@@ -28,5 +28,7 @@ ARIA-expanded/current/status, readable code, reduced-motion support and mobile
 menu access. If changing navigation or clipboard behavior, repeat that browser
 review as well as the static checker.
 
-The prepared Pages workflow is manual. Building the artifact locally does not
-publish it or enable GitHub Pages. See [workflow notes](../../container/CI.md).
+The [published documentation](https://curly-adventure-gken1jg.pages.github.io/) uses the private repository's access controls;
+GitHub sign-in and repository access are required. The Pages workflow remains
+manual. Building locally does not publish it. See [workflow notes](../../container/CI.md)
+and [publication evidence](../evidence/pages-publication.json).

@@ -3,6 +3,8 @@
 Local CLI and initial HTTP cache for Midnight ZKIR and generated prover/verifier keys, with a
 Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
 
+[Documentation site](https://curly-adventure-gken1jg.pages.github.io/) (GitHub sign-in and repository access required).
+
 ## Supported profiles
 
 | Selector | JSON format | Official backend |

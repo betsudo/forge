@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "issue": 10,
+  "source_commit": "bffeb356fbaac0cc2325e22c24d657bce3603b7a",
+  "ci": {
+    "url": "https://github.com/input-output-hk/midnight-zkir-forge/actions/runs/38749437847",
+    "conclusion": "success",
+    "jobs": [
+      {
+        "name": "checks",
+        "conclusion": "success",
+        "startedAt": "2026-10-15T14:13:15Z",
+        "completedAt": "2026-10-15T14:27:55Z"
+      },
+      {
+        "name": "real-proofs",
+        "conclusion": "skipped",
+        "startedAt": "2026-10-15T14:13:13Z",
+        "completedAt": "2026-10-15T14:13:13Z"
+      }
+    ]
+  },
+  "pages": {
+    "url": "https://curly-adventure-gken1jg.pages.github.io/",
+    "run_url": "https://github.com/input-output-hk/midnight-zkir-forge/actions/runs/38752102625",
+    "conclusion": "success",
+    "build_type": "workflow",
+    "public": false,
+    "https_enforced": true,
+    "deployment_id": 7095437980,
+    "deployment_state": "success"
+  },
+  "artifact_files_sha256": {
+    "favicon.svg": "ba231b86c5ef0a3a7d253d00286c7ac6181544879a347ab3985e556748e2562a",
+    "architecture.svg": "4c5df8d1831da710ae4cfccd08bda3cfe86e58cb3fa1e983b95e4b3ea209f02b",
+    "http-sequence.svg": "723bdfebf2351a302b8b0757319e143e20d986aacb0f135e9be339f5f8efe897",
+    "openapi.json": "a2dff583cd00fe27cb7855c4c28bd252e233be358524acc731565e62570f7b96",
+    "prepare-sequence.svg": "f52c62e82aaed417c59605f6d422ef255c30f1e62fcf23889df1905c32cc8c2d",
+    ".nojekyll": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "index.html": "2fc5542af1be113c22aefe8e8c84183c29079e72b0a70522c0d9cad0349eaa62",
+    "app.js": "e73a3625b99e5a4133ace516c88fc1d52a6b92929e464fdf4e369818963f096c",
+    "style.css": "c02e40ea95cb33fd08978f904f68dbca5c7f7da17b5bbc748f3d6478ced61627"
+  },
+  "artifact_matches_locally_validated_site": true,
+  "runtime_fixes_required": false,
+  "scope": "Linux hosted fast checks pass; optional real-proof job skipped; repository/site access controls preserved; Compact unchanged"
+}

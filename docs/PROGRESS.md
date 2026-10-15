@@ -329,3 +329,19 @@
 - Owner additionally authorized publishing the completed history to main after
   this signed evidence commit. No manual workflow dispatch, Pages deployment,
   image publication or supervision is part of that publication.
+
+## 2026-10-15 — issue #10: hosted CI and Pages publication
+
+- Initial main CI https://github.com/input-output-hk/midnight-zkir-forge/actions/runs/38749437847 passes at `bffeb356fbaac0cc2325e22c24d657bce3603b7a`. Linux fast
+  checks include profile/spec/policy validation, Rust tests/Clippy and recovery,
+  snapshot, HTTP and documentation e2e. No failures or runtime fixes were needed.
+  The manual real-proof lane is skipped; Linux proof/container qualification
+  remains distinct from these passing fast tests.
+- Enabled Actions-based Pages while preserving private repository/site access.
+  Owner-authorized workflow https://github.com/input-output-hk/midnight-zkir-forge/actions/runs/38752102625 passes build and deployment.
+  URL: https://curly-adventure-gken1jg.pages.github.io/ (GitHub sign-in/repository access required).
+- Deployment 7095437980 reports success; all nine files in its uploaded artifact
+  match the locally validated site bytes. Receipt: docs/evidence/pages-publication.json.
+- README/site/workflow guide now link the deployed site and record current scope.
+  Non-blocking action-runtime deprecation annotations are recorded; no unrelated
+  action upgrades were introduced. Compact and other checkouts remain untouched.
