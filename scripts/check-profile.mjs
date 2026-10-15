@@ -28,3 +28,13 @@ for(const [name,version] of Object.entries(v3)){
   if(git.has(name)||name==='midnight-zkir-v3') assert.equal(matches[0].source,'git+https://github.com/midnightntwrk/midnight-ledger?rev=3a7ae0361d03e6eed4fc91e31f6600f334f605d5#3a7ae0361d03e6eed4fc91e31f6600f334f605d5');
 }
 console.log('Isolated consumer ZKIR3 profile: OK');
+
+// Product versions move together; official dependency/profile versions stay independent.
+const product=/^version = "([^"]+)"/m.exec(readFileSync('Cargo.toml','utf8'))[1];
+assert.match(product,/^[0-9]{4}\.(?:[1-9]|1[0-2])\.[0-9]+(?:-rc\.[0-9]+)?$/);
+assert.equal(entries.find(x=>x.name==='midnight-zkir-forge').version,product);
+assert.equal(worker.find(x=>x.name==='midnight-zkir-forge-zkir3-worker').version,product);
+assert.equal(/^version = "([^"]+)"/m.exec(readFileSync('workers/zkir3/Cargo.toml','utf8'))[1],product);
+assert.equal(JSON.parse(readFileSync('docs/http/openapi.json','utf8')).info.version,product);
+assert.ok(readFileSync('compose.yaml','utf8').includes('midnight-zkir-forge:'+product));
+console.log('Calendar product versions: OK');

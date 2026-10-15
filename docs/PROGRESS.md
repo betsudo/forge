@@ -405,3 +405,18 @@
 - Independent cross-reviews report no remaining blockers after clarifications.
   Research index: docs/research/README.md. OpenSpec structure checks pass; no
   consumer checkout, Compact, hosted workflow, cloud or publication change.
+
+
+## 2026-10-16 — issue #17 calendar milestone
+
+- Created GitHub milestone 2026.10.0 without an invented deadline and assigned
+  issues #1–#17, including newly scoped research issues #13–#16 and version #17.
+  Local autonomous goal/acceptance is docs/milestones/2026.10.0.md.
+- Product versions are YYYY.M.PATCH (month without leading zeros); current
+  CLI/worker/locks/Nix/Compose/OpenAPI agree on 2026.10.0. Backend dependency
+  versions/pins and historical receipts remain unchanged.
+- Full native bootstrap and both-profile real descriptor parity, HTTP-downloaded
+  proof, snapshot and failure-recovery controls pass for the calendar candidate.
+  Receipt: docs/evidence/calver-local.json. Review found no version/identity blocker.
+- No push, tag, release upload, hosted run or deployment. Portable Linux/other
+  architectures and clean no-Nix consumer qualification are separate release gates.

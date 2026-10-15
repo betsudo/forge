@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Midnight ZKIR Forge \u2014 initial HTTP subset",
-    "version": "0.2.0",
+    "version": "2026.10.0",
     "description": "Single-owner service. Raw single-circuit uploads and synchronous materialization. No archives, durable jobs, namespaces, HTTP provider views or hosted registry guarantees. Bearer authentication is enforced when a token file is configured and required for non-loopback binding. No CORS; TLS belongs at a trusted reverse proxy. Parameter acquisition is an explicit operator option."
   },
   "servers": [

@@ -11,7 +11,7 @@ import urllib.request
 import uuid
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--image', default='midnight-zkir-forge:0.2.0')
+parser.add_argument('--image', default='midnight-zkir-forge:2026.10.0')
 args = parser.parse_args()
 
 def docker(*arguments, check=True):
