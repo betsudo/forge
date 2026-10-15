@@ -428,3 +428,12 @@ the site, push code, dispatch CI or publish an image.
 Issue #6 authorizes Forge-only verified directory snapshots/restoration and local
 CI cache helpers, governed by `openspec/changes/snapshot-ci/`. Preserve Compact
 unchanged; validation and signed commits remain local without remote dispatch.
+
+## Owner amendments — 2026-10-16
+
+Private release installation is proposed in `openspec/changes/private-release-installer/`
+(issue #11): macOS/Linux bundles and an immutable pinned-flake alternative. Compiler
+compatibility parity and typed availability/integrity errors are specified in
+`openspec/changes/compiler-compatibility/` (issue #12). The owner authorized local
+implementation after signed spec commits. Release publishing and new remote runs
+remain outside this phase; Compact stays unchanged.
