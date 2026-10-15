@@ -1,2 +1,135 @@
-# midnight-zkir-forge
-Register Midnight ZKIR bundles, derive circuit artifacts once for an exact compatibility profile, and deliver the original ZKIR and derived files over HTTP or the local filesystem
+# Midnight ZKIR Forge
+
+Local CLI cache for Midnight ZKIR and generated prover/verifier keys. Official
+ledger8 8.1.3 stack, Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
+
+## Install for all local agents
+
+From this checkout, with Nix flakes enabled:
+
+```sh
+./bootstrap.sh --check
+./scripts/install-local.sh
+export PATH="$HOME/.local/bin:$PATH"
+midnight-zkir-forge --version
+```
+
+Add the PATH line to your shell profile and configure the same PATH in agent
+launchers that do not load shell profiles. The installed executable can be
+invoked from any checkout. No server or supervisor is required. Re-run the
+installer after adopting a new local commit. The installer retains a Nix GC root at
+`~/.local/share/midnight-zkir-forge/current`, so runtime dependencies survive
+normal Nix garbage collection. No shell profile or credential file is changed.
+
+## Use in test setup
+
+```sh
+midnight-zkir-forge prepare /absolute/path/to/circuit.zkir > artifacts.json
+midnight-zkir-forge stats
+```
+
+`prepare` imports exact input bytes, generates on a miss, verifies a warm hit,
+and returns JSON containing `bundle_id`, `derivation_id`, `artifact_set_id`,
+`cache.hit`, timings and `export.files` (kind, SHA-256, bytes, absolute path).
+The provider layout is `zkir/<name>.zkir`, `zkir/<name>.bzkir`,
+`keys/<name>.prover`, `keys/<name>.verifier` and `manifest.json`.
+
+Parameters are **offline by default**, using the official provider's verified
+cache (`MIDNIGHT_PP`, else the upstream XDG/HOME default). Missing parameters
+fail explicitly. To allow acquisition from the official provider:
+
+```sh
+midnight-zkir-forge --fetch-params prepare ./fixtures/assert.zkir
+```
+
+`--params-dir /absolute/parameter/cache` overrides the parameter directory.
+Upstream SHA-256 validation is retained. Parameters are not copied into each
+bundle and are not counted as Forge CAS bytes.
+
+For separate registration and materialization:
+
+```sh
+midnight-zkir-forge import ./fixtures/assert.zkir
+midnight-zkir-forge ensure BUNDLE_ID
+midnight-zkir-forge inspect BUNDLE_ID
+midnight-zkir-forge resolve BUNDLE_ID --artifact prover
+midnight-zkir-forge export BUNDLE_ID --output /new/provider-layout
+midnight-zkir-forge evict BUNDLE_ID --dry-run
+midnight-zkir-forge evict BUNDLE_ID
+midnight-zkir-forge ensure BUNDLE_ID
+```
+
+`resolve` and `export` never trigger generation. JSON goes to stdout; diagnostics
+go to stderr and failures exit nonzero with a structured JSON error. Paths are
+JSON values: use a JSON parser, never `eval` the output.
+
+## Agent integration
+
+Use Forge only where a test normally generates keys for the exact circuit.
+Read the current circuit every time; `prepare` derives identity from its bytes.
+Continue executing proofs, verifiers and assertions on every test run.
+
+Python example, without a shell or string interpolation:
+
+```python
+import json, subprocess
+from pathlib import Path
+
+result = subprocess.run(
+    [str(Path.home() / ".local/bin/midnight-zkir-forge"),
+     "prepare", str(Path("generated/zkir/circuit.zkir").resolve())],
+    check=True, text=True, capture_output=True,
+)
+artifacts = json.loads(result.stdout)
+paths = {entry["kind"]: Path(entry["path"])
+         for entry in artifacts["export"]["files"]}
+# Use paths["binary_ir"], paths["prover"], paths["verifier"] in the test.
+# Run the original test assertions and proof verification here.
+```
+
+Set `MIDNIGHT_ZKIR_FORGE_DIR=/absolute/cache` or `--cache-dir` for another store.
+Use private temporary stores for corruption/lifecycle tests. Keep one uncached
+qualification job to exercise key generation:
+
+```sh
+midnight-zkir-forge qualify
+./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1
+./bootstrap.sh -- python3 scripts/check-cli.py --binary target/debug/midnight-zkir-forge
+```
+
+The bundled assert circuit is for qualification. `qualify` generates twice and
+compares bytes, then proves and checks valid/invalid statements. It caches no
+proof or test result. See [the local capability contract](openspec/changes/local-cache-mvp/specs/local-artifact-cache/spec.md).
+
+## Metrics and storage lifetime
+
+`stats` reports request hits/misses/errors, hit rate, per-request timings,
+generation milliseconds, each requested file's counts/digest/size, hit bytes,
+and CAS/export size. `estimated_generation_avoided_ms` uses the last measured
+generation for that recipe; it is an estimate, not a benchmark or test verdict.
+`cache.elapsed_ms` measures ensure/resolve work; `prepare` import and process
+startup are outside that field. Use the benchmark script for end-to-end timing.
+Per-file counts describe logical artifact-set requests, not raw disk read calls.
+Recent request details are capped at 100 in output; aggregate history remains
+in local SQLite. Paths and metrics stay on this machine.
+
+All writers share a SQLite immediate transaction (rollback journal, full sync): duplicate local requests join
+through serialization and then verify the hit. One generation runs at a time;
+callers wait up to one hour for a busy store. Process death rolls back metadata
+and releases the lock. Orphan unpublished blobs/staging files may remain.
+
+Exports are independent **copies**, persistent until their owner removes them.
+Derived eviction keeps source, small identity manifests and exports. It reclaims
+only unshared derived CAS objects. Existing export paths remain usable; eviction
+is not a promise to reclaim every byte of disk space. Regeneration must preserve
+the previous actual artifact identity for the same recipe or fail explicitly.
+
+## Current boundary
+
+One circuit per bundle, synchronous local CLI, trusted same-user store; no
+HTTP, background jobs, multi-host operation, purge/GC budget, stdio protocol,
+full manifest/metadata import, ledger9 or ZKIR3. No universal JS/Rust application
+compatibility or production readiness is claimed. The official Rust Resolver
+is exercised by the real proof qualification. See [SPEC.md](SPEC.md),
+[CONTRIBUTING.md](CONTRIBUTING.md), [progress](docs/PROGRESS.md) and
+[local factory](docs/factory/README.md).

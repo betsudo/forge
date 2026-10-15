@@ -24,8 +24,9 @@ midnight-curves = "=0.2.0"
 midnight-zk-stdlib = "=1.1.0"
 rand = "0.8"
 
-[dev-dependencies]
 tempfile = "3"
+
+[dev-dependencies]
 
 [profile.dev.package."*"]
 opt-level = 2

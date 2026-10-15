@@ -1,25 +1,37 @@
 {
   description = "Midnight ZKIR Forge: local ledger8 artifact cache";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-  outputs = { self, nixpkgs }:
+  inputs.rust-overlay.url = "github:oxalica/rust-overlay/ca7f624be3935a5bc46d2c240515491ab8675503";
+  inputs.rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
+  outputs = { self, nixpkgs, rust-overlay }:
     let
       systems = [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
       eachSystem = nixpkgs.lib.genAttrs systems;
     in {
-      devShells = eachSystem (system: let pkgs = import nixpkgs { inherit system; }; in {
+      devShells = eachSystem (system: let pkgs = import nixpkgs { inherit system; overlays = [ (import rust-overlay) ]; };
+          toolchain = pkgs.rust-bin.stable."1.98.1".minimal.override { extensions = [ "rustfmt" "clippy" ]; };
+      in {
         default = pkgs.mkShell {
-          packages = with pkgs; [ cargo rustc rustfmt clippy pkg-config openssl sqlite nodejs_24 git gnupg ripgrep pi-coding-agent ];
+          packages = with pkgs; [ toolchain pkg-config openssl sqlite python3 nodejs_24 git gnupg ripgrep pi-coding-agent ];
           shellHook = ''
             export CARGO_BUILD_JOBS="''${CARGO_BUILD_JOBS:-2}"
           '';
         };
       });
-      packages = eachSystem (system: let pkgs = import nixpkgs { inherit system; }; in {
-        default = pkgs.rustPlatform.buildRustPackage {
+      packages = eachSystem (system: let pkgs = import nixpkgs { inherit system; overlays = [ (import rust-overlay) ]; };
+          toolchain = pkgs.rust-bin.stable."1.98.1".minimal.override { extensions = [ "rustfmt" "clippy" ]; };
+      in {
+        default = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
           pname = "midnight-zkir-forge";
           version = "0.1.0";
-          src = self;
-          cargoLock.lockFile = ./Cargo.lock;
+          src = pkgs.lib.fileset.toSource {
+            root = ./.;
+            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./fixtures/assert.zkir ];
+          };
+          cargoLock = {
+            lockFile = ./Cargo.lock;
+            outputHashes."midnight-base-crypto-1.0.2" = "sha256-iNrhLPBGrWxeospwl8eW4TtYNlk+vY5Y564OTRjwBoM=";
+          };
           nativeBuildInputs = [ pkgs.pkg-config ];
           buildInputs = [ pkgs.openssl ];
         };

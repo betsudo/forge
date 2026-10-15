@@ -1,6 +1,6 @@
 # Midnight ZKIR Forge
 
-Read SPEC.md and docs/PROGRESS.md. Build a local artifact cache first.
+Read SPEC.md, CONTRIBUTING.md, the active openspec/changes contract and docs/PROGRESS.md. Build a local artifact cache first.
 Use official ledger8 8.1.3 sources and its midnight-zk dependency pins; no
 ledger9/ZKIR3. Do not modify Compact or any other checkout.
 Run through ./bootstrap.sh; Nix owns the toolchain. Default cache is

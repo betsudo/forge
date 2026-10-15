@@ -29,19 +29,19 @@ The first usable slice must accept one real circuit, generate its artifacts usin
 
 ### Initial compatibility profile
 
-Use the known ledger 8.0.3 family as the first implementation target. The following exact versions are observed in the existing Compact workspace; the new repository must resolve and lock its own consistent graph and verify the profile using real fixtures:
+Use the latest stable official ledger8 release, verified on 2026-10-15 as **8.1.3**, as the first implementation target. This owner amendment supersedes the original 8.0.3 research baseline. Resolve and lock a consistent official graph and qualify it with real fixtures. The selected versions follow the official ledger-8.1.3 lockfile:
 
 | Component | Initial version |
 | --- | --- |
-| Compatibility baseline | `midnight-ledger` 8.0.3 |
-| `midnight-zkir` | 2.1.0 |
-| `midnight-transient-crypto` | 2.0.1 |
-| `midnight-base-crypto` | 1.0.0 |
-| `midnight-serialize` | 1.0.0 |
-| `midnight-proofs` | 0.7.0 |
-| `midnight-circuits` | 6.0.0 |
+| Compatibility baseline | `midnight-ledger` 8.1.3 |
+| `midnight-zkir` | 2.1.1 |
+| `midnight-transient-crypto` | 2.1.1 |
+| `midnight-base-crypto` | 1.0.2 |
+| `midnight-serialize` | 1.1.1 |
+| `midnight-proofs` | 0.7.1 |
+| `midnight-circuits` | 6.1.0 |
 | `midnight-curves` | 0.2.0 |
-| `midnight-zk-stdlib` | 1.0.0 |
+| `midnight-zk-stdlib` | 1.1.0 |
 
 A service that only needs key generation need not depend on the entire ledger crate. Include it for compatibility tests or integrations only when required.
 
@@ -51,7 +51,7 @@ Do not infer ledger8 compatibility from the shared crate name, a successful pars
 
 ### Reuse official interfaces
 
-The installed 2.1.0/2.0.1 sources expose `IrSource::load`, the `Zkir` trait with `keygen`/`keygen_vk`, tagged serialization, `ParamsProverProvider`, `Resolver` and `ProvingProvider`. Verify signatures when implementing; these names do not guarantee the same API across releases.
+The pinned 2.1.1/2.1.1 sources expose `IrSource::load`, the `Zkir` trait with `keygen`/`keygen_vk`, tagged serialization, `ParamsProverProvider`, `Resolver` and `ProvingProvider`. Verify signatures when implementing; these names do not guarantee the same API across releases.
 
 - Backend: use official ZKIR parsing, key generation and serialization.
 - Parameters: adapt the official `ParamsProverProvider`; retain upstream parameter verification and record exact parameter identity.
@@ -242,7 +242,7 @@ midnight-zkir-forge stdio
 
 `ensure --wait` returns after requested artifacts are ready or a typed terminal failure. `resolve` alone does not unexpectedly start expensive work; `resolve --ensure` may combine the two explicitly. `--mode eager` enqueues all circuits and can be combined with `--wait`. Document whether a job needs a running local supervisor or is executed by the invoking command.
 
-`stdio` accepts one versioned JSON request per line and emits one JSON response per line with the same request ID. Logs/progress go to stderr. Errors are structured and do not corrupt stdout. Paths and Unicode names are handled as JSON values, not shell snippets. Initial protocol may execute requests sequentially; HTTP need not be running.
+`stdio` accepts one versioned JSON request per line and emits one JSON response per line with the same request ID. Logs/progress go to stderr. Errors are structured and do not corrupt stdout. Paths and Unicode names are handled as JSON values, not shell snippets. The future protocol may execute requests sequentially; HTTP need not be running.
 
 ```json
 {"version":1,"id":"req-1","method":"ensure","params":{"bundleId":"<id>","profileId":"<id>","circuits":["increment"],"wait":true,"location":"absolute"}}
@@ -405,3 +405,7 @@ Legacy baseline/API observations were checked against installed official crates 
 ## Owner amendments — 2026-10-15
 
 Latest stable official ledger8 (8.1.3) supersedes the 8.0.3 initial baseline above. Nix is required. Ledger9 and ZKIR3 are deferred. First delivery is a local CLI, default store `~/.midnight-zkir-forge`; all work stays local.
+
+## Local MVP scope
+
+The first implementation is governed by `openspec/changes/local-cache-mvp/`: one circuit per bundle, synchronous CLI and no HTTP/background-job promise. Full service capabilities above remain proposed until separately qualified. Default store: `~/.midnight-zkir-forge`.

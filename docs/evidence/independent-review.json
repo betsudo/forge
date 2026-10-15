@@ -1,0 +1,18 @@
+{
+  "scope": "independent read-only identity, integrity, export, concurrency and eviction review",
+  "status": "no remaining source blockers",
+  "runtime_evidence_owned_by": "primary session local tests",
+  "corrected_findings": [
+    "export path must include derivation identity",
+    "lookup ready shared derivations across bundles",
+    "retire derivation readiness when last ready bundle reference moves",
+    "retain observable build and upstream provenance"
+  ],
+  "final_delta": "default rollback journal avoids first-open WAL transition race; BEGIN IMMEDIATE and FULL sync retained",
+  "sha256": {
+    "src/application.rs": "6c024add66a6ed3c8edc77dcbbca9360d48d459b7de6f5ba9bfc1b32703e0577",
+    "src/store.rs": "1ab7b016bf3989d253b867088b8f87ba8e1fd73fc7c5fbc7fb858404c7ada1a7",
+    "src/backend.rs": "1e74b9b2d6634bcdb0597dd42052697a772473a8cf9dd59c5b7d6470007e7d44",
+    "src/domain.rs": "8ed09e12540d58ba8f37c10536d788dd89370e2788447c33f80254df64248467"
+  }
+}

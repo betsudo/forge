@@ -1,7 +1,8 @@
 # Local factory
 
 Adapted from the factory knowledge base and Oxid, with one local writer.
-The Nix lock owns Pi, Node and Rust versions. Use `./bootstrap.sh --pi`.
+The Nix lock owns Pi, Node and Rust versions. Rust 1.98.1 uses the pinned
+rust-overlay binary distribution; nixpkgs follows the Oxid factory baseline. Use `./bootstrap.sh --pi`.
 External extensions/skills/prompts are disabled at launch to avoid startup
 mutations and inheriting a hosted delivery loop. No extra Pi packages are
 needed for this initial loop. Authentication stays in the existing user store.
@@ -11,6 +12,9 @@ in docs/PROGRESS.md. The first two iterations are bootstrap/compatibility and
 local cache. No GitHub claims, PRs, automated merges or persistent supervisors
 are activated. Remote coordination and production factory gates remain future
 work. Missing usage counters are unknown, never reconstructed estimates.
+
+`./bootstrap.sh --configure-git` enables local commit policy hooks and signed
+commits using the existing configured identity/key. It never creates an identity.
 
 `./bootstrap.sh --audit-pi` checks runtime and machine-readable local policy.
 `./bootstrap.sh --check` runs the selected local engineering checks.

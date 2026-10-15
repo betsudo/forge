@@ -9,9 +9,9 @@ that release's lockfile. The complete service does not require the ledger crate.
 One circuit forms one logical bundle in this MVP. SHA-256 exact input identity,
 versioned generation recipe (backend build fingerprint, options, tagged format,
 actual verified parameter digest), and actual output set identity are distinct.
-A SQLite immediate transaction serializes local mutating operations, including
+A SQLite immediate transaction with the default rollback journal serializes local mutating operations, including
 keygen. The OS releases it on process death, avoiding a stale background lease.
-This deliberately trades throughput for an easily reviewable local MVP; there
+WAL mode is unnecessary for this single-writer CLI and introduced a concurrent first-open journal-mode race in the real process test. This deliberately trades throughput for an easily reviewable local MVP; there
 is no background job queue or durable asynchronous promise.
 
 Immutable blobs publish before SQLite readiness. Small output records survive

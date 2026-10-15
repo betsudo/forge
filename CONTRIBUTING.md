@@ -1,6 +1,6 @@
 # Contributing locally
 
-Use `./bootstrap.sh --check`. All builds and tests run locally for this MVP.
+Run `./bootstrap.sh --configure-git` once, then use `./bootstrap.sh --check`. All builds and tests run locally for this MVP.
 
 The delivery loop is issue → OpenSpec contract → implementation → targeted
 checks → signed DCO commit → review evidence. When publishing is authorized,
