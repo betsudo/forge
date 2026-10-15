@@ -1,0 +1,11 @@
+import { readFileSync } from 'node:fs';
+import assert from 'node:assert/strict';
+const policy = JSON.parse(readFileSync('.pi/factory.json'));
+assert.equal(policy.mode, 'local');
+assert.equal(policy.supervision, false);
+assert.equal(policy.remoteMutations, false);
+assert.equal(policy.maxWriters, 1);
+assert.equal(policy.maxBackendWorkers, 1);
+const settings = JSON.parse(readFileSync('.pi/settings.json'));
+assert.deepEqual(settings.packages, []);
+console.log('Local factory policy: OK (single writer; supervision disabled)');

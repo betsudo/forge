@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "mode": "local",
+  "supervision": false,
+  "maxWriters": 1,
+  "maxBackendWorkers": 1,
+  "remoteMutations": false,
+  "releaseReady": false
+}
