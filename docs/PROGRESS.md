@@ -420,3 +420,19 @@
   Receipt: docs/evidence/calver-local.json. Review found no version/identity blocker.
 - No push, tag, release upload, hosted run or deployment. Portable Linux/other
   architectures and clean no-Nix consumer qualification are separate release gates.
+
+
+## 2026-10-16 — issue #18 four-platform Nix evaluation correction
+
+- Final evaluation exposed that locked Nixpkgs26.11 drops Intel macOS although
+  Forge advertised x86_64-darwin. Added separately revision/hash-locked official
+  nixpkgs-26.05-darwin only for Intel macOS; original Nixpkgs/rust-overlay lock
+  nodes and Midnight crate pins remain byte-for-byte unchanged.
+- All four package and dev-shell derivations now evaluate; independent review
+  found no blocker. Receipt: docs/evidence/nix-platform-evaluation.json. Intel
+  build/runtime and Linux proof qualification remain distinct pending gates.
+- The earlier source09b0b1a macOS ARM64 candidate successfully installed under
+  fake-gh local transport and executed real v2/v3 proof controls with /nix and
+  checkout runtime reads denied. Its relocated CLI/worker also passed ordinary
+  real recovery. The new lock conservatively changes build identity, so a new
+  native candidate/receipt follows rather than reusing the earlier claim.

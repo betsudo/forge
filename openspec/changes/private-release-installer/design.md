@@ -199,3 +199,15 @@ masquerading as a pin. Nix installation intentionally retains its Nix closure an
 is a separate supported path from Nix-free bundles. Expose the CLI and matching
 worker/helper together through the default package. No consuming checkout edits
 are implied; a self-contained example and local flake evaluation are sufficient.
+
+
+### Intel macOS Nix input correction — issue #18
+
+The final four-system evaluation found that the existing locked Nixpkgs26.11
+revision has dropped x86_64-darwin. Retain that exact input for ARM macOS and both
+Linux systems. Add a separately locked official nixpkgs-26.05-darwin input for Intel macOS
+only, since upstream identifies that stable line as supported through end2026.
+This is not a Midnight graph upgrade or a universal runtime claim. Apply the same
+selection in the consumer example and evaluate all package/worker/shell outputs.
+A future upstream Intel support change requires an explicit policy/pin amendment;
+never hide evaluation failure behind an advertised unsupported output.
