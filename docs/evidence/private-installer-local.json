@@ -14,5 +14,6 @@
   "nix_worker_build": "native aarch64-darwin worker source closure build passed",
   "consumer_flake_evaluation": "aarch64-darwin devShell evaluated via local Git override; package outputs also evaluated for x86_64-linux",
   "candidate_status": "Not yet built; native candidate and clean no-Nix consumer qualification remain separate gates.",
-  "linux_status": "Nix flake supported as a build definition; portable tarball production deliberately refuses Nix ELF dependencies and still needs implementation/qualification."
+  "linux_status": "Nix flake supported as a build definition; portable tarball production deliberately refuses Nix ELF dependencies and still needs implementation/qualification.",
+  "metadata_checksum_and_expansion_budgets": true
 }

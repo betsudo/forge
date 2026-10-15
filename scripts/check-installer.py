@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Offline private-release installer e2e with fake gh and isolated prefixes; no publication."""
-import fcntl,hashlib,importlib.util,io,json,os,pathlib,platform,shutil,subprocess,sys,tarfile,tempfile,time
+import fcntl,gzip,hashlib,importlib.util,io,json,os,pathlib,platform,shutil,subprocess,sys,tarfile,tempfile,time
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 spec=importlib.util.spec_from_file_location('installer',ROOT/'scripts/install-release.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 with tempfile.TemporaryDirectory(prefix='forge-installer-test-') as d:
@@ -26,6 +26,8 @@ with tempfile.TemporaryDirectory(prefix='forge-installer-test-') as d:
  gh=bin_dir/'gh';gh.write_text('#!'+sys.executable+'\n'+'''import json,os,pathlib,shutil,sys,time
 args=sys.argv[1:];remote=pathlib.Path(os.environ['FIXTURE_REMOTE'])
 if args[:2]==['release','view']:
+ if os.environ.get('LARGE_METADATA'):
+  sys.stdout.write('x'*(17*1024**2));sys.exit(0)
  tag=args[2];folder=remote/tag
  print(json.dumps({'tagName':tag,'isDraft':False,'isPrerelease':False,'assets':[{'name':p.name,'size':p.stat().st_size} for p in folder.iterdir()]}))
 elif args[0]=='api':print(json.dumps({'sha':'a'*40}))
@@ -36,6 +38,7 @@ elif args[:2]==['release','download']:
   time.sleep(60)
  directory=pathlib.Path(args[args.index('--dir')+1]);tag=args[2]
  for p in (remote/tag).iterdir():shutil.copyfile(p,directory/p.name)
+ if os.environ.get('LARGE_CHECKSUM'):(directory/'SHA256SUMS').write_bytes(b'x'*(2*1024**2))
 else:sys.exit(2)
 ''');gh.chmod(0o755)
  env=dict(os.environ,PATH=str(bin_dir)+os.pathsep+os.environ['PATH'],FIXTURE_REMOTE=str(releases))
@@ -47,7 +50,20 @@ else:sys.exit(2)
  assert 'checksum' in command(extra=('--sha256','0'*64),ok=False) and active.resolve()==old
  assert 'GitHub download failed' in command(environment=dict(env,FAIL_DOWNLOAD='1'),ok=False) and active.resolve()==old
  command('v1.3.0',ok=False);assert active.resolve()==old and not (prefix/'escape').exists()
+ assert 'metadata exceeds limit' in command(environment=dict(env,LARGE_METADATA='1'),ok=False) and active.resolve()==old
+ assert 'checksum metadata exceeds limit' in command(environment=dict(env,LARGE_CHECKSUM='1'),ok=False) and active.resolve()==old
+ # Reject gzip expansion before tarfile can parse oversized extension headers.
+ bomb=temp/'expanded.gz'
+ with gzip.open(bomb,'wb') as compressed:
+  for _ in range(18):compressed.write(b'0'*(1024**2))
+ limit=module.MAX_UNPACKED;module.MAX_UNPACKED=1024**2
+ try:
+  try:module.extract(bomb,temp,'fixture')
+  except ValueError as error:assert 'expanded archive budget exceeded' in str(error)
+  else:raise AssertionError('unbounded expansion accepted')
+ finally:module.MAX_UNPACKED=limit
  # Installer lock is released by the OS when a killed owner exits.
+
  lock_path=active.parent/'.install.lock'
  with lock_path.open('r+') as lock:
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
@@ -108,4 +124,4 @@ m.install('v1.1.0',pathlib.Path(prefix))
  # Same tag changed content cannot silently replace the pinned installation.
  folder=releases/'v1.0.0';archive=next(folder.glob('*.tar.gz'));data=archive.read_bytes();archive.write_bytes(data+b'changed');(folder/'SHA256SUMS').write_text(module.digest(archive)+'  '+archive.name+'\n')
  assert 'tag content changed' in command(ok=False) and active.resolve()==old
- print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'install_reinstall_upgrade_rollback':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))
+ print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'install_reinstall_upgrade_rollback':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'metadata_checksum_and_expansion_budgets':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))

@@ -78,3 +78,20 @@ Run offline fake-gh/isolated-prefix install/failure tests with
 `./bootstrap.sh -- python3 scripts/check-installer.py`. Their success does not
 establish real private-release downloading, credentials or Nix-free portability.
 See [the spec](../openspec/changes/private-release-installer/design.md).
+
+
+For a locally built actual native candidate (no GitHub publication):
+
+```sh
+./bootstrap.sh -- python3 scripts/check-release-candidate.py \
+  --directory .local/release-candidate-2026.10.0 \
+  --runtime-python /opt/homebrew/bin/python3 --deny-nix
+```
+
+The macOS restricted-runtime experiment copies the candidate/installer to private
+scratch, uses fake gh only for the local download boundary, denies `/nix` and the
+checkout to the installer and installed commands, and runs both genuine backend
+qualifications. Choose an installed Python 3.11+ outside Nix. This does not replace
+an actual clean no-Nix host, Linux execution, or authenticated GitHub download test.
+Omit `--deny-nix` only when deliberately recording an ordinary native candidate
+experiment; its receipt reports whether Python itself comes from Nix.
