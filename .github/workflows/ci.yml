@@ -76,3 +76,4 @@ jobs:
           ./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1
           ./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1
           ./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge --real
+          ./bootstrap.sh -- python3 scripts/check-snapshot.py --binary target/debug/midnight-zkir-forge --real

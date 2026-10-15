@@ -44,6 +44,7 @@
 <a href="#profiles">Backend profiles</a>
 <a href="#http">HTTP transport</a>
 <a href="#containers">Containers</a>
+<a href="#snapshots">Snapshots & CI cache</a>
 <a href="#metrics">Metrics & storage</a>
 <a href="#development">Specification & checks</a>
 </nav>
@@ -285,6 +286,21 @@ docker load --input result-image
 </pre>
 </div>
 <p>Image creation is separate from publishing. No registry push, hosted service or production release is implied. Follow the <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/container/README.md">container guide</a> for the exact image, volume and token configuration.</p>
+</section>
+<section id="snapshots">
+<p class="eyebrow">PORTABLE VERIFIED ARTIFACTS</p>
+<h2>Snapshots &amp; CI cache</h2>
+<p>Move a verified snapshot into a fresh job-local store. Forge checks inventory,
+identities, SQLite metadata and persistent exports before atomic publication.
+Every restored test still runs its proofs, verification and assertions.</p>
+<pre><code>midnight-zkir-forge snapshot --output /tmp/forge-snapshot
+midnight-zkir-forge --cache-dir /tmp/new-forge-job restore /tmp/forge-snapshot
+midnight-zkir-forge-ci --help</code></pre>
+<p>Destinations must be absent. Partition CI caches by exact tool, platform,
+profile and actual parameter bytes; report hit deltas from a post-restore baseline.
+Only trusted successful runs with generation growth should prepare a bounded save.
+Snapshot checksums verify bytes; trusted workflow scopes establish provenance.</p>
+<p><a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/docs/ci-cache.md">Snapshot contract and CI helper setup ↗</a></p>
 </section>
 <section id="metrics" data-title="Measure reuse. Preserve identity.">
 <p class="eyebrow">DOCUMENTATION / 06</p>

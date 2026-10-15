@@ -10,6 +10,13 @@ use std::{
     time::Duration,
 };
 
+pub const SCHEMA_SQL: &str = "PRAGMA synchronous=FULL;
+            CREATE TABLE IF NOT EXISTS bundles(id TEXT PRIMARY KEY, record TEXT NOT NULL, ready INTEGER NOT NULL DEFAULT 0);
+            CREATE TABLE IF NOT EXISTS derivations(id TEXT PRIMARY KEY, record TEXT NOT NULL, ready INTEGER NOT NULL);
+            CREATE TABLE IF NOT EXISTS artifact_sets(id TEXT PRIMARY KEY, record TEXT NOT NULL);
+            CREATE TABLE IF NOT EXISTS requests(id INTEGER PRIMARY KEY, at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')), bundle TEXT NOT NULL, requested_path TEXT NOT NULL, operation TEXT NOT NULL, outcome TEXT NOT NULL, elapsed_ms REAL NOT NULL, generation_ms REAL, estimated_saved_ms REAL NOT NULL);
+            CREATE TABLE IF NOT EXISTS file_requests(request_id INTEGER NOT NULL, kind TEXT NOT NULL, digest TEXT NOT NULL, bytes INTEGER NOT NULL, outcome TEXT NOT NULL);";
+
 pub struct Store {
     pub root: PathBuf,
     pub db: Connection,
@@ -56,12 +63,7 @@ impl Store {
         }
         let db = Connection::open(database)?;
         db.busy_timeout(Duration::from_secs(3600))?;
-        db.execute_batch("PRAGMA synchronous=FULL;
-            CREATE TABLE IF NOT EXISTS bundles(id TEXT PRIMARY KEY, record TEXT NOT NULL, ready INTEGER NOT NULL DEFAULT 0);
-            CREATE TABLE IF NOT EXISTS derivations(id TEXT PRIMARY KEY, record TEXT NOT NULL, ready INTEGER NOT NULL);
-            CREATE TABLE IF NOT EXISTS artifact_sets(id TEXT PRIMARY KEY, record TEXT NOT NULL);
-            CREATE TABLE IF NOT EXISTS requests(id INTEGER PRIMARY KEY, at TEXT NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%fZ','now')), bundle TEXT NOT NULL, requested_path TEXT NOT NULL, operation TEXT NOT NULL, outcome TEXT NOT NULL, elapsed_ms REAL NOT NULL, generation_ms REAL, estimated_saved_ms REAL NOT NULL);
-            CREATE TABLE IF NOT EXISTS file_requests(request_id INTEGER NOT NULL, kind TEXT NOT NULL, digest TEXT NOT NULL, bytes INTEGER NOT NULL, outcome TEXT NOT NULL);")?;
+        db.execute_batch(SCHEMA_SQL)?;
         Ok(Self { root, db })
     }
     pub fn lock(&self) -> Result<Transaction<'_>> {
@@ -326,7 +328,7 @@ pub fn read_input(path: &Path) -> Result<Vec<u8>> {
     Ok(bytes)
 }
 
-fn export_manifest(record: &Record) -> Result<Vec<u8>> {
+pub(crate) fn export_manifest(record: &Record) -> Result<Vec<u8>> {
     let mut immutable = serde_json::to_value(record)?;
     immutable.as_object_mut().unwrap().remove("generation_ms");
     Ok(serde_json::to_vec_pretty(&immutable)?)

@@ -1734,6 +1734,7 @@ dependencies = [
  "axum",
  "clap",
  "hex",
+ "libc",
  "midnight-base-crypto",
  "midnight-circuits",
  "midnight-curves",

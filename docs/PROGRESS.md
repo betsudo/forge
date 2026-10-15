@@ -208,3 +208,30 @@
   performance docs/patch changes; no inspected integration/workflow file changed.
   This session made no writes, ran no builds/tests and dispatched no CI in Compact.
   Global skill and Midnight vault gain research links; delivery remains local.
+
+## 2026-10-15 — issue #6: verified snapshots and CI helpers
+
+- Implemented writer-leased standalone SQLite backup plus bounded CAS/export
+  directory inventory. Restore validates identities, schema, ready references,
+  canonical exports and current producer/profile/parameter scope, then atomically
+  publishes to an absent explicit root. No overwrite/merge or Compact amendment.
+- Added Nix-packaged `midnight-zkir-forge-ci`: exact tool/platform/profile/worker/
+  actual-parameter partition, declared workload and immutable generation keys;
+  restore, post-restore baseline, job-only report, bounded trusted-growth save
+  planning. No remote upload or test-result caching. Workflow conditions and
+  GitHub scopes supply authority; environment/test-success declarations do not.
+- Full local bootstrap checks pass, including formatting, locked unit tests,
+  Clippy, policy/profile/spec checks, fast snapshot/HTTP e2e and Pages validation.
+  Real snapshot suite passes for both exact profiles: cold save, relocation, warm
+  artifact proof verification, invalid-statement/corrupt-proof controls and evicted
+  identity regeneration. Wrong-scope/noncanonical export/contradictory metadata
+  regressions rehash their envelopes to exercise deeper invariants.
+- Independent review addressed bounded traversal, exact schema, ready/partial
+  generation records, cross-table output identities, immutable export bytes and
+  writer-lease release with existing readers. Final reviewer reports no blockers.
+- Evidence: docs/evidence/snapshot-ci-e2e.json and snapshot-ci-review.md.
+  Usage: docs/ci-cache.md and Pages snapshot section. Skill/vault handoff updated.
+- Native execution is aarch64-darwin; Linux atomic-publication runtime is not
+  qualified by this receipt. Cargo's SQLite backup feature/direct libc declaration
+  changes the Forge build fingerprint; Compact's old build allowlist remains
+  untouched and needs separate consumer qualification. Nix install receipt follows.

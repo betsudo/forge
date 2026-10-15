@@ -1,7 +1,8 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use midnight_zkir_forge::{
-    application, backend, domain::ArtifactKind, engine::ProfileSelector, http, store::Store, zkir3,
+    application, backend, domain::ArtifactKind, engine::ProfileSelector, http, snapshot,
+    store::Store, zkir3,
 };
 use serde_json::{Value, json};
 use std::path::PathBuf;
@@ -70,6 +71,31 @@ enum Command {
     },
     /// Per-file and total local hit/miss/timing statistics (JSON).
     Stats,
+    /// Publish a consistent verified directory snapshot of an existing store.
+    Snapshot {
+        #[arg(long)]
+        output: PathBuf,
+        #[arg(long, default_value_t = snapshot::DEFAULT_MAX_BYTES)]
+        max_bytes: u64,
+        #[arg(long, default_value_t = 30)]
+        wait_seconds: u64,
+        #[arg(long)]
+        partition: Option<String>,
+        #[arg(long)]
+        parameter_digest: Vec<String>,
+    },
+    /// Restore a verified snapshot into an absent explicitly selected cache.
+    Restore {
+        input: PathBuf,
+        #[arg(long)]
+        expected_id: Option<String>,
+        #[arg(long)]
+        partition: Option<String>,
+        #[arg(long)]
+        parameter_digest: Vec<String>,
+        #[arg(long, default_value_t = snapshot::DEFAULT_MAX_BYTES)]
+        max_bytes: u64,
+    },
     /// Fresh real keygen twice, valid proof and invalid-statement control.
     Qualify,
     Profile,
@@ -101,7 +127,21 @@ async fn main() {
 }
 fn error_code(error: &anyhow::Error) -> &'static str {
     let text = format!("{error:#}");
-    if text.contains("profile_format_mismatch") {
+    if let Some(code) = [
+        "snapshot_destination_exists",
+        "snapshot_profile_mismatch",
+        "snapshot_partition_mismatch",
+        "snapshot_schema_mismatch",
+        "snapshot_unsafe_path",
+        "snapshot_limit",
+        "snapshot_busy",
+        "snapshot_publish_failed",
+    ]
+    .into_iter()
+    .find(|code| text.contains(code))
+    {
+        code
+    } else if text.contains("profile_format_mismatch") {
         "profile_format_mismatch"
     } else if text.contains("unsupported_zkir_version") {
         "unsupported_zkir_version"
@@ -143,6 +183,29 @@ async fn run(cli: Cli) -> Result<Value> {
         }
         return application::qualify(cli.params_dir.as_deref(), cli.fetch_params).await;
     }
+    if let Command::Restore {
+        input,
+        expected_id,
+        partition,
+        max_bytes,
+        parameter_digest,
+    } = &cli.command
+    {
+        let root = cli.cache_dir.as_ref().ok_or_else(|| {
+            anyhow::anyhow!("restore requires explicit --cache-dir or MIDNIGHT_ZKIR_FORGE_DIR")
+        })?;
+        return snapshot::restore(
+            input,
+            root,
+            *max_bytes,
+            expected_id.as_deref(),
+            partition.as_deref(),
+            &snapshot::Scope {
+                profile: cli.profile,
+                parameters: parameter_digest.clone(),
+            },
+        );
+    }
     let root = match cli.cache_dir {
         Some(path) => path,
         None => application::default_cache_dir()?,
@@ -157,6 +220,26 @@ async fn run(cli: Cli) -> Result<Value> {
             token_file: token_file.clone(),
         })
         .await;
+    }
+    if let Command::Snapshot {
+        output,
+        max_bytes,
+        wait_seconds,
+        partition,
+        parameter_digest,
+    } = &cli.command
+    {
+        return snapshot::create(
+            &root,
+            output,
+            *max_bytes,
+            *wait_seconds,
+            partition.clone(),
+            &snapshot::Scope {
+                profile: cli.profile,
+                parameters: parameter_digest.clone(),
+            },
+        );
     }
     let store = Store::open(&root)?;
     match cli.command {
@@ -207,6 +290,10 @@ async fn run(cli: Cli) -> Result<Value> {
         }
         Command::Evict { bundle_id, dry_run } => store.evict(&bundle_id, dry_run),
         Command::Stats => store.stats(),
-        Command::Qualify | Command::Profile | Command::Serve { .. } => unreachable!(),
+        Command::Qualify
+        | Command::Profile
+        | Command::Serve { .. }
+        | Command::Snapshot { .. }
+        | Command::Restore { .. } => unreachable!(),
     }
 }

@@ -36,17 +36,20 @@
           version = "0.2.0";
           src = pkgs.lib.fileset.toSource {
             root = ./.;
-            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ];
+            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ./scripts/forge-ci.py ];
           };
           cargoLock = {
             lockFile = ./Cargo.lock;
             outputHashes."midnight-base-crypto-1.0.2" = "sha256-iNrhLPBGrWxeospwl8eW4TtYNlk+vY5Y564OTRjwBoM=";
           };
-          nativeBuildInputs = [ pkgs.pkg-config ];
+          nativeBuildInputs = [ pkgs.pkg-config pkgs.makeWrapper ];
           buildInputs = [ pkgs.openssl ];
           MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER = "${worker}/bin/midnight-zkir-forge-zkir3-worker";
           postInstall = ''
             ln -s ${worker}/bin/midnight-zkir-forge-zkir3-worker $out/bin/midnight-zkir-forge-zkir3-worker
+            install -Dm644 scripts/forge-ci.py $out/share/midnight-zkir-forge/forge-ci.py
+            makeWrapper ${pkgs.python3}/bin/python3 $out/bin/midnight-zkir-forge-ci \
+              --add-flags "$out/share/midnight-zkir-forge/forge-ci.py --binary $out/bin/midnight-zkir-forge"
           '';
         };
       in {

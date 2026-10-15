@@ -198,3 +198,10 @@ Compact adapter, current build-qualification blockers, separate build/parameter/
 Forge caches, trusted snapshots, same-run fanout and measurement gates. It includes
 a research-only workflow fragment and a bounded snapshot-relocation probe.
 This research does not modify Compact or enable any additional workflow.
+
+## Snapshot/restore and CI cache reuse
+
+See [verified snapshots and CI helpers](docs/ci-cache.md) for local relocation,
+partitioned GitHub cache planning and per-job hit deltas. The Nix installer also
+installs `midnight-zkir-forge-ci`. Every warm-cache consumer still executes actual
+proofs, verification and assertions. Compact integration remains unchanged.
