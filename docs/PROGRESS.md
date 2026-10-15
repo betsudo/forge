@@ -304,3 +304,28 @@
   use target/debug/midnight-zkir-forge for this tested increment or rerun the
   existing installer when adopting it. Compact and other checkouts untouched;
   no push, PR, hosted CI, deployment, image publication or supervision.
+
+## 2026-10-15 — issue #9 installed recovery qualification
+
+- Rebuilt implementation `3b330e8` through the locked Nix installer; all ten
+  package fast tests pass. The five opt-in real backend tests remain ignored
+  during package checks; installed real recovery was executed separately.
+- Installed CLI, CI helper and pinned worker are GC-rooted by the normal launcher
+  links. New output: `/nix/store/9lcrz2k3j6nw3y3rzc7rjyn50jdl1j05-midnight-zkir-forge-0.2.0`.
+- Installed CLI passes both-profile recovery: primary errors survive accounting
+  faults, successful accounting rolls back with metadata, relative exports work,
+  export obstacles are correctable, reader-blocked COMMIT termination reopens
+  cleanly, counters do not commit early, and copied exports rebuild on warm hits.
+  Pinned output identities and real proof/negative controls pass for v2 and v3.
+- Recovery explicitly selected the installed v3 worker. Normal installed worker
+  discovery also passes without the override. V2 proof controls use the locked
+  fixture verifier consuming installed-CLI-generated artifacts; v3 uses the
+  installed worker's qualify-export. No debug CLI generated recovery artifacts.
+- Receipt: docs/evidence/local-recovery-installation.json (source commit, Nix
+  output, executable hashes/profiles, parameter digest and full recovery result).
+- This supersedes the prior source-only checkpoint. Native platform remains
+  aarch64-darwin; Linux, power-loss and actual disk-full recovery are unqualified.
+  All probes use private stores; Compact and other checkouts remain untouched.
+- Owner additionally authorized publishing the completed history to main after
+  this signed evidence commit. No manual workflow dispatch, Pages deployment,
+  image publication or supervision is part of that publication.

@@ -8,3 +8,6 @@
 
 Evidence: `docs/evidence/local-recovery-e2e.json`, `local-recovery-snapshot.json`,
 `local-recovery-http.json`, `local-recovery-review.md`. Operator guide: `docs/recovery.md`.
+
+- [x] Rebuild/reinstall with Nix and qualify installed CLI recovery for both profiles;
+  see `docs/evidence/local-recovery-installation.json`.
