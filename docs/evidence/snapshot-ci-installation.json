@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "nix_output": "/nix/store/8hv68ld7yndf9r8ncqppcy8kp5n4cvqc-midnight-zkir-forge-0.2.0",
+  "binary_sha256": "a522900cc9e51cff942ef6464644421ec0379674700fcd074bfa2ee5a77c3dc3",
+  "profile": {
+    "build_fingerprint": "b5cba5ea11a4725ea00262c68506fd340dc7c39cdd7aa9e9f18fb80ea2223c0d",
+    "formats": [
+      "midnight-zkir-v2-json",
+      "midnight-zkir-v3-json"
+    ],
+    "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+    "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+    "schema": 1,
+    "selectors": [
+      "ledger8-v2",
+      "zkir3"
+    ]
+  },
+  "installed_helper_key_smoke": true,
+  "platform": "Darwin arm64",
+  "compact_changed": false,
+  "remote_operations": false
+}

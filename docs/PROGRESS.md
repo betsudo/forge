@@ -235,3 +235,20 @@
   qualified by this receipt. Cargo's SQLite backup feature/direct libc declaration
   changes the Forge build fingerprint; Compact's old build allowlist remains
   untouched and needs separate consumer qualification. Nix install receipt follows.
+
+## 2026-10-15 — issue #6 installed checkpoint
+
+- Implementation `d0f3829` is GPG verified with DCO and AI attribution.
+- Native Nix build/package tests/install pass. CLI and CI helper are installed
+  together in ~/.local/bin, GC-rooted by the existing local installer.
+  Output: `/nix/store/8hv68ld7yndf9r8ncqppcy8kp5n4cvqc-midnight-zkir-forge-0.2.0`.
+- Installed root build fingerprint: `b5cba5ea11a4725ea00262c68506fd340dc7c39cdd7aa9e9f18fb80ea2223c0d`.
+  The installed wrapper produces matching key provenance. The installed binary
+  passes the complete snapshot/helper e2e with genuine restored warm v2/v3 proof
+  verification, negative controls and eviction/regeneration identity checks.
+- Evidence: snapshot-ci-installation.json and snapshot-ci-installed-e2e.json in
+  docs/evidence. Pages links/anchors validate after adding snapshot documentation;
+  global skill validates and Midnight vault handoff is updated.
+- All issue #6 tasks complete locally. Linux runtime and Compact consumer
+  requalification remain separate scope. No push, PR, hosted CI, upload, Pages
+  deployment, image publication or supervision was performed.
