@@ -1,6 +1,6 @@
 # Midnight ZKIR Forge
 
-Local CLI cache for Midnight ZKIR and generated prover/verifier keys, with a
+Local CLI and initial HTTP cache for Midnight ZKIR and generated prover/verifier keys, with a
 Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
 
 ## Supported profiles
@@ -158,9 +158,10 @@ the previous actual artifact identity for the same recipe or fail explicitly.
 
 ## Current boundary
 
-One circuit per bundle, synchronous local CLI, trusted same-user store; no
-HTTP, background jobs, multi-host operation, purge/GC budget, stdio protocol,
-full manifest/metadata import or ledger9 transaction integration. V3 support is
+One circuit per bundle, synchronous CLI/HTTP materialization and a trusted
+single-owner store. Hosted registry policy, durable jobs, multi-host operation,
+purge/GC budget, stdio, full archive/metadata import and ledger9 transaction
+integration remain future scope. V3 support is
 limited to the exact 3.0 profile above. No universal JS/Rust application
 compatibility or production readiness is claimed. The official Rust Resolver
 is exercised by the real proof qualification. See [SPEC.md](SPEC.md),

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "implementation_commit": "d473862",
+  "binary": "/Users/ysh/.local/bin/midnight-zkir-forge",
+  "binary_sha256": "f6fb68ac4cc8e8a59efdde771cbd49adb8842e0ddcedcff87f9ff3e9e1221613",
+  "nix_output": "/nix/store/jsgn4b0ia9l2mzq30bpaxjp62ckgzzjv-midnight-zkir-forge-0.2.0",
+  "launcher_http": {
+    "schema": 1,
+    "http_source_roundtrip": true,
+    "auth_and_remote_binding": true,
+    "head_etag_range": true,
+    "path_inputs_refused": true,
+    "sqlite_contention_admission_and_responsive_liveness": false,
+    "corruption_refused_before_conditional_response": false,
+    "real_proofs": [],
+    "scope": "externally supplied isolated server"
+  },
+  "scope": "ARM macOS installed launcher HTTP source/auth/head/range/admission checks; no image runtime claim",
+  "local_checks": {
+    "fast_rust_tests": 8,
+    "real_v2_tests": 3,
+    "real_v3_tests": 2,
+    "both_graph_clippy_and_formatting": true,
+    "spec_profile_commit_policy": true,
+    "docs_build_links_openapi": true,
+    "desktop_mobile_browser_review": true,
+    "workflow_yaml_pinned_actions": true,
+    "compose_configuration": true,
+    "linux_image_outputs_evaluate": [
+      "aarch64-linux",
+      "x86_64-linux"
+    ],
+    "linux_image_runtime_qualified": false,
+    "image_runtime_limitation": "Darwin Nix host has no Linux builder configured"
+  },
+  "local_log_sha256": {
+    "http-checks-final.log": "a2ace7d95700242c83e665b44db1736cd68f52ae9cc9656837ef8fa581716024",
+    "http-v2-tests.log": "e06650babcefe5aa0eea8a3421393d5506f46a486a98421f17f2157778733c3e",
+    "http-v3-tests.log": "29e44ab03f7c87db89f1858f256a45c1835ceff45f83b69866d1f933a42eb7b3",
+    "http-install-final.log": "acd89b87531edfa5a0ccf47ae51d950e9af21429aa61e0fe5f04dbfe2a636bf5"
+  }
+}

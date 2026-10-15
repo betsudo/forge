@@ -125,3 +125,52 @@
 - Midnight vault starter prompt and initiative note updated; global skill links
   the prompt and explains exact v3 scope, profile assertions and uncached fallback.
   Skill validation passes. Delivery stays local, with no consumer test edits.
+
+## 2026-10-15 — issue #4: documentation and initial HTTP service
+
+- Owner authorized a Midnight styled Pages site, basic CI/e2e definitions, HTTP
+  transport and Docker packaging. Signed planning commit `51318ca` records
+  `openspec/changes/http-docs-container/`; workflow files stay local until push.
+- Static documentation uses official brand-hub black/white/blue, relative assets,
+  no runtime CDN and mobile navigation/copy controls. Desktop and mobile browser
+  interaction review passes. Static build, links and ten OpenAPI routes pass.
+- HTTP `serve` defaults to loopback; non-loopback binding requires a token file.
+  Exact raw single-circuit uploads, synchronous materialization, inventories,
+  source/objects, stats/profiles, health and OpenAPI are implemented. Downloads
+  verify bytes before streaming/HEAD/conditional/range responses; GET never
+  generates. Server-local paths and upstream diagnostics are excluded.
+- Storage/crypto runs off the HTTP executor, with two bounded upload buffers,
+  eight work/stream slots and one HTTP materializer. Existing SQLite leases
+  serialize CLI/HTTP publication. Body deadlines and SIGTERM shutdown are wired.
+  This is single-owner admission control, not a CPU/memory sandbox or durable
+  job supervisor; archives, provider views, namespaces and hosted policy remain
+  future scope. Parameters stay offline unless the operator opts in.
+- Local full checks pass: eight fast Rust tests, both-graph Clippy/formatting,
+  spec/profile/commit policy, real-process HTTP fast e2e and docs validation.
+  All three real v2 tests and both real v3 tests pass again. HTTP real e2e
+  downloads warm key/IR bytes for both pins and uses those exact files for real
+  proofs and invalid controls. It also checks slow-upload saturation, SQLite
+  contention/admission, responsive liveness, corruption before304, auth and ranges.
+- Independent review identified pre-admission upload buffering and missing Nix
+  embedded contract source; both fixed. Settled code/proof review found no
+  additional confirmed blocker. Receipts: `docs/evidence/http-{e2e,review}.json`.
+- CI uses pinned actions, lock/toolchain-keyed Rust caching and bounded jobs;
+  expensive verified-parameter proof e2e requires a manual opt-in. Pages
+  publication is a separate manual workflow. YAML, action references and
+  Compose configuration validated locally; no remote runs were dispatched.
+- Linux Nix OCI outputs evaluate on x86_64/aarch64. Image includes both official
+  backends, non-root UID65532, persistent cache and mounted parameters/token;
+  Compose publishes localhost only. Image build/runtime smoke is NOT qualified:
+  this Darwin Nix host has no Linux builder, despite Docker Desktop availability.
+  `scripts/check-container.py` is ready for a loaded Linux image.
+- Native ARM macOS Nix package builds/tests successfully. Installed output:
+  `/nix/store/jsgn4b0ia9l2mzq30bpaxjp62ckgzzjv-midnight-zkir-forge-0.2.0`,
+  implementation `d473862`, GC-rooted through the existing local installer.
+  The actual `~/.local/bin` launcher serves authenticated HTTP successfully.
+  Installed release HTTP e2e repeats both profiles' genuine downloaded-warm-key
+  proofs/negative controls, admission, corruption, auth and range checks.
+  Receipts: `docs/evidence/http-installation.json` and
+  `docs/evidence/http-installed-e2e.json`.
+- Preview built at `.local/site` and served locally at127.0.0.1:8087. Global
+  skill and Midnight initiative knowledge updated, skill validator passes.
+  No push, Pages deployment, image publication or supervision occurred.
