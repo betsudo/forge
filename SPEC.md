@@ -409,3 +409,7 @@ Latest stable official ledger8 (8.1.3) supersedes the 8.0.3 initial baseline abo
 ## Local MVP scope
 
 The first implementation is governed by `openspec/changes/local-cache-mvp/`: one circuit per bundle, synchronous CLI and no HTTP/background-job promise. Full service capabilities above remain proposed until separately qualified. Default store: `~/.midnight-zkir-forge`.
+
+## Owner amendment — ZKIR v3 cache
+
+ZKIR v3 artifact caching is now authorized in issue #3 and `openspec/changes/zkir3-cache/`. Preserve the existing v2 profile and qualify the exact v3 tool/backend independently. Ledger9 transaction/network support and HTTP remain outside this slice.

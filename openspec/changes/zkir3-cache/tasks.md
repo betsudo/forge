@@ -1,0 +1,14 @@
+## 1. Handoff and compatibility
+
+- [x] 1.1 Save the starter prompt and link it from the global skill.
+- [ ] 1.2 Resolve the exact official v3 consumer stack and profile.
+- [ ] 1.3 Pin implementation choice and compatibility boundary in this design.
+
+## 2. Implementation and qualification
+
+- [ ] 2.1 Add profile-aware parse/generation/artifact validation and preserve v2 records.
+- [ ] 2.2 Verify fresh v3 proof and invalid controls, reproduction and warm reuse.
+- [ ] 2.3 Exercise profile separation/refusal, eviction and concurrent requests.
+- [ ] 2.4 Run v2 regression and independent identity/compatibility review.
+- [ ] 2.5 Build/install the Nix CLI and qualify the installed v3 profile.
+- [ ] 2.6 Update usage, skill, vault and evidence; commit locally with GPG/DCO.
