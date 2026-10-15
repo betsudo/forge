@@ -11,7 +11,9 @@ verifier identities through eviction. Keep tests executing proofs/assertions.
 One local writer and one backend generation at a time initially. Delegate
 independent review when useful; independent identity/concurrency review is
 required before release readiness. No supervision loop until owner asks.
-No push, merge, remote CI, deployment, releases or credential mutations.
+Owner authorized preparing basic CI/Pages workflows, HTTP and container packaging
+in issue #4. Keep validation local for this increment. No push, merge, workflow
+dispatch, deployment, releases or credential mutations without further direction.
 Conventional GPG-signed commits with DCO using configured identity only;
 include Assisted-by: AI. ADRs remain proposed until owner acceptance.
 Private vault paths are research inputs, never runtime dependencies.

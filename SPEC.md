@@ -413,3 +413,12 @@ The first implementation is governed by `openspec/changes/local-cache-mvp/`: one
 ## Owner amendment — ZKIR v3 cache
 
 ZKIR v3 artifact caching is now authorized in issue #3 and `openspec/changes/zkir3-cache/`. Preserve the existing v2 profile and qualify the exact v3 tool/backend independently. Ledger9 transaction/network support and HTTP remain outside this slice.
+
+## Owner amendment — documentation and initial HTTP delivery
+
+Issue #4 authorizes a branded GitHub Pages documentation site, basic CI/e2e
+workflow definitions, HTTP transport and Docker packaging. The implemented first
+HTTP subset is governed by `openspec/changes/http-docs-container/`; full archive
+uploads, durable asynchronous jobs, provider views, namespace authorization and
+registry operations remain proposed. Preparing workflow files does not publish
+the site, push code, dispatch CI or publish an image.
