@@ -563,6 +563,7 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             "snapshot_integrity_error: artifact history missing"
         );
     }
+    let mut export_paths = BTreeSet::new();
     for entry in inventory
         .iter()
         .filter(|e| e.path.ends_with("/manifest.json"))
@@ -571,10 +572,11 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             entry.bytes <= MAX_MANIFEST,
             "snapshot_limit: export manifest too large"
         );
-        let record: Record = serde_json::from_slice(&fs::read(root.join(&entry.path))?)?;
+        let manifest_bytes = fs::read(root.join(&entry.path))?;
+        let record: Record = serde_json::from_slice(&manifest_bytes)?;
         record_valid(&record)?;
         ensure!(
-            fs::read(root.join(&entry.path))? == crate::store::export_manifest(&record)?,
+            manifest_bytes == crate::store::export_manifest(&record)?,
             "snapshot_integrity_error: noncanonical export manifest"
         );
         let recipe = &record
@@ -610,33 +612,15 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
                 e.bytes == a.size && e.sha256 == a.digest,
                 "snapshot_integrity_error: export bytes"
             );
+            export_paths.insert(path);
         }
     }
     for entry in inventory
         .iter()
         .filter(|e| e.path.starts_with("exports/") && !e.path.ends_with("/manifest.json"))
     {
-        let parts: Vec<_> = entry.path.split('/').collect();
-        let manifest = format!("{}/manifest.json", parts[..4].join("/"));
         ensure!(
-            map.contains_key(manifest.as_str()),
-            "snapshot_integrity_error: export manifest missing"
-        );
-        let record: Record = serde_json::from_slice(&fs::read(root.join(&manifest))?)?;
-        let expected: Vec<_> = std::iter::once(&record.source)
-            .chain(record.artifacts.iter())
-            .map(|a| {
-                format!(
-                    "{}/{}/{}.{}",
-                    parts[..4].join("/"),
-                    a.kind.folder(),
-                    record.name,
-                    a.kind.extension()
-                )
-            })
-            .collect();
-        ensure!(
-            expected.contains(&entry.path),
+            export_paths.contains(&entry.path),
             "snapshot_integrity_error: undeclared export file"
         );
     }
@@ -650,39 +634,6 @@ fn sync_tree(root: &Path) -> Result<()> {
         }
     }
     File::open(root)?.sync_all()?;
-    Ok(())
-}
-fn publish(stage: &Path, target: &Path) -> Result<()> {
-    #[cfg(unix)]
-    {
-        use std::{ffi::CString, os::unix::ffi::OsStrExt};
-        let from = CString::new(stage.as_os_str().as_bytes())?;
-        let to = CString::new(target.as_os_str().as_bytes())?;
-        #[cfg(target_os = "linux")]
-        let result = unsafe {
-            libc::syscall(
-                libc::SYS_renameat2,
-                libc::AT_FDCWD,
-                from.as_ptr(),
-                libc::AT_FDCWD,
-                to.as_ptr(),
-                libc::RENAME_NOREPLACE,
-            )
-        };
-        #[cfg(target_os = "macos")]
-        let result = unsafe { libc::renamex_np(from.as_ptr(), to.as_ptr(), libc::RENAME_EXCL) };
-        #[cfg(not(any(target_os = "linux", target_os = "macos")))]
-        anyhow::bail!("snapshot atomic publication unsupported on this OS");
-        #[cfg(any(target_os = "linux", target_os = "macos"))]
-        ensure!(
-            result == 0,
-            "snapshot_publish_failed: {}",
-            std::io::Error::last_os_error()
-        );
-    }
-    #[cfg(not(unix))]
-    anyhow::bail!("snapshot atomic publication unsupported on this OS");
-    File::open(target.parent().context("destination parent missing")?)?.sync_all()?;
     Ok(())
 }
 pub fn create(
@@ -791,7 +742,8 @@ pub fn create(
     file.write_all(&bytes)?;
     file.sync_all()?;
     sync_tree(staging.path())?;
-    publish(staging.path(), &output)?;
+    crate::filesystem::publish_directory(staging.path(), &output)
+        .context("snapshot_publish_failed")?;
     transaction
         .rollback()
         .context("snapshot release read-only lease")?;
@@ -888,7 +840,8 @@ pub fn restore(
         "snapshot_profile_mismatch: worker declaration"
     );
     sync_tree(staging.path())?;
-    publish(staging.path(), &target)?;
+    crate::filesystem::publish_directory(staging.path(), &target)
+        .context("snapshot_publish_failed")?;
     Ok(
         json!({"schema":1,"snapshot_id":manifest.snapshot_id,"cache_dir":target,"partition":manifest.partition,"bytes":total,"summary":summary,"producer":manifest.producer}),
     )

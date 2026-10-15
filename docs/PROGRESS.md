@@ -279,3 +279,28 @@
   portable repository entrypoint. No global skill replacement or runtime change.
 - Skill validator and referenced-file checks pass. Documentation only; Compact
   and other consumer checkouts remain untouched. Delivery is a signed local commit.
+
+## 2026-10-15 — issue #9: simplify local recovery
+
+- Shared atomic no-replace directory publication for exports/snapshots; removed
+  duplicate eviction readiness SQL and repeated export-manifest parsing. Relative
+  export destinations resolve against the caller's working directory. No new
+  dependency, daemon, scheduler, backend pin or API surface.
+- Success accounting now shares ensure/resolve/HTTP-download transactions, removing
+  a second writer lease and rolling back new readiness if accounting fails. Failed
+  error accounting preserves the original cause. Request timings explicitly
+  exclude final COMMIT/process overhead; measure wall time separately.
+- Bounded source reads and streaming existing-object verification refuse oversized
+  corrupt CAS before unbounded allocation. Sparse-file regression passes.
+- Full bootstrap suite, Clippy, three v2 and two v3 real backend tests, both-profile
+  real snapshot/HTTP suites and new failure-recovery e2e pass locally. Recovery
+  exercises metrics/file-metrics faults, export obstacles, interrupted final COMMIT
+  with an already published export, rollback/reopen/retry, damaged-export owner
+  repair, warm reconstruction and real proof/negative controls with pinned outputs.
+- Independent review reports no remaining blockers. Evidence and scope are in
+  docs/evidence/local-recovery-*; operator guidance is docs/recovery.md. Native
+  platform is aarch64-darwin; no Linux, power-loss or actual disk-full claim.
+- Source delivery only: installed Nix executable remains at the earlier checkpoint;
+  use target/debug/midnight-zkir-forge for this tested increment or rerun the
+  existing installer when adopting it. Compact and other checkouts untouched;
+  no push, PR, hosted CI, deployment, image publication or supervision.

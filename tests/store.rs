@@ -97,3 +97,29 @@ fn retiring_last_recipe_reference_invalidates_index() {
         .unwrap();
     assert!(!ready);
 }
+
+#[test]
+fn oversized_objects_fail_before_unbounded_read_and_retry_after_owner_repair() {
+    let temp = tempfile::tempdir().unwrap();
+    let store = Store::open(temp.path()).unwrap();
+    let bytes = include_bytes!("../fixtures/assert.zkir");
+    let hash = store.put(bytes).unwrap();
+    let artifact = Artifact {
+        kind: ArtifactKind::Source,
+        digest: hash,
+        size: bytes.len() as u64,
+    };
+    let path = store.object_path(&artifact.digest).unwrap();
+    std::fs::OpenOptions::new()
+        .write(true)
+        .open(&path)
+        .unwrap()
+        .set_len(1024 * 1024 * 1024)
+        .unwrap();
+    assert!(format!("{:#}", store.read(&artifact).unwrap_err()).contains("size mismatch"));
+    assert!(format!("{:#}", store.put(bytes).unwrap_err()).contains("size mismatch"));
+    // Only this private fixture is repaired; no silent overwrite of shared CAS.
+    std::fs::remove_file(path).unwrap();
+    assert_eq!(store.put(bytes).unwrap(), artifact.digest);
+    assert_eq!(store.read(&artifact).unwrap(), bytes);
+}

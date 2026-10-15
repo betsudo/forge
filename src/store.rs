@@ -104,7 +104,20 @@ impl Store {
     pub fn read(&self, artifact: &Artifact) -> Result<Vec<u8>> {
         let path = self.object_path(&artifact.digest)?;
         regular_file(&path)?;
-        let bytes = fs::read(path)?;
+        let file = fs::File::open(path)?;
+        ensure!(
+            file.metadata()?.len() == artifact.size,
+            "integrity_error: size mismatch for {}",
+            artifact.digest
+        );
+        let mut bytes = Vec::new();
+        file.take(
+            artifact
+                .size
+                .checked_add(1)
+                .context("artifact size overflow")?,
+        )
+        .read_to_end(&mut bytes)?;
         ensure!(
             bytes.len() as u64 == artifact.size && digest(&bytes) == artifact.digest,
             "integrity_error: {}",
@@ -115,12 +128,13 @@ impl Store {
     pub fn put(&self, bytes: &[u8]) -> Result<String> {
         let hash = digest(bytes);
         let path = self.object_path(&hash)?;
+        let expected = Artifact {
+            kind: crate::domain::ArtifactKind::Source,
+            digest: hash.clone(),
+            size: bytes.len() as u64,
+        };
         if path.symlink_metadata().is_ok() {
-            regular_file(&path)?;
-            ensure!(
-                fs::read(&path)? == bytes,
-                "integrity_error: existing object {hash}"
-            );
+            verify_file(&path, &expected)?;
             return Ok(hash);
         }
         let mut temp = tempfile::NamedTempFile::new_in(self.root.join("staging"))?;
@@ -132,11 +146,7 @@ impl Store {
                 if e.error.kind() != std::io::ErrorKind::AlreadyExists {
                     return Err(e.error.into());
                 }
-                regular_file(&path)?;
-                ensure!(
-                    fs::read(&path)? == bytes,
-                    "concurrent object integrity failure"
-                );
+                verify_file(&path, &expected)?;
             }
         }
         sync_dir(&self.root.join("objects"))?;
@@ -156,7 +166,8 @@ impl Store {
             .join(&record.bundle_id.0)
             .join(&record.derivation_id.as_ref().context("missing recipe")?.0)
             .join(&set.0);
-        let destination = output.unwrap_or(&default);
+        let destination = std::path::absolute(output.unwrap_or(&default))?;
+        let destination = destination.as_path();
         let all: Vec<&Artifact> = std::iter::once(&record.source)
             .chain(record.artifacts.iter())
             .collect();
@@ -203,8 +214,7 @@ impl Store {
             sync_dir(&staging.path().join("zkir"))?;
             sync_dir(&staging.path().join("keys"))?;
             sync_dir(staging.path())?;
-            fs::rename(staging.path(), destination)?;
-            sync_dir(parent)?;
+            crate::filesystem::publish_directory(staging.path(), destination)?;
         }
         let base = fs::canonicalize(destination)?;
         let files:Vec<Value>=all.iter().map(|a|json!({"kind":a.kind,"sha256":a.digest,"bytes":a.size,"path":base.join(a.kind.folder()).join(format!("{}.{}",record.name,a.kind.extension()))})).collect();
@@ -235,13 +245,6 @@ impl Store {
         drop(others);
         if !dry_run {
             self.save(&record, false)?;
-            if let Some(recipe) = &record.derivation_id {
-                let count:u64=self.db.query_row("SELECT count(*) FROM bundles WHERE ready=1 AND json_extract(record,'$.derivation_id')=?1",[&recipe.0],|r|r.get(0))?;
-                if count == 0 {
-                    self.db
-                        .execute("UPDATE derivations SET ready=0 WHERE id=?1", [&recipe.0])?;
-                }
-            }
             // Commit unavailability before unlink: interruption can leak blobs,
             // but can never advertise a partial key set as ready.
             tx.commit()?;
@@ -256,6 +259,7 @@ impl Store {
                     }
                 }
             }
+            sync_dir(&self.root.join("objects"))?;
             cleanup.commit()?;
         }
         Ok(
@@ -275,6 +279,16 @@ impl Store {
     }
     pub fn metric(&self, event: &Metric<'_>, artifacts: &[Artifact]) -> Result<()> {
         let tx = self.lock()?;
+        self.record_metric(event, artifacts)?;
+        tx.commit()?;
+        Ok(())
+    }
+    /// Caller owns the operation transaction so success and accounting commit together.
+    pub(crate) fn record_metric(&self, event: &Metric<'_>, artifacts: &[Artifact]) -> Result<()> {
+        ensure!(
+            !self.db.is_autocommit(),
+            "metric requires operation transaction"
+        );
         self.db.execute("INSERT INTO requests(bundle,requested_path,operation,outcome,elapsed_ms,generation_ms,estimated_saved_ms) VALUES(?1,?2,?3,?4,?5,?6,?7)",params![event.bundle,event.path,event.operation,event.outcome,event.elapsed_ms,event.generation_ms,event.saved_ms])?;
         let id = self.db.last_insert_rowid();
         for a in artifacts {
@@ -283,7 +297,6 @@ impl Store {
                 params![id, a.kind.extension(), a.digest, a.size, event.outcome],
             )?;
         }
-        tx.commit()?;
         Ok(())
     }
     pub fn stats(&self) -> Result<Value> {
@@ -299,7 +312,7 @@ impl Store {
         let mut stmt=self.db.prepare("SELECT at,bundle,requested_path,operation,outcome,elapsed_ms,generation_ms,estimated_saved_ms FROM requests ORDER BY id DESC LIMIT 100")?;
         let recent=stmt.query_map([],|r|Ok(json!({"at":r.get::<_,String>(0)?,"bundle_id":r.get::<_,String>(1)?,"requested_path":r.get::<_,String>(2)?,"operation":r.get::<_,String>(3)?,"outcome":r.get::<_,String>(4)?,"elapsed_ms":r.get::<_,f64>(5)?,"generation_ms":r.get::<_,Option<f64>>(6)?,"estimated_generation_avoided_ms":r.get::<_,f64>(7)?})))?.collect::<std::result::Result<Vec<_>,_>>()?;
         Ok(
-            json!({"schema":1,"storage":{"cas_bytes":directory_bytes(&self.root.join("objects"))?,"export_bytes":directory_bytes(&self.root.join("exports"))?,"sqlite_main_bytes":fs::metadata(self.root.join("index.sqlite3"))?.len(),"sqlite_wal_bytes":fs::metadata(self.root.join("index.sqlite3-wal")).map(|m|m.len()).unwrap_or(0),"staging_bytes":directory_bytes(&self.root.join("staging"))?},"totals":requests,"files":files,"recent_requests":recent,"estimate_basis":"last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export; not a test-pass cache"}),
+            json!({"schema":1,"storage":{"cas_bytes":directory_bytes(&self.root.join("objects"))?,"export_bytes":directory_bytes(&self.root.join("exports"))?,"sqlite_main_bytes":fs::metadata(self.root.join("index.sqlite3"))?.len(),"sqlite_wal_bytes":fs::metadata(self.root.join("index.sqlite3-wal")).map(|m|m.len()).unwrap_or(0),"staging_bytes":directory_bytes(&self.root.join("staging"))?},"totals":requests,"files":files,"recent_requests":recent,"estimate_basis":"last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache"}),
         )
     }
 }

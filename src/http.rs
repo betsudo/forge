@@ -528,8 +528,7 @@ async fn download(
             file.seek(SeekFrom::Start(0))?;
             drop(rows);
             drop(stmt);
-            tx.commit()?;
-            store.metric(
+            store.record_metric(
                 &Metric {
                     bundle: &bundle,
                     path: &format!("/v1/objects/{requested}"),
@@ -541,6 +540,7 @@ async fn download(
                 },
                 std::slice::from_ref(&artifact),
             )?;
+            tx.commit()?;
             Ok((file, artifact))
         })
         .await?;

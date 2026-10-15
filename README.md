@@ -220,3 +220,7 @@ local circuit tests. To hand off to another agent, use:
 
 The skill lives with this checkout; it can be read directly without changing an
 agent's global skill installation.
+
+See [local recovery](docs/recovery.md) for failure policy, safe owner actions,
+transactional metrics and local crash/retry tests. Request timing excludes final
+transaction commit and process overhead; use process wall time for end-to-end measurements.

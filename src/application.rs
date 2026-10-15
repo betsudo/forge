@@ -107,6 +107,8 @@ pub async fn ensure_with_profile(
     profile: Option<engine::ProfileSelector>,
 ) -> Result<Value> {
     let start = Instant::now();
+    let tx = store.lock()?;
+    let lock_wait_ms = start.elapsed().as_secs_f64() * 1000.0;
     let result = ensure_locked(store, id, params_dir, fetch, output, profile).await;
     match result {
         Ok((mut response, record, hit, generation_ms)) => {
@@ -116,7 +118,7 @@ pub async fn ensure_with_profile(
             } else {
                 0.0
             };
-            store.metric(
+            store.record_metric(
                 &Metric {
                     bundle: id,
                     path: requested_path,
@@ -130,10 +132,15 @@ pub async fn ensure_with_profile(
                     .chain(record.artifacts.iter().cloned())
                     .collect::<Vec<_>>(),
             )?;
+            tx.commit()?;
+            response["lock_wait_ms"] = json!(lock_wait_ms);
             response["cache"] = json!({"hit":hit,"elapsed_ms":elapsed,"generation_ms":generation_ms,"estimated_generation_avoided_ms":saved});
             Ok(response)
         }
         Err(error) => {
+            if let Err(rollback) = tx.rollback() {
+                return Err(error.context(format!("rollback also failed: {rollback:#}")));
+            }
             let artifacts = store
                 .load(id)
                 .map(|(r, _)| {
@@ -142,7 +149,7 @@ pub async fn ensure_with_profile(
                         .collect::<Vec<_>>()
                 })
                 .unwrap_or_default();
-            store.metric(
+            let accounting = store.metric(
                 &Metric {
                     bundle: id,
                     path: requested_path,
@@ -153,8 +160,13 @@ pub async fn ensure_with_profile(
                     saved_ms: 0.0,
                 },
                 &artifacts,
-            )?;
-            Err(error)
+            );
+            match accounting {
+                Ok(()) => Err(error),
+                Err(accounting) => {
+                    Err(error.context(format!("error accounting also failed: {accounting:#}")))
+                }
+            }
         }
     }
 }
@@ -166,9 +178,6 @@ async fn ensure_locked(
     output: Option<&Path>,
     profile: Option<engine::ProfileSelector>,
 ) -> Result<(Value, Record, bool, f64)> {
-    let lock_clock = Instant::now();
-    let tx = store.lock()?;
-    let lock_wait_ms = lock_clock.elapsed().as_secs_f64() * 1000.0;
     let (mut record, ready) = store.load(id)?;
     let input = store.read(&record.source)?;
     let ir = engine::parse(&input, profile)?;
@@ -274,9 +283,8 @@ async fn ensure_locked(
         store.save(&record, true)?;
     }
     let paths = store.export(&record, output)?;
-    tx.commit()?;
     Ok((
-        json!({"schema":1,"bundle_id":record.bundle_id,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"format":ir.format(),"worker":record.worker,"profile":record.profile,"build_fingerprint":record.build_fingerprint,"ledger_revision":record.ledger_revision,"lock_wait_ms":lock_wait_ms,"export":paths}),
+        json!({"schema":1,"bundle_id":record.bundle_id,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"format":ir.format(),"worker":record.worker,"profile":record.profile,"build_fingerprint":record.build_fingerprint,"ledger_revision":record.ledger_revision,"export":paths}),
         record,
         hit,
         generation_ms,
@@ -310,8 +318,7 @@ pub fn resolve(
             .cloned()
             .collect()
     };
-    tx.commit()?;
-    store.metric(
+    store.record_metric(
         &Metric {
             bundle: id,
             path: "",
@@ -323,6 +330,7 @@ pub fn resolve(
         },
         &selected,
     )?;
+    tx.commit()?;
     Ok(
         json!({"schema":1,"bundle_id":record.bundle_id,"artifact_set_id":record.artifact_set_id,"export":export}),
     )

@@ -32,3 +32,17 @@ Publication against an existing empty directory fails and leaves that directory 
 
 The retained export does not advertise ready metadata. After reopening, retry
 returns the same output identity and real proof/verification controls still run.
+
+## Requirement: bounded corruption checks and usable export paths
+
+CAS reads SHALL check expected size before allocation and bound subsequent reads.
+Export SHALL accept a relative destination resolved against the current directory.
+
+### Scenario: oversized sparse source object
+
+A larger-than-expected source or existing CAS object fails with integrity_error
+before unbounded allocation. Explicit owner repair in a private store permits retry.
+
+### Scenario: relative output path
+
+Export to a new relative path returns a complete provider directory with absolute paths.
