@@ -208,3 +208,15 @@ proofs, verification and assertions. Compact integration remains unchanged.
 
 See [API conventions and Midnight provider terminology](docs/api-conventions.md) for the
 CLI stdin/stdout boundary, HTTP payload conventions and local/fetch provider roles.
+
+## Agent skill for local development
+
+Read [SKILL.md](SKILL.md) to set up Forge and integrate its artifact cache into
+local circuit tests. To hand off to another agent, use:
+
+> Read `/absolute/path/to/midnight-zkir-forge/SKILL.md` and integrate Forge into
+> this checkout's local development tests. Keep actual proof generation,
+> verification, assertions and negative controls running on cold and warm runs.
+
+The skill lives with this checkout; it can be read directly without changing an
+agent's global skill installation.

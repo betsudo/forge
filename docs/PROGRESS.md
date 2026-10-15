@@ -269,3 +269,13 @@
 - Validation: Pages build/link/anchor checks pass; all four SVG files parse.
   Browser inspection at 1440px and 390px confirms loaded diagrams and no page
   overflow. Diagrams scroll within their own figure on small screens.
+
+## 2026-10-15 — issue #8: portable local development skill
+
+- Added root SKILL.md with Nix setup, exact profile/parameter compatibility,
+  current-input prepare integration, provider directory consumption and cold/warm
+  validation while preserving real proofs, verification and assertions.
+- README provides a direct agent handoff. Existing global Forge skill links the
+  portable repository entrypoint. No global skill replacement or runtime change.
+- Skill validator and referenced-file checks pass. Documentation only; Compact
+  and other consumer checkouts remain untouched. Delivery is a signed local commit.
