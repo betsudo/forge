@@ -1,0 +1,380 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "compact_checkout_read_only": true,
+  "compact_initial_head": "df7367fca86cce5264e276c94f977d0ca7b9c4d6",
+  "compact_later_head": "67a3403f9b65fd525c3b1da812ef5cd28d5c4be8",
+  "concurrent_head_change_scope": "historical-performance documentation and patch only; inspected integration/workflow files unchanged",
+  "source_sha256": {
+    "compiler/passes.ss": "d8fb0ff8ef21262363a7047a248f1a3e2d9ab57920162beb7900079c7d1aaad7",
+    "compiler/go": "9ae88dbaaa572c44f027d551cb509ac2ac31f814839f2cafbf5a0d411495772a",
+    "flake.nix": "444146a1660e6de05fc029b07d4a1395ce00227646e67b5b7d2cae0921b8d199",
+    ".github/workflows/build-compiler.yml": "55ed41ad6ffa4804dc50301ff84adb87b1d35f472a40f639616c36be8c637f17",
+    ".github/workflows/rust-backend-checks.yml": "3c4a7980c014d44c38fa52c36720ad6bb90bd36d9f0022b56b00baec3bb87e8d",
+    ".github/workflows/compact-test.yml": "72cc7dba3b05bb7318dcf743d1b9be0deaaa474e53965914b00d72997de3270a",
+    ".github/actions/setup-nix-cache/action.yml": "46fc955ef60221bdf881b0f1596e5d11f0c8ee72eba144894fb5a17167da7ae4",
+    "tools/compact-rust-backend/forge_circuits.py": "2c84fed23a677d589cbdeb26319c0fec7022cf393b97f7786b9052a872fe84a4",
+    "tools/compact-rust-backend/check_forge_circuit_cache.py": "a30ad37791b9b9b8ace62d961f7ea1ea5048e60bc1e9264c462c96109fa9569c",
+    "tools/compact-rust-backend/compactc-launcher.sh": "1a0bc4ef7524ea582174c32b39126c9a3bc73bb2f5c6c6a832a37f08df0a8c98",
+    "tools/compact-rust-backend/test_forge_harness.py": "3894f618a6d226f0ff9703c1cd5b02ddd605110c4a9aafd1c16a7a93dbe73bf8",
+    "doc/rust/guides/forge-circuit-cache.md": "cc599d7c5f14510b60cf6feeed446aa3558f2695ae1dbb7086b0fb902d560fde"
+  },
+  "historical_runs": [
+    {
+      "run_id": 37856976470,
+      "head_sha": "32e314770da10cc62dab30dcfeb340ec4c6bcb64",
+      "url": "https://github.com/MediaNoxLabs/compact/actions/runs/37856976470",
+      "jobs": [
+        {
+          "name": "Check if all files got headers",
+          "seconds": 8.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1.0
+            },
+            {
+              "name": "Checkout compactc repo",
+              "seconds": 1.0
+            },
+            {
+              "name": "Setup Python",
+              "seconds": 0.0
+            },
+            {
+              "name": "Install dependencies",
+              "seconds": 2.0
+            },
+            {
+              "name": "Validate license headers",
+              "seconds": 1.0
+            },
+            {
+              "name": "Post Setup Python",
+              "seconds": 0.0
+            },
+            {
+              "name": "Post Checkout compactc repo",
+              "seconds": 0.0
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0.0
+            }
+          ]
+        },
+        {
+          "name": "Build and test compiler",
+          "seconds": 860.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1.0
+            },
+            {
+              "name": "Checkout compactc repository",
+              "seconds": 1.0
+            },
+            {
+              "name": "Setup Nix with cache",
+              "seconds": 24.0
+            },
+            {
+              "name": "Check flake.nix version matches compiler/compiler-version.ss",
+              "seconds": 0.0
+            },
+            {
+              "name": "Check compiler and language versions match doc/ledger-adt.mdx",
+              "seconds": 0.0
+            },
+            {
+              "name": "Check CHANGELOG.md top entry matches version files",
+              "seconds": 0.0
+            },
+            {
+              "name": "Build compiler",
+              "seconds": 455.0
+            },
+            {
+              "name": "Snapshot doc/compact-reference.mdx before running compiler/go",
+              "seconds": 0.0
+            },
+            {
+              "name": "Run compiler tests",
+              "seconds": 297.0
+            },
+            {
+              "name": "Check doc/compact-reference.mdx is consistent with compiler/go",
+              "seconds": 0.0
+            },
+            {
+              "name": "Run src-maps tests",
+              "seconds": 10.0
+            },
+            {
+              "name": "Execute binary - smoke test",
+              "seconds": 10.0
+            },
+            {
+              "name": "Merge report as ZIP",
+              "seconds": 1.0
+            },
+            {
+              "name": "Upload Artifact - coverage report",
+              "seconds": 1.0
+            },
+            {
+              "name": "Test E2E",
+              "seconds": 54.0
+            },
+            {
+              "name": "Upload CTRF test results",
+              "seconds": 1.0
+            },
+            {
+              "name": "Upload Junit test results",
+              "seconds": 1.0
+            },
+            {
+              "name": "Upload event file",
+              "seconds": 1.0
+            },
+            {
+              "name": "Post Checkout compactc repository",
+              "seconds": 0.0
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0.0
+            }
+          ]
+        },
+        {
+          "name": "Build compiler (macOS, Nix)",
+          "seconds": 712.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1.0
+            },
+            {
+              "name": "Checkout compactc repository",
+              "seconds": 2.0
+            },
+            {
+              "name": "Setup Nix with cache",
+              "seconds": 32.0
+            },
+            {
+              "name": "Build compiler",
+              "seconds": 392.0
+            },
+            {
+              "name": "Smoke test",
+              "seconds": 280.0
+            },
+            {
+              "name": "Post Checkout compactc repository",
+              "seconds": 1.0
+            },
+            {
+              "name": "Complete job",
+              "seconds": 2.0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": 37825247684,
+      "head_sha": "20cd967eecd967cef2c184277e73892eeb546752",
+      "url": "https://github.com/MediaNoxLabs/compact/actions/runs/37825247684",
+      "jobs": [
+        {
+          "name": "Rust / core owners",
+          "seconds": 97.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1.0
+            },
+            {
+              "name": "Checkout source",
+              "seconds": 3.0
+            },
+            {
+              "name": "Install exact Rust toolchain",
+              "seconds": 8.0
+            },
+            {
+              "name": "Record source and toolchain",
+              "seconds": 0.0
+            },
+            {
+              "name": "Cache locked dependency downloads",
+              "seconds": 2.0
+            },
+            {
+              "name": "Cache bounded compilation",
+              "seconds": 9.0
+            },
+            {
+              "name": "Fetch locked workspace dependencies",
+              "seconds": 4.0
+            },
+            {
+              "name": "Check workspace formatting",
+              "seconds": 2.0
+            },
+            {
+              "name": "Test the four Rust owners",
+              "seconds": 49.0
+            },
+            {
+              "name": "Lint the four Rust owners",
+              "seconds": 7.0
+            },
+            {
+              "name": "Compile backend and generated Jubjub consumer on Rust 1.88",
+              "seconds": 0.0
+            },
+            {
+              "name": "Compile standalone backend on Rust 1.88",
+              "seconds": 0.0
+            },
+            {
+              "name": "Retain explicit check outcomes and verify unchanged locks",
+              "seconds": 0.0
+            },
+            {
+              "name": "Upload bounded check receipts",
+              "seconds": 1.0
+            },
+            {
+              "name": "Post Cache bounded compilation",
+              "seconds": 7.0
+            },
+            {
+              "name": "Post Cache locked dependency downloads",
+              "seconds": 0.0
+            },
+            {
+              "name": "Post Checkout source",
+              "seconds": 0.0
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0.0
+            }
+          ]
+        },
+        {
+          "name": "Rust / MSRV backend and Jubjub consumer",
+          "seconds": 39.0,
+          "steps": [
+            {
+              "name": "Set up job",
+              "seconds": 1.0
+            },
+            {
+              "name": "Checkout source",
+              "seconds": 3.0
+            },
+            {
+              "name": "Install exact Rust toolchain",
+              "seconds": 6.0
+            },
+            {
+              "name": "Record source and toolchain",
+              "seconds": 0.0
+            },
+            {
+              "name": "Cache locked dependency downloads",
+              "seconds": 4.0
+            },
+            {
+              "name": "Cache bounded compilation",
+              "seconds": 5.0
+            },
+            {
+              "name": "Fetch locked workspace dependencies",
+              "seconds": 3.0
+            },
+            {
+              "name": "Check workspace formatting",
+              "seconds": 0.0
+            },
+            {
+              "name": "Test the four Rust owners",
+              "seconds": 0.0
+            },
+            {
+              "name": "Lint the four Rust owners",
+              "seconds": 0.0
+            },
+            {
+              "name": "Compile backend and generated Jubjub consumer on Rust 1.88",
+              "seconds": 5.0
+            },
+            {
+              "name": "Compile standalone backend on Rust 1.88",
+              "seconds": 4.0
+            },
+            {
+              "name": "Retain explicit check outcomes and verify unchanged locks",
+              "seconds": 0.0
+            },
+            {
+              "name": "Upload bounded check receipts",
+              "seconds": 1.0
+            },
+            {
+              "name": "Post Cache bounded compilation",
+              "seconds": 3.0
+            },
+            {
+              "name": "Post Cache locked dependency downloads",
+              "seconds": 1.0
+            },
+            {
+              "name": "Post Checkout source",
+              "seconds": 0.0
+            },
+            {
+              "name": "Complete job",
+              "seconds": 0.0
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "cache_inventory": {
+    "count": 11,
+    "sum_bytes": 10864395704,
+    "configured_budget_unknown": true,
+    "largest": [
+      {
+        "key": "Linux-target-rust-runtime-e05a3a7391aac12c7a15a5876b6fd4909d120efd8e835d3b3bae14fc06396412",
+        "ref": "refs/pull/504/merge",
+        "bytes": 4510981021
+      },
+      {
+        "key": "Linux-target-rust-runtime-f6515ced33ecd24065bbffaf50ec80dc065b7a279bb0714d703d92d2f7add350",
+        "ref": "refs/pull/504/merge",
+        "bytes": 3084319730
+      },
+      {
+        "key": "macOS-target-rust-runtime-e05a3a7391aac12c7a15a5876b6fd4909d120efd8e835d3b3bae14fc06396412",
+        "ref": "refs/pull/504/merge",
+        "bytes": 1168709386
+      },
+      {
+        "key": "macOS-target-rust-runtime-f6515ced33ecd24065bbffaf50ec80dc065b7a279bb0714d703d92d2f7add350",
+        "ref": "refs/pull/504/merge",
+        "bytes": 854364983
+      }
+    ]
+  },
+  "scope": "read-only API/source research; historical completed jobs are not current-local-head CI measurements; no workflow dispatched or cache deleted; bounded Forge relocation probe recorded separately"
+}

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "date": "2026-10-15",
+  "scope": "ARM macOS installed Forge minimal fixture private stopped-store relocation only; no Compact tests, Linux/CI benchmark, live snapshot or snapshot merge qualification",
+  "compact_commit": "67a3403f9b65fd525c3b1da812ef5cd28d5c4be8",
+  "forge_binary_sha256": "f6fb68ac4cc8e8a59efdde771cbd49adb8842e0ddcedcff87f9ff3e9e1221613",
+  "consumer_expected_build_fingerprint": "340e0b3bd94394d987c1b2a073bb411afb755e7164934ca15e8d8cb02b77b879",
+  "installed_build_fingerprint": "6b62bbf3ec49e334405e416eeb1a7dd1fe73a20095406ea602efa947f5b5a57a",
+  "consumer_build_allowlist_matches_installed_forge": false,
+  "profile_matches_existing_v2_adapter": true,
+  "snapshot_probes": [
+    {
+      "selector": "ledger8-v2",
+      "sqlite_integrity_check": "ok",
+      "relocated_warm_hit": true,
+      "same_artifact_identity": true,
+      "paths_recomputed_under_new_root": true,
+      "all_export_digests_verified": true,
+      "stats_hit_delta": 1,
+      "snapshot_file_bytes": 51649,
+      "local_copy_ms": 3.456292033661157
+    },
+    {
+      "selector": "zkir3",
+      "sqlite_integrity_check": "ok",
+      "relocated_warm_hit": true,
+      "same_artifact_identity": true,
+      "paths_recomputed_under_new_root": true,
+      "all_export_digests_verified": true,
+      "stats_hit_delta": 1,
+      "snapshot_file_bytes": 52430,
+      "local_copy_ms": 4.122499958612025
+    }
+  ]
+}

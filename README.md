@@ -190,3 +190,11 @@ binding). See [HTTP setup and limits](docs/http/README.md),
 [OpenAPI](docs/http/openapi.json), [Linux image packaging](container/README.md)
 and [basic CI/e2e workflows](container/CI.md). The full hosted registry remains
 proposed. Consumer tests continue running proofs, verification and assertions.
+
+## Compact and GitHub CI research
+
+[Integration proposal](docs/research/compact-ci-integration.md) covers the existing
+Compact adapter, current build-qualification blockers, separate build/parameter/
+Forge caches, trusted snapshots, same-run fanout and measurement gates. It includes
+a research-only workflow fragment and a bounded snapshot-relocation probe.
+This research does not modify Compact or enable any additional workflow.

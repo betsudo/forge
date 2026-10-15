@@ -1,0 +1,125 @@
+# Research-only STEP FRAGMENT; not a workflow and not installed in .github.
+# Blocked until Compact's per-platform Forge build qualification is updated.
+# Insert only in an existing unprivileged proof-bearing job. Retain its other
+# required compiler/proof/assertion gates. The two-case pilot below replaces none.
+# Requires actions/cache v5: Node 24-compatible runner >=2.327.1.
+# Prerequisites, provided by reviewed setup outside the restored cache:
+# - published pinned Forge+worker and current matching compiler/proof runner;
+# - verified MIDNIGHT_PP, COMPACTC and COMPACT_PROOF_RUNNER absolute paths;
+# - COMPACT_ZKIR_FORGE_BIN and MIDNIGHT_ZKIR_FORGE_DIR=$GITHUB_WORKSPACE/.ci/forge-store;
+# - FORGE_CACHE_PARTITION = SHA256(qualified platform/tool/profile/worker/params/schema);
+# - FORGE_WORKLOAD_ID describes exact test selectors/flags;
+# - FORGE_SNAPSHOT_BUDGET_BYTES is a measured repository-approved size cap.
+# Serialize the trusted producer per partition. PR consumers use restore only;
+# on GitHub.com, add cache-mode: read to those jobs (verify host/action support).
+steps:
+  - name: Declare nonempty workload key and snapshot budget
+    id: forge-key
+    shell: bash
+    run: |
+      python3 - <<'PY'
+      import hashlib, os, pathlib, re, subprocess
+      store = pathlib.Path(os.environ['MIDNIGHT_ZKIR_FORGE_DIR'])
+      workspace = pathlib.Path(os.environ['GITHUB_WORKSPACE']).resolve()
+      assert not (workspace / '.ci').is_symlink() and not store.is_symlink()
+      assert store.resolve() == (workspace / '.ci/forge-store').resolve()
+      partition = os.environ['FORGE_CACHE_PARTITION']
+      assert re.fullmatch('[a-f0-9]{64}', partition)
+      assert int(os.environ['FORGE_SNAPSHOT_BUDGET_BYTES']) > 0
+      workload = os.environ['FORGE_WORKLOAD_ID']
+      assert workload
+      paths = subprocess.check_output(['git', 'ls-files', '-z']).split(b'\0')
+      paths = sorted(p for p in paths if p)
+      assert paths, 'empty tracked source discovery'
+      digest = hashlib.sha256(workload.encode())
+      for raw in paths:
+          path = pathlib.Path(os.fsdecode(raw))
+          digest.update(raw + b'\0')
+          if path.is_symlink():
+              digest.update(b'symlink:' + os.readlink(path).encode())
+          else:
+              digest.update(path.read_bytes())
+          digest.update(b'\0')
+      prefix = 'forge-v1-' + partition + '-'
+      primary = prefix + digest.hexdigest()
+      generation = os.environ['GITHUB_RUN_ID'] + '-' + os.environ['GITHUB_RUN_ATTEMPT']
+      with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+          print('partition=' + prefix, file=out)
+          print('workload=' + primary + '-', file=out)
+          print('primary=' + primary + '-' + generation, file=out)
+      PY
+
+  - name: Restore compatible baseline without granting publication
+    id: forge-restore
+    continue-on-error: true
+    uses: actions/cache/restore@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+    with:
+      path: .ci/forge-store
+      key: ${{ steps.forge-key.outputs.primary }}
+      restore-keys: |
+        ${{ steps.forge-key.outputs.workload }}
+        ${{ steps.forge-key.outputs.partition }}
+
+  - name: Quarantine an incomplete failed extraction in this job-local directory
+    if: steps.forge-restore.outcome == 'failure'
+    shell: bash
+    run: |
+      if [ -e .ci/forge-store ]; then
+        mv .ci/forge-store .ci/forge-cache-restore-failed
+      fi
+      echo 'Cache restore unavailable; using an empty private store, with tests enabled.'
+
+  - name: Record inherited metrics before the pilot
+    shell: bash
+    run: |
+      "$COMPACT_ZKIR_FORGE_BIN" stats > "$RUNNER_TEMP/forge-stats-before.json"
+
+  - name: Execute the existing real Compact proof qualification
+    shell: bash
+    run: |
+      python3 -B tools/compact-rust-backend/check_forge_circuit_cache.py \
+        --forge "$COMPACT_ZKIR_FORGE_BIN" \
+        --compiler "$COMPACTC" --proof-runner "$COMPACT_PROOF_RUNNER" \
+        --params-dir "$MIDNIGHT_PP" --cache-dir "$MIDNIGHT_ZKIR_FORGE_DIR" \
+        --report "$RUNNER_TEMP/forge-pilot.json"
+      # Other existing proof/assertion/compiler gates remain required in this job.
+      # No test is conditional on steps.forge-restore.outputs.cache-hit.
+
+  - name: Measure new derivations and budget after all foreground clients exit
+    id: forge-growth
+    shell: bash
+    run: |
+      "$COMPACT_ZKIR_FORGE_BIN" stats > "$RUNNER_TEMP/forge-stats-after.json"
+      python3 - <<'PY'
+      import json, os, pathlib
+      temp = pathlib.Path(os.environ['RUNNER_TEMP'])
+      before = json.loads((temp / 'forge-stats-before.json').read_text())['totals']
+      after = json.loads((temp / 'forge-stats-after.json').read_text())['totals']
+      store = pathlib.Path(os.environ['MIDNIGHT_ZKIR_FORGE_DIR']).resolve()
+      expected = (pathlib.Path(os.environ['GITHUB_WORKSPACE']) / '.ci/forge-store').resolve()
+      assert store == expected, 'never archive a shared/default user store'
+      size = sum(p.stat().st_size for p in store.rglob('*') if p.is_file())
+      delta = after['misses'] - before['misses']
+      summary = {'generation_misses': delta, 'snapshot_file_bytes': size,
+                 'within_budget': size <= int(os.environ['FORGE_SNAPSHOT_BUDGET_BYTES'])}
+      (temp / 'forge-cache-delta.json').write_text(json.dumps(summary, indent=2))
+      with open(os.environ['GITHUB_OUTPUT'], 'a') as out:
+          print('publish=' + str(delta > 0 and summary['within_budget']).lower(), file=out)
+      PY
+      # This dedicated job must not leave an HTTP daemon/worker/other writer alive.
+      # A stopped whole store is the snapshot; a live SQLite-only copy is invalid.
+
+  - name: Publish growth only from the successful trusted default-branch producer
+    if: >-
+      success() && steps.forge-growth.outputs.publish == 'true' &&
+      github.ref == format('refs/heads/{0}', github.event.repository.default_branch) &&
+      (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    continue-on-error: true
+    uses: actions/cache/save@27d5ce7f107fe9357f9df03efb73ab90386fccae # v5.0.5
+    with:
+      path: .ci/forge-store
+      key: ${{ steps.forge-key.outputs.primary }}
+# Upload delta/proof receipts as workflow artifacts in the surrounding workflow.
+# For sibling jobs, upload a named quiescent snapshot artifact and use needs:
+# with private extraction. Do not expect a global cache to select this run's seed.
+# Keep uncached real keygen qualification separate (COMPACT_ZKIR_MODE=uncached).

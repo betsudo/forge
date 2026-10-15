@@ -174,3 +174,37 @@
 - Preview built at `.local/site` and served locally at127.0.0.1:8087. Global
   skill and Midnight initiative knowledge updated, skill validator passes.
   No push, Pages deployment, image publication or supervision occurred.
+
+## 2026-10-15 — issue #5: Compact and GitHub CI research
+
+- Inspected Compact's current compiler hook, v2 adapter, qualification runner,
+  Nix setup and CI source read-only. Current adapter's build allowlist still
+  expects `340e0b3b…`; installed Forge reports `6b62bbf3…`. Exact v2 backend
+  matches, but consumer build qualification must be updated before use. Its v3
+  route remains explicitly uncached despite Forge now supporting the matching pin.
+- Full compiler CI does not yet provision Forge. Bounded Rust checks are not
+  proof/keygen lanes and are poor candidates for additional Forge setup. Preserve
+  hermetic Nix builds and use signed compiler/Forge binary substitution there.
+- Read-only historical completed job APIs show 455s compiler build, 297s compiler
+  tests and 54s E2E in an 860s Linux job; bounded Rust jobs 97s/39s. These Oct8
+  runs are different revisions from the current local consumer, not a new CI
+  benchmark. Cache API reports 11 entries totaling 10,864,395,704 bytes, with two
+  Linux target archives consuming about 7.60 GB. No cache/settings were mutated.
+- Proposed separate Nix/Cargo/verified-parameter/Forge layers, a trusted stopped
+  store producer, restore-only PR consumers, exact same-run workflow artifacts,
+  one publisher, partitioned immutable growth keys and an explicit byte budget.
+  Keep proofs, verification, assertions and uncached controls in every mode.
+- Local bounded Forge-only relocation probe passes for both minimal profile
+  fixtures: SQLite integrity, warm reuse, unchanged artifact identity, current
+  relocated paths, export digests and per-job stats deltas. No Linux/large-cache/
+  live-snapshot or Compact qualification claim is made. Reproducible research
+  probe takes explicit checkout/binary/output paths and uses private temp stores.
+- Saved main proposal, official-source cache review, non-active YAML example and
+  API/source/snapshot evidence under `docs/research` and `docs/evidence/compact-ci*`.
+  Independent review found no blocker; action/runner requirements, miss-count
+  naming and conservative workload key coverage clarified. YAML/shell/embedded
+  Python, links, JSON and unchanged inspected source hashes validate.
+- Consumer HEAD advanced concurrently from df7367fc to 67a3403f through unrelated
+  performance docs/patch changes; no inspected integration/workflow file changed.
+  This session made no writes, ran no builds/tests and dispatched no CI in Compact.
+  Global skill and Midnight vault gain research links; delivery remains local.
