@@ -10,4 +10,6 @@ install_root="${HOME}/.local/share/midnight-zkir-forge"
 mkdir -p "$install_root" "${HOME}/.local/bin"
 "$nix_bin" build . --cores 2 --out-link "$install_root/current" "$@"
 ln -sfn "$install_root/current/bin/midnight-zkir-forge" "${HOME}/.local/bin/midnight-zkir-forge"
+# macOS current_exe may retain the launcher symlink; expose its worker sibling too.
+ln -sfn "$install_root/current/bin/midnight-zkir-forge-zkir3-worker" "${HOME}/.local/bin/midnight-zkir-forge-zkir3-worker"
 printf '%s\n' 'Installed ~/.local/bin/midnight-zkir-forge (Nix GC-rooted)' 'Add ~/.local/bin to PATH for every local agent.'

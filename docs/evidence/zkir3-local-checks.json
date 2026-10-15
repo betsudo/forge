@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "implementation_commit": "d109582",
+  "platform": "aarch64-darwin",
+  "scope": "local fixture qualification; no consumer checkout changes or hosted CI",
+  "checks": {
+    "fast_tests_passed": 8,
+    "real_v3_tests_passed": 2,
+    "real_v2_tests_passed": 3,
+    "root_and_worker_clippy_deny_warnings": true,
+    "formatting": true,
+    "spec_and_profile_contracts": true,
+    "signed_commit_policy": true,
+    "v3_crash_acceptance": {
+      "killed_writer_recovered": true,
+      "partial_ready_rejected": true,
+      "single_artifact_resolved": true,
+      "structured_error": true
+    }
+  },
+  "commands": [
+    "./bootstrap.sh --check",
+    "./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1 (with isolated worker environment)",
+    "./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1",
+    "./bootstrap.sh -- python3 scripts/check-cli.py --binary target/debug/midnight-zkir-forge --input fixtures/assert-v3.zkir"
+  ],
+  "local_log_sha256": {
+    "v3-final-check.log": "3d2af1334a16995daec44b36945dec6e5aa2562c91da6c5bc76086d91f4c3711",
+    "v3-real-tests.log": "72c9d789c85f9fc25d2501530a51e23324aa0006b22b5a392b11705a36715d32",
+    "v2-regression.log": "fa5c2acba25327ec47111909bf6eb86c96d88c659147df2db5973812098fcc82",
+    "v3-crash-acceptance.json": "9958cc6d235171e1f95e0450119bd97509cb64b3e25a2009102a7b0a65729990"
+  }
+}

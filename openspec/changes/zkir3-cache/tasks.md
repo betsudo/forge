@@ -10,5 +10,5 @@
 - [x] 2.2 Verify fresh v3 proof and invalid controls, reproduction and warm reuse.
 - [x] 2.3 Exercise profile separation/refusal, eviction and concurrent requests.
 - [x] 2.4 Run v2 regression and independent identity/compatibility review.
-- [ ] 2.5 Build/install the Nix CLI and qualify the installed v3 profile.
-- [ ] 2.6 Update usage, skill, vault and evidence; commit locally with GPG/DCO.
+- [x] 2.5 Build/install the Nix CLI and qualify the installed v3 profile.
+- [x] 2.6 Update usage, skill, vault and evidence; commit locally with GPG/DCO.

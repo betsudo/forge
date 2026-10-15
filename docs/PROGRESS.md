@@ -99,6 +99,29 @@
   manifest. Conservative new build fingerprints may cause one new derivation;
   source inventory and old exported paths survive the upgrade.
 - Formatting, spec/profile/negative commit-policy checks and Clippy pass for
-  both dependency graphs. Nix build/install and installed evidence pending.
+  both dependency graphs. Nix build/install and installed evidence pass.
 - No consumer checkout, long-running validation, push, PR, hosted CI or
   supervision was modified or started by this work.
+
+### Installed ZKIR3 receipt
+
+- Installed CLI 0.2.0 at `~/.local/bin/midnight-zkir-forge`, backed by
+  `/nix/store/88f65288m3a03i7p1cgw2c6nrvliwmb7-midnight-zkir-forge-0.2.0`.
+  Worker is retained by the package and the existing GC root.
+- Installed-path qualification caught macOS retaining the launcher symlink in
+  `current_exe`. The installer now links the worker beside the CLI in
+  `~/.local/bin`; repeated qualification through that exact path passes.
+- Installed fresh v3 qualification verifies a real proof, rejects invalid
+  statement/corrupt proof controls and confirms byte reproduction. Installed
+  warm and regenerated exports also verify real proofs and negative controls.
+- Installed crash-recovery controls pass; the old v2 export still resolves and
+  its manifest is unchanged. Installed uncached v2 qualification passes too.
+- V3 minimal assert fixture: cold process wall 879.02ms, warm 193.63ms
+  (4.54x in this observation). This includes one-shot worker startup and
+  executable hashing and is not a large-circuit or general performance claim.
+- Receipts: `docs/evidence/zkir3-{profile,qualification,installation,benchmark,
+  installed-acceptance,local-checks,v2-regression}.json`. Temporary experiment
+  exports were removed after recording results.
+- Midnight vault starter prompt and initiative note updated; global skill links
+  the prompt and explains exact v3 scope, profile assertions and uncached fallback.
+  Skill validation passes. Delivery stays local, with no consumer test edits.
