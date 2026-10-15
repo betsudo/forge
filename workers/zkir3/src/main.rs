@@ -1,5 +1,8 @@
 //! Private one-shot worker. Its isolated Cargo graph matches the pinned consumer.
 mod backend;
+#[path = "../../../src/error.rs"]
+#[allow(dead_code)]
+mod error;
 use anyhow::{Result, ensure};
 use clap::Parser;
 use serde::{Deserialize, Serialize};
@@ -44,6 +47,7 @@ fn fingerprint() -> String {
     bytes.extend(include_bytes!("../Cargo.toml"));
     bytes.extend(include_bytes!("main.rs"));
     bytes.extend(include_bytes!("backend.rs"));
+    bytes.extend(include_bytes!("../../../src/error.rs"));
     bytes.extend(std::env::consts::ARCH.as_bytes());
     bytes.extend(std::env::consts::OS.as_bytes());
     digest(&bytes)
@@ -70,7 +74,9 @@ async fn main() {
         Ok(value) => println!("{value}"),
         Err(error) => {
             eprintln!("{error:#}");
-            println!("{}", json!({"error":format!("{error:#}")}));
+            let mut response = profile();
+            response["failure"] = json!({"kind":crate::error::classify(&error)});
+            println!("{response}");
             std::process::exit(1);
         }
     }
@@ -94,7 +100,11 @@ async fn run(args: Args) -> Result<Value> {
     }
     let params = backend::parameters(&ir, args.params_dir.as_deref(), args.fetch_params).await?;
     if let Some(expected) = &args.expected_params {
-        ensure!(*expected == params.digest, "parameter_identity_changed");
+        crate::require!(
+            *expected == params.digest,
+            crate::error::Kind::InvalidParameters,
+            "parameter_identity_changed"
+        );
     }
     let mut result = profile();
     result["k"] = json!(params.k);

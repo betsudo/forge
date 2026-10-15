@@ -138,6 +138,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -239,6 +249,16 @@
           },
           "503": {
             "description": "Verified parameters unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
             "content": {
               "application/json": {
                 "schema": {
@@ -354,6 +374,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -455,6 +485,16 @@
           },
           "503": {
             "description": "Verified parameters unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
             "content": {
               "application/json": {
                 "schema": {
@@ -592,6 +632,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         },
         "requestBody": {
@@ -722,6 +772,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -845,6 +905,16 @@
           },
           "503": {
             "description": "Verified parameters unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
             "content": {
               "application/json": {
                 "schema": {
@@ -1025,6 +1095,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       },
@@ -1167,6 +1247,16 @@
           },
           "503": {
             "description": "Verified parameters unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
             "content": {
               "application/json": {
                 "schema": {
@@ -1355,6 +1445,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       },
@@ -1512,6 +1612,16 @@
                 }
               }
             }
+          },
+          "500": {
+            "description": "Internal failure; no availability fallback",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
           }
         }
       }
@@ -1540,7 +1650,9 @@
             "type": "object",
             "required": [
               "code",
-              "message"
+              "message",
+              "retryable",
+              "availability_fallback"
             ],
             "properties": {
               "code": {
@@ -1548,6 +1660,12 @@
               },
               "message": {
                 "type": "string"
+              },
+              "retryable": {
+                "type": "boolean"
+              },
+              "availability_fallback": {
+                "type": "boolean"
               }
             }
           }
@@ -1592,7 +1710,8 @@
           "name",
           "ready",
           "source",
-          "artifacts"
+          "artifacts",
+          "descriptor"
         ],
         "properties": {
           "schema": {
@@ -1654,8 +1773,295 @@
                 "type": "number"
               }
             }
+          },
+          "descriptor": {
+            "$ref": "#/components/schemas/ArtifactDescriptor"
           }
         }
+      },
+      "ArtifactDescriptor": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "schema",
+          "input_format",
+          "input_version",
+          "materialized",
+          "serialization",
+          "keygen_recipe",
+          "record"
+        ],
+        "properties": {
+          "schema": {
+            "const": 1
+          },
+          "input_format": {
+            "enum": [
+              "midnight-zkir-v2-json",
+              "midnight-zkir-v3-json"
+            ]
+          },
+          "input_version": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "major",
+              "minor"
+            ],
+            "properties": {
+              "major": {
+                "enum": [
+                  2,
+                  3
+                ]
+              },
+              "minor": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          },
+          "materialized": {
+            "type": "boolean"
+          },
+          "serialization": {
+            "anyOf": [
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "binary_ir",
+                  "prover_key",
+                  "verifier_key"
+                ],
+                "properties": {
+                  "binary_ir": {
+                    "type": "string"
+                  },
+                  "prover_key": {
+                    "type": "string"
+                  },
+                  "verifier_key": {
+                    "type": "string"
+                  }
+                }
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "keygen_recipe": {
+            "anyOf": [
+              {
+                "const": "library-keygen/default-options/no-rng"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "record": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "schema",
+              "bundle_id",
+              "name",
+              "source",
+              "derivation_id",
+              "artifact_set_id",
+              "profile",
+              "build_fingerprint",
+              "ledger_revision",
+              "parameter_digest",
+              "k",
+              "artifacts",
+              "generation_ms"
+            ],
+            "properties": {
+              "schema": {
+                "const": 1
+              },
+              "format": {
+                "enum": [
+                  "midnight-zkir-v2-json",
+                  "midnight-zkir-v3-json"
+                ]
+              },
+              "worker": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "profile",
+                  "source_revision",
+                  "build_fingerprint",
+                  "executable_sha256"
+                ],
+                "properties": {
+                  "profile": {
+                    "type": "string"
+                  },
+                  "source_revision": {
+                    "type": "string"
+                  },
+                  "build_fingerprint": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "executable_sha256": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  }
+                }
+              },
+              "bundle_id": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              },
+              "name": {
+                "type": "string"
+              },
+              "source": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "kind",
+                  "digest",
+                  "size"
+                ],
+                "properties": {
+                  "kind": {
+                    "enum": [
+                      "source",
+                      "binary_ir",
+                      "prover",
+                      "verifier"
+                    ]
+                  },
+                  "digest": {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  "size": {
+                    "type": "integer",
+                    "minimum": 0
+                  }
+                }
+              },
+              "derivation_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "artifact_set_id": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "profile": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "build_fingerprint": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "ledger_revision": {
+                "anyOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "parameter_digest": {
+                "anyOf": [
+                  {
+                    "type": "string",
+                    "pattern": "^[a-f0-9]{64}$"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "k": {
+                "anyOf": [
+                  {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 255
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "artifacts": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "kind",
+                    "digest",
+                    "size"
+                  ],
+                  "properties": {
+                    "kind": {
+                      "enum": [
+                        "source",
+                        "binary_ir",
+                        "prover",
+                        "verifier"
+                      ]
+                    },
+                    "digest": {
+                      "type": "string",
+                      "pattern": "^[a-f0-9]{64}$"
+                    },
+                    "size": {
+                      "type": "integer",
+                      "minimum": 0
+                    }
+                  }
+                }
+              },
+              "generation_ms": {
+                "type": "null"
+              }
+            }
+          }
+        },
+        "description": "Path-free descriptor v1. Strict decoding and identity/serialization consistency checks are required beyond JSON Schema. Materialized records contain verified generation premises; outer ready/bytes verification still governs availability."
       }
     }
   }

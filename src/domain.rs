@@ -1,4 +1,4 @@
-use anyhow::{Result, ensure};
+use anyhow::Result;
 use serde::{
     Deserialize, Serialize,
     de::{self, MapAccess, SeqAccess, Visitor},
@@ -53,6 +53,7 @@ pub struct Artifact {
     pub size: u64,
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(deny_unknown_fields)]
 pub struct Record {
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub format: Option<String>,
@@ -73,22 +74,24 @@ pub struct Record {
     pub generation_ms: Option<f64>,
 }
 pub fn validate_name(name: &str) -> Result<()> {
-    ensure!(
+    crate::require!(
         !name.is_empty()
             && name.len() <= 128
             && name
                 .bytes()
                 .all(|b| b.is_ascii_alphanumeric() || b == b'_' || b == b'-'),
+        crate::error::Kind::InvalidInput,
         "invalid circuit name: use 1–128 ASCII letters, digits, underscores or hyphens"
     );
     Ok(())
 }
 pub fn validate_id(id: &str) -> Result<()> {
-    ensure!(
+    crate::require!(
         id.len() == 64
             && id
                 .bytes()
                 .all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase()),
+        crate::error::Kind::InvalidInput,
         "invalid bundle id"
     );
     Ok(())

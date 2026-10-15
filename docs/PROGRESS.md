@@ -345,3 +345,23 @@
 - README/site/workflow guide now link the deployed site and record current scope.
   Non-blocking action-runtime deprecation annotations are recorded; no unrelated
   action upgrades were introduced. Compact and other checkouts remain untouched.
+
+
+## 2026-10-16 — issue #12 compiler contract
+
+- Added one strict path-free descriptor shared by CLI, export sidecars and HTTP.
+  Its validated decode entrypoint rejects ambiguous/unknown fields and inconsistent
+  identities. Existing identity transcripts and immutable legacy manifest bytes stay
+  intact; missing verified sidecars can be added atomically. Snapshot validation
+  accepts old exports and checks new sidecars.
+- Typed errors originate at parameter/backend/store/worker boundaries, keeping
+  absent parameters distinct from corrupt bytes. CLI public JSON and HTTP are
+  sanitized; private diagnostics remain on stderr. Policy never parses strings.
+- Native full bootstrap, strict premise controls and real both-profile HTTP,
+  snapshot and recovery suites pass. Real proofs, verification and negative
+  controls execute on warm exports/downloads. Timing and request deltas are in
+  docs/evidence/compiler-compatibility-local.json; tiny fixtures are not consumer
+  speedup claims. Independent agent review completed; Nix worker source closure
+  builds with the shared typed-error module.
+- Local source delivery only; installed CLI is unchanged. No Compact edits,
+  consumer qualification claim, push, release, deployment or hosted run.

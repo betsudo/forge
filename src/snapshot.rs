@@ -80,9 +80,10 @@ fn check_scope(summary: &Summary, scope: &Scope) -> Result<()> {
             }
             crate::engine::ProfileSelector::Zkir3 => (zkir3::PROFILE, zkir3::FORMAT),
         };
-        ensure!(
+        crate::require!(
             summary.profiles.iter().all(|p| p == profile)
                 && summary.formats.iter().all(|p| p == format),
+            crate::error::Kind::SnapshotPartitionMismatch,
             "snapshot_partition_mismatch: profile outside scope"
         );
     }
@@ -90,11 +91,12 @@ fn check_scope(summary: &Summary, scope: &Scope) -> Result<()> {
         validate_id(p)?;
     }
     if !scope.parameters.is_empty() {
-        ensure!(
+        crate::require!(
             summary
                 .parameter_digests
                 .iter()
                 .all(|p| scope.parameters.contains(p)),
+            crate::error::Kind::SnapshotPartitionMismatch,
             "snapshot_partition_mismatch: parameters outside scope"
         );
     }
@@ -115,8 +117,9 @@ fn producer(v3: bool) -> Result<Producer> {
 }
 fn regular(path: &Path, directory: bool) -> Result<()> {
     let m = fs::symlink_metadata(path)?;
-    ensure!(
+    crate::require!(
         !m.file_type().is_symlink() && if directory { m.is_dir() } else { m.is_file() },
+        crate::error::Kind::SnapshotUnsafePath,
         "snapshot_unsafe_path: non-regular file/directory"
     );
     Ok(())
@@ -130,35 +133,45 @@ fn destination(path: &Path) -> Result<PathBuf> {
         .filter(|p| !p.as_os_str().is_empty())
         .unwrap_or(Path::new("."));
     let result = fs::canonicalize(parent)?.join(name);
-    ensure!(
+    crate::require!(
         fs::symlink_metadata(&result).is_err_and(|e| e.kind() == std::io::ErrorKind::NotFound),
+        crate::error::Kind::SnapshotDestinationExists,
         "snapshot_destination_exists"
     );
     Ok(result)
 }
 fn disjoint(a: &Path, b: &Path) -> Result<()> {
-    ensure!(
+    crate::require!(
         !a.starts_with(b) && !b.starts_with(a),
+        crate::error::Kind::SnapshotUnsafePath,
         "snapshot_unsafe_path: source and destination overlap"
     );
     Ok(())
 }
 fn safe_path(path: &str) -> Result<()> {
-    ensure!(
+    crate::require!(
         !path.contains('\\') && path.len() < 1024,
+        crate::error::Kind::SnapshotUnsafePath,
         "snapshot_unsafe_path"
     );
     let parts: Vec<_> = path.split('/').collect();
-    ensure!(
+    crate::require!(
         parts
             .iter()
             .all(|p| !p.is_empty() && *p != "." && *p != ".."),
+        crate::error::Kind::SnapshotUnsafePath,
         "snapshot_unsafe_path"
     );
     match parts.as_slice() {
         ["index.sqlite3"] => {}
         ["objects", hash] => validate_id(hash)?,
-        ["exports", bundle, recipe, set, "manifest.json"] => {
+        [
+            "exports",
+            bundle,
+            recipe,
+            set,
+            "manifest.json" | "descriptor.json",
+        ] => {
             validate_id(bundle)?;
             validate_id(recipe)?;
             validate_id(set)?;
@@ -167,17 +180,20 @@ fn safe_path(path: &str) -> Result<()> {
             validate_id(bundle)?;
             validate_id(recipe)?;
             validate_id(set)?;
-            let (name, extension) = file.rsplit_once('.').context("snapshot_unsafe_path")?;
+            let (name, extension) = file
+                .rsplit_once('.')
+                .context(crate::error::Kind::SnapshotUnsafePath)?;
             validate_name(name)?;
-            ensure!(
+            crate::require!(
                 matches!(
                     (*folder, extension),
                     ("zkir", "zkir" | "bzkir") | ("keys", "prover" | "verifier")
                 ),
+                crate::error::Kind::SnapshotUnsafePath,
                 "snapshot_unsafe_path"
             );
         }
-        _ => anyhow::bail!("snapshot_unsafe_path: unknown payload"),
+        _ => anyhow::bail!(crate::error::Kind::SnapshotUnsafePath),
     }
     Ok(())
 }
@@ -188,30 +204,44 @@ fn walk(
     depth: usize,
     seen: &mut usize,
 ) -> Result<()> {
-    ensure!(depth <= 7, "snapshot_unsafe_path: excessive depth");
+    crate::require!(
+        depth <= 7,
+        crate::error::Kind::SnapshotUnsafePath,
+        "snapshot_unsafe_path: excessive depth"
+    );
     regular(path, true)?;
     for item in fs::read_dir(path)? {
         let path = item?.path();
         *seen += 1;
-        ensure!(*seen <= MAX_FILES, "snapshot_limit: too many entries");
+        crate::require!(
+            *seen <= MAX_FILES,
+            crate::error::Kind::SnapshotLimit,
+            "snapshot_limit: too many entries"
+        );
         let m = fs::symlink_metadata(&path)?;
-        ensure!(!m.file_type().is_symlink(), "snapshot_unsafe_path: symlink");
+        crate::require!(
+            !m.file_type().is_symlink(),
+            crate::error::Kind::SnapshotUnsafePath,
+            "snapshot_unsafe_path: symlink"
+        );
         if m.is_dir() {
             let relative = path
                 .strip_prefix(root)?
                 .to_str()
-                .context("snapshot_unsafe_path")?;
+                .context(crate::error::Kind::SnapshotUnsafePath)?;
             let parts: Vec<_> = relative.split('/').collect();
-            ensure!(
+            crate::require!(
                 parts.first() == Some(&"exports") && parts.len() <= 5,
+                crate::error::Kind::SnapshotUnsafePath,
                 "snapshot_unsafe_path: unexpected directory"
             );
             for id in parts.iter().skip(1).take(3) {
                 validate_id(id)?;
             }
             if parts.len() == 5 {
-                ensure!(
+                crate::require!(
                     matches!(parts[4], "zkir" | "keys"),
+                    crate::error::Kind::SnapshotUnsafePath,
                     "snapshot_unsafe_path: unexpected export directory"
                 );
             }
@@ -224,7 +254,11 @@ fn walk(
                 .context("snapshot_unsafe_path: non-UTF8")?;
             safe_path(relative)?;
             entries.push(path);
-            ensure!(entries.len() <= MAX_FILES, "snapshot_limit: too many files");
+            crate::require!(
+                entries.len() <= MAX_FILES,
+                crate::error::Kind::SnapshotLimit,
+                "snapshot_limit: too many files"
+            );
         }
     }
     Ok(())
@@ -235,11 +269,12 @@ fn payload(root: &Path, snapshot: bool) -> Result<Vec<PathBuf>> {
         for item in fs::read_dir(root)? {
             let item = item?;
             let name = item.file_name();
-            ensure!(
+            crate::require!(
                 matches!(
                     name.to_str(),
                     Some("objects" | "exports" | "index.sqlite3" | "snapshot.json")
                 ),
+                crate::error::Kind::SnapshotUnsafePath,
                 "snapshot_unsafe_path: unknown root entry"
             );
         }
@@ -257,7 +292,11 @@ fn copy_file(source: &Path, target: &Path, remaining: u64) -> Result<Entry> {
     regular(source, false)?;
     let mut input = File::open(source)?;
     let size = input.metadata()?.len();
-    ensure!(size <= remaining, "snapshot_limit: byte budget exceeded");
+    crate::require!(
+        size <= remaining,
+        crate::error::Kind::SnapshotLimit,
+        "snapshot_limit: byte budget exceeded"
+    );
     let mut output = File::options().create_new(true).write(true).open(target)?;
     let mut hash = Sha256::new();
     let mut count = 0u64;
@@ -267,13 +306,20 @@ fn copy_file(source: &Path, target: &Path, remaining: u64) -> Result<Entry> {
         if n == 0 {
             break;
         }
-        count = count.checked_add(n as u64).context("snapshot_limit")?;
-        ensure!(count <= remaining, "snapshot_limit: source grew");
+        count = count
+            .checked_add(n as u64)
+            .context(crate::error::Kind::SnapshotLimit)?;
+        crate::require!(
+            count <= remaining,
+            crate::error::Kind::SnapshotLimit,
+            "snapshot_limit: source grew"
+        );
         output.write_all(&buffer[..n])?;
         hash.update(&buffer[..n]);
     }
-    ensure!(
+    crate::require!(
         count == size,
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: source size changed"
     );
     output.sync_all()?;
@@ -299,38 +345,47 @@ fn hash_file(path: &Path) -> Result<(u64, String)> {
     }
     Ok((count, hex::encode(hash.finalize())))
 }
-fn record_valid(record: &Record) -> Result<()> {
-    ensure!(record.schema == 1, "snapshot_schema_mismatch");
+pub(crate) fn record_valid(record: &Record) -> Result<()> {
+    crate::require!(
+        record.schema == 1,
+        crate::error::Kind::SnapshotSchemaMismatch,
+        "snapshot_schema_mismatch"
+    );
     validate_name(&record.name)?;
     validate_id(&record.bundle_id.0)?;
-    ensure!(
+    crate::require!(
         record.source.kind == ArtifactKind::Source && record.source.size <= 16 * 1024 * 1024,
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: source metadata"
     );
     validate_id(&record.source.digest)?;
     let format = record.format.as_deref().unwrap_or("midnight-zkir-v2-json");
-    ensure!(
+    crate::require!(
         matches!(format, "midnight-zkir-v2-json" | "midnight-zkir-v3-json"),
+        crate::error::Kind::SnapshotProfileMismatch,
         "snapshot_profile_mismatch"
     );
-    ensure!(
+    crate::require!(
         record.bundle_id.0
             == identity(
                 "midnight-zkir-forge/bundle/v1",
                 &(&record.name, format, &record.source.digest)
             )?,
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: bundle identity"
     );
-    ensure!(
+    crate::require!(
         record
             .generation_ms
             .is_none_or(|n| n.is_finite() && n >= 0.0),
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: generation timing"
     );
     if let Some(set) = &record.artifact_set_id {
         validate_id(&set.0)?;
-        ensure!(
+        crate::require!(
             record.artifacts.len() == 3,
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: incomplete artifacts"
         );
         let kinds: BTreeSet<_> = record
@@ -338,15 +393,17 @@ fn record_valid(record: &Record) -> Result<()> {
             .iter()
             .map(|a| a.kind.extension())
             .collect();
-        ensure!(
+        crate::require!(
             kinds == BTreeSet::from(["bzkir", "prover", "verifier"]),
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: artifact kinds"
         );
         for a in &record.artifacts {
             validate_id(&a.digest)?;
         }
-        ensure!(
+        crate::require!(
             set.0 == identity("midnight-zkir-forge/artifacts/v1", &record.artifacts)?,
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: artifact identity"
         );
         let v3 = format == "midnight-zkir-v3-json";
@@ -356,9 +413,10 @@ fn record_valid(record: &Record) -> Result<()> {
         } else {
             backend::LEDGER_REV
         };
-        ensure!(
+        crate::require!(
             record.profile.as_deref() == Some(profile)
                 && record.ledger_revision.as_deref() == Some(rev),
+            crate::error::Kind::SnapshotProfileMismatch,
             "snapshot_profile_mismatch"
         );
         let fingerprint = record
@@ -389,22 +447,28 @@ fn record_valid(record: &Record) -> Result<()> {
                 .worker
                 .as_ref()
                 .context("snapshot_integrity_error: worker missing")?;
-            ensure!(
+            crate::require!(
                 worker.profile == profile && worker.source_revision == rev,
+                crate::error::Kind::SnapshotProfileMismatch,
                 "snapshot_profile_mismatch"
             );
             validate_id(&worker.build_fingerprint)?;
             validate_id(&worker.executable_sha256)?;
             recipe = identity("midnight-zkir-forge/derive-worker/v1", &(&recipe, worker))?;
         } else {
-            ensure!(record.worker.is_none(), "snapshot_profile_mismatch");
+            crate::require!(
+                record.worker.is_none(),
+                crate::error::Kind::SnapshotProfileMismatch,
+                "snapshot_profile_mismatch"
+            );
         }
-        ensure!(
+        crate::require!(
             record.derivation_id.as_ref().map(|d| d.0.as_str()) == Some(recipe.as_str()),
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: recipe identity"
         );
     } else {
-        ensure!(
+        crate::require!(
             record.artifacts.is_empty()
                 && record.derivation_id.is_none()
                 && record.profile.is_none()
@@ -414,6 +478,7 @@ fn record_valid(record: &Record) -> Result<()> {
                 && record.parameter_digest.is_none()
                 && record.k.is_none()
                 && record.generation_ms.is_none(),
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: partial record"
         );
     }
@@ -421,15 +486,17 @@ fn record_valid(record: &Record) -> Result<()> {
 }
 fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
     let map: BTreeMap<_, _> = inventory.iter().map(|e| (e.path.as_str(), e)).collect();
-    ensure!(
+    crate::require!(
         map.len() == inventory.len(),
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: duplicate inventory path"
     );
     for entry in inventory {
         safe_path(&entry.path)?;
         if let Some(hash) = entry.path.strip_prefix("objects/") {
-            ensure!(
+            crate::require!(
                 hash == entry.sha256,
+                crate::error::Kind::IntegrityError,
                 "snapshot_integrity_error: CAS filename"
             );
         }
@@ -438,8 +505,9 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
         Connection::open_with_flags(root.join("index.sqlite3"), OpenFlags::SQLITE_OPEN_READ_ONLY)?;
     db.execute_batch("PRAGMA trusted_schema=OFF; PRAGMA query_only=ON;")?;
     let mode: String = db.query_row("PRAGMA journal_mode", [], |r| r.get(0))?;
-    ensure!(
+    crate::require!(
         mode == "delete",
+        crate::error::Kind::SnapshotSchemaMismatch,
         "snapshot_schema_mismatch: standalone DELETE database required"
     );
     let expected = Connection::open_in_memory()?;
@@ -452,12 +520,17 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             .query_map([], |r| Ok((r.get(0)?, r.get(1)?, r.get(2)?)))?
             .collect::<rusqlite::Result<_>>()?)
     };
-    ensure!(
+    crate::require!(
         schema(&db)? == schema(&expected)?,
+        crate::error::Kind::SnapshotSchemaMismatch,
         "snapshot_schema_mismatch: unexpected schema/constraints"
     );
     let integrity: String = db.query_row("PRAGMA integrity_check", [], |r| r.get(0))?;
-    ensure!(integrity == "ok", "snapshot_integrity_error: SQLite check");
+    crate::require!(
+        integrity == "ok",
+        crate::error::Kind::IntegrityError,
+        "snapshot_integrity_error: SQLite check"
+    );
     let verify = |record: &Record, ready: bool| -> Result<()> {
         record_valid(record)?;
         for a in std::iter::once(&record.source).chain(record.artifacts.iter().filter(|_| ready)) {
@@ -465,14 +538,16 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             let entry = map
                 .get(path.as_str())
                 .context("snapshot_integrity_error: referenced CAS missing")?;
-            ensure!(
+            crate::require!(
                 entry.bytes == a.size && entry.sha256 == a.digest,
+                crate::error::Kind::IntegrityError,
                 "snapshot_integrity_error: CAS metadata"
             );
         }
         if ready {
-            ensure!(
+            crate::require!(
                 record.artifact_set_id.is_some(),
+                crate::error::Kind::IntegrityError,
                 "snapshot_integrity_error: ready record incomplete"
             );
         }
@@ -492,23 +567,26 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
         let mut statement = db.prepare(sql)?;
         let mut rows = statement.query([])?;
         while let Some(row) = rows.next()? {
-            ensure!(
+            crate::require!(
                 row.get::<_, u64>(3)? == 64 && row.get::<_, u64>(4)? <= MAX_MANIFEST,
+                crate::error::Kind::SnapshotLimit,
                 "snapshot_limit: record metadata"
             );
             let id: String = row.get(0)?;
             let record: Record = serde_json::from_str(&row.get::<_, String>(1)?)?;
             let flag: i64 = row.get(2)?;
-            ensure!(
+            crate::require!(
                 flag == 0 || flag == 1,
+                crate::error::Kind::IntegrityError,
                 "snapshot_integrity_error: ready flag"
             );
             let ready = flag == 1;
             verify(&record, ready)?;
             if let (Some(recipe), Some(set)) = (&record.derivation_id, &record.artifact_set_id) {
                 if let Some(previous) = recipes.insert(recipe.0.clone(), set.0.clone()) {
-                    ensure!(
+                    crate::require!(
                         previous == set.0,
+                        crate::error::Kind::IntegrityError,
                         "snapshot_integrity_error: contradictory recipe outputs"
                     );
                 }
@@ -521,8 +599,9 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
                 "derivations" => record.derivation_id.as_ref().map(|d| &d.0),
                 _ => record.artifact_set_id.as_ref().map(|s| &s.0),
             };
-            ensure!(
+            crate::require!(
                 expected == Some(&id),
+                crate::error::Kind::IntegrityError,
                 "snapshot_integrity_error: database key"
             );
             summary.formats.insert(
@@ -544,13 +623,15 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             }
         }
     }
-    ensure!(
+    crate::require!(
         recipes.keys().all(|recipe| derivations.contains(recipe)),
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: derivation history missing"
     );
     let inconsistent:u64=db.query_row("SELECT count(*) FROM derivations d WHERE d.ready != EXISTS(SELECT 1 FROM bundles b WHERE b.ready=1 AND json_extract(b.record,'$.derivation_id')=d.id)",[],|r|r.get(0))?;
-    ensure!(
+    crate::require!(
         inconsistent == 0,
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: ready reference mismatch"
     );
     for table in ["bundles", "derivations"] {
@@ -558,8 +639,9 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             "SELECT count(*) FROM {table} r WHERE json_extract(r.record,'$.artifact_set_id') IS NOT NULL AND NOT EXISTS(SELECT 1 FROM artifact_sets a WHERE a.id=json_extract(r.record,'$.artifact_set_id'))"
         );
         let missing: u64 = db.query_row(&sql, [], |r| r.get(0))?;
-        ensure!(
+        crate::require!(
             missing == 0,
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: artifact history missing"
         );
     }
@@ -568,15 +650,17 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
         .iter()
         .filter(|e| e.path.ends_with("/manifest.json"))
     {
-        ensure!(
+        crate::require!(
             entry.bytes <= MAX_MANIFEST,
+            crate::error::Kind::SnapshotLimit,
             "snapshot_limit: export manifest too large"
         );
         let manifest_bytes = fs::read(root.join(&entry.path))?;
         let record: Record = serde_json::from_slice(&manifest_bytes)?;
         record_valid(&record)?;
-        ensure!(
+        crate::require!(
             manifest_bytes == crate::store::export_manifest(&record)?,
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: noncanonical export manifest"
         );
         let recipe = &record
@@ -589,15 +673,35 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             .as_ref()
             .context("snapshot_integrity_error: export identity missing")?
             .0;
-        ensure!(
+        crate::require!(
             recipes.get(recipe) == Some(set),
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: export recipe history mismatch"
         );
         let base = format!("exports/{}/{recipe}/{set}", record.bundle_id.0);
-        ensure!(
+        crate::require!(
             entry.path == format!("{base}/manifest.json"),
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: export path"
         );
+        let sidecar = format!("{base}/descriptor.json");
+        if let Some(entry) = map.get(sidecar.as_str()) {
+            ensure!(
+                entry.bytes <= MAX_MANIFEST,
+                crate::error::Kind::SnapshotLimit
+            );
+            let bytes = fs::read(root.join(&sidecar))?;
+            let actual = crate::descriptor::ArtifactDescriptor::decode(&bytes)?;
+            let expected = crate::descriptor::ArtifactDescriptor::from_record(
+                &record,
+                &fs::read(root.join(format!("objects/{}", record.source.digest)))?,
+            )?;
+            ensure!(
+                serde_json::to_value(actual)? == serde_json::to_value(expected)?,
+                crate::error::Kind::IntegrityError
+            );
+            export_paths.insert(sidecar);
+        }
         for a in std::iter::once(&record.source).chain(record.artifacts.iter()) {
             let path = format!(
                 "{base}/{}/{}.{}",
@@ -608,8 +712,9 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
             let e = map
                 .get(path.as_str())
                 .context("snapshot_integrity_error: export file missing")?;
-            ensure!(
+            crate::require!(
                 e.bytes == a.size && e.sha256 == a.digest,
+                crate::error::Kind::IntegrityError,
                 "snapshot_integrity_error: export bytes"
             );
             export_paths.insert(path);
@@ -619,8 +724,9 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
         .iter()
         .filter(|e| e.path.starts_with("exports/") && !e.path.ends_with("/manifest.json"))
     {
-        ensure!(
+        crate::require!(
             export_paths.contains(&entry.path),
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: undeclared export file"
         );
     }
@@ -644,7 +750,11 @@ pub fn create(
     partition: Option<String>,
     scope: &Scope,
 ) -> Result<Value> {
-    ensure!(max_bytes > 0, "snapshot_limit: budget must be positive");
+    crate::require!(
+        max_bytes > 0,
+        crate::error::Kind::SnapshotLimit,
+        "snapshot_limit: budget must be positive"
+    );
     if let Some(p) = &partition {
         validate_id(p)?;
     }
@@ -671,21 +781,23 @@ pub fn create(
         )?;
         let pages: u64 = source.query_row("PRAGMA page_count", [], |r| r.get(0))?;
         let size: u64 = source.query_row("PRAGMA page_size", [], |r| r.get(0))?;
-        ensure!(
+        crate::require!(
             pages
                 .checked_mul(size)
                 .is_some_and(|bytes| bytes <= max_bytes),
+            crate::error::Kind::SnapshotLimit,
             "snapshot_limit: database byte budget exceeded"
         );
         let mut target = Connection::open(staging.path().join("index.sqlite3"))?;
         {
             let backup = rusqlite::backup::Backup::new(&source, &mut target)
                 .context("snapshot backup begin")?;
-            ensure!(
+            crate::require!(
                 matches!(
                     backup.step(-1).context("snapshot backup step")?,
                     rusqlite::backup::StepResult::Done
                 ),
+                crate::error::Kind::SnapshotBusy,
                 "snapshot_busy: database backup incomplete"
             );
         }
@@ -695,7 +807,11 @@ pub fn create(
     }
     File::open(staging.path().join("index.sqlite3"))?.sync_all()?;
     let (bytes, hash) = hash_file(&staging.path().join("index.sqlite3"))?;
-    ensure!(bytes <= max_bytes, "snapshot_limit: byte budget exceeded");
+    crate::require!(
+        bytes <= max_bytes,
+        crate::error::Kind::SnapshotLimit,
+        "snapshot_limit: byte budget exceeded"
+    );
     let mut total = bytes;
     let mut entries = vec![Entry {
         path: "index.sqlite3".to_owned(),
@@ -709,7 +825,7 @@ pub fn create(
         let relative = source
             .strip_prefix(&root)?
             .to_str()
-            .context("snapshot_unsafe_path")?
+            .context(crate::error::Kind::SnapshotUnsafePath)?
             .to_owned();
         let target = staging.path().join(&relative);
         fs::create_dir_all(target.parent().unwrap())?;
@@ -731,8 +847,9 @@ pub fn create(
     };
     manifest.snapshot_id = manifest.id()?;
     let bytes = serde_json::to_vec_pretty(&manifest)?;
-    ensure!(
+    crate::require!(
         bytes.len() as u64 <= MAX_MANIFEST && total + bytes.len() as u64 <= max_bytes,
+        crate::error::Kind::SnapshotLimit,
         "snapshot_limit: manifest exceeds budget"
     );
     let mut file = File::options()
@@ -743,7 +860,7 @@ pub fn create(
     file.sync_all()?;
     sync_tree(staging.path())?;
     crate::filesystem::publish_directory(staging.path(), &output)
-        .context("snapshot_publish_failed")?;
+        .context(crate::error::Kind::SnapshotPublishFailed)?;
     transaction
         .rollback()
         .context("snapshot release read-only lease")?;
@@ -759,47 +876,61 @@ pub fn restore(
     partition: Option<&str>,
     scope: &Scope,
 ) -> Result<Value> {
-    ensure!(max_bytes > 0, "snapshot_limit: budget must be positive");
+    crate::require!(
+        max_bytes > 0,
+        crate::error::Kind::SnapshotLimit,
+        "snapshot_limit: budget must be positive"
+    );
     regular(input, true)?;
     let input = fs::canonicalize(input)?;
     let target = destination(root)?;
     disjoint(&input, &target)?;
     let manifest_path = input.join("snapshot.json");
     regular(&manifest_path, false)?;
-    ensure!(
+    crate::require!(
         fs::metadata(&manifest_path)?.len() <= MAX_MANIFEST,
+        crate::error::Kind::SnapshotLimit,
         "snapshot_limit: manifest too large"
     );
     let mut bytes = Vec::new();
     File::open(manifest_path)?
         .take(MAX_MANIFEST + 1)
         .read_to_end(&mut bytes)?;
-    ensure!(bytes.len() as u64 <= MAX_MANIFEST, "snapshot_limit");
+    crate::require!(
+        bytes.len() as u64 <= MAX_MANIFEST,
+        crate::error::Kind::SnapshotLimit,
+        "snapshot_limit"
+    );
     crate::domain::validate_json(&bytes)?;
     let manifest: Manifest = serde_json::from_slice(&bytes)?;
-    ensure!(
+    crate::require!(
         manifest.schema == 1 && manifest.format == "midnight-zkir-forge/snapshot/v1",
+        crate::error::Kind::SnapshotSchemaMismatch,
         "snapshot_schema_mismatch"
     );
     validate_id(&manifest.snapshot_id)?;
-    ensure!(
+    crate::require!(
         manifest.snapshot_id == manifest.id()?
             && expected_id.is_none_or(|id| id == manifest.snapshot_id),
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: snapshot identity"
     );
     if let Some(p) = &manifest.partition {
         validate_id(p)?;
     }
-    ensure!(
+    crate::require!(
         partition.is_none_or(|p| manifest.partition.as_deref() == Some(p)),
+        crate::error::Kind::SnapshotPartitionMismatch,
         "snapshot_partition_mismatch"
     );
-    ensure!(
+    crate::require!(
         manifest.producer == producer(manifest.producer.worker.is_some())?,
+        crate::error::Kind::SnapshotProfileMismatch,
         "snapshot_profile_mismatch: producer differs"
     );
-    ensure!(
+    crate::require!(
         !manifest.files.is_empty() && manifest.files.len() <= MAX_FILES,
+        crate::error::Kind::SnapshotLimit,
         "snapshot_limit: inventory count"
     );
     let actual: Vec<_> = payload(&input, true)?
@@ -807,8 +938,9 @@ pub fn restore(
         .map(|p| p.strip_prefix(&input).unwrap().to_str().unwrap().to_owned())
         .collect();
     let listed: Vec<_> = manifest.files.iter().map(|e| e.path.clone()).collect();
-    ensure!(
+    crate::require!(
         actual == listed,
+        crate::error::Kind::IntegrityError,
         "snapshot_integrity_error: missing, extra, duplicate or unsorted inventory"
     );
     let staging = tempfile::tempdir_in(target.parent().unwrap())?;
@@ -816,32 +948,39 @@ pub fn restore(
         fs::create_dir(staging.path().join(dir))?;
     }
     let mut total = bytes.len() as u64;
-    ensure!(total <= max_bytes, "snapshot_limit: byte budget exceeded");
+    crate::require!(
+        total <= max_bytes,
+        crate::error::Kind::SnapshotLimit,
+        "snapshot_limit: byte budget exceeded"
+    );
     for expected in &manifest.files {
         safe_path(&expected.path)?;
         validate_id(&expected.sha256)?;
-        ensure!(
+        crate::require!(
             expected.bytes <= max_bytes - total,
+            crate::error::Kind::SnapshotLimit,
             "snapshot_limit: byte budget exceeded"
         );
         let output = staging.path().join(&expected.path);
         fs::create_dir_all(output.parent().unwrap())?;
         let actual = copy_file(&input.join(&expected.path), &output, max_bytes - total)?;
-        ensure!(
+        crate::require!(
             actual.sha256 == expected.sha256 && actual.bytes == expected.bytes,
+            crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: file differs"
         );
         total += actual.bytes;
     }
     let summary = validate_payload(staging.path(), &manifest.files)?;
     check_scope(&summary, scope)?;
-    ensure!(
+    crate::require!(
         summary.has_v3 == manifest.producer.worker.is_some(),
+        crate::error::Kind::SnapshotProfileMismatch,
         "snapshot_profile_mismatch: worker declaration"
     );
     sync_tree(staging.path())?;
     crate::filesystem::publish_directory(staging.path(), &target)
-        .context("snapshot_publish_failed")?;
+        .context(crate::error::Kind::SnapshotPublishFailed)?;
     Ok(
         json!({"schema":1,"snapshot_id":manifest.snapshot_id,"cache_dir":target,"partition":manifest.partition,"bytes":total,"summary":summary,"producer":manifest.producer}),
     )

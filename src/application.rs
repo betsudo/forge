@@ -262,8 +262,9 @@ async fn ensure_locked(
                 }
             });
         if let Some(expected) = expected {
-            ensure!(
+            crate::require!(
                 *expected == set,
+                crate::error::Kind::ArtifactIdentityChanged,
                 "artifact_identity_changed: regenerated output differs; original identity retained"
             );
         }
@@ -284,7 +285,7 @@ async fn ensure_locked(
     }
     let paths = store.export(&record, output)?;
     Ok((
-        json!({"schema":1,"bundle_id":record.bundle_id,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"format":ir.format(),"worker":record.worker,"profile":record.profile,"build_fingerprint":record.build_fingerprint,"ledger_revision":record.ledger_revision,"export":paths}),
+        json!({"schema":1,"bundle_id":record.bundle_id,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"format":ir.format(),"worker":record.worker,"profile":record.profile,"build_fingerprint":record.build_fingerprint,"ledger_revision":record.ledger_revision,"descriptor":paths["descriptor"],"export":paths}),
         record,
         hit,
         generation_ms,
@@ -300,7 +301,7 @@ pub fn resolve(
     let clock = Instant::now();
     let tx = store.lock()?;
     let (record, ready) = store.load(id)?;
-    ensure!(ready, "artifacts unavailable; run ensure explicitly");
+    ensure!(ready, crate::error::Kind::ArtifactsUnavailable);
     let mut export = store.export(&record, output)?;
     let selected: Vec<Artifact> = if let Some(kind) = kind {
         export["files"]
@@ -332,7 +333,7 @@ pub fn resolve(
     )?;
     tx.commit()?;
     Ok(
-        json!({"schema":1,"bundle_id":record.bundle_id,"artifact_set_id":record.artifact_set_id,"export":export}),
+        json!({"schema":1,"bundle_id":record.bundle_id,"artifact_set_id":record.artifact_set_id,"descriptor":export["descriptor"],"export":export}),
     )
 }
 

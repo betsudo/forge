@@ -56,7 +56,7 @@ impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
         let mut response = (
             self.0,
-            Json(json!({"schema":1,"error":{"code":self.1,"message":self.1}})),
+            Json(json!({"schema":1,"error":{"code":self.1,"message":self.1,"retryable":matches!(self.0,StatusCode::TOO_MANY_REQUESTS|StatusCode::SERVICE_UNAVAILABLE),"availability_fallback":matches!(self.0,StatusCode::TOO_MANY_REQUESTS|StatusCode::SERVICE_UNAVAILABLE|StatusCode::NOT_FOUND)}})),
         )
             .into_response();
         if self.0 == StatusCode::UNAUTHORIZED {
@@ -76,23 +76,11 @@ fn bad(code: &'static str) -> ApiError {
     ApiError(StatusCode::BAD_REQUEST, code)
 }
 fn classify(error: anyhow::Error) -> ApiError {
-    // Deliberately do not send upstream diagnostics: they may contain server paths.
-    let text = format!("{error:#}");
-    if text.contains("not registered") || text.contains("object_not_found") {
-        ApiError(StatusCode::NOT_FOUND, "not_found")
-    } else if text.contains("integrity") {
-        ApiError(StatusCode::CONFLICT, "integrity_error")
-    } else if text.contains("artifact_identity_changed") {
-        ApiError(StatusCode::CONFLICT, "artifact_identity_changed")
-    } else if text.contains("profile_format_mismatch") {
-        bad("profile_format_mismatch")
-    } else if text.contains("unsupported_zkir_version") {
-        bad("unsupported_zkir_version")
-    } else if text.contains("parameter") {
-        ApiError(StatusCode::SERVICE_UNAVAILABLE, "parameters_unavailable")
-    } else {
-        ApiError(StatusCode::UNPROCESSABLE_ENTITY, "operation_failed")
-    }
+    let kind = crate::error::classify(&error);
+    ApiError(
+        StatusCode::from_u16(kind.status()).expect("domain HTTP status"),
+        kind.code(),
+    )
 }
 impl Service {
     async fn work<T, F>(self: &Arc<Self>, task: F) -> std::result::Result<T, ApiError>
@@ -297,7 +285,7 @@ async fn upload(
             let record =
                 application::import_bytes_with_profile(store, &bytes, &args.name, profile)?;
             let ready = store.load(&record.bundle_id.0)?.1;
-            Ok(record_json(&record, ready))
+            record_json(&record, ready, store)
         })
         .await?;
     Ok((StatusCode::CREATED, Json(value)))
@@ -305,8 +293,12 @@ async fn upload(
 fn artifact_json(artifact: &Artifact) -> Value {
     json!({"kind":artifact.kind,"sha256":artifact.digest,"bytes":artifact.size,"url":format!("/v1/objects/{}",artifact.digest)})
 }
-fn record_json(record: &Record, ready: bool) -> Value {
-    json!({"schema":1,"bundle_id":record.bundle_id,"name":record.name,"ready":ready,"format":record.format.as_deref().unwrap_or("midnight-zkir-v2-json"),"profile":record.profile,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"source":artifact_json(&record.source),"artifacts":if ready {record.artifacts.iter().map(artifact_json).collect::<Vec<_>>()} else {vec![]}})
+fn record_json(record: &Record, ready: bool, store: &Store) -> anyhow::Result<Value> {
+    let descriptor =
+        crate::descriptor::ArtifactDescriptor::from_record(record, &store.read(&record.source)?)?;
+    Ok(
+        json!({"schema":1,"descriptor":descriptor,"bundle_id":record.bundle_id,"name":record.name,"ready":ready,"format":record.format.as_deref().unwrap_or("midnight-zkir-v2-json"),"profile":record.profile,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"source":artifact_json(&record.source),"artifacts":if ready {record.artifacts.iter().map(artifact_json).collect::<Vec<_>>()} else {vec![]}}),
+    )
 }
 async fn bundle(
     State(state): State<Shared>,
@@ -316,7 +308,7 @@ async fn bundle(
     state
         .work(move |_, store| {
             let (r, ready) = store.load(&id)?;
-            Ok(Json(record_json(&r, ready)))
+            Ok(Json(record_json(&r, ready, store)?))
         })
         .await
 }
@@ -360,7 +352,7 @@ async fn materialize(
                 profile,
             ))?;
             let (record, ready) = store.load(&id)?;
-            let mut response = record_json(&record, ready);
+            let mut response = record_json(&record, ready, store)?;
             response["cache"] = result["cache"].clone();
             Ok(Json(response))
         })
@@ -418,7 +410,7 @@ async fn source(
     let digest = state
         .work(move |_, store| {
             let (r, _) = store.load(&id)?;
-            ensure!(r.name == name, "object_not_found");
+            ensure!(r.name == name, crate::error::Kind::NotFound);
             Ok(r.source.digest)
         })
         .await?;
@@ -492,7 +484,8 @@ async fn download(
             let mut rows = stmt.query([])?;
             let mut found = None;
             while let Some(row) = rows.next()? {
-                let r: Record = serde_json::from_str(&row.get::<_, String>(0)?)?;
+                let r: Record = serde_json::from_str(&row.get::<_, String>(0)?)
+                    .context(crate::error::Kind::IntegrityError)?;
                 let ready: bool = row.get(1)?;
                 if r.source.digest == requested {
                     found = Some((r.bundle_id.0, r.source));
@@ -503,15 +496,25 @@ async fn download(
                     break;
                 }
             }
-            let (bundle, artifact) = found.context("object_not_found")?;
+            let (bundle, artifact) = found.context(crate::error::Kind::NotFound)?;
             let path = store.object_path(&requested)?;
-            let meta = std::fs::symlink_metadata(&path).context("object_not_found")?;
+            let meta = std::fs::symlink_metadata(&path).map_err(|error| {
+                let kind = if error.kind() == std::io::ErrorKind::NotFound {
+                    crate::error::Kind::NotFound
+                } else {
+                    crate::error::Kind::InternalError
+                };
+                anyhow::Error::new(error).context(kind)
+            })?;
             ensure!(
                 meta.is_file() && !meta.file_type().is_symlink(),
-                "integrity_error"
+                crate::error::Kind::IntegrityError
             );
             let mut file = File::open(path)?;
-            ensure!(file.metadata()?.len() == artifact.size, "integrity_error");
+            ensure!(
+                file.metadata()?.len() == artifact.size,
+                crate::error::Kind::IntegrityError
+            );
             let mut hash = Sha256::new();
             let mut buffer = [0u8; 128 * 1024];
             loop {
@@ -523,7 +526,7 @@ async fn download(
             }
             ensure!(
                 hex::encode(hash.finalize()) == artifact.digest,
-                "integrity_error"
+                crate::error::Kind::IntegrityError
             );
             file.seek(SeekFrom::Start(0))?;
             drop(rows);

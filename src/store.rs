@@ -67,10 +67,11 @@ impl Store {
         Ok(Self { root, db })
     }
     pub fn lock(&self) -> Result<Transaction<'_>> {
-        Ok(Transaction::new_unchecked(
-            &self.db,
-            TransactionBehavior::Immediate,
-        )?)
+        Transaction::new_unchecked(&self.db, TransactionBehavior::Immediate).map_err(|error| {
+            let busy = matches!(&error, rusqlite::Error::SqliteFailure(code, _) if matches!(code.code, rusqlite::ErrorCode::DatabaseBusy | rusqlite::ErrorCode::DatabaseLocked));
+            let kind = if busy { crate::error::Kind::Busy } else { crate::error::Kind::InternalError };
+            anyhow::Error::new(error).context(kind)
+        })
     }
     pub fn load(&self, id: &str) -> Result<(Record, bool)> {
         validate_id(id)?;
@@ -80,8 +81,13 @@ impl Store {
                 Ok((r.get(0)?, r.get(1)?))
             })
             .optional()?;
-        let (record, ready) = row.context("bundle not registered")?;
-        Ok((serde_json::from_str(&record)?, ready))
+        let (record, ready) = row
+            .context("bundle not registered")
+            .context(crate::error::Kind::NotFound)?;
+        Ok((
+            serde_json::from_str(&record).context(crate::error::Kind::IntegrityError)?,
+            ready,
+        ))
     }
     pub fn save(&self, record: &Record, ready: bool) -> Result<()> {
         if ready && let Some(id) = &record.derivation_id {
@@ -102,28 +108,33 @@ impl Store {
         Ok(self.root.join("objects").join(digest))
     }
     pub fn read(&self, artifact: &Artifact) -> Result<Vec<u8>> {
-        let path = self.object_path(&artifact.digest)?;
-        regular_file(&path)?;
-        let file = fs::File::open(path)?;
-        ensure!(
-            file.metadata()?.len() == artifact.size,
-            "integrity_error: size mismatch for {}",
-            artifact.digest
-        );
-        let mut bytes = Vec::new();
-        file.take(
-            artifact
-                .size
-                .checked_add(1)
-                .context("artifact size overflow")?,
-        )
-        .read_to_end(&mut bytes)?;
-        ensure!(
-            bytes.len() as u64 == artifact.size && digest(&bytes) == artifact.digest,
-            "integrity_error: {}",
-            artifact.digest
-        );
-        Ok(bytes)
+        (|| {
+            let path = self.object_path(&artifact.digest)?;
+            regular_file(&path)?;
+            let file = fs::File::open(path)?;
+            crate::require!(
+                file.metadata()?.len() == artifact.size,
+                crate::error::Kind::IntegrityError,
+                "integrity_error: size mismatch for {}",
+                artifact.digest
+            );
+            let mut bytes = Vec::new();
+            file.take(
+                artifact
+                    .size
+                    .checked_add(1)
+                    .context("artifact size overflow")?,
+            )
+            .read_to_end(&mut bytes)?;
+            crate::require!(
+                bytes.len() as u64 == artifact.size && digest(&bytes) == artifact.digest,
+                crate::error::Kind::IntegrityError,
+                "integrity_error: {}",
+                artifact.digest
+            );
+            Ok(bytes)
+        })()
+        .context(crate::error::Kind::IntegrityError)
     }
     pub fn put(&self, bytes: &[u8]) -> Result<String> {
         let hash = digest(bytes);
@@ -154,6 +165,7 @@ impl Store {
     }
     pub fn verify(&self, artifact: &Artifact) -> Result<()> {
         verify_file(&self.object_path(&artifact.digest)?, artifact)
+            .context(crate::error::Kind::IntegrityError)
     }
     pub fn export(&self, record: &Record, output: Option<&Path>) -> Result<Value> {
         let set = record
@@ -168,6 +180,11 @@ impl Store {
             .join(&set.0);
         let destination = std::path::absolute(output.unwrap_or(&default))?;
         let destination = destination.as_path();
+        let descriptor = crate::descriptor::ArtifactDescriptor::from_record(
+            record,
+            &self.read(&record.source)?,
+        )?;
+        let descriptor_bytes = serde_json::to_vec_pretty(&descriptor)?;
         let all: Vec<&Artifact> = std::iter::once(&record.source)
             .chain(record.artifacts.iter())
             .collect();
@@ -184,13 +201,32 @@ impl Store {
                     record.name,
                     artifact.kind.extension()
                 ));
-                verify_file(&target, artifact).context("export_integrity_error")?;
+                verify_file(&target, artifact)
+                    .context("export_integrity_error")
+                    .context(crate::error::Kind::IntegrityError)?;
             }
-            regular_file(&destination.join("manifest.json"))?;
+            regular_file(&destination.join("manifest.json"))
+                .context(crate::error::Kind::IntegrityError)?;
             ensure!(
                 fs::read(destination.join("manifest.json"))? == export_manifest(record)?,
-                "export manifest differs"
+                crate::error::Kind::IntegrityError
             );
+            let sidecar = destination.join("descriptor.json");
+            if sidecar.symlink_metadata().is_ok() {
+                regular_file(&sidecar).context(crate::error::Kind::IntegrityError)?;
+                let bytes = fs::read(&sidecar)?;
+                crate::descriptor::ArtifactDescriptor::decode(&bytes)?;
+                ensure!(
+                    bytes == descriptor_bytes,
+                    crate::error::Kind::IntegrityError
+                );
+            } else {
+                let mut stage = tempfile::NamedTempFile::new_in(destination)?;
+                stage.write_all(&descriptor_bytes)?;
+                stage.as_file().sync_all()?;
+                stage.persist_noclobber(&sidecar).map_err(|e| e.error)?;
+                sync_dir(destination)?;
+            }
         } else {
             let parent = destination.parent().context("export has no parent")?;
             managed_dir(parent)?;
@@ -211,6 +247,9 @@ impl Store {
             let mut manifest = fs::File::create(staging.path().join("manifest.json"))?;
             manifest.write_all(&export_manifest(record)?)?;
             manifest.sync_all()?;
+            let mut sidecar = fs::File::create(staging.path().join("descriptor.json"))?;
+            sidecar.write_all(&descriptor_bytes)?;
+            sidecar.sync_all()?;
             sync_dir(&staging.path().join("zkir"))?;
             sync_dir(&staging.path().join("keys"))?;
             sync_dir(staging.path())?;
@@ -218,7 +257,9 @@ impl Store {
         }
         let base = fs::canonicalize(destination)?;
         let files:Vec<Value>=all.iter().map(|a|json!({"kind":a.kind,"sha256":a.digest,"bytes":a.size,"path":base.join(a.kind.folder()).join(format!("{}.{}",record.name,a.kind.extension()))})).collect();
-        Ok(json!({"base":base,"lifetime":"persistent_until_owner_removal","files":files}))
+        Ok(
+            json!({"base":base,"lifetime":"persistent_until_owner_removal","files":files,"descriptor":descriptor}),
+        )
     }
     pub fn evict(&self, id: &str, dry_run: bool) -> Result<Value> {
         let tx = self.lock()?;
@@ -364,8 +405,9 @@ fn directory_bytes(path: &Path) -> Result<u64> {
 fn verify_file(path: &Path, artifact: &Artifact) -> Result<()> {
     regular_file(path)?;
     let mut file = fs::File::open(path)?;
-    ensure!(
+    crate::require!(
         file.metadata()?.len() == artifact.size,
+        crate::error::Kind::IntegrityError,
         "integrity_error: size mismatch for {}",
         artifact.digest
     );
@@ -378,8 +420,9 @@ fn verify_file(path: &Path, artifact: &Artifact) -> Result<()> {
         }
         hasher.update(&buffer[..n]);
     }
-    ensure!(
+    crate::require!(
         hex::encode(hasher.finalize()) == artifact.digest,
+        crate::error::Kind::IntegrityError,
         "integrity_error: digest mismatch for {}",
         artifact.digest
     );

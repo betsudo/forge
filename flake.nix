@@ -23,7 +23,8 @@
           worker = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
             pname = "midnight-zkir-forge-zkir3-worker";
             version = "0.2.0";
-            src = pkgs.lib.fileset.toSource { root = ./workers/zkir3; fileset = ./workers/zkir3; };
+            src = pkgs.lib.fileset.toSource { root = ./.; fileset = pkgs.lib.fileset.unions [ ./workers/zkir3 ./src/error.rs ]; };
+            sourceRoot = "source/workers/zkir3";
             cargoLock = {
               lockFile = ./workers/zkir3/Cargo.lock;
               outputHashes."midnight-base-crypto-1.0.0" = "sha256-mYOsQLJ5f8WJfuu13pEQAiQ3N2mPNNjUGQnzIQuJuOA=";

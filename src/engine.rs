@@ -3,7 +3,7 @@ use crate::{
     domain::{WorkerProvenance, validate_json},
     zkir3,
 };
-use anyhow::{Context, Result, bail, ensure};
+use anyhow::{Context, Result, bail};
 use std::path::Path;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, clap::ValueEnum)]
@@ -24,28 +24,33 @@ impl Circuit {
     }
 }
 pub fn parse(raw: &[u8], selected: Option<ProfileSelector>) -> Result<Circuit> {
-    validate_json(raw)?;
-    let json: serde_json::Value = serde_json::from_slice(raw)?;
+    validate_json(raw).context(crate::error::Kind::InvalidInput)?;
+    let json: serde_json::Value =
+        serde_json::from_slice(raw).context(crate::error::Kind::InvalidInput)?;
     let major = json["version"]["major"]
         .as_u64()
-        .context("unsupported_zkir_version: expected a version object")?;
+        .context("unsupported_zkir_version: expected a version object")
+        .context(crate::error::Kind::UnsupportedZkirVersion)?;
     match major {
         2 => {
-            ensure!(
+            crate::require!(
                 selected != Some(ProfileSelector::Zkir3),
+                crate::error::Kind::ProfileFormatMismatch,
                 "profile_format_mismatch: zkir3 requires major 3"
             );
             Ok(Circuit::V2(backend::parse(raw)?))
         }
         3 => {
-            ensure!(
+            crate::require!(
                 selected != Some(ProfileSelector::Ledger8V2),
+                crate::error::Kind::ProfileFormatMismatch,
                 "profile_format_mismatch: ledger8-v2 requires major 2"
             );
             zkir3::call("inspect", raw, None, false, None, None)?;
             Ok(Circuit::V3(raw.to_vec()))
         }
-        _ => bail!("unsupported_zkir_version: {major}"),
+        _ => Err(anyhow::anyhow!("unsupported_zkir_version: {major}")
+            .context(crate::error::Kind::UnsupportedZkirVersion)),
     }
 }
 pub enum Parameters {
@@ -132,6 +137,6 @@ pub async fn generate(
                 fetch,
             },
         ) => zkir3::generate(raw, *k, digest, provenance, directory.as_deref(), *fetch),
-        _ => bail!("profile_format_mismatch: mixed backend plan"),
+        _ => bail!(crate::error::Kind::ProfileFormatMismatch),
     }
 }

@@ -36,7 +36,8 @@ rewrite of legacy snapshot payloads or producer compatibility bypass is allowed.
 This explicit additive decision avoids a Record/identity migration; any later
 change to identity domains or legacy manifest serialization needs a separate ADR.
 
-Descriptor v1 deserialization rejects unknown/missing/duplicate/conflicting fields,
+Descriptor v1 `decode()` is the sole public deserialization entrypoint (the type
+does not implement unchecked `Deserialize`). It rejects unknown/missing/duplicate/conflicting fields,
 invalid IDs/inventory, materialized fields on a lazy record, absent v3 provenance,
 and inconsistent recomputed identities. Consumers accept only explicitly supported
 versions and must independently qualify expected backend revision/profile, format/

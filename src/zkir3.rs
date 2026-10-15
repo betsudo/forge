@@ -1,6 +1,6 @@
 //! File-based private worker boundary; never mix its crypto types with ledger8 v2.
 use crate::domain::{ArtifactKind, WorkerProvenance, digest};
-use anyhow::{Context, Result, ensure};
+use anyhow::{Context, Result};
 use serde_json::Value;
 use std::{
     io::Write,
@@ -53,18 +53,55 @@ pub fn call(
     let mut child = command.spawn().context("start pinned ZKIR3 worker")?;
     let written = child.stdin.take().context("worker stdin")?.write_all(input);
     let result = child.wait_with_output()?;
-    ensure!(
-        result.status.success(),
-        "ZKIR3 worker {action} failed: {}",
-        String::from_utf8_lossy(&result.stderr)
+    crate::domain::validate_json(&result.stdout)
+        .context(crate::error::Kind::WorkerProfileMismatch)?;
+    let value: Value = serde_json::from_slice(&result.stdout)
+        .context("invalid worker response")
+        .context(crate::error::Kind::WorkerProfileMismatch)?;
+    crate::require!(
+        value["protocol"] == 1
+            && value["profile"] == PROFILE
+            && value["source_revision"] == REVISION
+            && value["format"] == FORMAT
+            && value["binary_ir_tag"] == "ir-source[v3-generic]"
+            && value["build_fingerprint"]
+                .as_str()
+                .is_some_and(|v| v.len() == 64
+                    && v.bytes()
+                        .all(|b| b.is_ascii_digit() || (b'a'..=b'f').contains(&b))),
+        crate::error::Kind::WorkerProfileMismatch,
+        "incomplete worker envelope"
     );
+    if !result.status.success() {
+        crate::require!(
+            value["protocol"] == 1
+                && value["profile"] == PROFILE
+                && value["source_revision"] == REVISION
+                && value["format"] == FORMAT,
+            crate::error::Kind::WorkerProfileMismatch,
+            "untrusted worker error envelope"
+        );
+        let fields = value.as_object().expect("worker object");
+        crate::require!(
+            fields.len() == 7 && value["failure"].as_object().is_some_and(|v| v.len() == 1),
+            crate::error::Kind::WorkerProfileMismatch,
+            "unexpected worker error fields"
+        );
+        let kind: crate::error::Kind = serde_json::from_value(value["failure"]["kind"].clone())
+            .context(crate::error::Kind::WorkerProfileMismatch)?;
+        return Err(anyhow::anyhow!(
+            "ZKIR3 worker {action} failed: {}",
+            String::from_utf8_lossy(&result.stderr)
+        )
+        .context(kind));
+    }
     written?;
-    let value: Value = serde_json::from_slice(&result.stdout).context("invalid worker response")?;
-    ensure!(
+    crate::require!(
         value["protocol"] == 1
             && value["profile"] == PROFILE
             && value["source_revision"] == REVISION
             && value["format"] == FORMAT,
+        crate::error::Kind::WorkerProfileMismatch,
         "worker_profile_mismatch: unexpected v3 backend"
     );
     let fingerprint = value["build_fingerprint"]
@@ -99,10 +136,11 @@ pub fn generate(
         Some(staging.path()),
         Some(parameter_digest),
     )?;
-    ensure!(
+    crate::require!(
         actual == *provenance
             && response["k"] == k
             && response["parameter_sha256"] == parameter_digest,
+        crate::error::Kind::WorkerProfileMismatch,
         "worker_identity_changed: re-plan required"
     );
     let mut outputs = Vec::new();
@@ -118,8 +156,9 @@ pub fn generate(
             .iter()
             .find(|a| a["kind"] == serde_json::to_value(kind).unwrap())
             .context("worker output missing")?;
-        ensure!(
+        crate::require!(
             listed["sha256"] == digest(&bytes) && listed["bytes"] == bytes.len(),
+            crate::error::Kind::IntegrityError,
             "worker artifact integrity_error"
         );
         outputs.push((kind, bytes));
