@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Explicit real local CLI acceptance, including a killed writer. Requires parameters."""
 import argparse,json,pathlib,sqlite3,subprocess,tempfile,time
-p=argparse.ArgumentParser();p.add_argument('--binary',required=True,type=pathlib.Path);a=p.parse_args()
-binary=a.binary.resolve();fixture=pathlib.Path(__file__).resolve().parent.parent/'fixtures/assert.zkir'
+p=argparse.ArgumentParser();p.add_argument('--binary',required=True,type=pathlib.Path);p.add_argument('--input',type=pathlib.Path);a=p.parse_args()
+binary=a.binary.resolve();fixture=a.input.resolve() if a.input else pathlib.Path(__file__).resolve().parent.parent/'fixtures/assert.zkir'
 with tempfile.TemporaryDirectory(prefix='forge-cli-acceptance-') as directory:
     root=pathlib.Path(directory);cache=root/'cache';cache.mkdir()
     command=[str(binary),'--cache-dir',str(cache)]

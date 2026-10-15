@@ -24,6 +24,8 @@ fn transaction_crash_rollback_and_eviction_keeps_shared_blob() {
     let source_hash = store.put(source_bytes).unwrap();
     let output_hash = store.put(b"fixture-output").unwrap();
     let make = |name: &str| Record {
+        format: None,
+        worker: None,
         schema: 1,
         bundle_id: BundleId(digest(name.as_bytes())),
         name: name.into(),

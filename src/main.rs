@@ -1,6 +1,8 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
-use midnight_zkir_forge::{application, backend, domain::ArtifactKind, store::Store};
+use midnight_zkir_forge::{
+    application, backend, domain::ArtifactKind, engine::ProfileSelector, store::Store, zkir3,
+};
 use serde_json::{Value, json};
 use std::path::PathBuf;
 
@@ -12,6 +14,9 @@ use std::path::PathBuf;
 struct Cli {
     #[arg(long, global = true, env = "MIDNIGHT_ZKIR_FORGE_DIR")]
     cache_dir: Option<PathBuf>,
+    /// Select an exact backend; otherwise detect the supported format from input.
+    #[arg(long, global = true, value_enum)]
+    profile: Option<ProfileSelector>,
     #[arg(long, global = true, env = "MIDNIGHT_PP")]
     params_dir: Option<PathBuf>,
     /// Explicitly allow official parameter downloads. Offline by default.
@@ -89,7 +94,13 @@ async fn main() {
 }
 fn error_code(error: &anyhow::Error) -> &'static str {
     let text = format!("{error:#}");
-    if text.contains("artifact_identity_changed") {
+    if text.contains("profile_format_mismatch") {
+        "profile_format_mismatch"
+    } else if text.contains("unsupported_zkir_version") {
+        "unsupported_zkir_version"
+    } else if text.contains("worker_profile_mismatch") {
+        "worker_profile_mismatch"
+    } else if text.contains("artifact_identity_changed") {
         "artifact_identity_changed"
     } else if text.contains("integrity") {
         "integrity_error"
@@ -101,11 +112,28 @@ fn error_code(error: &anyhow::Error) -> &'static str {
 }
 async fn run(cli: Cli) -> Result<Value> {
     if matches!(cli.command, Command::Profile) {
+        if cli.profile == Some(ProfileSelector::Zkir3) {
+            let (mut value, worker) = zkir3::call("profile", &[], None, false, None, None)?;
+            value["worker"] = serde_json::to_value(worker)?;
+            return Ok(value);
+        }
         return Ok(
-            json!({"schema":1,"profile":backend::PROFILE,"ledger_revision":backend::LEDGER_REV,"build_fingerprint":application::build_fingerprint()}),
+            json!({"schema":1,"formats":["midnight-zkir-v2-json","midnight-zkir-v3-json"],"selectors":["ledger8-v2","zkir3"],"profile":backend::PROFILE,"ledger_revision":backend::LEDGER_REV,"build_fingerprint":application::build_fingerprint()}),
         );
     }
     if matches!(cli.command, Command::Qualify) {
+        if cli.profile == Some(ProfileSelector::Zkir3) {
+            let (mut value, worker) = zkir3::call(
+                "qualify",
+                &[],
+                cli.params_dir.as_deref(),
+                cli.fetch_params,
+                None,
+                None,
+            )?;
+            value["worker"] = serde_json::to_value(worker)?;
+            return Ok(value);
+        }
         return application::qualify(cli.params_dir.as_deref(), cli.fetch_params).await;
     }
     let root = match cli.cache_dir {
@@ -114,19 +142,18 @@ async fn run(cli: Cli) -> Result<Value> {
     };
     let store = Store::open(&root)?;
     match cli.command {
-        Command::Import { input, name } => Ok(serde_json::to_value(application::import(
-            &store,
-            &input,
-            name.as_deref(),
-        )?)?),
+        Command::Import { input, name } => Ok(serde_json::to_value(
+            application::import_with_profile(&store, &input, name.as_deref(), cli.profile)?,
+        )?),
         Command::Ensure { bundle_id, output } => {
-            application::ensure_artifacts(
+            application::ensure_with_profile(
                 &store,
                 &bundle_id,
                 "",
                 cli.params_dir.as_deref(),
                 cli.fetch_params,
                 output.as_deref(),
+                cli.profile,
             )
             .await
         }
@@ -136,14 +163,16 @@ async fn run(cli: Cli) -> Result<Value> {
             output,
         } => {
             let path = application::absolute_input(&input)?;
-            let record = application::import(&store, &input, name.as_deref())?;
-            application::ensure_artifacts(
+            let record =
+                application::import_with_profile(&store, &input, name.as_deref(), cli.profile)?;
+            application::ensure_with_profile(
                 &store,
                 &record.bundle_id.0,
                 &path,
                 cli.params_dir.as_deref(),
                 cli.fetch_params,
                 output.as_deref(),
+                cli.profile,
             )
             .await
         }

@@ -1,0 +1,16 @@
+{
+  "scope": "independent read-only cache identity, exact consumer compatibility and concurrency",
+  "finding": "no confirmed identity or compatibility defect",
+  "observations": [
+    "50ms parent-liveness polling is not strict zero-overlap generation after owner death",
+    "warm/regenerated exported proof path was added following review"
+  ],
+  "sha256": {
+    "src/engine.rs": "2d02b1f63da5ff12f57d336872e88743397804426e0c6efc52e2af68ec31cf57",
+    "src/zkir3.rs": "995150fa35a4e889aed0db323f948cdcb6268f7272f6b3c9c307b854a3be3865",
+    "src/application.rs": "ec559bdb8170f850b3ef423413115430455916a994357cac443de85eaa15d169",
+    "src/domain.rs": "6646af691aaf5fccf5b5944b92e98c52fd096ea794f3f145dfd39bc717bbe3e9",
+    "workers/zkir3/src/backend.rs": "5af7ace70a473880f4033bedd80be24f20c9ba3b2ea1c57660d2f9d8d5ce46dd",
+    "workers/zkir3/src/main.rs": "8b6c2d5e514f255f7cdea9803bfc3806335000353bd1cc6a5447520537b3aced"
+  }
+}

@@ -20,13 +20,25 @@
       });
       packages = eachSystem (system: let pkgs = import nixpkgs { inherit system; overlays = [ (import rust-overlay) ]; };
           toolchain = pkgs.rust-bin.stable."1.98.1".minimal.override { extensions = [ "rustfmt" "clippy" ]; };
+          worker = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
+            pname = "midnight-zkir-forge-zkir3-worker";
+            version = "0.2.0";
+            src = pkgs.lib.fileset.toSource { root = ./workers/zkir3; fileset = ./workers/zkir3; };
+            cargoLock = {
+              lockFile = ./workers/zkir3/Cargo.lock;
+              outputHashes."midnight-base-crypto-1.0.0" = "sha256-mYOsQLJ5f8WJfuu13pEQAiQ3N2mPNNjUGQnzIQuJuOA=";
+            };
+            nativeBuildInputs = [ pkgs.pkg-config ];
+            buildInputs = [ pkgs.openssl ];
+          };
       in {
+        zkir3-worker = worker;
         default = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
           pname = "midnight-zkir-forge";
-          version = "0.1.0";
+          version = "0.2.0";
           src = pkgs.lib.fileset.toSource {
             root = ./.;
-            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./fixtures/assert.zkir ];
+            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./fixtures ./workers/zkir3 ];
           };
           cargoLock = {
             lockFile = ./Cargo.lock;
@@ -34,6 +46,10 @@
           };
           nativeBuildInputs = [ pkgs.pkg-config ];
           buildInputs = [ pkgs.openssl ];
+          MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER = "${worker}/bin/midnight-zkir-forge-zkir3-worker";
+          postInstall = ''
+            ln -s ${worker}/bin/midnight-zkir-forge-zkir3-worker $out/bin/midnight-zkir-forge-zkir3-worker
+          '';
         };
       });
     };

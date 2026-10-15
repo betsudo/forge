@@ -1,7 +1,34 @@
 # Midnight ZKIR Forge
 
-Local CLI cache for Midnight ZKIR and generated prover/verifier keys. Official
-ledger8 8.1.3 stack, Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
+Local CLI cache for Midnight ZKIR and generated prover/verifier keys, with a
+Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
+
+## Supported profiles
+
+| Selector | JSON format | Official backend |
+| --- | --- | --- |
+| `ledger8-v2` | 2.0 | Ledger8 8.1.3, ZKIR 2.1.1, commit `b5d3e965…` |
+| `zkir3` | 3.0 | Consumer-pinned ZKIR 3.0.0-rc.1, commit `3a7ae036…`, `ir-source[v3-generic]` |
+
+Input format is detected from exact bytes; `--profile` asserts the expected
+backend and rejects mismatches. Use `profile` for the default v2 descriptor and
+`--profile zkir3 profile` for the exact v3 worker provenance. The v3 worker has
+its own Cargo workspace/lock and source dependencies; it does not replace or
+unify the v2 proof stack.
+
+The v3 source is pinned to
+[3a7ae0361d03e6eed4fc91e31f6600f334f605d5](https://github.com/midnightntwrk/midnight-ledger/tree/3a7ae0361d03e6eed4fc91e31f6600f334f605d5),
+matching the inspected local Compact v3 tool configuration. It is **not** the
+same binary format as the v3 RC bundled with ledger8 8.1.3, despite the same
+crate version label. It also does not support JSON 3.1 or the newer split
+ZKIR default dependency graph. Check a consumer's exact pin and serialization;
+no ledger9 transaction/network qualification is implied.
+
+```sh
+midnight-zkir-forge --profile zkir3 prepare /absolute/path/to/circuit.zkir
+midnight-zkir-forge --profile zkir3 qualify
+```
+
 
 ## Install for all local agents
 
@@ -94,10 +121,12 @@ qualification job to exercise key generation:
 ```sh
 midnight-zkir-forge qualify
 ./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1
+./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1
 ./bootstrap.sh -- python3 scripts/check-cli.py --binary target/debug/midnight-zkir-forge
 ```
 
-The bundled assert circuit is for qualification. `qualify` generates twice and
+The bundled assert circuits are for qualification. V3 qualification uses its
+separate worker and verifies the exact source profile. `qualify` generates twice and
 compares bytes, then proves and checks valid/invalid statements. It caches no
 proof or test result. See [the local capability contract](openspec/changes/local-cache-mvp/specs/local-artifact-cache/spec.md).
 
@@ -116,7 +145,10 @@ in local SQLite. Paths and metrics stay on this machine.
 All writers share a SQLite immediate transaction (rollback journal, full sync): duplicate local requests join
 through serialization and then verify the hit. One generation runs at a time;
 callers wait up to one hour for a busy store. Process death rolls back metadata
-and releases the lock. Orphan unpublished blobs/staging files may remain.
+and releases the lock. V3 workers poll parent liveness every 50ms and stop
+when orphaned; this is cancellation polling, not a strict zero-overlap guarantee
+with a replacement owner during crash recovery. Only the parent can publish
+cache readiness. Orphan unpublished blobs/staging files may remain.
 
 Exports are independent **copies**, persistent until their owner removes them.
 Derived eviction keeps source, small identity manifests and exports. It reclaims
@@ -128,8 +160,17 @@ the previous actual artifact identity for the same recipe or fail explicitly.
 
 One circuit per bundle, synchronous local CLI, trusted same-user store; no
 HTTP, background jobs, multi-host operation, purge/GC budget, stdio protocol,
-full manifest/metadata import, ledger9 or ZKIR3. No universal JS/Rust application
+full manifest/metadata import or ledger9 transaction integration. V3 support is
+limited to the exact 3.0 profile above. No universal JS/Rust application
 compatibility or production readiness is claimed. The official Rust Resolver
 is exercised by the real proof qualification. See [SPEC.md](SPEC.md),
 [CONTRIBUTING.md](CONTRIBUTING.md), [progress](docs/PROGRESS.md) and
 [local factory](docs/factory/README.md).
+
+## Upgrading from the first v2-only MVP
+
+Old v2 records and immutable exports remain readable; optional v3 metadata is
+omitted for old records so their integrity manifest stays unchanged. A new
+Forge build fingerprint can cause a new v2 derivation once even though the
+v2 backend profile string stays the same. Old exported paths remain usable;
+pinned verifier identities are not silently replaced.

@@ -69,3 +69,36 @@
   PR, hosted CI, deployment, automated merge or persistent supervision occurred.
 - Next slices: broader real consumer fixtures, multi-circuit manifests, explicit
   purge/GC/retention and JSON-lines mode; HTTP only after those local contracts.
+
+## 2026-10-15 — issue #3: exact consumer ZKIR3 cache
+
+- Saved the consumer starter prompt in the Midnight vault and linked it from
+  the global skill. Issue #3 and a planning-only signed OpenSpec commit own
+  this increment. User explicitly authorized v3 after the original deferral.
+- Read-only consumer configuration inspection found v3 pinned separately to
+  official 3a7ae0361d03e6eed4fc91e31f6600f334f605d5. It is not ledger8
+  b5d3e96's bundled RC; both use the same crate version but different binary
+  tags. Exact consumer v3 uses ir-source[v3-generic], transient2.1.0,
+  base1.0.0, serialize1.1.0 and the existing registry proof/circuit pins.
+- Built an isolated worker Cargo workspace/lock with inspect/plan/generate/
+  qualification operations, preserving the root v2 graph. Parent authenticates
+  worker profile, source, binary/build fingerprints, parameter plan and output
+  hashes, then publishes under existing SQLite ownership.
+- Runtime discovery: this exact v3 parser accepts JSON3.0 and rejects3.1.
+  Attempting minor1 qualification exposed that boundary; no coercion or fallback
+  was added. The modern split repository/default graph remains unsupported.
+- All eight fast tests, both real v3 tests and all three v2 real regression
+  tests pass. New v3 coverage includes fresh valid/invalid proof controls,
+  proofs using warm exported artifacts and regenerated exports, exact identity,
+  concurrent processes (one generation/one hit), corruption and wrong versions.
+- Explicit v3 crash acceptance passed. Worker parent liveness polls every50ms;
+  no strict zero-overlap/real-time cancellation claim is made after owner death.
+  Orphan workers cannot publish readiness. Independent review found no confirmed
+  identity or compatibility defect; the cached-export proof gap was covered.
+- The pre-upgrade v2 default export resolves with the same path and unchanged
+  manifest. Conservative new build fingerprints may cause one new derivation;
+  source inventory and old exported paths survive the upgrade.
+- Formatting, spec/profile/negative commit-policy checks and Clippy pass for
+  both dependency graphs. Nix build/install and installed evidence pending.
+- No consumer checkout, long-running validation, push, PR, hosted CI or
+  supervision was modified or started by this work.

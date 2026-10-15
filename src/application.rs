@@ -1,6 +1,7 @@
 use crate::{
     backend,
     domain::*,
+    engine,
     store::{Metric, Store, read_input},
 };
 use anyhow::{Context, Result, ensure};
@@ -9,8 +10,17 @@ use serde_json::{Value, json};
 use std::{fs, path::Path, time::Instant};
 
 pub fn import(store: &Store, input: &Path, name: Option<&str>) -> Result<Record> {
+    import_with_profile(store, input, name, None)
+}
+
+pub fn import_with_profile(
+    store: &Store,
+    input: &Path,
+    name: Option<&str>,
+    profile: Option<engine::ProfileSelector>,
+) -> Result<Record> {
     let bytes = read_input(input)?;
-    backend::parse(&bytes)?;
+    let circuit = engine::parse(&bytes, profile)?;
     let name = name
         .or_else(|| input.file_stem().and_then(|n| n.to_str()))
         .context("input needs a UTF-8 name or --name")?;
@@ -22,7 +32,7 @@ pub fn import(store: &Store, input: &Path, name: Option<&str>) -> Result<Record>
     };
     let id = BundleId(identity(
         "midnight-zkir-forge/bundle/v1",
-        &(name, "midnight-zkir-v2-json", &source.digest),
+        &(name, circuit.format(), &source.digest),
     )?);
     let tx = store.lock()?;
     let existing = store
@@ -38,6 +48,12 @@ pub fn import(store: &Store, input: &Path, name: Option<&str>) -> Result<Record>
     } else {
         store.put(&bytes)?;
         let r = Record {
+            format: if matches!(circuit, engine::Circuit::V3(_)) {
+                Some(circuit.format().to_owned())
+            } else {
+                None
+            },
+            worker: None,
             schema: 1,
             bundle_id: id,
             name: name.to_owned(),
@@ -67,8 +83,20 @@ pub async fn ensure_artifacts(
     fetch: bool,
     output: Option<&Path>,
 ) -> Result<Value> {
+    ensure_with_profile(store, id, requested_path, params_dir, fetch, output, None).await
+}
+
+pub async fn ensure_with_profile(
+    store: &Store,
+    id: &str,
+    requested_path: &str,
+    params_dir: Option<&Path>,
+    fetch: bool,
+    output: Option<&Path>,
+    profile: Option<engine::ProfileSelector>,
+) -> Result<Value> {
     let start = Instant::now();
-    let result = ensure_locked(store, id, params_dir, fetch, output).await;
+    let result = ensure_locked(store, id, params_dir, fetch, output, profile).await;
     match result {
         Ok((mut response, record, hit, generation_ms)) => {
             let elapsed = start.elapsed().as_secs_f64() * 1000.0;
@@ -125,26 +153,35 @@ async fn ensure_locked(
     params_dir: Option<&Path>,
     fetch: bool,
     output: Option<&Path>,
+    profile: Option<engine::ProfileSelector>,
 ) -> Result<(Value, Record, bool, f64)> {
     let lock_clock = Instant::now();
     let tx = store.lock()?;
     let lock_wait_ms = lock_clock.elapsed().as_secs_f64() * 1000.0;
     let (mut record, ready) = store.load(id)?;
     let input = store.read(&record.source)?;
-    let ir = backend::parse(&input)?;
-    let params = backend::parameters(&ir, params_dir, fetch).await?;
+    let ir = engine::parse(&input, profile)?;
+    let params = engine::parameters(&ir, params_dir, fetch).await?;
     let recipe = DerivationId(identity(
         "midnight-zkir-forge/derive/v1",
         &(
             &record.source.digest,
-            backend::PROFILE,
-            backend::LEDGER_REV,
+            params.profile(),
+            params.revision(),
             build_fingerprint(),
-            params.k,
-            &params.digest,
+            params.k(),
+            params.digest(),
             "library-keygen/default-options/no-rng",
         ),
     )?);
+    let recipe = if let Some(worker) = params.worker() {
+        DerivationId(identity(
+            "midnight-zkir-forge/derive-worker/v1",
+            &(&recipe, worker),
+        )?)
+    } else {
+        recipe
+    };
     let same_recipe = record.derivation_id.as_ref() == Some(&recipe);
     let indexed: Option<(String, bool)> = store
         .db
@@ -172,6 +209,7 @@ async fn ensure_locked(
         record.k = cached.k;
         record.artifacts = cached.artifacts.clone();
         record.generation_ms = cached.generation_ms;
+        record.worker = cached.worker.clone();
     }
     let mut generation_ms = 0.0;
     if hit {
@@ -182,7 +220,7 @@ async fn ensure_locked(
         store.save(&record, true)?;
     } else {
         let clock = Instant::now();
-        let outputs = backend::generate(&ir, &params).await?;
+        let outputs = engine::generate(&ir, &params).await?;
         generation_ms = clock.elapsed().as_secs_f64() * 1000.0;
         let artifacts: Vec<Artifact> = outputs
             .iter()
@@ -214,11 +252,12 @@ async fn ensure_locked(
         }
         record.derivation_id = Some(recipe);
         record.artifact_set_id = Some(set);
-        record.profile = Some(backend::PROFILE.to_owned());
+        record.profile = Some(params.profile().to_owned());
+        record.worker = params.worker().cloned();
         record.build_fingerprint = Some(build_fingerprint());
-        record.ledger_revision = Some(backend::LEDGER_REV.to_owned());
-        record.parameter_digest = Some(params.digest);
-        record.k = Some(params.k);
+        record.ledger_revision = Some(params.revision().to_owned());
+        record.parameter_digest = Some(params.digest().to_owned());
+        record.k = Some(params.k());
         record.artifacts = artifacts;
         record.generation_ms = Some(generation_ms);
         store.save(&record, true)?;
@@ -226,7 +265,7 @@ async fn ensure_locked(
     let paths = store.export(&record, output)?;
     tx.commit()?;
     Ok((
-        json!({"schema":1,"bundle_id":record.bundle_id,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"profile":record.profile,"build_fingerprint":record.build_fingerprint,"ledger_revision":record.ledger_revision,"lock_wait_ms":lock_wait_ms,"export":paths}),
+        json!({"schema":1,"bundle_id":record.bundle_id,"derivation_id":record.derivation_id,"artifact_set_id":record.artifact_set_id,"format":ir.format(),"worker":record.worker,"profile":record.profile,"build_fingerprint":record.build_fingerprint,"ledger_revision":record.ledger_revision,"lock_wait_ms":lock_wait_ms,"export":paths}),
         record,
         hit,
         generation_ms,
@@ -281,6 +320,8 @@ pub fn resolve(
 pub fn build_fingerprint() -> String {
     let mut bytes = include_bytes!("../Cargo.lock").to_vec();
     bytes.extend(include_bytes!("backend.rs"));
+    bytes.extend(include_bytes!("engine.rs"));
+    bytes.extend(include_bytes!("zkir3.rs"));
     bytes.extend(include_bytes!("../Cargo.toml"));
     bytes.extend(include_bytes!("../flake.lock"));
     bytes.extend(env!("FORGE_RUSTC_VERSION").as_bytes());

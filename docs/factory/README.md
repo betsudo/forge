@@ -19,3 +19,7 @@ commits using the existing configured identity/key. It never creates an identity
 `./bootstrap.sh --audit-pi` checks runtime and machine-readable local policy.
 `./bootstrap.sh --check` runs the selected local engineering checks.
 The broader Oxid factory has not been ported or qualified in full.
+
+V3 is built as `workers/zkir3`, an independent Cargo workspace and lockfile,
+and installed alongside the CLI by the same Nix package. The local check builds
+and lints both graphs without merging their source dependencies.

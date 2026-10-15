@@ -54,6 +54,10 @@ pub struct Artifact {
 }
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Record {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub format: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub worker: Option<WorkerProvenance>,
     pub schema: u32,
     pub bundle_id: BundleId,
     pub name: String,
@@ -141,4 +145,12 @@ pub fn validate_json(raw: &[u8]) -> Result<()> {
     Strict::deserialize(&mut parser)?;
     parser.end()?;
     Ok(())
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct WorkerProvenance {
+    pub profile: String,
+    pub source_revision: String,
+    pub build_fingerprint: String,
+    pub executable_sha256: String,
 }
