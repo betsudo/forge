@@ -252,3 +252,20 @@
 - All issue #6 tasks complete locally. Linux runtime and Compact consumer
   requalification remain separate scope. No push, PR, hosted CI, upload, Pages
   deployment, image publication or supervision was performed.
+
+## 2026-10-15 — issue #7: documentation language and architecture
+
+- Reviewed official Midnight provider guide, Midnight.js API and ZKIR repository.
+  Adopted prover key/verifier key, ZKIR, NodeZkConfigProvider, FetchZkConfigProvider
+  and the distinction between ZK config retrieval and ProofProvider. No new SDK
+  compatibility or drop-in HTTP provider claim is made.
+- Enclosed the existing Forge mark in an oval; removed local-first labeling and
+  positioned Forge around key generation, reuse and distribution. Added offline
+  SVG architecture, CLI prepare and HTTP sequence diagrams with accessible text.
+- Documented actual CLI arguments/files → JSON stdout conventions, stderr/error
+  exceptions, lack of public stdin/JSON-RPC streaming, HTTP metadata/bytes boundary
+  and current fetch-provider layout limitation in the site and API convention guide.
+- Documentation-only increment: no runtime, profile, Compact or workflow changes.
+- Validation: Pages build/link/anchor checks pass; all four SVG files parse.
+  Browser inspection at 1440px and 390px confirms loaded diagrams and no page
+  overflow. Diagrams scroll within their own figure on small screens.

@@ -205,3 +205,6 @@ See [verified snapshots and CI helpers](docs/ci-cache.md) for local relocation,
 partitioned GitHub cache planning and per-job hit deltas. The Nix installer also
 installs `midnight-zkir-forge-ci`. Every warm-cache consumer still executes actual
 proofs, verification and assertions. Compact integration remains unchanged.
+
+See [API conventions and Midnight provider terminology](docs/api-conventions.md) for the
+CLI stdin/stdout boundary, HTTP payload conventions and local/fetch provider roles.

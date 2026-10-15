@@ -101,3 +101,6 @@ SQLite contention; do not point this mutating test at a shared service.
 Archives, durable jobs, HTTP provider views, namespaces, GC, TLS, resumable upload,
 public rate policy and full JS provider qualification remain future slices.
 See [container setup](../../container/README.md) and [CI notes](../../container/CI.md).
+
+See [API conventions and Midnight provider terminology](../api-conventions.md) for the
+CLI stdin/stdout boundary, HTTP payload conventions and local/fetch provider roles.

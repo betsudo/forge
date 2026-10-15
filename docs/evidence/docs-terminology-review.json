@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-15",
+  "issue": 7,
+  "scope": "documentation only",
+  "sources": [
+    "https://docs.midnight.network/guides/deploy-and-operate",
+    "https://docs.midnight.network/api-reference/midnight-js",
+    "https://github.com/midnightntwrk/midnight-zkir"
+  ],
+  "runtime_contract_checked": [
+    "src/main.rs",
+    "src/application.rs",
+    "src/http.rs",
+    "docs/http/openapi.json"
+  ],
+  "checks": {
+    "svg_xml": true,
+    "desktop_width": 1440,
+    "mobile_width": 390,
+    "page_overflow": false,
+    "diagram_images_loaded": true
+  },
+  "runtime_changed": false,
+  "compact_changed": false,
+  "deployed": false
+}

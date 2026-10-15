@@ -15,21 +15,11 @@
 <a class="skip" href="#content">Skip to content</a>
 <header>
 <a class="brand" href="#overview">
-<span class="mark" aria-hidden="true">
-<i>
-</i>
-<i>
-</i>
-<i>
-</i>
-</span>
+<img class="mark" src="favicon.svg" alt="" width="48" height="40">
 <span>MIDNIGHT <b>ZKIR FORGE</b>
 </span>
 </a>
 <div class="header-links">
-<span class="status">
-<span>
-</span> LOCAL FIRST</span>
 <a href="https://github.com/input-output-hk/midnight-zkir-forge">GitHub ↗</a>
 <button id="menu-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
 </div>
@@ -41,6 +31,9 @@
 <a href="#overview">Overview</a>
 <a href="#installation">Installation</a>
 <a href="#test-integration">Circuit tests</a>
+<a href="#providers">Midnight terminology</a>
+<a href="#architecture">Architecture &amp; flows</a>
+<a href="#api-conventions">API conventions</a>
 <a href="#profiles">Backend profiles</a>
 <a href="#http">HTTP transport</a>
 <a href="#containers">Containers</a>
@@ -57,8 +50,8 @@
 <div id="overview" class="hero">
 <p class="eyebrow">MIDNIGHT / DEVELOPER TOOLING</p>
 <div class="hero-top">
-<h1>Build circuits.<br>
-<span>Skip repeated keygen.</span>
+<h1>Generate keys.<br>
+<span>Reuse. Distribute.</span>
 </h1>
 <div class="orb" aria-hidden="true">
 <div>
@@ -66,7 +59,7 @@
 <span>01 : 00</span>
 </div>
 </div>
-<p class="lede">A verified cache for ZKIR, prover and verifier artifacts. Reuse the work you have already done — keep every proof, verification and assertion running.</p>
+<p class="lede">Generate, cache and distribute prover keys, verifier keys and ZKIR for Midnight circuits. Reuse the work you have already done — keep every proof, verification and assertion running.</p>
 <div class="hero-actions">
 <a class="button" href="#installation">Start locally <span>↗</span>
 </a>
@@ -117,7 +110,7 @@ midnight-zkir-forge --version</code>
 midnight-zkir-forge stats</code>
 </pre>
 </div>
-<p>The JSON result contains <code>bundle_id</code>, <code>derivation_id</code>, <code>artifact_set_id</code>, <code>cache.hit</code>, and <code>export.files</code>. Use the returned copied paths with your existing proving provider.</p>
+<p>The JSON result contains <code>bundle_id</code>, <code>derivation_id</code>, <code>artifact_set_id</code>, <code>cache.hit</code>, and <code>export.files</code>. Use the exported directory with a compatible ZK config provider. Keep proof generation in your existing proof provider.</p>
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
@@ -132,7 +125,7 @@ result = subprocess.run(
 artifacts = json.loads(result.stdout)
 paths = {f[&quot;kind&quot;]: Path(f[&quot;path&quot;])
          for f in artifacts[&quot;export&quot;][&quot;files&quot;]}
-# Feed binary_ir, prover and verifier paths to the existing provider.
+# Supply binary ZKIR, prover key and verifier key to the ZK config provider.
 # Execute the original proof, verification and assertions every run.</code>
 </pre>
 </div>
@@ -145,6 +138,59 @@ paths = {f[&quot;kind&quot;]: Path(f[&quot;path&quot;])
 midnight-zkir-forge --profile zkir3 qualify</code>
 </pre>
 </div>
+</section>
+<section id="providers" data-title="Circuit artifacts and providers">
+<p class="eyebrow">MIDNIGHT DOMAIN MODEL</p>
+<h2>Circuit artifacts and providers</h2>
+<p>ZKIR means zero-knowledge intermediate representation. Forge accepts a circuit’s
+JSON <code>.zkir</code> and produces binary ZKIR <code>.bzkir</code>, a prover key
+<code>.prover</code> and a verifier key <code>.verifier</code> using an exact backend profile.</p>
+<div class="table-scroll"><table><thead><tr><th>Midnight term</th><th>Role in an integration</th></tr></thead><tbody>
+<tr><td><code>ZKConfigProvider</code></td><td>Retrieves ZKIR, prover keys and verifier keys by circuit name.</td></tr>
+<tr><td><code>NodeZkConfigProvider</code></td><td>Reads <code>keys/</code> and <code>zkir/</code> from a filesystem directory.</td></tr>
+<tr><td><code>FetchZkConfigProvider</code></td><td>Retrieves the circuit artifact layout over HTTP/HTTPS.</td></tr>
+<tr><td><code>ProofProvider</code></td><td>Generates proofs using circuit artifacts. Forge supplies artifacts; the consumer still generates and verifies proofs.</td></tr>
+</tbody></table></div>
+<p>Forge exports <code>keys/&lt;circuit&gt;.prover</code>, <code>keys/&lt;circuit&gt;.verifier</code>
+and <code>zkir/&lt;circuit&gt;.bzkir</code>, plus the source and integrity manifest.
+The local provider uses a filesystem base directory; the fetch provider uses an HTTP base URL.
+Match the consumer’s exact backend and serialization before using either.</p>
+<div class="note"><strong>HTTP integration boundary.</strong> Forge currently returns
+content-addressed object URLs. Its HTTP API does not serve the circuit-name layout
+expected by <code>FetchZkConfigProvider</code>. An adapter must download and verify the
+artifacts into that layout, or serve a verified export directory separately. Browser
+CORS and full Midnight.js provider qualification remain future scope.</div>
+<p>Terminology reviewed against the official
+<a href="https://docs.midnight.network/guides/deploy-and-operate">provider guide</a>,
+<a href="https://docs.midnight.network/api-reference/midnight-js">Midnight.js reference</a>
+and <a href="https://github.com/midnightntwrk/midnight-zkir">Midnight ZKIR repository</a>.
+Current SDK documentation does not change Forge’s pinned compatibility profiles.</p>
+</section>
+<section id="architecture" data-title="Architecture and request flows">
+<p class="eyebrow">SYSTEM DESIGN</p>
+<h2>Architecture and request flows</h2>
+<p>The CLI and HTTP transport share the same cache application. SQLite serializes
+writers; content-addressed storage holds verified bytes. Profile-specific backends
+run only when materialization needs new keys.</p>
+<figure class="diagram"><img src="architecture.svg" alt="CLI and HTTP clients share the Forge application, SQLite metadata, artifact storage and pinned key-generation backends. Exported artifacts feed a ZK config provider; a separate proof provider generates proofs."><figcaption>Architecture: artifact retrieval and proof generation remain separate responsibilities.</figcaption></figure>
+<figure class="diagram"><img src="prepare-sequence.svg" alt="A test requests prepare. Forge imports exact ZKIR bytes, checks its recipe and verifies a hit, or generates and stores keys on a miss. It returns an export directory. The test then generates a proof, verifies it and runs assertions in both cases."><figcaption>CLI prepare: the hit and miss paths both continue into real tests.</figcaption></figure>
+<figure class="diagram"><img src="http-sequence.svg" alt="An HTTP client uploads raw ZKIR, receives a bundle ID, explicitly requests synchronous materialization, receives artifact URLs and digests, and downloads verified bytes. GET never generates keys."><figcaption>HTTP: register, explicitly materialize, then fetch immutable artifacts.</figcaption></figure>
+</section>
+<section id="api-conventions" data-title="CLI and HTTP conventions">
+<p class="eyebrow">INTEGRATION CONTRACT</p>
+<h2>CLI and HTTP conventions</h2>
+<div class="table-scroll"><table><thead><tr><th>Surface</th><th>Current convention</th></tr></thead><tbody>
+<tr><td>CLI input</td><td>Arguments, flags and filesystem paths. <code>prepare FILE</code> and <code>import FILE</code> do not read circuit bytes from stdin. <code>-</code> has no stdin meaning.</td></tr>
+<tr><td>CLI stdout</td><td>One newline-terminated JSON result per completed data command; <code>schema: 1</code>. Paths are absolute local paths. <code>--help</code>/<code>--version</code> are human-readable; <code>serve</code> is a long-running HTTP server.</td></tr>
+<tr><td>CLI failure</td><td>Application failures: nonzero exit, JSON <code>{schema:1,error:{code,message}}</code> on stdout and diagnostics on stderr. Argument parsing errors use stderr and may have no JSON result. Check the exit status before consuming artifacts.</td></tr>
+<tr><td>stdin / streaming</td><td>No JSON-RPC, JSON-lines session, stdin upload or persistent stdio server is implemented. Invoke one process per command and parse its stdout.</td></tr>
+<tr><td>HTTP input</td><td><code>/v1</code> routes; raw exact single-circuit JSON upload (16 MiB limit); name/profile in query parameters. POST requires <code>Content-Type: application/json</code>, including an empty materialization request.</td></tr>
+<tr><td>HTTP output</td><td>JSON metadata with origin-relative artifact URLs and SHA-256 digests; artifact GET/HEAD returns bytes/headers rather than a JSON/base64 wrapper. No server-local paths are returned.</td></tr>
+<tr><td>HTTP lifecycle</td><td>Lazy registration; explicit synchronous materialization (200). GET never generates. Busy admission returns 429 with <code>Retry-After: 1</code>. No asynchronous 202 job protocol.</td></tr>
+<tr><td>HTTP failures / auth</td><td>JSON errors with stable codes and HTTP status; optional bearer token protects all routes except liveness. Non-loopback binds require a token. No CORS is enabled.</td></tr>
+</tbody></table></div>
+<p><a href="openapi.json">OpenAPI route/status/schema reference</a> ·
+<a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/docs/api-conventions.md">API conventions and automation example</a>.</p>
 </section>
 <section id="profiles" data-title="Exact profiles. Explicit compatibility.">
 <p class="eyebrow">DOCUMENTATION / 03</p>
@@ -351,7 +397,7 @@ midnight-zkir-forge ensure BUNDLE_ID</code>
 <footer>
 <a class="brand" href="#overview">MIDNIGHT <b>ZKIR FORGE</b>
 </a>
-<p>Local-first tooling for circuit development.</p>
+<p>Circuit keys, ready for reuse.</p>
 <p>Visual direction follows the <a href="https://midnight.network/brand-hub">Midnight Brand Hub</a>.</p>
 <a href="#overview">Back to top ↑</a>
 </footer>
