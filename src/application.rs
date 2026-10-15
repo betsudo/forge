@@ -20,14 +20,25 @@ pub fn import_with_profile(
     profile: Option<engine::ProfileSelector>,
 ) -> Result<Record> {
     let bytes = read_input(input)?;
-    let circuit = engine::parse(&bytes, profile)?;
     let name = name
         .or_else(|| input.file_stem().and_then(|n| n.to_str()))
         .context("input needs a UTF-8 name or --name")?;
+    import_bytes_with_profile(store, &bytes, name, profile)
+}
+
+/// Register exact uploaded bytes without accepting any server-local input path.
+pub fn import_bytes_with_profile(
+    store: &Store,
+    bytes: &[u8],
+    name: &str,
+    profile: Option<engine::ProfileSelector>,
+) -> Result<Record> {
+    ensure!(bytes.len() <= 16 * 1024 * 1024, "input exceeds 16 MiB");
+    let circuit = engine::parse(bytes, profile)?;
     validate_name(name)?;
     let source = Artifact {
         kind: ArtifactKind::Source,
-        digest: digest(&bytes),
+        digest: digest(bytes),
         size: bytes.len() as u64,
     };
     let id = BundleId(identity(
@@ -46,7 +57,7 @@ pub fn import_with_profile(
         store.read(&r.source)?;
         r
     } else {
-        store.put(&bytes)?;
+        store.put(bytes)?;
         let r = Record {
             format: if matches!(circuit, engine::Circuit::V3(_)) {
                 Some(circuit.format().to_owned())

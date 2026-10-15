@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "scope": "independent read-only identity, concurrency and downloaded artifact proof review",
+  "fixed_findings": [
+    "Upload admission now precedes bounded body buffering and has a30s deadline",
+    "Nix source fileset now contains embedded OpenAPI contract"
+  ],
+  "conclusion": "No further confirmed blocker in the initial single-owner HTTP scope; local fast and genuine downloaded-proof controls pass. Linux image runtime remains unqualified.",
+  "sha256": {
+    "src/http.rs": "60a036923eadab505f194ae3544012aa2520cb1803c13005cc7f6f47a81a9282",
+    "src/application.rs": "a13b98ac68afcc5d1887ee7811be22222fb4ab1ef20c701fd22fd96895adc746",
+    "examples/qualify-http-fixture.rs": "12db499263cc58379acef80f76d8e51063965a0f20cf11b91d4beb9ce2a204ca",
+    "scripts/check-http.py": "5334c5ebaada35712127820f1cef3aece0e489d71de966489ac76238a270fab1",
+    "flake.nix": "f848b9501cc0bc1bb3700b6d8459a3ec55475b690d7ce448aa5c798e07568d38"
+  }
+}

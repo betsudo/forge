@@ -1,0 +1,78 @@
+name: Local-contract checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      real_proofs:
+        description: Fetch verified official parameters and run genuine proof e2e tests
+        type: boolean
+        default: false
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@3c6342b75005b9cc7c7d4069c3e9179247c89012 # v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            max-jobs = 2
+            cores = 2
+      - name: Reuse locked Rust build dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            target
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: forge-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock', 'workers/zkir3/Cargo.lock', 'flake.lock') }}
+          restore-keys: forge-${{ runner.os }}-${{ runner.arch }}-
+      - name: Locked profiles, specs, formatting, unit tests, Clippy, HTTP e2e and docs
+        run: ./bootstrap.sh --check
+
+  real-proofs:
+    if: github.event_name == 'workflow_dispatch' && inputs.real_proofs
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: cachix/install-nix-action@3c6342b75005b9cc7c7d4069c3e9179247c89012 # v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            max-jobs = 2
+            cores = 2
+      - name: Reuse locked Rust build dependencies
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4
+        with:
+          path: |
+            target
+            ~/.cargo/registry
+            ~/.cargo/git
+          key: forge-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock', 'workers/zkir3/Cargo.lock', 'flake.lock') }}
+          restore-keys: forge-${{ runner.os }}-${{ runner.arch }}-
+      - name: Build both locked backends
+        run: |
+          ./bootstrap.sh -- cargo build --locked --manifest-path workers/zkir3/Cargo.toml --target-dir target
+          ./bootstrap.sh -- cargo build --locked
+          ./bootstrap.sh -- cargo build --locked --example qualify-http-fixture
+      - name: Fetch verified parameters and execute proof and HTTP e2e controls
+        run: |
+          export MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER="$PWD/target/debug/midnight-zkir-forge-zkir3-worker"
+          ./bootstrap.sh -- target/debug/midnight-zkir-forge --fetch-params qualify
+          ./bootstrap.sh -- target/debug/midnight-zkir-forge --profile zkir3 --fetch-params qualify
+          ./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1
+          ./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1
+          ./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge --real

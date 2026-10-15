@@ -31,14 +31,12 @@
             nativeBuildInputs = [ pkgs.pkg-config ];
             buildInputs = [ pkgs.openssl ];
           };
-      in {
-        zkir3-worker = worker;
-        default = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
+          forge = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
           pname = "midnight-zkir-forge";
           version = "0.2.0";
           src = pkgs.lib.fileset.toSource {
             root = ./.;
-            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./fixtures ./workers/zkir3 ];
+            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ];
           };
           cargoLock = {
             lockFile = ./Cargo.lock;
@@ -50,6 +48,36 @@
           postInstall = ''
             ln -s ${worker}/bin/midnight-zkir-forge-zkir3-worker $out/bin/midnight-zkir-forge-zkir3-worker
           '';
+        };
+      in {
+        default = forge;
+        zkir3-worker = worker;
+      } // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+        dockerImage = pkgs.dockerTools.buildLayeredImage {
+          name = "midnight-zkir-forge";
+          tag = "0.2.0";
+          contents = [ forge pkgs.cacert ];
+          extraCommands = ''
+            mkdir -p data params tmp run/secrets
+            chmod 1777 tmp
+          '';
+          fakeRootCommands = ''
+            chown 65532:65532 data params
+          '';
+          config = {
+            User = "65532:65532";
+            WorkingDir = "/data";
+            Entrypoint = [ "${forge}/bin/midnight-zkir-forge" "--cache-dir" "/data" "--params-dir" "/params" ];
+            Cmd = [ "serve" "--listen" "0.0.0.0:8787" "--token-file" "/run/secrets/forge-token" ];
+            ExposedPorts."8787/tcp" = { };
+            Volumes."/data" = { };
+            Env = [ "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
+            Labels = {
+              "org.opencontainers.image.title" = "Midnight ZKIR Forge";
+              "org.opencontainers.image.source" = "https://github.com/input-output-hk/midnight-zkir-forge";
+              "org.opencontainers.image.version" = "0.2.0";
+            };
+          };
         };
       });
     };

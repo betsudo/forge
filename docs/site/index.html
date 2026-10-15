@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Midnight ZKIR Forge: reproducible circuit artifacts, verified cache hits and live proof tests. Local CLI, HTTP transport and Nix container documentation.">
+<meta name="theme-color" content="#0A0A0A">
+<title>Midnight ZKIR Forge · Documentation</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer>
+</script>
+</head>
+<body>
+<a class="skip" href="#content">Skip to content</a>
+<header>
+<a class="brand" href="#overview">
+<span class="mark" aria-hidden="true">
+<i>
+</i>
+<i>
+</i>
+<i>
+</i>
+</span>
+<span>MIDNIGHT <b>ZKIR FORGE</b>
+</span>
+</a>
+<div class="header-links">
+<span class="status">
+<span>
+</span> LOCAL FIRST</span>
+<a href="https://github.com/input-output-hk/midnight-zkir-forge">GitHub ↗</a>
+<button id="menu-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
+</div>
+</header>
+<div class="layout">
+<aside id="sidebar">
+<p class="nav-label">DEVELOPER DOCUMENTATION</p>
+<nav aria-label="Documentation">
+<a href="#overview">Overview</a>
+<a href="#installation">Installation</a>
+<a href="#test-integration">Circuit tests</a>
+<a href="#profiles">Backend profiles</a>
+<a href="#http">HTTP transport</a>
+<a href="#containers">Containers</a>
+<a href="#metrics">Metrics & storage</a>
+<a href="#development">Specification & checks</a>
+</nav>
+<div class="sidebar-foot">
+<p>ARTIFACTS, NOT OUTCOMES.</p>
+<span>Your proofs still run.<br>Your keys are ready.</span>
+</div>
+</aside>
+<main id="content">
+<div id="overview" class="hero">
+<p class="eyebrow">MIDNIGHT / DEVELOPER TOOLING</p>
+<div class="hero-top">
+<h1>Build circuits.<br>
+<span>Skip repeated keygen.</span>
+</h1>
+<div class="orb" aria-hidden="true">
+<div>
+</div>
+<span>01 : 00</span>
+</div>
+</div>
+<p class="lede">A verified cache for ZKIR, prover and verifier artifacts. Reuse the work you have already done — keep every proof, verification and assertion running.</p>
+<div class="hero-actions">
+<a class="button" href="#installation">Start locally <span>↗</span>
+</a>
+<a class="secondary" href="#http">Explore the HTTP API →</a>
+</div>
+<div class="capabilities">
+<div>
+<strong>Exact bytes</strong>
+<span>Content-addressed inputs</span>
+</div>
+<div>
+<strong>Pinned backends</strong>
+<span>Isolated v2 + v3 profiles</span>
+</div>
+<div>
+<strong>Verified hits</strong>
+<span>Integrity on every reuse</span>
+</div>
+</div>
+</div>
+<section id="installation" data-title="Install once. Use from any checkout.">
+<p class="eyebrow">DOCUMENTATION / 01</p>
+<h2>Install once. Use from any checkout.</h2>
+<p>Nix owns the Rust toolchain, locked dependencies and separate v3 worker. Start from this repository with Nix flakes enabled.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>git clone https://github.com/input-output-hk/midnight-zkir-forge.git
+cd midnight-zkir-forge
+./bootstrap.sh --check
+./scripts/install-local.sh
+export PATH=&quot;$HOME/.local/bin:$PATH&quot;
+midnight-zkir-forge --version</code>
+</pre>
+</div>
+<p>Add the PATH entry to your shell profile and agent launcher environment. The installer retains a Nix GC root; rerun it after adopting a new commit. The default store is <code>~/.midnight-zkir-forge</code>. Override it with <code>--cache-dir</code> or <code>MIDNIGHT_ZKIR_FORGE_DIR</code>.</p>
+<div class="note">
+<strong>Parameters are offline by default.</strong> Forge uses the official verified parameter cache (<code>MIDNIGHT_PP</code> or the upstream default). Pass <code>--fetch-params</code> to allow official acquisition, or <code>--params-dir</code> to select a cache.</div>
+</section>
+<section id="test-integration" data-title="Cache the keys. Keep the proof.">
+<p class="eyebrow">DOCUMENTATION / 02</p>
+<h2>Cache the keys. Keep the proof.</h2>
+<p>Call <code>prepare</code> where your test normally generates circuit artifacts. Always pass the current circuit file. Forge hashes its exact bytes and the complete backend recipe.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>midnight-zkir-forge prepare /absolute/path/to/circuit.zkir &gt; artifacts.json
+midnight-zkir-forge stats</code>
+</pre>
+</div>
+<p>The JSON result contains <code>bundle_id</code>, <code>derivation_id</code>, <code>artifact_set_id</code>, <code>cache.hit</code>, and <code>export.files</code>. Use the returned copied paths with your existing proving provider.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>import json, subprocess
+from pathlib import Path
+
+result = subprocess.run(
+    [str(Path.home() / &quot;.local/bin/midnight-zkir-forge&quot;),
+     &quot;prepare&quot;, str(Path(&quot;generated/circuit.zkir&quot;).resolve())],
+    check=True, capture_output=True, text=True,
+)
+artifacts = json.loads(result.stdout)
+paths = {f[&quot;kind&quot;]: Path(f[&quot;path&quot;])
+         for f in artifacts[&quot;export&quot;][&quot;files&quot;]}
+# Feed binary_ir, prover and verifier paths to the existing provider.
+# Execute the original proof, verification and assertions every run.</code>
+</pre>
+</div>
+<div class="note">
+<strong>Tests remain live.</strong> Forge stores artifacts, never proof results or test outcomes. Keep an uncached qualification lane that exercises fresh key generation and negative controls.</div>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>midnight-zkir-forge qualify
+midnight-zkir-forge --profile zkir3 qualify</code>
+</pre>
+</div>
+</section>
+<section id="profiles" data-title="Exact profiles. Explicit compatibility.">
+<p class="eyebrow">DOCUMENTATION / 03</p>
+<h2>Exact profiles. Explicit compatibility.</h2>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Selector</th>
+<th>Input JSON</th>
+<th>Official source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>ledger8-v2</code>
+</td>
+<td>2.0</td>
+<td>Ledger8 8.1.3 · ZKIR 2.1.1<br>
+<code>b5d3e965…</code>
+</td>
+</tr>
+<tr>
+<td>
+<code>zkir3</code>
+</td>
+<td>3.0</td>
+<td>ZKIR 3.0.0-rc.1 · <code>ir-source[v3-generic]</code>
+<br>
+<code>3a7ae036…</code>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The v3 worker is separately compiled and locked. It matches the specific consumer pin below, not every backend with the same crate version. JSON 3.1, the newer split ZKIR graph and ledger9 transaction support are outside this qualification.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>midnight-zkir-forge profile
+midnight-zkir-forge --profile zkir3 profile
+midnight-zkir-forge --profile zkir3 prepare /absolute/path/circuit.zkir</code>
+</pre>
+</div>
+<p>Input format is detected from bytes. <code>--profile</code> asserts the expected backend; a mismatch fails without fallback or format conversion. Derivations include actual parameter content identity and implementation fingerprints.</p>
+<p>Sources: <a href="https://github.com/midnightntwrk/midnight-ledger/tree/b5d3e965a18e4cac17fac4f38446fc55c524439a">ledger8 v2 pin</a> · <a href="https://github.com/midnightntwrk/midnight-ledger/tree/3a7ae0361d03e6eed4fc91e31f6600f334f605d5">qualified v3 pin</a>.</p>
+</section>
+<section id="http" data-title="An artifact API for one host.">
+<p class="eyebrow">DOCUMENTATION / 04</p>
+<h2>An artifact API for one host.</h2>
+<p>The initial HTTP transport shares the local cache application. It registers one raw ZKIR circuit per bundle, materializes synchronously, and serves immutable verified objects. It is an initial service slice; durable jobs, multi-circuit archive uploads, aliases and provider views remain future scope.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>midnight-zkir-forge serve --listen 127.0.0.1:8787
+
+curl --fail-with-body \
+  -H &quot;Content-Type: application/json&quot; \
+  --data-binary @fixtures/assert.zkir \
+  &quot;http://127.0.0.1:8787/v1/bundles?name=assert&amp;profile=ledger8-v2&quot;</code>
+</pre>
+</div>
+<p>Use the returned bundle identity to request materialization, then retrieve objects by their returned SHA-256 digests. No server filesystem path is accepted as an upload.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>curl --fail-with-body -X POST -H &quot;Content-Type: application/json&quot; \
+  &quot;http://127.0.0.1:8787/v1/bundles/BUNDLE_ID/materializations?profile=ledger8-v2&quot;
+curl --fail-with-body \
+  &quot;http://127.0.0.1:8787/v1/objects/SHA256&quot; -o artifact.prover</code>
+</pre>
+</div>
+<div class="table-scroll">
+<table>
+<thead>
+<tr>
+<th>Route</th>
+<th>Contract</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<code>POST /v1/bundles</code>
+</td>
+<td>Raw circuit registration; name/profile query parameters</td>
+</tr>
+<tr>
+<td>
+<code>GET /v1/bundles/{id}</code>
+</td>
+<td>Bundle inventory and availability</td>
+</tr>
+<tr>
+<td>
+<code>POST /v1/bundles/{id}/materializations</code>
+</td>
+<td>Synchronous ensure; bounded admission returns 429 when busy</td>
+</tr>
+<tr>
+<td>
+<code>GET /v1/objects/{digest}</code>
+</td>
+<td>Verified immutable bytes; HEAD, ETag and Range</td>
+</tr>
+<tr>
+<td>
+<code>GET /v1/profiles</code> · <code>GET /v1/stats</code>
+</td>
+<td>Compatibility descriptors and cache efficiency</td>
+</tr>
+<tr>
+<td>
+<code>/health/live</code> · <code>/health/ready</code>
+</td>
+<td>Liveness and readiness</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>
+<a class="text-link" href="openapi.json">Read the OpenAPI contract ↗</a>
+</p>
+<div class="note">
+<strong>Loopback by default.</strong> Use <code>--token-file /private/token</code> for bearer authentication. Non-loopback binds require a token. Put TLS at a trusted reverse proxy for remote use; this first transport is not a multi-tenant hosted service.</div>
+</section>
+<section id="containers" data-title="A reproducible service package.">
+<p class="eyebrow">DOCUMENTATION / 05</p>
+<h2>A reproducible service package.</h2>
+<p>The Nix image packages Forge and its isolated v3 worker. Build it on Linux or configure a Linux Nix builder from macOS. Persist the Forge store and verified public-parameter cache across restarts. Keep bearer tokens in a read-only mounted file; exclude secrets and circuit outputs from image layers.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>nix build .#dockerImage --out-link result-image
+docker load --input result-image
+# Inspect the image metadata and container guide before running.
+# Mount a persistent cache and bind the published port to loopback.</code>
+</pre>
+</div>
+<p>Image creation is separate from publishing. No registry push, hosted service or production release is implied. Follow the <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/container/README.md">container guide</a> for the exact image, volume and token configuration.</p>
+</section>
+<section id="metrics" data-title="Measure reuse. Preserve identity.">
+<p class="eyebrow">DOCUMENTATION / 06</p>
+<h2>Measure reuse. Preserve identity.</h2>
+<p>
+<code>stats</code> reports hit, miss and error counts; hit rate; generation timings; per-file requests, digests and sizes; hit bytes; and CAS/export disk usage. Per-file counters describe logical artifact requests, not every disk read.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>midnight-zkir-forge stats
+midnight-zkir-forge evict BUNDLE_ID --dry-run
+midnight-zkir-forge evict BUNDLE_ID
+midnight-zkir-forge ensure BUNDLE_ID</code>
+</pre>
+</div>
+<p>
+<code>estimated_generation_avoided_ms</code> uses the recipe’s last measured generation time. It is an estimate. Measure process-level wall time for your actual circuits before claiming speedups.</p>
+<div class="identity-flow" aria-label="Artifact identity lifecycle">
+<span>Exact input</span>
+<b aria-hidden="true">→</b>
+<span>Pinned recipe</span>
+<b aria-hidden="true">→</b>
+<span>Actual output</span>
+</div>
+<p>Hits recheck bytes. Eviction keeps source, small identity manifests and persistent copied exports. Regeneration must reproduce the pinned actual artifact identity or fail explicitly. Removing derived CAS data does not remove independent exports.</p>
+<p>Local writers serialize through SQLite. The first service retains one generation at a time. An HTTP admission limit bounds waiting requests; this is not distributed scheduling.</p>
+</section>
+<section id="development" data-title="Build against a written contract.">
+<p class="eyebrow">DOCUMENTATION / 07</p>
+<h2>Build against a written contract.</h2>
+<p>Behavior changes begin with an OpenSpec proposal, design, requirements, scenarios and tasks. The full product specification describes the destination; active changes define each delivered slice. Use an ADR when a material decision needs a separate record.</p>
+<div class="code-wrap">
+<button class="copy" type="button" aria-label="Copy command">Copy</button>
+<pre>
+<code>./bootstrap.sh --check
+./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1
+./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1
+./bootstrap.sh -- python3 scripts/build-docs.py
+./bootstrap.sh -- python3 scripts/check-docs.py</code>
+</pre>
+</div>
+<p>Prepared workflows run bounded fast checks and offer explicit real-proof qualification; publication stays manual. See the <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/container/CI.md">CI and Pages guide</a>.</p>
+<p>Fast checks cover deterministic behavior. Explicit real-backend qualification generates fresh keys, compares reproduction, proves valid statements and rejects invalid statements and corrupted proofs. Lifecycle checks use temporary stores.</p>
+<p>
+<a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/SPEC.md">Product specification</a> · <a href="https://github.com/input-output-hk/midnight-zkir-forge/tree/main/openspec/changes">OpenSpec changes</a> · <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/docs/PROGRESS.md">Qualification evidence</a> · <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/CONTRIBUTING.md">Contributing</a>
+</p>
+</section>
+<footer>
+<a class="brand" href="#overview">MIDNIGHT <b>ZKIR FORGE</b>
+</a>
+<p>Local-first tooling for circuit development.</p>
+<p>Visual direction follows the <a href="https://midnight.network/brand-hub">Midnight Brand Hub</a>.</p>
+<a href="#overview">Back to top ↑</a>
+</footer>
+</main>
+</div>
+<div id="copy-status" role="status" aria-live="polite">
+</div>
+</body>
+</html>

@@ -1,7 +1,7 @@
 use anyhow::Result;
 use clap::{Parser, Subcommand};
 use midnight_zkir_forge::{
-    application, backend, domain::ArtifactKind, engine::ProfileSelector, store::Store, zkir3,
+    application, backend, domain::ArtifactKind, engine::ProfileSelector, http, store::Store, zkir3,
 };
 use serde_json::{Value, json};
 use std::path::PathBuf;
@@ -73,6 +73,13 @@ enum Command {
     /// Fresh real keygen twice, valid proof and invalid-statement control.
     Qualify,
     Profile,
+    /// Serve the initial single-owner HTTP API. Remote binding requires a token.
+    Serve {
+        #[arg(long, default_value = "127.0.0.1:8787")]
+        listen: std::net::SocketAddr,
+        #[arg(long)]
+        token_file: Option<PathBuf>,
+    },
 }
 #[tokio::main(flavor = "current_thread")]
 async fn main() {
@@ -140,6 +147,17 @@ async fn run(cli: Cli) -> Result<Value> {
         Some(path) => path,
         None => application::default_cache_dir()?,
     };
+    if let Command::Serve { listen, token_file } = &cli.command {
+        return http::serve(http::Config {
+            root,
+            params_dir: cli.params_dir,
+            fetch_params: cli.fetch_params,
+            profile: cli.profile,
+            listen: *listen,
+            token_file: token_file.clone(),
+        })
+        .await;
+    }
     let store = Store::open(&root)?;
     match cli.command {
         Command::Import { input, name } => Ok(serde_json::to_value(
@@ -189,6 +207,6 @@ async fn run(cli: Cli) -> Result<Value> {
         }
         Command::Evict { bundle_id, dry_run } => store.evict(&bundle_id, dry_run),
         Command::Stats => store.stats(),
-        Command::Qualify | Command::Profile => unreachable!(),
+        Command::Qualify | Command::Profile | Command::Serve { .. } => unreachable!(),
     }
 }

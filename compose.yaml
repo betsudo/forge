@@ -1,0 +1,26 @@
+services:
+  forge:
+    image: midnight-zkir-forge:0.2.0
+    pull_policy: never
+    ports:
+      - "127.0.0.1:8787:8787"
+    volumes:
+      - forge-data:/data
+      - type: bind
+        source: ${FORGE_PARAMS_DIR:?Set FORGE_PARAMS_DIR to verified parameter directory}
+        target: /params
+        read_only: true
+      - type: bind
+        source: ${FORGE_TOKEN_FILE:?Set FORGE_TOKEN_FILE to a readable token file}
+        target: /run/secrets/forge-token
+        read_only: true
+    read_only: true
+    tmpfs:
+      - /tmp:mode=1777,size=256m
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    pids_limit: 128
+    stop_grace_period: 30s
+volumes:
+  forge-data:

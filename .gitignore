@@ -29,3 +29,6 @@ rustc-ice-*.txt
 .local/
 result
 .env
+
+# Python validation bytecode
+__pycache__/

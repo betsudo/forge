@@ -174,3 +174,18 @@ omitted for old records so their integrity manifest stays unchanged. A new
 Forge build fingerprint can cause a new v2 derivation once even though the
 v2 backend profile string stays the same. Old exported paths remain usable;
 pinned verifier identities are not silently replaced.
+
+## Documentation, HTTP and container preview
+
+Build the Midnight styled documentation site with
+`./bootstrap.sh -- python3 scripts/build-docs.py`; serve `.local/site` using
+`python3 -m http.server 8080 --bind 127.0.0.1 --directory .local/site`.
+The manual Pages workflow is prepared, without publishing anything.
+
+The initial single-owner HTTP transport adds `serve`, with loopback defaults,
+explicit synchronous materialization, exact-profile cache reuse, verified
+streaming downloads and optional bearer authentication (required for remote
+binding). See [HTTP setup and limits](docs/http/README.md),
+[OpenAPI](docs/http/openapi.json), [Linux image packaging](container/README.md)
+and [basic CI/e2e workflows](container/CI.md). The full hosted registry remains
+proposed. Consumer tests continue running proofs, verification and assertions.
