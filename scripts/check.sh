@@ -12,6 +12,7 @@ cargo test --locked
 cargo build --locked --example qualify-http-fixture
 cargo clippy --locked --all-targets -- -D warnings
 cargo clippy --locked --manifest-path workers/zkir3/Cargo.toml --target-dir target --all-targets -- -D warnings
+python3 scripts/check-installer.py
 python3 scripts/check-recovery.py --binary target/debug/midnight-zkir-forge
 python3 scripts/check-snapshot.py --binary target/debug/midnight-zkir-forge
 python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge

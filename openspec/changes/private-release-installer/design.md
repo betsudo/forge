@@ -72,6 +72,7 @@ midnight-zkir-forge-TAG-TARGET/
   share/midnight-zkir-forge/forge-ci.py
   manifest.json
   LICENSES/...
+  lib/...  # inventoried relocated runtime libraries when needed
 ```
 
 The CI helper launcher uses the consumer Python and its bundled script/main CLI;
@@ -85,7 +86,9 @@ an explicitly named prerelease is allowed and labeled as such. No unrelated rele
 asset or GitHub-generated source archive is executable payload.
 
 A release producer assembles CLI, worker and helper from one reviewed source commit
-and locked dependencies. A Nix store executable copied into a tarball is NOT
+and locked dependencies. The candidate builder builds the exact clean Git commit
+through Nix itself; arbitrary prebuilt executable inputs cannot be attributed to
+HEAD. A Nix store executable copied into a tarball is NOT
 portable by definition: remove/bundle runtime dependencies and qualify each target
 on a clean environment with no `/nix/store`, build checkout or Rust toolchain.
 Use platform tools to inspect loader/library references and test relocation. Shared
@@ -106,7 +109,10 @@ step, not a mandatory multi-platform pipeline in this proposal.
    before extraction. Abort on missing/duplicate checksum names, changed assets,
    interrupted/truncated downloads or authentication failures. Defaults bound
    compressed download to 1 GiB, unpacked data to 2 GiB and archive members to
-   10,000, with a 5-minute deadline per network operation. Check advertised size
+   10,000, with a 5-minute deadline per network operation. GitHub metadata is capped
+   at 16 MiB and checksum/manifest metadata at 1 MiB. A bounded decompressed spool
+   (2 GiB plus 16 MiB tar framing allowance) precedes archive-header parsing, so
+   oversized PAX/GNU headers cannot bypass the expansion budget. Check advertised size
    before download, actual size afterward, and cumulative member/read bytes during
    controlled extraction. Those bounds are initial delivery limits, not a promise
    to support any circuit/key size in the installed cache.

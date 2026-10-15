@@ -365,3 +365,21 @@
   builds with the shared typed-error module.
 - Local source delivery only; installed CLI is unchanged. No Compact edits,
   consumer qualification claim, push, release, deployment or hosted run.
+
+
+## 2026-10-16 — issue #11 private installer
+
+- Implemented exact-tag authenticated gh/Python installation, bounded downloads,
+  strict manifests/inventories, bounded gzip/tar parsing and safe staged extraction.
+  Root CLI, v3 worker and CI helper activate through one pointer under a separate
+  binary root; existing Nix launchers are refused rather than overwritten.
+- Offline fake-gh e2e passes install/reinstall/upgrade/rollback, checksum/path/
+  conflict refusals, live/killed lock recovery, before/after activation termination
+  and interrupted first-link retry. Independent review blockers are resolved.
+- Candidate tooling builds the exact clean Git commit through locked Nix, copies
+  ancillary files from that recorded commit and inspects/relocates native loaders.
+  It does not accept arbitrary stale executable inputs as source provenance.
+- Pinned private-flake documentation/example and native devShell evaluation pass.
+  No binary release exists yet. Native candidate execution, clean no-Nix consumer
+  qualification, licensing audit and Linux portable production remain explicit
+  gates; no broad portability claim. Receipt: docs/evidence/private-installer-local.json.
