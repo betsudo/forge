@@ -17,14 +17,19 @@ nix shell 'git+ssh://git@github.com/input-output-hk/midnight-zkir-forge?rev=5d9c
 ```
 
 That is an existing published source commit, not the unpushed installer increment.
+Its Nixpkgs input no longer evaluates for Intel macOS; use the corrected pin below
+after its publication, or a local Git input on this machine.
 Replace it with a reviewed full commit when adopting later changes. Native systems:
 `aarch64-darwin`, `x86_64-darwin`, `aarch64-linux`, `x86_64-linux`. Native validation
 and actual runtime support are reported in progress/evidence, not inferred from
 flake evaluation alone. Authentication requires GitHub SSH read access; `gh auth
 login` by itself does not configure SSH. Do not put tokens in flake URLs or files.
 
-[examples/nix/flake.nix](../examples/nix/flake.nix) shows a consumer dev-shell input
-pinned to that commit. Keep its generated `flake.lock` in the consumer repository;
+[examples/nix/flake.nix](../examples/nix/flake.nix) pins reviewed local commit
+`f3801e08f1e3af0f1a2c7b3e0e6a5c7070fa4d3a`, including the Intel macOS correction. It
+is not published yet: remote readers cannot fetch it until publication is separately
+authorized. On this machine use a `git+file://` input for this checkout with the
+same full revision. Keep its generated `flake.lock` in the consumer repository;
 Nix itself is required. No consumer/Compact checkout is modified here.
 
 ## Binary users: intended flow once qualified assets exist
@@ -95,3 +100,9 @@ qualifications. Choose an installed Python 3.11+ outside Nix. This does not repl
 an actual clean no-Nix host, Linux execution, or authenticated GitHub download test.
 Omit `--deny-nix` only when deliberately recording an ordinary native candidate
 experiment; its receipt reports whether Python itself comes from Nix.
+
+Intel macOS selects separately locked official `nixpkgs-26.05-darwin`; ARM macOS
+and Linux retain the original package set. The example follows both inputs and
+selects by system. All four derivations evaluate; Intel runtime is unqualified.
+Upstream identifies 26.05 as the final Intel macOS Nixpkgs release, so continued
+future support needs an explicit reviewed strategy rather than a floating pin.

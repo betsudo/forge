@@ -51,6 +51,14 @@
       "type": "github"
     }
   },
-  "review": "Independent contract_review found no blocker; consumer example pin correction follows in next local commit.",
-  "scope": "four-system derivation evaluation only; no Intel/Linux build or runtime qualification claim"
+  "review": "Independent contract_review found no blocker; consumer pin corrected and all four consumer shell derivations evaluate.",
+  "scope": "four-system derivation evaluation only; no Intel/Linux build or runtime qualification claim",
+  "consumer_example_pin": "f3801e08f1e3af0f1a2c7b3e0e6a5c7070fa4d3a",
+  "consumer_shells": {
+    "aarch64-darwin": "/nix/store/wbydlp6ipppkpbbax9py2i6vl6s18jpp-nix-shell.drv",
+    "aarch64-linux": "/nix/store/blshgc534fcghpik1ynn9as3kyxvlirc-nix-shell.drv",
+    "x86_64-darwin": "/nix/store/z60zc609gmhbnqqlwy7j8kb3xpjvrl93-nix-shell.drv",
+    "x86_64-linux": "/nix/store/f0xb87j8hy9vaamawbp0qbd56myxgm7l-nix-shell.drv"
+  },
+  "consumer_pin_publication_status": "signed local commit only; evaluated using same-commit local Git override, remote SSH fetch requires later publication"
 }
