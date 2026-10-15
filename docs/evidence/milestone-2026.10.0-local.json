@@ -1,0 +1,251 @@
+{
+  "schema": 1,
+  "date": "2026-10-16",
+  "version": "2026.10.0",
+  "code_source_commit": "a0badb8d91b7c1f0f8c023031515b8d78e6c515d",
+  "candidate_relative_path": ".local/release-candidate-2026.10.0-final/midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin.tar.gz",
+  "candidate_sha256": "990c29027c3c3471522dbef683c06f4ba008aadf815bafcaee73260001dec4ab",
+  "native_qualification": {
+    "schema": 1,
+    "candidate_sha256": "990c29027c3c3471522dbef683c06f4ba008aadf815bafcaee73260001dec4ab",
+    "source_commit": "a0badb8d91b7c1f0f8c023031515b8d78e6c515d",
+    "version": "2026.10.0",
+    "target": "aarch64-apple-darwin",
+    "fake_gh_install": true,
+    "runtime_python_uses_nix": false,
+    "runtime_denies_nix_and_checkout": true,
+    "profiles": [
+      {
+        "profile": "ledger8-v2",
+        "qualification": {
+          "artifacts": [
+            {
+              "bytes": 28,
+              "kind": "binary_ir",
+              "sha256": "3d11698d0dabb11dfefc2d063eac364c9d89ba5ab7366fbcc5ff4b7ceec1af09"
+            },
+            {
+              "bytes": 5309,
+              "kind": "prover",
+              "sha256": "274164be1d41476d8c62a4b730f500543d01251bba7554ca4fd1b876ae8f1b18"
+            },
+            {
+              "bytes": 1255,
+              "kind": "verifier",
+              "sha256": "50e8b3e48256fe90ce4f360008b050bea24d556d258508e383c63c1b7815730d"
+            }
+          ],
+          "corrupt_proof_rejected": true,
+          "generation_ms": 22.91525,
+          "invalid_statement_rejected": true,
+          "k": 4,
+          "parameter_sha256": "232f401fad10c7ddf8828d2aa4c85c6506c5da09795998cecaeb9f75fc8f6ada",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "reproducible": true,
+          "schema": 1,
+          "valid_proof_verified": true
+        }
+      },
+      {
+        "profile": "zkir3",
+        "qualification": {
+          "artifacts": [
+            {
+              "bytes": 49,
+              "kind": "binary_ir",
+              "sha256": "f20ad0b4d289a40b1ca4aefcdb15193dbabecf53f18d4ea688550df4f14d215a"
+            },
+            {
+              "bytes": 5359,
+              "kind": "prover",
+              "sha256": "2d6c8e479b92b08e49e4dc319bc1a50bddc6e6e2923c1c722d5cac31d6447eda"
+            },
+            {
+              "bytes": 1255,
+              "kind": "verifier",
+              "sha256": "f133d165261db3bb66a10de45e712d9dda053dd2d970a9bfd75be4f5c09f4f99"
+            }
+          ],
+          "binary_ir_tag": "ir-source[v3-generic]",
+          "build_fingerprint": "76d15b366642a65dac7cce6e91cf050a9f9d88170d963c14b270f9bfa1a6862e",
+          "corrupt_proof_rejected": true,
+          "format": "midnight-zkir-v3-json",
+          "generation_ms": 28.811792,
+          "invalid_statement_rejected": true,
+          "k": 4,
+          "parameter_sha256": "232f401fad10c7ddf8828d2aa4c85c6506c5da09795998cecaeb9f75fc8f6ada",
+          "profile": "zkir3-3a7ae036/zkir-3.0.0-rc.1/transient-2.1.0/base-1.0.0/serialize-1.1.0/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/ir-source-v3-generic/forge-recipe-v1",
+          "protocol": 1,
+          "qualified_minor_versions": [
+            0
+          ],
+          "reproducible": true,
+          "source_revision": "3a7ae0361d03e6eed4fc91e31f6600f334f605d5",
+          "valid_proof_verified": true,
+          "worker": {
+            "build_fingerprint": "76d15b366642a65dac7cce6e91cf050a9f9d88170d963c14b270f9bfa1a6862e",
+            "executable_sha256": "e46bf881fcdcba6334fe9d6622a0a7993cef632a7aaca6dcd2daef408b30aaaa",
+            "profile": "zkir3-3a7ae036/zkir-3.0.0-rc.1/transient-2.1.0/base-1.0.0/serialize-1.1.0/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "3a7ae0361d03e6eed4fc91e31f6600f334f605d5"
+          }
+        }
+      }
+    ],
+    "scope": "real relocated native bundle and isolated prefix; Python origin reported separately; not a clean-host, Linux or real GitHub download qualification"
+  },
+  "native_recovery": {
+    "schema": 1,
+    "candidate_sha256": "990c29027c3c3471522dbef683c06f4ba008aadf815bafcaee73260001dec4ab",
+    "source_commit": "a0badb8d91b7c1f0f8c023031515b8d78e6c515d",
+    "version": "2026.10.0",
+    "target": "aarch64-apple-darwin",
+    "recovery": {
+      "schema": 1,
+      "primary_error_preserved_after_accounting_failure": true,
+      "profiles": [
+        {
+          "profile": "ledger8-v2",
+          "accounting_failure_rollback": true,
+          "resolve_accounting_atomic": true,
+          "export_obstacle_retry": true,
+          "killed_after_export_before_commit": true,
+          "uncommitted_metrics_rolled_back": true,
+          "corrupt_export_owner_repair": true,
+          "warm_export_rebuild": true,
+          "same_output_identity": true,
+          "real_proof_controls": true
+        },
+        {
+          "profile": "zkir3",
+          "accounting_failure_rollback": true,
+          "resolve_accounting_atomic": true,
+          "export_obstacle_retry": true,
+          "killed_after_export_before_commit": true,
+          "uncommitted_metrics_rolled_back": true,
+          "corrupt_export_owner_repair": true,
+          "warm_export_rebuild": true,
+          "same_output_identity": true,
+          "real_proof_controls": true
+        }
+      ],
+      "scope": "private local stores; no Compact or remote operations"
+    },
+    "scope": "verified relocated bundle CLI and bundled worker, private stores; ordinary runtime, no sandbox; v2 proof consumer is locked source fixture helper, not a bundled executable"
+  },
+  "source_checks": {
+    "parity": {
+      "schema": 1,
+      "profiles": [
+        {
+          "profile": "ledger8-v2",
+          "descriptor_parity": true,
+          "legacy_manifest_preserved": true,
+          "parameter_errors_distinct": true,
+          "source_pin": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "serialization": {
+            "binary_ir": "ir-source[v2]",
+            "prover_key": "prover-key[v7](ir-source[v2])",
+            "verifier_key": "verifier-key[v6]"
+          },
+          "cold_process_ms": 143.21362494956702,
+          "warm_process_ms": 13.208249991293997,
+          "job_delta": {
+            "requests": 1,
+            "hits": 1,
+            "misses": 0,
+            "errors": 0
+          }
+        },
+        {
+          "profile": "zkir3",
+          "descriptor_parity": true,
+          "legacy_manifest_preserved": true,
+          "parameter_errors_distinct": true,
+          "source_pin": "3a7ae0361d03e6eed4fc91e31f6600f334f605d5",
+          "serialization": {
+            "binary_ir": "ir-source[v3-generic]",
+            "prover_key": "prover-key[v7](ir-source[v3-generic])",
+            "verifier_key": "verifier-key[v6]"
+          },
+          "cold_process_ms": 756.9898329675198,
+          "warm_process_ms": 460.02104197395965,
+          "job_delta": {
+            "requests": 1,
+            "hits": 1,
+            "misses": 0,
+            "errors": 0
+          }
+        }
+      ],
+      "scope": "local native descriptor/error tests; proof controls executed separately; Compact unchanged"
+    },
+    "http": {
+      "schema": 1,
+      "http_source_roundtrip": true,
+      "auth_and_remote_binding": true,
+      "head_etag_range": true,
+      "path_inputs_refused": true,
+      "sqlite_contention_admission_and_responsive_liveness": true,
+      "corruption_refused_before_conditional_response": true,
+      "real_proofs": [
+        {
+          "profile": "ledger8-v2",
+          "downloaded_warm_artifacts_prove_and_reject_invalid_controls": true
+        },
+        {
+          "profile": "zkir3",
+          "downloaded_warm_artifacts_prove_and_reject_invalid_controls": true
+        }
+      ],
+      "scope": "isolated real HTTP process; local private store"
+    },
+    "snapshot": {
+      "schema": 1,
+      "relocation": true,
+      "writer_contention_timeout_and_reader_coexistence": true,
+      "wal_backup_standalone": true,
+      "concurrent_no_replace": true,
+      "hostile_and_corrupt_payloads_refused": [
+        "missing",
+        "extra",
+        "symlink",
+        "traversal",
+        "duplicate",
+        "producer",
+        "schema",
+        "ready",
+        "partial",
+        "empty-directory",
+        "corrupt-bytes"
+      ],
+      "killed_snapshot_not_published": true,
+      "ci_key_and_policy_guards": true,
+      "real_proofs": [
+        {
+          "profile": "ledger8-v2",
+          "warm_restored_artifacts_prove": true,
+          "invalid_controls_rejected": true,
+          "evicted_identity_and_exports_preserved": true,
+          "ci_budget_growth_and_stat_deltas": true
+        },
+        {
+          "profile": "zkir3",
+          "warm_restored_artifacts_prove": true,
+          "invalid_controls_rejected": true,
+          "evicted_identity_and_exports_preserved": true,
+          "ci_budget_growth_and_stat_deltas": true
+        }
+      ],
+      "scope": "isolated local process e2e; no Compact or remote cache operations"
+    }
+  },
+  "fast_suite": "Full bootstrap --check passed after Intel Nix input correction; ignored real descriptor premise test separately passed.",
+  "review": "Independent implementation, installer, cross-research and Intel input reviews found no remaining blockers in this local scope.",
+  "qualification_gaps": [
+    "Clean no-Nix host and real GitHub release download not executed",
+    "Linux portable production and Linux/Intel runtime receipts pending",
+    "Dependency-license release audit pending",
+    "DID/passport end-to-end benchmark and consumer qualification pending"
+  ],
+  "delivery": "Signed local commits only; Compact and other existing checkouts unchanged; no push, tag, hosted dispatch, release upload or deployment"
+}

@@ -436,3 +436,25 @@
   checkout runtime reads denied. Its relocated CLI/worker also passed ordinary
   real recovery. The new lock conservatively changes build identity, so a new
   native candidate/receipt follows rather than reusing the earlier claim.
+
+
+## 2026-10-16 — 2026.10.0 local acceptance
+
+- Built the final lock-aware native candidate from exact signed source a0badb8.
+  Actual local fake-gh installation with external Python passed while denying
+  /nix and checkout runtime reads. Both v2/v3 genuine proof verification,
+  reproducibility and invalid-statement/corrupt-proof controls pass.
+- The verified relocated CLI and paired worker separately passed ordinary real
+  recovery: accounting rollback, killed-before-COMMIT recovery, export repair,
+  warm reconstruction and preserved output identities with real proof controls.
+- Final-source full bootstrap, real descriptor premise/parity, HTTP-downloaded
+  proof and snapshot suites pass. All four package/main-shell/consumer-shell
+  derivations evaluate. Existing Midnight/Nixpkgs/Rust-overlay pins stay unchanged;
+  only the separately locked Intel Darwin input was added.
+- Acceptance matrix: docs/milestones/2026.10.0-acceptance.md. Complete native/source
+  receipt: docs/evidence/milestone-2026.10.0-local.json. Research contracts and exact
+  consumer observations are complete; measured CI savings, Linux/Intel runtime,
+  clean no-Nix host, license audit and real release download remain explicit gates.
+- GitHub milestone includes issues1–18. No push, release/tag/upload, hosted dispatch,
+  deployment, Compact/other-checkout edits or shared CLI reinstallation. Installed
+  shared Nix CLI remains0.2.0; this increment delivers source and local candidate.

@@ -13,7 +13,7 @@
   "review": "Independent contract_review found no remaining installer/descriptor blockers after resource caps, activation recovery and exact-commit builder changes.",
   "nix_worker_build": "native aarch64-darwin worker source closure build passed",
   "consumer_flake_evaluation": "aarch64-darwin devShell evaluated via local Git override; package outputs also evaluated for x86_64-linux",
-  "candidate_status": "Not yet built; native candidate and clean no-Nix consumer qualification remain separate gates.",
+  "candidate_status": "Final lock-aware macOS ARM64 candidate built at a0badb8, installed/proved with Nix and checkout runtime reads denied, and passed ordinary real recovery; see milestone-2026.10.0-local.json. Clean no-Nix consumer-host qualification remains pending.",
   "linux_status": "Nix flake supported as a build definition; portable tarball production deliberately refuses Nix ELF dependencies and still needs implementation/qualification.",
   "metadata_checksum_and_expansion_budgets": true
 }

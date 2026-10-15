@@ -30,7 +30,7 @@ The relay SHALL preserve exact forwarded request/response bytes, cache only comp
 
 ### Requirement: private bounded operation and coverage
 
-The relay SHALL isolate local namespaces, avoid witness/body logging and persistence by default, bound resources, support purge/bypass and keep its store outside shared GitHub caches. Qualification SHALL retain genuine uncached proof generation and positive/negative verification assertions.
+The relay SHALL isolate local namespaces, avoid witness/body logging and persistence by default, bound resources, support purge/bypass and keep its store outside shared GitHub caches. Persisted request identity SHALL use HMAC-SHA256 under a local secret excluded from snapshots. Qualification SHALL retain genuine uncached proof generation and positive/negative verification assertions.
 
 #### Scenario: coverage and replay
 

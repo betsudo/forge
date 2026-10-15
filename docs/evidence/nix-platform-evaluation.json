@@ -60,5 +60,32 @@
     "x86_64-darwin": "/nix/store/z60zc609gmhbnqqlwy7j8kb3xpjvrl93-nix-shell.drv",
     "x86_64-linux": "/nix/store/f0xb87j8hy9vaamawbp0qbd56myxgm7l-nix-shell.drv"
   },
-  "consumer_pin_publication_status": "signed local commit only; evaluated using same-commit local Git override, remote SSH fetch requires later publication"
+  "consumer_pin_publication_status": "signed local commit only; evaluated using same-commit local Git override, remote SSH fetch requires later publication",
+  "final_package_source_commit": "a0badb8d91b7c1f0f8c023031515b8d78e6c515d",
+  "final_packages": {
+    "aarch64-darwin": {
+      "derivation": "/nix/store/qg64aa3lqdi4w71jmlxifyqg2wq9wwxm-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "aarch64-linux": {
+      "derivation": "/nix/store/r5ml8rx8z306yz4sppg5qhykqxv8r8cl-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "x86_64-darwin": {
+      "derivation": "/nix/store/ya707y7mdrbgjmjfaslhs3yhiivlqmwy-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "x86_64-linux": {
+      "derivation": "/nix/store/njz5d4n8dczbf810xq91sgdhvwy5h1hf-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    }
+  }
 }
