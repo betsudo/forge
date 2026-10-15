@@ -246,3 +246,20 @@ a platform from function invocation price alone.
    before a hosted pilot, credential provisioning, CI upload or deployment.
 
 The service contract is [hosted-artifact-delivery](../../openspec/changes/hosted-artifact-delivery/proposal.md).
+
+
+## Tiny-fixture compression observation
+
+A local gzip level 6 probe on the genuine qualification fixtures (2026.10.0,
+aarch64-darwin) verified decompressed byte equality. V2 prover bytes grew from
+5,309 to 5,332; v3 prover bytes grew from 5,359 to 5,382. Both 1,255-byte verifier keys
+compressed to 535 bytes. The tiny binary IR also grew. This directly supports
+choosing identity encoding when a variant is larger; it does **not** predict
+large DID/passport key compression or CDN savings. No Brotli or HTTP transfer
+measurement was made. Receipt: [fixture-compression-local.json](../evidence/fixture-compression-local.json).
+
+To reproduce, prepare the repository's fixtures in a private temporary cache,
+read each returned `export.files[*].path`, run Python `gzip.compress(raw,
+compresslevel=6, mtime=0)` and assert `gzip.decompress(encoded) == raw`. Record
+raw/encoded lengths, decoded SHA-256 and compression time separately. Do not
+modify the shared cache or infer consumer compatibility from this probe.
