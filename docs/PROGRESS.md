@@ -383,3 +383,25 @@
   No binary release exists yet. Native candidate execution, clean no-Nix consumer
   qualification, licensing audit and Linux portable production remain explicit
   gates; no broad portability claim. Receipt: docs/evidence/private-installer-local.json.
+
+
+## 2026-10-16 — issues #13–#16 research contracts
+
+- Proposed bounded GitHub snapshot/action transport with exact local recipe reuse,
+  provider-view qualification and a reproducible genuine-proof benchmark protocol.
+  DID v0.7.0 codegen measured 0.4505s for 12 JSON2.0 circuits; keygen savings are
+  unmeasured. Passport's required Compact0.35.0 is absent. Historical job durations
+  are allocation evidence, not claimed optimization results.
+- Named the optional component Forge Proof Relay: exact binary requests, pinned
+  server/builtin/parameter context, private HMAC request identities, independently
+  verified responses, unchanged miss forwarding and mandatory uncached proving
+  coverage. It is a proposal, not runtime cache behavior or an assertion bypass.
+- Documented official published-crate availability and explicit worker/profile
+  matrix without changing current pins or claiming generic ledger9 support.
+- Compared Rust cloud admission, native keygen placement and object/CDN providers
+  with dated prices and explicit cost exclusions. Transparent key compression
+  preserves decoded identity and exact provider integrity/runtime metadata;
+  DID/passport compression measurements remain pending.
+- Independent cross-reviews report no remaining blockers after clarifications.
+  Research index: docs/research/README.md. OpenSpec structure checks pass; no
+  consumer checkout, Compact, hosted workflow, cloud or publication change.

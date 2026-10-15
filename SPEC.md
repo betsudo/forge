@@ -437,3 +437,17 @@ compatibility parity and typed availability/integrity errors are specified in
 `openspec/changes/compiler-compatibility/` (issue #12). The owner authorized local
 implementation after signed spec commits. Release publishing and new remote runs
 remain outside this phase; Compact stays unchanged.
+
+
+## Owner amendment — 2026-10-16 calendar milestone and research
+
+The local candidate version is 2026.10.0 (YYYY.M.PATCH calendar versioning).
+Milestone scope and acceptance are in docs/milestones/2026.10.0.md. Owner requested
+research/specification of CI consumer cache strategy, an optional exact-request
+Forge Proof Relay, official backend profiles and low-cost hosted delivery. These
+are proposed changes, not implemented features. Core artifact snapshots never
+cache test outcomes or witness/proof responses. Any future proof relay is a
+separate opt-in private component with exact qualified identity, verified responses
+and mandatory uncached proving coverage; no fuzzy similarity reuse is allowed.
+Keep Compact unchanged, retain current backend pins, and deliver signed local
+commits without publication, deployment or hosted CI dispatch.
