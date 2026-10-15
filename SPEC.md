@@ -422,3 +422,9 @@ HTTP subset is governed by `openspec/changes/http-docs-container/`; full archive
 uploads, durable asynchronous jobs, provider views, namespace authorization and
 registry operations remain proposed. Preparing workflow files does not publish
 the site, push code, dispatch CI or publish an image.
+
+## Owner amendment — snapshot and CI helpers
+
+Issue #6 authorizes Forge-only verified directory snapshots/restoration and local
+CI cache helpers, governed by `openspec/changes/snapshot-ci/`. Preserve Compact
+unchanged; validation and signed commits remain local without remote dispatch.
