@@ -14,50 +14,50 @@
       "build_fingerprint": "340e0b3bd94394d987c1b2a073bb411afb755e7164934ca15e8d8cb02b77b879",
       "bundle_id": "8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4",
       "cache": {
-        "elapsed_ms": 118.418417,
+        "elapsed_ms": 106.998625,
         "estimated_generation_avoided_ms": 0.0,
-        "generation_ms": 30.81425,
+        "generation_ms": 22.7755,
         "hit": false
       },
       "derivation_id": "949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28",
       "export": {
-        "base": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428",
+        "base": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428",
         "files": [
           {
             "bytes": 151,
             "kind": "source",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.zkir",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.zkir",
             "sha256": "5913d032c0aa79c5e43e249f7cc92a8dd0bad1c1f1775d10a5e6095eed7c65ef"
           },
           {
             "bytes": 28,
             "kind": "binary_ir",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.bzkir",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.bzkir",
             "sha256": "3d11698d0dabb11dfefc2d063eac364c9d89ba5ab7366fbcc5ff4b7ceec1af09"
           },
           {
             "bytes": 5309,
             "kind": "prover",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.prover",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.prover",
             "sha256": "274164be1d41476d8c62a4b730f500543d01251bba7554ca4fd1b876ae8f1b18"
           },
           {
             "bytes": 1255,
             "kind": "verifier",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.verifier",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.verifier",
             "sha256": "50e8b3e48256fe90ce4f360008b050bea24d556d258508e383c63c1b7815730d"
           }
         ],
         "lifetime": "persistent_until_owner_removal"
       },
       "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
-      "lock_wait_ms": 0.021583,
+      "lock_wait_ms": 0.012209,
       "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
       "schema": 1
     },
-    "process_wall_ms": 154.0991659858264,
-    "time_l": "        0.15 real         0.08 user         0.03 sys\n            18776064  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                1330  page reclaims\n                  17  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  83  voluntary context switches\n                1981  involuntary context switches\n           946232735  instructions retired\n           353378961  cycles elapsed\n             6767024  peak memory footprint\n",
-    "peak_process_rss_bytes": 18776064
+    "process_wall_ms": 136.19662501150742,
+    "time_l": "        0.13 real         0.07 user         0.03 sys\n            15466496  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                1127  page reclaims\n                  13  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  92  voluntary context switches\n                1711  involuntary context switches\n           888008711  instructions retired\n           332279006  cycles elapsed\n             6177152  peak memory footprint\n",
+    "peak_process_rss_bytes": 15466496
   },
   "warm": {
     "result": {
@@ -65,50 +65,50 @@
       "build_fingerprint": "340e0b3bd94394d987c1b2a073bb411afb755e7164934ca15e8d8cb02b77b879",
       "bundle_id": "8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4",
       "cache": {
-        "elapsed_ms": 5.55325,
-        "estimated_generation_avoided_ms": 30.81425,
+        "elapsed_ms": 4.563084,
+        "estimated_generation_avoided_ms": 22.7755,
         "generation_ms": 0.0,
         "hit": true
       },
       "derivation_id": "949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28",
       "export": {
-        "base": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428",
+        "base": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428",
         "files": [
           {
             "bytes": 151,
             "kind": "source",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.zkir",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.zkir",
             "sha256": "5913d032c0aa79c5e43e249f7cc92a8dd0bad1c1f1775d10a5e6095eed7c65ef"
           },
           {
             "bytes": 28,
             "kind": "binary_ir",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.bzkir",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.bzkir",
             "sha256": "3d11698d0dabb11dfefc2d063eac364c9d89ba5ab7366fbcc5ff4b7ceec1af09"
           },
           {
             "bytes": 5309,
             "kind": "prover",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.prover",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.prover",
             "sha256": "274164be1d41476d8c62a4b730f500543d01251bba7554ca4fd1b876ae8f1b18"
           },
           {
             "bytes": 1255,
             "kind": "verifier",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.verifier",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.verifier",
             "sha256": "50e8b3e48256fe90ce4f360008b050bea24d556d258508e383c63c1b7815730d"
           }
         ],
         "lifetime": "persistent_until_owner_removal"
       },
       "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
-      "lock_wait_ms": 0.005332999999999999,
+      "lock_wait_ms": 0.006125,
       "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
       "schema": 1
     },
-    "process_wall_ms": 15.783832990564406,
-    "time_l": "        0.01 real         0.00 user         0.00 sys\n            15876096  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                1139  page reclaims\n                  14  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   3  voluntary context switches\n                   7  involuntary context switches\n           124430865  instructions retired\n            37354625  cycles elapsed\n             4931968  peak memory footprint\n",
-    "peak_process_rss_bytes": 15876096
+    "process_wall_ms": 13.981874973978847,
+    "time_l": "        0.01 real         0.00 user         0.00 sys\n            13434880  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 992  page reclaims\n                  12  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   3  voluntary context switches\n                   3  involuntary context switches\n           113074433  instructions retired\n            31768701  cycles elapsed\n             4784464  peak memory footprint\n",
+    "peak_process_rss_bytes": 13434880
   },
   "evict": {
     "result": {
@@ -123,9 +123,9 @@
       "identity_retained": true,
       "source_retained": true
     },
-    "process_wall_ms": 9.41083300858736,
-    "time_l": "        0.00 real         0.00 user         0.00 sys\n            10485760  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 816  page reclaims\n                   8  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   3  voluntary context switches\n                   6  involuntary context switches\n            43390906  instructions retired\n            17692774  cycles elapsed\n             2294120  peak memory footprint\n",
-    "peak_process_rss_bytes": 10485760
+    "process_wall_ms": 8.787249971646816,
+    "time_l": "        0.00 real         0.00 user         0.00 sys\n             9224192  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 737  page reclaims\n                  10  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   3  voluntary context switches\n                   7  involuntary context switches\n            42173259  instructions retired\n            17136310  cycles elapsed\n             2048336  peak memory footprint\n",
+    "peak_process_rss_bytes": 9224192
   },
   "regenerated": {
     "result": {
@@ -133,50 +133,50 @@
       "build_fingerprint": "340e0b3bd94394d987c1b2a073bb411afb755e7164934ca15e8d8cb02b77b879",
       "bundle_id": "8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4",
       "cache": {
-        "elapsed_ms": 62.742625,
+        "elapsed_ms": 59.733541,
         "estimated_generation_avoided_ms": 0.0,
-        "generation_ms": 25.689957999999997,
+        "generation_ms": 23.313292,
         "hit": false
       },
       "derivation_id": "949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28",
       "export": {
-        "base": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428",
+        "base": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428",
         "files": [
           {
             "bytes": 151,
             "kind": "source",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.zkir",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.zkir",
             "sha256": "5913d032c0aa79c5e43e249f7cc92a8dd0bad1c1f1775d10a5e6095eed7c65ef"
           },
           {
             "bytes": 28,
             "kind": "binary_ir",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.bzkir",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/zkir/assert.bzkir",
             "sha256": "3d11698d0dabb11dfefc2d063eac364c9d89ba5ab7366fbcc5ff4b7ceec1af09"
           },
           {
             "bytes": 5309,
             "kind": "prover",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.prover",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.prover",
             "sha256": "274164be1d41476d8c62a4b730f500543d01251bba7554ca4fd1b876ae8f1b18"
           },
           {
             "bytes": 1255,
             "kind": "verifier",
-            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-bpbkkr2e/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.verifier",
+            "path": "/private/var/folders/55/p48skc9j45b2s3301cv1_6tw0000gn/T/zkir-forge-benchmark-r_bzv648/cache/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428/keys/assert.verifier",
             "sha256": "50e8b3e48256fe90ce4f360008b050bea24d556d258508e383c63c1b7815730d"
           }
         ],
         "lifetime": "persistent_until_owner_removal"
       },
       "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
-      "lock_wait_ms": 0.006709,
+      "lock_wait_ms": 0.005,
       "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
       "schema": 1
     },
-    "process_wall_ms": 72.05908396281302,
-    "time_l": "        0.06 real         0.07 user         0.03 sys\n            18497536  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                1324  page reclaims\n                  17  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  27  voluntary context switches\n                1890  involuntary context switches\n           910067067  instructions retired\n           354630281  cycles elapsed\n             6504904  peak memory footprint\n",
-    "peak_process_rss_bytes": 18497536
+    "process_wall_ms": 69.13750001695007,
+    "time_l": "        0.06 real         0.07 user         0.02 sys\n            15581184  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                1134  page reclaims\n                  13  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                  31  voluntary context switches\n                2249  involuntary context switches\n           849040767  instructions retired\n           311313656  cycles elapsed\n             6291864  peak memory footprint\n",
+    "peak_process_rss_bytes": 15581184
   },
   "stats": {
     "result": {
@@ -281,31 +281,31 @@
       ],
       "recent_requests": [
         {
-          "at": "2026-10-15T08:37:37.436Z",
+          "at": "2026-10-15T08:45:11.836Z",
           "bundle_id": "8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4",
-          "elapsed_ms": 62.742625,
+          "elapsed_ms": 59.733541,
           "estimated_generation_avoided_ms": 0.0,
-          "generation_ms": 25.689957999999997,
+          "generation_ms": 23.313292,
           "operation": "ensure",
           "outcome": "miss",
           "requested_path": ""
         },
         {
-          "at": "2026-10-15T08:37:37.355Z",
+          "at": "2026-10-15T08:45:11.758Z",
           "bundle_id": "8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4",
-          "elapsed_ms": 5.55325,
-          "estimated_generation_avoided_ms": 30.81425,
+          "elapsed_ms": 4.563084,
+          "estimated_generation_avoided_ms": 22.7755,
           "generation_ms": 0.0,
           "operation": "ensure",
           "outcome": "hit",
           "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/fixtures/assert.zkir"
         },
         {
-          "at": "2026-10-15T08:37:37.338Z",
+          "at": "2026-10-15T08:45:11.743Z",
           "bundle_id": "8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4",
-          "elapsed_ms": 118.418417,
+          "elapsed_ms": 106.998625,
           "estimated_generation_avoided_ms": 0.0,
-          "generation_ms": 30.81425,
+          "generation_ms": 22.7755,
           "operation": "ensure",
           "outcome": "miss",
           "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/fixtures/assert.zkir"
@@ -321,18 +321,18 @@
       },
       "totals": {
         "errors": 0,
-        "estimated_generation_avoided_ms": 30.81425,
-        "generation_ms": 56.504208,
+        "estimated_generation_avoided_ms": 22.7755,
+        "generation_ms": 46.088792,
         "hit_rate": 0.3333333333333333,
         "hits": 1,
         "misses": 2,
         "requests": 3,
-        "total_request_ms": 186.714292
+        "total_request_ms": 171.29525
       }
     },
-    "process_wall_ms": 9.432541963178664,
-    "time_l": "        0.00 real         0.00 user         0.00 sys\n            10469376  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 818  page reclaims\n                   8  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                   3  involuntary context switches\n            43753571  instructions retired\n            17711276  cycles elapsed\n             2294096  peak memory footprint\n",
-    "peak_process_rss_bytes": 10469376
+    "process_wall_ms": 9.114042040891945,
+    "time_l": "        0.00 real         0.00 user         0.00 sys\n             9338880  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 744  page reclaims\n                  10  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                   5  involuntary context switches\n            40964054  instructions retired\n            16519169  cycles elapsed\n             2179408  peak memory footprint\n",
+    "peak_process_rss_bytes": 9338880
   },
-  "wall_speedup": 9.76310165458207
+  "wall_speedup": 9.740941416296309
 }

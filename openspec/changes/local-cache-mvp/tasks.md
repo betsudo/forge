@@ -12,4 +12,11 @@
 - [x] 2.5 Record per-file hits, misses, failures, sizes and timings.
 - [x] 2.6 Verify a valid proof and reject invalid statement/proof controls.
 - [x] 2.7 Independently review identity and concurrency guarantees.
-- [ ] 2.8 Install locally, document agent integration and update Midnight vault.
+- [x] 2.8 Install locally, document agent integration and update Midnight vault.
+
+## Evidence
+
+All tasks are complete for the bounded local MVP. See `docs/PROGRESS.md` and
+`docs/evidence/` for checks, independent review, installed CLI qualification and
+measurements. This change stays available for local adoption; no PR/release or
+full-service completion is implied.

@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "forge_implementation_commit": "f75dc26",
+  "binary": "/Users/ysh/.local/bin/midnight-zkir-forge",
+  "binary_sha256": "bc4def7056ecb7237a90b623117cc7d3da8f99bd493ea1855c8bebb7959ebe79",
+  "nix_output": "/nix/store/206j5lxk855hjjg7m0xk6x609l3r626w-midnight-zkir-forge-0.1.0",
+  "default_cache_verified": true,
+  "default_export_base": "/Users/ysh/.midnight-zkir-forge/exports/8abef4d23a7cdd4678d1d692579d613a432b1472492fea00a1766a3bc254d7e4/949075467cedfcf304c67a8ad218cfe04c9de7e6581c1b16c2b50d5f21313f28/c752f28b9bb7c72d8e8ad2888ffa94312dc4259382643edb0217971101ffc428",
+  "profile": {
+    "build_fingerprint": "340e0b3bd94394d987c1b2a073bb411afb755e7164934ca15e8d8cb02b77b879",
+    "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+    "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+    "schema": 1
+  }
+}

@@ -2,7 +2,7 @@
 
 ## Product and engineering specification
 
-Status: proposed scope for a new, independent repository. Research checked 2026-10-15 (Asia/Kuala_Lumpur). No service implementation or compatibility qualification is claimed.
+Status: full service scope remains proposed. The local single-circuit CLI MVP is implemented and qualified on ARM macOS; see `openspec/changes/local-cache-mvp/` and `docs/evidence/`. Research and first local delivery: 2026-10-15 (Asia/Kuala_Lumpur). No hosted service or production-readiness claim is made.
 
 **Suggested repository:** `midnight-zkir-forge`  
 **Suggested binary:** `midnight-zkir-forge`  

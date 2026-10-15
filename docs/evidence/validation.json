@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "at": "2026-10-15T16:46:35.346424+08:00",
+  "platform": "aarch64-darwin",
+  "status": "locally testable MVP",
+  "checks": {
+    "bootstrap_check": "passed: formatting, profile, spec structure, commit policy including negative fixtures, 6 fast tests, Clippy -D warnings",
+    "real_backend": "passed: 3 tests with verified parameters, --test-threads=1",
+    "nix_build": "passed: standalone package build and package tests",
+    "flake_check_no_build": "passed on aarch64-darwin; other declared systems not qualified",
+    "pi_audit": "passed, 0.84.0",
+    "installed_qualification": "passed: fresh keygen twice, real proof, invalid statement/corrupt proof controls",
+    "installed_cli_acceptance": "passed: killed writer recovery, no partial readiness, single artifact paths, structured errors",
+    "default_cache": "verified ~/.midnight-zkir-forge and repeated hit"
+  },
+  "unqualified": [
+    "large circuit resource bounds",
+    "other platforms",
+    "HTTP and background jobs",
+    "full metadata/multi-circuit manifest protocol",
+    "JS consumer version matrix",
+    "production release readiness"
+  ],
+  "remote_code_actions": false,
+  "supervision_enabled": false
+}

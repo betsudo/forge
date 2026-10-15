@@ -47,3 +47,25 @@
   replace the initial slow fresh toolchain download. Pi audit passes at 0.84.0.
 - Standalone Nix release build/install is running; final installed-binary evidence
   and vault checkpoint follow. No code pushed, PR, hosted CI or supervision run.
+
+## 2026-10-15 — installed MVP checkpoint
+
+- Implementation commit: f75dc26 (GPG verified, DCO signed). Standalone Nix
+  package builds and tests successfully. Installed at ~/.local/bin/
+  midnight-zkir-forge, GC-rooted by ~/.local/share/midnight-zkir-forge/current.
+- Installed binary passes uncached qualification and CLI crash-recovery controls.
+  Default ~/.midnight-zkir-forge was created and repeated prepare returned a hit.
+- Installed release measurement: cold process wall 136.20ms,
+  warm 13.98ms (9.74x for this fixture);
+  ensure phase 107.00ms / 4.56ms.
+  Peak process RSS 15.47MB cold and
+  13.43MB warm. These supersede the debug
+  example for installed CLI timing; not a large-circuit or multi-host claim.
+- Nix flake evaluation passes on aarch64-darwin; other declared systems were
+  omitted by the native check and are unqualified. Pi audit still passes.
+- Midnight vault initiative/index updated. README contains reinstall/PATH,
+  Python test integration, lifecycle, statistics and uncached qualification.
+- Local MVP complete. Issues #1/#2 remain as remote tracking; no code push,
+  PR, hosted CI, deployment, automated merge or persistent supervision occurred.
+- Next slices: broader real consumer fixtures, multi-circuit manifests, explicit
+  purge/GC/retention and JSON-lines mode; HTTP only after those local contracts.
