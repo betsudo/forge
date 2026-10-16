@@ -762,3 +762,23 @@
   compiler/local usefulness is assessed independently of CI savings.
 - No code implementation, dispatch, VM work, consumer/Compact edits or release
   occurred during planning. Historical evidence stays source-specific.
+
+## 2026-10-16 — compiler integration contract (#3), local backlog resumed
+
+- Owner resumed the current backlog locally, with Cloudflare deferred. Kept
+  priority order: compiler/provider contract, local reuse, then CI. No push or
+  external workflow execution is implied by the resume.
+- Audited current Compact source05a7885f read-only. All8 inspected source file
+  digests and existing unrelated working changes are recorded in
+  docs/evidence/compact-compiler-boundary.json. No Compact files/builds/tests changed.
+- Defined proposed off/local/fetch compiler opt-in, independently qualified policy,
+  original uncached behavior and typed safe fallback. Actual flags/fetch support
+  are not claimed. Key materialization belongs before normal compiler integrity
+  manifest generation; post-compile injection is not equivalent.
+- Existing test shim remains v2-only with an older exact-build guard. Contract
+  explicitly preserves it, current ZKIR, private outputs, proof/assertion runs,
+  parameter verification and verifier identity across eviction.
+- OpenSpec structure and diff checks passed. Independent source/contract review
+  found no blocker; fixed minor reference spacing. Documentation-only contract
+  delivery does not claim a compiler runtime integration or measured speedup.
+- Next local work: pinned Node/Fetch provider qualification under issue#4.
