@@ -20,8 +20,11 @@ output separate from source, qualification, tools, parameters and cache. The
 compiler owns and may clear its output directory. Unknown circuits, changed tools,
 parameters, descriptors or artifacts refuse local mode; use explicit off mode
 or obtain a new reviewed qualification. Never edit an old receipt to bless a new
-executable. Qualification currently covers the minimal fixture, not arbitrary
-Passport contracts. Output copies are private; test proofs and assertions still run.
+executable. Qualification covers the minimal fixture and the separately pinned
+[Passport account cohort](passport-local.md), with all 52 intercepted artifact sets
+and two selected application proof paths. It does not authorize arbitrary Passport
+contracts or full-account HTTP serving. Output copies are private; test proofs and
+assertions still run.
 A failed copy can leave incomplete output, but the wrapper refuses success and
 the compiler does not finish its manifest; retry compilation in owned output.
 

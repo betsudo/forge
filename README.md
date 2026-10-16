@@ -33,8 +33,11 @@ matching the inspected local Compact v3 tool configuration. It is **not** the
 same binary format as the v3 RC bundled with ledger8 8.1.3, despite the same
 crate version label. JSON 3.1 uses the separately pinned `zkir31` worker with
 `verifier-key[v7]`; the older profiles retain `verifier-key[v6]`. The new profile
-is qualified against two exact Passport account circuits; full benchmark results
-and installation qualification are tracked separately in `docs/research/passport-benchmark.md`.
+has separately reviewed [full-account artifact qualification](docs/providers/passport-local.md)
+for all 52 emitted Passport circuits, with genuine proofs for two selected application
+paths on native macOS ARM64. Full-account HTTP remains over the current serving
+budget. Broader benchmark and installation qualification stay separately tracked
+in `docs/research/passport-benchmark.md`.
 The shared installed CLI may predate this source: inspect its `profile` before use.
 Check a consumer's exact pin and serialization;
 no ledger9 transaction/network qualification is implied.
@@ -255,6 +258,10 @@ The opt-in [compiler adapter and provider-view guide](docs/providers/local-adapt
 explains complete compiler metadata preservation, independently pinned manifests
 and exact source qualification. Bare key exports do not satisfy current SDK
 provider integrity requirements.
+
+The [2026.10.1 local delivery report](docs/milestones/2026.10.1.md) records the
+exact Passport cohort, real cold/warm/recovery proof controls, request counters,
+timings and deferred platform/hosted gates. It is not a published release.
 
 `zkir-forge` is the primary CLI. `midnight-zkir-forge` remains a compatibility
 alias with the same commands and store. Package/crate names, worker/helper names,

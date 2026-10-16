@@ -1055,3 +1055,38 @@
   provenance pins CI helper/preimage generator. All owned stores/snapshots/runtime
   dependency/preimage copies were cleaned after capture. Full52local adapter
   qualification remains a separate ongoing gate. No push or Compact changes.
+
+## 2026-10-17 — full local Passport qualification complete (#15/#6/#7/#30)
+
+- All 52 independent official/Forge artifact sets match for unchanged Passport
+  account 0d7bb0bc; exact source closure, compiler, JSON3.1 worker, eight parameter
+  models, SDK lock and harness hashes are retained. Trusted policy raw SHA-256:
+  `4e94e57bf7467a5db580600be3e660691752f363123a1aab2fe8ea92abacc602`.
+- Full cold and warm compiler outputs preserve all 213 original files, including
+  manifest `433e83a1…` and runtime metadata. Cold52miss/0hit/0error; warm adds
+  52hits/0miss/0error and zero measured generation. Node provider remains pinned
+  to the same original compiler manifest. No pruning or synthetic metadata.
+- Native/cold/warm and five positive recovery groups pass16actual proofs,
+  16verifications,32negative controls and144state/trace assertions across two
+  selected application circuits. Corrupt CAS/export refusals, explicit repair,
+  missing-export reconstruction, eviction/regeneration and concurrent callers
+  preserve actual identity. Wrong profile/policy refuse before compiler cleanup.
+- One shared-host observation: cold compile1619.463s, warm650.756s (~59.8%less);
+  proof-test harness3.002s/2.883s and whole lanes1628.216s/659.432s. Native/off
+  ~1379s uses a lower-precision process-start/manifest-mtime proxy, not a precise
+  monotonic benchmark. Per-file bytes/counters and keygen/request timings remain
+  separate. Earlier selected-two archive saving stays negative; no hosted claim.
+- Independent final evidence review verified hashes, complete inventory, counts,
+  resource boundaries and actual scratch cleanup; no blocker in the stated native
+  scope. Full baseline, independent/adapter stores, cold/warm outputs and private
+  proof/preimage copies are removed. The tested Nix root and small source/tools/
+  receipts remain. No obsolete worktrees; shared CLI/default cache unchanged.
+- Setup/renewal: docs/providers/passport-local.md. Acceptance and exact deferred
+  gates: docs/milestones/2026.10.1.md. General/site/repository/global-skill and
+  Midnight-vault handoff updated. Site build/link/API checks pass. Complete
+  provider publication refuses the actual12.18GBbundle under the unchanged4GiB
+  limit, with no visible partial view; #31 tracks the actionable large-view gate.
+- Local #30 scope is complete. Broader #6/#7/#13 Linux gates, clean Nix-free Mac,
+  full-account Fetch/HTTP, hosted CI study, Ledger9 transactions and Cloudflare
+  stay open. No Compact/other-checkout/pin edits, shared install, push, PR, merge,
+  workflow dispatch, release or deployment occurred.

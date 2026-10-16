@@ -1,0 +1,3567 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "tool_sha256": {
+    "compactc.bin": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+    "zkir-v3": "2e5febcbe905451cb549991f96eb91b94dfa7bc1a5deb7a41ee017964d532fb4",
+    "forge": "5780bfe4b0b27ffbcffff980f6f7a14e874e3624714742824fc9cd4c882c3cc0",
+    "worker": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58"
+  },
+  "materialization": [
+    {
+      "circuit": "activate_initial_device_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "22dd35c824a4fb6bdc846928c995c62bf78f185c37ebb4f118e85ab5b1d5dc5c",
+          "artifacts": [
+            {
+              "digest": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+              "kind": "binary_ir",
+              "size": 1993
+            },
+            {
+              "digest": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+              "kind": "prover",
+              "size": 24648297
+            },
+            {
+              "digest": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+          "derivation_id": "565f7f55070254472581cf01b203b5738de1a1d44d86dcb4362d4bf0efe9d59e",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 14,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "activate_initial_device_with_jubjub",
+          "parameter_digest": "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b",
+            "kind": "source",
+            "size": 6789
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b",
+        "binary_ir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+        "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+        "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+      },
+      "cold_prepare_ms": 3031.158207973931
+    },
+    {
+      "circuit": "activate_initial_device_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "89223776b9cfb2e3a3341228125ab6c330764b29f76dfdd6fd6d5964f8371e05",
+          "artifacts": [
+            {
+              "digest": "7f4bc97ce74a9bd5a67c20353a88bead7991b6c3407941ab4e3deb40cf169fa7",
+              "kind": "binary_ir",
+              "size": 2509
+            },
+            {
+              "digest": "cff06e62e395c6037c8feef50673b9f8a6a82cb9d663a9acd9b690df71bff011",
+              "kind": "prover",
+              "size": 29368305
+            },
+            {
+              "digest": "7e579319659b7f310c87c553b37ed0c3531e7c4558e76e7de0b8aa96916a8551",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "26b40c2965c9f53ccb297a6046b1033d4a97067170ed9597a501e70d49331b01",
+          "derivation_id": "80bba24b2fe1d429aeeeae6aa7fea4a035a5e48f55d788db992013b283900a28",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 14,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "activate_initial_device_with_k256",
+          "parameter_digest": "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "b197e27eaa0b96c3e320a65c238ff662ce3e6cb0be7d56a5e1dabba0e7db8662",
+            "kind": "source",
+            "size": 8639
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "b197e27eaa0b96c3e320a65c238ff662ce3e6cb0be7d56a5e1dabba0e7db8662",
+        "binary_ir": "7f4bc97ce74a9bd5a67c20353a88bead7991b6c3407941ab4e3deb40cf169fa7",
+        "prover": "cff06e62e395c6037c8feef50673b9f8a6a82cb9d663a9acd9b690df71bff011",
+        "verifier": "7e579319659b7f310c87c553b37ed0c3531e7c4558e76e7de0b8aa96916a8551"
+      },
+      "cold_prepare_ms": 3381.754208006896
+    },
+    {
+      "circuit": "activate_initial_device_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "c339c3b2a87e48e39561a98d261c213cd10d35875ef68185a9d3e29abfce942b",
+          "artifacts": [
+            {
+              "digest": "12f725bccb2efa1e7efee56a6167a150464604e4ef7bc28bf4a11e5ea8e868d9",
+              "kind": "binary_ir",
+              "size": 2280
+            },
+            {
+              "digest": "70f5d46e5e3f56a34c6e9a4c6a44c6e508e0fc11f1c8eee2abe21bed865d7bf8",
+              "kind": "prover",
+              "size": 29368076
+            },
+            {
+              "digest": "042ef4684a953bd2a2b3a246a517b999c5fa77e2c5a9851b4d55fed5db092ccd",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "05a507a7540226a387273ce58a94e527014ae07a9e260637429a1e7be97b788f",
+          "derivation_id": "a670c91d3224183f2561a44830ca9785da9185607f2f2c8466759310e340d81f",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 14,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "activate_initial_device_with_p256",
+          "parameter_digest": "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "a6c4420309515190f2f93ff5ceb3caf8faf32c1a277c249456a7db6520cf8510",
+            "kind": "source",
+            "size": 7891
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "a6c4420309515190f2f93ff5ceb3caf8faf32c1a277c249456a7db6520cf8510",
+        "binary_ir": "12f725bccb2efa1e7efee56a6167a150464604e4ef7bc28bf4a11e5ea8e868d9",
+        "prover": "70f5d46e5e3f56a34c6e9a4c6a44c6e508e0fc11f1c8eee2abe21bed865d7bf8",
+        "verifier": "042ef4684a953bd2a2b3a246a517b999c5fa77e2c5a9851b4d55fed5db092ccd"
+      },
+      "cold_prepare_ms": 4642.26591703482
+    },
+    {
+      "circuit": "add_device_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "abd02748918132028f34a586c685cc0acca8982f141f818580a446375c2b89e9",
+          "artifacts": [
+            {
+              "digest": "7f5029b616e9be3fc37aa47d64c89b90cdb96860cec0b6e1b07ac5c7534945eb",
+              "kind": "binary_ir",
+              "size": 3788
+            },
+            {
+              "digest": "f109ee0aa3ea0b3cd61b70f50ab2e3f272810d29794b26de8ff458b12d36df1d",
+              "kind": "prover",
+              "size": 49291628
+            },
+            {
+              "digest": "8bcb83e10f7ad25fc65e28f3fdb918eaf0f8755f6a0eb7416052c6153ea80408",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "793f06bf04f662ebfd023c45dcd15b7c7ca5522d12459a7bf203d7c813124b0e",
+          "derivation_id": "7925326be267dfa03b7e5b63b2a7d9d9ac4bc33e1400fa32ffacf668d29bef7c",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 15,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "add_device_with_jubjub",
+          "parameter_digest": "724c7c3d779148bb113c7ee9c034b2f27db16e6bdf315fde90105a9bad00b1de",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "d6086a4bcd2f3d6c0c891657121df7ad753f4b5c52f9843c68e9c927471e6c5f",
+            "kind": "source",
+            "size": 12609
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "d6086a4bcd2f3d6c0c891657121df7ad753f4b5c52f9843c68e9c927471e6c5f",
+        "binary_ir": "7f5029b616e9be3fc37aa47d64c89b90cdb96860cec0b6e1b07ac5c7534945eb",
+        "prover": "f109ee0aa3ea0b3cd61b70f50ab2e3f272810d29794b26de8ff458b12d36df1d",
+        "verifier": "8bcb83e10f7ad25fc65e28f3fdb918eaf0f8755f6a0eb7416052c6153ea80408"
+      },
+      "cold_prepare_ms": 5518.391833000351
+    },
+    {
+      "circuit": "add_device_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "9570ad4f5d88d8c6aab2379d0c8e8c15c85744684085299c67714dfa6cbf651a",
+          "artifacts": [
+            {
+              "digest": "18c1a452542d3a2ed869f2deaec360712d65924d66e7eb9950777808492b9118",
+              "kind": "binary_ir",
+              "size": 6817
+            },
+            {
+              "digest": "d60d1845604c0a136e9cc4381e482b559d0cac6ec7a7061e6119b9657f7fc1d0",
+              "kind": "prover",
+              "size": 234893509
+            },
+            {
+              "digest": "959e4057137caaf8e2febb8f4a6fdb3d5073d852247ca4dc12c84e2698fd9a86",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "b369625a174abdfc5bd373e890cafd8e004f1dc007ead021e2230a2cc95bed1a",
+          "derivation_id": "fe49dd17da01fd179eec1d11ae00f531434ca066e2fb878a0d84ed470cb27335",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "add_device_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "86bdb1c8b2106d8c484efd67f3f68e851fccce96a1d4f3ad50c7cbc88216db5e",
+            "kind": "source",
+            "size": 23394
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "86bdb1c8b2106d8c484efd67f3f68e851fccce96a1d4f3ad50c7cbc88216db5e",
+        "binary_ir": "18c1a452542d3a2ed869f2deaec360712d65924d66e7eb9950777808492b9118",
+        "prover": "d60d1845604c0a136e9cc4381e482b559d0cac6ec7a7061e6119b9657f7fc1d0",
+        "verifier": "959e4057137caaf8e2febb8f4a6fdb3d5073d852247ca4dc12c84e2698fd9a86"
+      },
+      "cold_prepare_ms": 26117.850375012495
+    },
+    {
+      "circuit": "add_device_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "7f41b0fc8fe980ef32f1f5e34dd3b2afdbb988531f536384f1a90f09320aeb1e",
+          "artifacts": [
+            {
+              "digest": "9078244a60503e1e0d20c22184e065d406804d68a5b1b7cf899d97555056349f",
+              "kind": "binary_ir",
+              "size": 87664
+            },
+            {
+              "digest": "e9e6912ad9eb35f182ec98346858935b00d53a297aa363fc97db4c25f0e8b355",
+              "kind": "prover",
+              "size": 469855382
+            },
+            {
+              "digest": "7414477f52366b4098bb5347879fcad174595148b19d853ffa65d4d84d48913f",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "c4156ad930d5a80abfa3bd5f47f8946090c7f2fce7f2d67036ce3b296defbcdf",
+          "derivation_id": "6d9aff0e0c8699d91ec7aa4cf927fa03091acd626771cce1e2c2312a785dc135",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "add_device_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "a8fdf50e4fc80b7b5f6faf7fafda911aeeee9ceb9513677ccbfc4a86cabb8ce9",
+            "kind": "source",
+            "size": 270860
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "a8fdf50e4fc80b7b5f6faf7fafda911aeeee9ceb9513677ccbfc4a86cabb8ce9",
+        "binary_ir": "9078244a60503e1e0d20c22184e065d406804d68a5b1b7cf899d97555056349f",
+        "prover": "e9e6912ad9eb35f182ec98346858935b00d53a297aa363fc97db4c25f0e8b355",
+        "verifier": "7414477f52366b4098bb5347879fcad174595148b19d853ffa65d4d84d48913f"
+      },
+      "cold_prepare_ms": 57179.92270796094
+    },
+    {
+      "circuit": "append_inbox_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "789e193390e526bda72ec83c9251d7ea7a8b21fd686550d7e418253aaca35f33",
+          "artifacts": [
+            {
+              "digest": "5f3085f9669fbc3ce6eba0aaacd8fa1fd3cb9ccdacbb1210955c9a736a192c56",
+              "kind": "binary_ir",
+              "size": 3907
+            },
+            {
+              "digest": "6dff5362bd05631680267d83cdab67b5506597a7c851d6053cafa5332225c3e5",
+              "kind": "prover",
+              "size": 98574819
+            },
+            {
+              "digest": "c7b4858b558b2d53ba36567ae2ff27f9f855593ad8910ebaf60f84b10d9bf601",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "52ca18ad2568de7a63acd9aa57da368e998fc83357854869908271aac29ce8e5",
+          "derivation_id": "10a3a47d732596c24cf1ae986109a436574b7d66f571a907711b7628ead7ab10",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 16,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "append_inbox_with_jubjub",
+          "parameter_digest": "09c877216d6589b370263e18af40a030a901b41a7a7c37ef58c9901db41f05c6",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "7eabd8bcd3ef27e69937e8f84b3e2b280d38c2b2b6cb0c341f296fdc1b6b0135",
+            "kind": "source",
+            "size": 13045
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "7eabd8bcd3ef27e69937e8f84b3e2b280d38c2b2b6cb0c341f296fdc1b6b0135",
+        "binary_ir": "5f3085f9669fbc3ce6eba0aaacd8fa1fd3cb9ccdacbb1210955c9a736a192c56",
+        "prover": "6dff5362bd05631680267d83cdab67b5506597a7c851d6053cafa5332225c3e5",
+        "verifier": "c7b4858b558b2d53ba36567ae2ff27f9f855593ad8910ebaf60f84b10d9bf601"
+      },
+      "cold_prepare_ms": 20855.39266699925
+    },
+    {
+      "circuit": "append_inbox_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "0131c3647655bf89cd9753a5e36aa4e274e2c167d8669a114e09a5804b1d0227",
+          "artifacts": [
+            {
+              "digest": "b11b97b050ba5e3265479be6d6a53083b54f5f664d47f3b19446daaf2e7dbf23",
+              "kind": "binary_ir",
+              "size": 6947
+            },
+            {
+              "digest": "7097dd983e8aa72c8f6314c0ea5330e12319c1a105bd59e14765c9590cb31a9c",
+              "kind": "prover",
+              "size": 234893639
+            },
+            {
+              "digest": "73e67013fa3e37fc0877ab8432be6614fc5835b2c1e79c835e2c8cc40e7be157",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "9ca970ca2ac2c8fa1462108934cf2d7aea6386f205c23cf5d6844fa1234b18d6",
+          "derivation_id": "1adac7089091a5e4f42e61e827fbf5d094cbbb1f5cd7b5b0369df795f9121c56",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "append_inbox_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "803210bd546868494b8f990eb1af15a2b9b64bc43839b49aa8fef9efee131f48",
+            "kind": "source",
+            "size": 23841
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "803210bd546868494b8f990eb1af15a2b9b64bc43839b49aa8fef9efee131f48",
+        "binary_ir": "b11b97b050ba5e3265479be6d6a53083b54f5f664d47f3b19446daaf2e7dbf23",
+        "prover": "7097dd983e8aa72c8f6314c0ea5330e12319c1a105bd59e14765c9590cb31a9c",
+        "verifier": "73e67013fa3e37fc0877ab8432be6614fc5835b2c1e79c835e2c8cc40e7be157"
+      },
+      "cold_prepare_ms": 22464.64212500723
+    },
+    {
+      "circuit": "append_inbox_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "5b07eff736d6dbd33985ed34397e3659e4a8439c4109f36046bb6c5433471bfd",
+          "artifacts": [
+            {
+              "digest": "5216deac0c2d865f57cceec0527a8ead88ff8805565d07d35ec4cb544f76d92c",
+              "kind": "binary_ir",
+              "size": 87904
+            },
+            {
+              "digest": "6bbfb51c6d21a8cbe3085c74517487384c6e0fff4d5fb1458533e8b1532f6c2d",
+              "kind": "prover",
+              "size": 469855622
+            },
+            {
+              "digest": "52779a258276ea8c217de9e307d5611c8589fc1c715cdde466f14472736303f9",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "7049d7db61a545c0cf5e092fca6f4f5587438dc86c688945d9f834995a7c75d4",
+          "derivation_id": "5789f1bd69eadd365e94a2d4876e01b737dd0c40162ef6cde751de38607ef4df",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "append_inbox_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "23402cf8b906d819acea7514c7fea8963e2f47faf2334b975cbc1c9f00c3a3f0",
+            "kind": "source",
+            "size": 271417
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "23402cf8b906d819acea7514c7fea8963e2f47faf2334b975cbc1c9f00c3a3f0",
+        "binary_ir": "5216deac0c2d865f57cceec0527a8ead88ff8805565d07d35ec4cb544f76d92c",
+        "prover": "6bbfb51c6d21a8cbe3085c74517487384c6e0fff4d5fb1458533e8b1532f6c2d",
+        "verifier": "52779a258276ea8c217de9e307d5611c8589fc1c715cdde466f14472736303f9"
+      },
+      "cold_prepare_ms": 54543.42495900346
+    },
+    {
+      "circuit": "deposit_shielded",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "aa9b4d00727364bea0104e237cb5d3cd9aba3ad6f9eecf55b5f52f262b97809f",
+          "artifacts": [
+            {
+              "digest": "e61e8dd6f86999518f5d9dfe5d09f63c172f989e8eed3ccf5d90e43a7ab81951",
+              "kind": "binary_ir",
+              "size": 1652
+            },
+            {
+              "digest": "0c63768a2206101b86d8bfc49f7a55d3cdd230afa6a28f61964f160082a519cb",
+              "kind": "prover",
+              "size": 11278212
+            },
+            {
+              "digest": "18caf9ffc1ea3271c340f97ee5433598b796a64fadcc1fb7bb5c65868574d328",
+              "kind": "verifier",
+              "size": 2121
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "9cde6635e7c00a6f1026686fbc28b2135ea869572b8f443be0bf15913c3e29da",
+          "derivation_id": "fde9e0868e6be930226facbc8179a64f746f0bfaad46701f5b28d42e20786d6f",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 13,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "deposit_shielded",
+          "parameter_digest": "d3324910969c4cc54143b8045b649e5c3a4bd5fb7b8f85fe1b770f640ce1c803",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "9b4af24b42dce2987835aa08b517835015e5e08db893c783088e6f0ffe7943cc",
+            "kind": "source",
+            "size": 5871
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "9b4af24b42dce2987835aa08b517835015e5e08db893c783088e6f0ffe7943cc",
+        "binary_ir": "e61e8dd6f86999518f5d9dfe5d09f63c172f989e8eed3ccf5d90e43a7ab81951",
+        "prover": "0c63768a2206101b86d8bfc49f7a55d3cdd230afa6a28f61964f160082a519cb",
+        "verifier": "18caf9ffc1ea3271c340f97ee5433598b796a64fadcc1fb7bb5c65868574d328"
+      },
+      "cold_prepare_ms": 1353.5378749947995
+    },
+    {
+      "circuit": "deposit_unshielded",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "617555f16f47722b90ddec0860f013ad24d4f0daeb6836078bd240ab02cb5ba1",
+          "artifacts": [
+            {
+              "digest": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+              "kind": "binary_ir",
+              "size": 1654
+            },
+            {
+              "digest": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+              "kind": "prover",
+              "size": 446790
+            },
+            {
+              "digest": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9",
+              "kind": "verifier",
+              "size": 1353
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+          "derivation_id": "312cda054f527506d59e12d365779f0aa7f071f209e1844283d1a6c4aff8b629",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 9,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "deposit_unshielded",
+          "parameter_digest": "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d",
+            "kind": "source",
+            "size": 4975
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d",
+        "binary_ir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+        "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+        "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+      },
+      "cold_prepare_ms": 499.800082994625
+    },
+    {
+      "circuit": "issue_grant_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "4df903c58a47d1c06e79526e4f8d1257beaf488a415c8c142b44d8430d5c8344",
+          "artifacts": [
+            {
+              "digest": "19887b86c759417a93ff30f90830e479ef987f5df2785a2ff9f42668cf8b0a99",
+              "kind": "binary_ir",
+              "size": 10152
+            },
+            {
+              "digest": "d21b34197c0db7ea29626faa3b5d65e959c67fd3d1e28b450f5cb3515ede67a0",
+              "kind": "prover",
+              "size": 98581064
+            },
+            {
+              "digest": "008fa78514089341d53ead256a5f8878eb630d3f60741f3bc6bd34d41a84b2f7",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "529ad198e48b9b6281807f2ae4acffb733c162a93a89fe328b47771d083980c9",
+          "derivation_id": "b4eab96dbb3ce979c30be10aaa7cdfdc09dd0e8f30f8c2269e1223aaca09cfb9",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 16,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "issue_grant_with_jubjub",
+          "parameter_digest": "09c877216d6589b370263e18af40a030a901b41a7a7c37ef58c9901db41f05c6",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "5a375421790a8e1e2c7ee2a6a04bc45b59af6d3e5fd39ceac047605178bed0e8",
+            "kind": "source",
+            "size": 31716
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "5a375421790a8e1e2c7ee2a6a04bc45b59af6d3e5fd39ceac047605178bed0e8",
+        "binary_ir": "19887b86c759417a93ff30f90830e479ef987f5df2785a2ff9f42668cf8b0a99",
+        "prover": "d21b34197c0db7ea29626faa3b5d65e959c67fd3d1e28b450f5cb3515ede67a0",
+        "verifier": "008fa78514089341d53ead256a5f8878eb630d3f60741f3bc6bd34d41a84b2f7"
+      },
+      "cold_prepare_ms": 9447.350332979113
+    },
+    {
+      "circuit": "issue_grant_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "5d8431d17836b754ccedcc332712e8ebd208ca96c42e4767b406307a2bbf3b04",
+          "artifacts": [
+            {
+              "digest": "9e2689714f3714684806997559279f6c16f06f39c0d2e8d5c2363f66595d9cfa",
+              "kind": "binary_ir",
+              "size": 13266
+            },
+            {
+              "digest": "79d6f89c1ae103d960b13c30ead82fa5adc3ec06ccdf4335cced15c736dbfb83",
+              "kind": "prover",
+              "size": 234899958
+            },
+            {
+              "digest": "2c87005a33fa262204b01791f72b616d4b01c78d0f1b00d75942c87abff89b7b",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "5ae3ea9b773e906facc8ad9342c62295f113a1172a473b156e40474e1c219264",
+          "derivation_id": "9d37498ede5bfcea5d930ff09d56731b3407afc8f85193a72e9d7b5142ae6fea",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "issue_grant_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "4c7bf5878f4a389ddc72e6795d486b6914161b80abea9010df2b4a6daa533a49",
+            "kind": "source",
+            "size": 42586
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "4c7bf5878f4a389ddc72e6795d486b6914161b80abea9010df2b4a6daa533a49",
+        "binary_ir": "9e2689714f3714684806997559279f6c16f06f39c0d2e8d5c2363f66595d9cfa",
+        "prover": "79d6f89c1ae103d960b13c30ead82fa5adc3ec06ccdf4335cced15c736dbfb83",
+        "verifier": "2c87005a33fa262204b01791f72b616d4b01c78d0f1b00d75942c87abff89b7b"
+      },
+      "cold_prepare_ms": 22824.83516697539
+    },
+    {
+      "circuit": "issue_grant_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "8d7833b7395f37d55663e522777448fd67e39997678b11e4832101aa36919ed2",
+          "artifacts": [
+            {
+              "digest": "1291bf1fd25ec9960392ec3a92c2679961244209df19447fe18a19f021433754",
+              "kind": "binary_ir",
+              "size": 94497
+            },
+            {
+              "digest": "ff171dbb5b5a15f7b1c6577a7903d2f6485954b401141f6ac0f89848a5597d37",
+              "kind": "prover",
+              "size": 469862215
+            },
+            {
+              "digest": "75cfd2a144aa4135075fb8eefa3f0aece57efea745c19cc687f1b388db85ef82",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "f93ccdf490f2e8b0944fe6499c0f3d007dade7c82eb210837f381d81d5ddbda0",
+          "derivation_id": "44f46f14880ca00ee1b783aa74f0aeeb72cc60ea1ee24f2c9a12835f6accff50",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "issue_grant_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "bd368d086c56105ed3cd3d06a42818d268bba419ccc7c9b11f307a0d4c5caa6b",
+            "kind": "source",
+            "size": 290436
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "bd368d086c56105ed3cd3d06a42818d268bba419ccc7c9b11f307a0d4c5caa6b",
+        "binary_ir": "1291bf1fd25ec9960392ec3a92c2679961244209df19447fe18a19f021433754",
+        "prover": "ff171dbb5b5a15f7b1c6577a7903d2f6485954b401141f6ac0f89848a5597d37",
+        "verifier": "75cfd2a144aa4135075fb8eefa3f0aece57efea745c19cc687f1b388db85ef82"
+      },
+      "cold_prepare_ms": 57472.899625019636
+    },
+    {
+      "circuit": "publish_recovery_session_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "0b1b83385ddbacd25c6a8a335577078de0568107474a08dada5b00fdb8c0f43e",
+          "artifacts": [
+            {
+              "digest": "dca9f2a33349f5d2968230c754f17b24141d0f91fc1cac2cef26a239546de22c",
+              "kind": "binary_ir",
+              "size": 6717
+            },
+            {
+              "digest": "970d2106599f6a0d9c5da65bb474a9ddaaeb5c8d61fbbcd5c6cf9440204deca4",
+              "kind": "prover",
+              "size": 98577629
+            },
+            {
+              "digest": "40a747a1ff4e2c2a8ff095b4900e80b32ba3b12936164f8f3ecb6178d980a16c",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "2ddde4ac4bdf9e29228254d9a01fa298dcd64c8fbbe5ebbe0df49fb9f9735d6c",
+          "derivation_id": "25ac9e61109b46726a5430991d73342aff21266c24876eaa176e4d6510e49fd8",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 16,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "publish_recovery_session_with_jubjub",
+          "parameter_digest": "09c877216d6589b370263e18af40a030a901b41a7a7c37ef58c9901db41f05c6",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "b3c9ba85558a6114552f1ccf3a0a8f5a3ad2931be27ec588ba8a80768500a23b",
+            "kind": "source",
+            "size": 20252
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "b3c9ba85558a6114552f1ccf3a0a8f5a3ad2931be27ec588ba8a80768500a23b",
+        "binary_ir": "dca9f2a33349f5d2968230c754f17b24141d0f91fc1cac2cef26a239546de22c",
+        "prover": "970d2106599f6a0d9c5da65bb474a9ddaaeb5c8d61fbbcd5c6cf9440204deca4",
+        "verifier": "40a747a1ff4e2c2a8ff095b4900e80b32ba3b12936164f8f3ecb6178d980a16c"
+      },
+      "cold_prepare_ms": 9496.282375010196
+    },
+    {
+      "circuit": "publish_recovery_session_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "9d2c3a12eb074ae448398491a6a45cbdc39ef0893d582a2913dffe5368a28b24",
+          "artifacts": [
+            {
+              "digest": "932442839907973dfb6fd445ce4f5ac031cfc620757ebaabe3d6e4373f93e94c",
+              "kind": "binary_ir",
+              "size": 9860
+            },
+            {
+              "digest": "e2fd012acaedfe43e8b486cd8aaf86220ca36e3b584a4e82c8ab1413fa60561a",
+              "kind": "prover",
+              "size": 247479764
+            },
+            {
+              "digest": "95d63f64ed223e13b995f39ec7d2ef630336aabe31aa4d3beaf47467cf5c7854",
+              "kind": "verifier",
+              "size": 2889
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "0fa92176ef7ed9d810499a35ef7450c98450ecaa251c945f2dd34a5b11899912",
+          "derivation_id": "857625a4fb44f32848979d31ff35bbcd2ec3d6c7a44215e33251e2db9a8ca6f7",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "publish_recovery_session_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "280b5f54ba806fa04e5ebdc405462e7e169dd2bb6a8a8a86ee2dbf986134dc6a",
+            "kind": "source",
+            "size": 31285
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "280b5f54ba806fa04e5ebdc405462e7e169dd2bb6a8a8a86ee2dbf986134dc6a",
+        "binary_ir": "932442839907973dfb6fd445ce4f5ac031cfc620757ebaabe3d6e4373f93e94c",
+        "prover": "e2fd012acaedfe43e8b486cd8aaf86220ca36e3b584a4e82c8ab1413fa60561a",
+        "verifier": "95d63f64ed223e13b995f39ec7d2ef630336aabe31aa4d3beaf47467cf5c7854"
+      },
+      "cold_prepare_ms": 23885.173417045735
+    },
+    {
+      "circuit": "publish_recovery_session_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "4f02fcf482731b0ae7a47d7317c7efbd62ff7dbe5df535fe72af3b90d8903434",
+          "artifacts": [
+            {
+              "digest": "384ba77a406a4637e1dde0a263c121942e8c158b53b609e26c1adbebac1c25f4",
+              "kind": "binary_ir",
+              "size": 90902
+            },
+            {
+              "digest": "228b587960d707dd6faba39dca8d4fd197a3076d19bdd98cc77edf0e427949b6",
+              "kind": "prover",
+              "size": 495024744
+            },
+            {
+              "digest": "181a530e7af949f811f392aea988cffe471219406c36e57c8c283d647417731c",
+              "kind": "verifier",
+              "size": 2889
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "608ddee002a28429332ff557e7f6fb4b40167d985488cc3b218e434a426c127c",
+          "derivation_id": "822eabe1c775aa3321550e43bb5880ff378a363a9daf93149caaffd830f419ee",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "publish_recovery_session_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "7ce074fcc26434cec22780ded4504d8b739a58740a08b78dc2afe174cdd190e1",
+            "kind": "source",
+            "size": 278946
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "7ce074fcc26434cec22780ded4504d8b739a58740a08b78dc2afe174cdd190e1",
+        "binary_ir": "384ba77a406a4637e1dde0a263c121942e8c158b53b609e26c1adbebac1c25f4",
+        "prover": "228b587960d707dd6faba39dca8d4fd197a3076d19bdd98cc77edf0e427949b6",
+        "verifier": "181a530e7af949f811f392aea988cffe471219406c36e57c8c283d647417731c"
+      },
+      "cold_prepare_ms": 57561.49275001371
+    },
+    {
+      "circuit": "recover_cancel_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "93e1fb838ff2e84446cbd87872343c020454101d9c9d4636308d9e57b2f0b42e",
+          "artifacts": [
+            {
+              "digest": "c57abd77a80ed4e621b34443af26db53fafdbd7a49096b16d1546660bfc6c809",
+              "kind": "binary_ir",
+              "size": 4163
+            },
+            {
+              "digest": "339bdc588d287faa6b8582047fd5322615f8cf42ea0b732864d8a52c4ed290e7",
+              "kind": "prover",
+              "size": 49292003
+            },
+            {
+              "digest": "07ee83659226bdec4843a3ef75d62fd77e506492ff5cb43e174592f30644c0c7",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "31504408a6c4cc86252a743b22dfe3cbbdfd0011c4765124c7dc65d5fe8eb7b2",
+          "derivation_id": "192a550c33e64b1e9511d7e695377ee5065814710e1b9b571ebe822e4a7b84d1",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 15,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "recover_cancel_with_jubjub",
+          "parameter_digest": "724c7c3d779148bb113c7ee9c034b2f27db16e6bdf315fde90105a9bad00b1de",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "e1f31a71a6cacf62ccfca7becddec9b606bf64a0260606992de763d1bd4043ef",
+            "kind": "source",
+            "size": 12846
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "e1f31a71a6cacf62ccfca7becddec9b606bf64a0260606992de763d1bd4043ef",
+        "binary_ir": "c57abd77a80ed4e621b34443af26db53fafdbd7a49096b16d1546660bfc6c809",
+        "prover": "339bdc588d287faa6b8582047fd5322615f8cf42ea0b732864d8a52c4ed290e7",
+        "verifier": "07ee83659226bdec4843a3ef75d62fd77e506492ff5cb43e174592f30644c0c7"
+      },
+      "cold_prepare_ms": 5146.678749995772
+    },
+    {
+      "circuit": "recover_cancel_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "bbde05dd81f05d726c1ae67766075c464e755ab532795000973a1f6fb9cd52b9",
+          "artifacts": [
+            {
+              "digest": "524168d4ebb34e98a0ee4dea5ee608da7a0247203468502650b71316eb1ed318",
+              "kind": "binary_ir",
+              "size": 7206
+            },
+            {
+              "digest": "d02576256a1763b1ce3659a5875a59942f9cfb30543b5764cc552b3e705902c1",
+              "kind": "prover",
+              "size": 247477110
+            },
+            {
+              "digest": "fbb2b207720149ad54ba0a9a8f1b25add0edbb2d11ae2a8222af7ac875d16109",
+              "kind": "verifier",
+              "size": 2889
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "61610938883d229218208f244911c8b36eaef43a64323b70233eb8cb58aab00e",
+          "derivation_id": "030772d2eb9f4a47481efabf275b6197f3547b7568d780e9656fa72e29bec4eb",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "recover_cancel_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "8b9f8ff7f7d407ea073da725f140390a58ecd73d6d25ac794ed516b49798edfc",
+            "kind": "source",
+            "size": 23712
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "8b9f8ff7f7d407ea073da725f140390a58ecd73d6d25ac794ed516b49798edfc",
+        "binary_ir": "524168d4ebb34e98a0ee4dea5ee608da7a0247203468502650b71316eb1ed318",
+        "prover": "d02576256a1763b1ce3659a5875a59942f9cfb30543b5764cc552b3e705902c1",
+        "verifier": "fbb2b207720149ad54ba0a9a8f1b25add0edbb2d11ae2a8222af7ac875d16109"
+      },
+      "cold_prepare_ms": 21938.159417011775
+    },
+    {
+      "circuit": "recover_cancel_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "1bf95e7b32be87b1b86c08fc1bc4402c85f09c3a5b8d70389cbfc81f8ece8d11",
+          "artifacts": [
+            {
+              "digest": "9ce7f3ba9478294146afea1d7e6b410813c80e212207a0c6ebcc3a366c25f1c7",
+              "kind": "binary_ir",
+              "size": 88093
+            },
+            {
+              "digest": "2380566f0e075c7014dd39e52de8d436e0019dd7b6f8748198ab68e9d477453b",
+              "kind": "prover",
+              "size": 495021935
+            },
+            {
+              "digest": "931442529db8c6ee84ef25d582b068c6acd0f92577d180d8f44284ea767e618f",
+              "kind": "verifier",
+              "size": 2889
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "f5f58297bf13366b699db8ce3151d8b3ea861abe04e0634250939ed716a46f02",
+          "derivation_id": "f16422166d8896f6e8877f00d1fe422423b140e0a343ace37075ac83b0063a46",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "recover_cancel_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "e4e5883325e7baf0fee2915fe3fb5feb6fe31899ee35f2d2557244267eb2f394",
+            "kind": "source",
+            "size": 271218
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "e4e5883325e7baf0fee2915fe3fb5feb6fe31899ee35f2d2557244267eb2f394",
+        "binary_ir": "9ce7f3ba9478294146afea1d7e6b410813c80e212207a0c6ebcc3a366c25f1c7",
+        "prover": "2380566f0e075c7014dd39e52de8d436e0019dd7b6f8748198ab68e9d477453b",
+        "verifier": "931442529db8c6ee84ef25d582b068c6acd0f92577d180d8f44284ea767e618f"
+      },
+      "cold_prepare_ms": 56277.577041997574
+    },
+    {
+      "circuit": "recover_finalise",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "dfab0c381f199df6901548065e03462b796f54b0572b86e910c8cf7344de05d7",
+          "artifacts": [
+            {
+              "digest": "c42e71e08e9a56c8fc7ad850dbe4deb3fcc48a2516be4878cd8e6401b2213f58",
+              "kind": "binary_ir",
+              "size": 3993
+            },
+            {
+              "digest": "7ab55b38c375938c76b64ffe051e438217190d8e4dcdf2100c0c0371fada8cfa",
+              "kind": "prover",
+              "size": 4201565
+            },
+            {
+              "digest": "18088448f1d6f31cdb368b3cf0e1c0b0cc75efef4087634d3c3abf1a20bca000",
+              "kind": "verifier",
+              "size": 1593
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "2ce9ab90e847823c6ed62379a796dd384205a41c92d63278c7e1d8077b75b1dc",
+          "derivation_id": "6728482aedf3f38453f011e960c0139edde646764afb71d9c6eecc5ec3b9ddc4",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 12,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "recover_finalise",
+          "parameter_digest": "ef08eb3fcf62df8f72c515cffa027e681808b530cb016eea104115545ef6d5c8",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "780dddcf81d792e96c0af3b2ed109d04f58157e26eb4846060484fd0cfbb2dce",
+            "kind": "source",
+            "size": 10652
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "780dddcf81d792e96c0af3b2ed109d04f58157e26eb4846060484fd0cfbb2dce",
+        "binary_ir": "c42e71e08e9a56c8fc7ad850dbe4deb3fcc48a2516be4878cd8e6401b2213f58",
+        "prover": "7ab55b38c375938c76b64ffe051e438217190d8e4dcdf2100c0c0371fada8cfa",
+        "verifier": "18088448f1d6f31cdb368b3cf0e1c0b0cc75efef4087634d3c3abf1a20bca000"
+      },
+      "cold_prepare_ms": 1569.668875017669
+    },
+    {
+      "circuit": "recover_submit",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "943d5cefddea3e57d638b587e71ab3a115a97cfe4e8d090acb4837ae912bfb20",
+          "artifacts": [
+            {
+              "digest": "079c73ba2e7314e580e73204d965c1d047c63776d01252918fa902eb8b776a3a",
+              "kind": "binary_ir",
+              "size": 5513
+            },
+            {
+              "digest": "927dbddd87f7e627391272ed859c378a7daca64c69d2691599b29b6fed0c61fe",
+              "kind": "prover",
+              "size": 49293353
+            },
+            {
+              "digest": "87f7ef22c8393dff30624ab0b1ce61a666662546395088da2d7127d74b236c9c",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "4303114a4d523051b84514ae09fe1bd088cfc689e0d428deb783db098650df73",
+          "derivation_id": "c5d4c3421f5ba1efbad7ef68bcf9408715ebed314fe9668508dbb1c2e7ac9207",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 15,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "recover_submit",
+          "parameter_digest": "724c7c3d779148bb113c7ee9c034b2f27db16e6bdf315fde90105a9bad00b1de",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "383f701d09f5c763f17b5821c41944f3f5681a5b9cf9e39e525dded79e13e6d3",
+            "kind": "source",
+            "size": 16102
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "383f701d09f5c763f17b5821c41944f3f5681a5b9cf9e39e525dded79e13e6d3",
+        "binary_ir": "079c73ba2e7314e580e73204d965c1d047c63776d01252918fa902eb8b776a3a",
+        "prover": "927dbddd87f7e627391272ed859c378a7daca64c69d2691599b29b6fed0c61fe",
+        "verifier": "87f7ef22c8393dff30624ab0b1ce61a666662546395088da2d7127d74b236c9c"
+      },
+      "cold_prepare_ms": 9674.645041988697
+    },
+    {
+      "circuit": "remove_device_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "c34975d7397881fea6725ee45bc8d89f3fa764af63880a0f9745ad74fad6b134",
+          "artifacts": [
+            {
+              "digest": "1a7f288bd9606663e82416fa38f6ba3aa29d3631a1b24b0879ee095cde9d337e",
+              "kind": "binary_ir",
+              "size": 4497
+            },
+            {
+              "digest": "1975015ef62a2eb946a9960c4d84372dfcf12ffaeb64789a8ed764cf81deef93",
+              "kind": "prover",
+              "size": 98575409
+            },
+            {
+              "digest": "98b87b827e778a90e5012b99465b7c7cfcc00c5ee859bfbcfeec1da657698be0",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "e3b6d1078987b4cf6ac6e16e75220877f20af7c7ffce91085e04e78c01b72263",
+          "derivation_id": "5313cf0a73b1ed8aa352c337f9e08e21d040dc8f9c96257d74678f4043f001d7",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 16,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "remove_device_with_jubjub",
+          "parameter_digest": "09c877216d6589b370263e18af40a030a901b41a7a7c37ef58c9901db41f05c6",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "a282b7f98e02086266f95257eec57ef6b10b6d6810a5d0b85bdca1d0a8790622",
+            "kind": "source",
+            "size": 15016
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "a282b7f98e02086266f95257eec57ef6b10b6d6810a5d0b85bdca1d0a8790622",
+        "binary_ir": "1a7f288bd9606663e82416fa38f6ba3aa29d3631a1b24b0879ee095cde9d337e",
+        "prover": "1975015ef62a2eb946a9960c4d84372dfcf12ffaeb64789a8ed764cf81deef93",
+        "verifier": "98b87b827e778a90e5012b99465b7c7cfcc00c5ee859bfbcfeec1da657698be0"
+      },
+      "cold_prepare_ms": 9303.434916015249
+    },
+    {
+      "circuit": "remove_device_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "dd40b037204ee9504e318cb2ee37b6954e8f93d35ed704ecba93526a2f94e181",
+          "artifacts": [
+            {
+              "digest": "c318aa19e102c73eee1dc650e53d79f24dba9c98945f4263a06f1fd465832378",
+              "kind": "binary_ir",
+              "size": 7713
+            },
+            {
+              "digest": "cc6513ed778e2214b01011af8ab3a24e945accf593ce35ebd1fcf96b9662033d",
+              "kind": "prover",
+              "size": 234894405
+            },
+            {
+              "digest": "e1c2c52b3f6d52fb7bef2b40505ba28c4531f0922ac0916bcf56b1b942210fee",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "d4d871fac9ff236f423fce355e8d4bc8861565797d0820355daaeae0b2aea272",
+          "derivation_id": "10378371e763026d0ea794548bbe61ed41e272a5419469af7c391246c031d1b4",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "remove_device_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "399cb57558a9ff9b23992a39c3c00c33ebed22ce6198aee1762c5ea2d171832e",
+            "kind": "source",
+            "size": 26380
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "399cb57558a9ff9b23992a39c3c00c33ebed22ce6198aee1762c5ea2d171832e",
+        "binary_ir": "c318aa19e102c73eee1dc650e53d79f24dba9c98945f4263a06f1fd465832378",
+        "prover": "cc6513ed778e2214b01011af8ab3a24e945accf593ce35ebd1fcf96b9662033d",
+        "verifier": "e1c2c52b3f6d52fb7bef2b40505ba28c4531f0922ac0916bcf56b1b942210fee"
+      },
+      "cold_prepare_ms": 24073.44158302294
+    },
+    {
+      "circuit": "remove_device_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "5ab00ef4d0d76f1741dd5427979a836d1523de32efd15863f84fc35d594d4a70",
+          "artifacts": [
+            {
+              "digest": "b6b22e9c8f44e8719ce3f5f01350de57d121b2e892eec72a333fc23de1cdd5bb",
+              "kind": "binary_ir",
+              "size": 88670
+            },
+            {
+              "digest": "340b7f5daf4a1ffd5f1e5ff50d48bb16b0960fe65f58ac2686895f708a824ed3",
+              "kind": "prover",
+              "size": 469856388
+            },
+            {
+              "digest": "07cc0794c5aaac46ec7832129caff43c7e1c81c24fa034962b48fb06b62c3efc",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "d136aa112c6bcd81f5802aed4c3daacab38736ffe83c81b8686ac6eb3fc6a766",
+          "derivation_id": "2b63eccc120dbec4b20d060ba0b011b59ddc36e91ca230fefbb9f219b5bc2f3f",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "remove_device_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "7be3cc6ce957fd54c76f2e0f896aaa65a9e0d5294fc813f3a64b0c2b4bc0ccf0",
+            "kind": "source",
+            "size": 274021
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "7be3cc6ce957fd54c76f2e0f896aaa65a9e0d5294fc813f3a64b0c2b4bc0ccf0",
+        "binary_ir": "b6b22e9c8f44e8719ce3f5f01350de57d121b2e892eec72a333fc23de1cdd5bb",
+        "prover": "340b7f5daf4a1ffd5f1e5ff50d48bb16b0960fe65f58ac2686895f708a824ed3",
+        "verifier": "07cc0794c5aaac46ec7832129caff43c7e1c81c24fa034962b48fb06b62c3efc"
+      },
+      "cold_prepare_ms": 56109.60341698956
+    },
+    {
+      "circuit": "revoke_all_grants_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "d926cb28ae08bedb5e3a416ba6f4abf6203ae571212afe94f38eb58121bff004",
+          "artifacts": [
+            {
+              "digest": "bf4cde37c13b4a36cac999909154703cf2c05259c88f8b8cfe073cb49e60ce38",
+              "kind": "binary_ir",
+              "size": 3453
+            },
+            {
+              "digest": "41b2ceb329c890fc29baafc3d9d3bf65276f4d14ea12451b1b368768e046bf66",
+              "kind": "prover",
+              "size": 49291293
+            },
+            {
+              "digest": "acf69db5f77b0663f995bbd91a752b4a8be80f89d1a5ea6132d890648a532610",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "568b883eb3664598bc278aeed2f203a665e3b9b6d9ce5932322ff4132e21866f",
+          "derivation_id": "cb54666434415166cb9e6fbcae3132e57f876b7f979c6d5fb50f6c81dcd6b770",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 15,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "revoke_all_grants_with_jubjub",
+          "parameter_digest": "724c7c3d779148bb113c7ee9c034b2f27db16e6bdf315fde90105a9bad00b1de",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "59995aa084d8c21882a925db6ea6f7978e657dc2d55a583935046cb618aba5ff",
+            "kind": "source",
+            "size": 11564
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "59995aa084d8c21882a925db6ea6f7978e657dc2d55a583935046cb618aba5ff",
+        "binary_ir": "bf4cde37c13b4a36cac999909154703cf2c05259c88f8b8cfe073cb49e60ce38",
+        "prover": "41b2ceb329c890fc29baafc3d9d3bf65276f4d14ea12451b1b368768e046bf66",
+        "verifier": "acf69db5f77b0663f995bbd91a752b4a8be80f89d1a5ea6132d890648a532610"
+      },
+      "cold_prepare_ms": 5258.052415971179
+    },
+    {
+      "circuit": "revoke_all_grants_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "d7174eca2279211674d4ebb12d74da435c61231a88f694ae16da64a1f8eb0b19",
+          "artifacts": [
+            {
+              "digest": "25280f9de6e654a4cc25d7f729c8e7ca075e50714d3653370ceeb29b03876cf1",
+              "kind": "binary_ir",
+              "size": 6473
+            },
+            {
+              "digest": "98a59b5c7dc4bd2fe49e895eed72065105e852df543f93e1ef4dab91c9715c5b",
+              "kind": "prover",
+              "size": 234893165
+            },
+            {
+              "digest": "ddbf3dfd380a258065fff743888e392fa39422fcf54e7046624ce042688932d2",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "733d9135412c4418f4076058c7fc330a24c443edd353eef866ad1dbf3ff812ff",
+          "derivation_id": "c242731ade385907adcb41b22bdcc59525886a413b0a7367d7ce0ecebe6ba945",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "revoke_all_grants_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "219e152e58f3159486f53f068867b6a3e85953a474acac7253a7916013de61d4",
+            "kind": "source",
+            "size": 22340
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "219e152e58f3159486f53f068867b6a3e85953a474acac7253a7916013de61d4",
+        "binary_ir": "25280f9de6e654a4cc25d7f729c8e7ca075e50714d3653370ceeb29b03876cf1",
+        "prover": "98a59b5c7dc4bd2fe49e895eed72065105e852df543f93e1ef4dab91c9715c5b",
+        "verifier": "ddbf3dfd380a258065fff743888e392fa39422fcf54e7046624ce042688932d2"
+      },
+      "cold_prepare_ms": 21203.557542001363
+    },
+    {
+      "circuit": "revoke_all_grants_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "e4ae13ecb839859d2f12fb5cb5637d51db19c0f28b2d374eee0d8dbe6c0d0d97",
+          "artifacts": [
+            {
+              "digest": "f4c7b3cb7cb36d97bfe8b65b371f0f288179939d41d03f8112ea5b121d7068a2",
+              "kind": "binary_ir",
+              "size": 87350
+            },
+            {
+              "digest": "4b6b38348ed3c82446f08cf9f90b0974d47891d8f944454251bccefd7a9bb314",
+              "kind": "prover",
+              "size": 469855068
+            },
+            {
+              "digest": "594eb9482fc3c024957afd19b0207e393bf2df62e70c75a6c4aa7b6b59d465eb",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "16f12a6b97f6eede6e9afdf8831e963064948d3b5de7b0e3987cae8df1998d12",
+          "derivation_id": "a9b3d70314a84ee1c8a9df2ae5f879cdf2ce769eb4ef830e5294cf40f633cac5",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "revoke_all_grants_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "1f5ec1f0f70f683313292e6985521d399bf31ede611a376df60d3cc9c487306e",
+            "kind": "source",
+            "size": 269836
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "1f5ec1f0f70f683313292e6985521d399bf31ede611a376df60d3cc9c487306e",
+        "binary_ir": "f4c7b3cb7cb36d97bfe8b65b371f0f288179939d41d03f8112ea5b121d7068a2",
+        "prover": "4b6b38348ed3c82446f08cf9f90b0974d47891d8f944454251bccefd7a9bb314",
+        "verifier": "594eb9482fc3c024957afd19b0207e393bf2df62e70c75a6c4aa7b6b59d465eb"
+      },
+      "cold_prepare_ms": 54609.071040991694
+    },
+    {
+      "circuit": "revoke_grant_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "d4bce45517adfb04c0408bba3d2c9a25e9d4c33e9e826316603518266e0884d3",
+          "artifacts": [
+            {
+              "digest": "5bd4be3866cc3ecd94dbebb041813ecb3d9612f2de67b5f6fc4dc614303cdd0a",
+              "kind": "binary_ir",
+              "size": 4621
+            },
+            {
+              "digest": "882036c4b1086fea1f402bbc9efb308d5387d1a63e92a7bab30f4b93c3e74883",
+              "kind": "prover",
+              "size": 49292461
+            },
+            {
+              "digest": "2acbb4bf271df28b6fb6ed20d931a10a51975d661dd917b8855c41f8dffac289",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "60d45188d3c9fb5b9b620990850ce35b7d5fe95c25b1d8df33721d3c0f369481",
+          "derivation_id": "14431a428e7d7f7e10910da92dccaf3bdb5c3c3bf227c8f446edb6eb1eb9efd5",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 15,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "revoke_grant_with_jubjub",
+          "parameter_digest": "724c7c3d779148bb113c7ee9c034b2f27db16e6bdf315fde90105a9bad00b1de",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "003661371a42bef348e1545ddd6cd0ee39cff090cfe5c992219f564d3f09f75d",
+            "kind": "source",
+            "size": 15355
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "003661371a42bef348e1545ddd6cd0ee39cff090cfe5c992219f564d3f09f75d",
+        "binary_ir": "5bd4be3866cc3ecd94dbebb041813ecb3d9612f2de67b5f6fc4dc614303cdd0a",
+        "prover": "882036c4b1086fea1f402bbc9efb308d5387d1a63e92a7bab30f4b93c3e74883",
+        "verifier": "2acbb4bf271df28b6fb6ed20d931a10a51975d661dd917b8855c41f8dffac289"
+      },
+      "cold_prepare_ms": 5799.116125039291
+    },
+    {
+      "circuit": "revoke_grant_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "f8db6076619ffcb8c23e57e8ec4f1cb8b06674d2ed24178204bcf5dd9a8df0bd",
+          "artifacts": [
+            {
+              "digest": "e26652047875e884c4a3bb9bb84a4093d1df48bbca7f95593e3e746d0a6aaf76",
+              "kind": "binary_ir",
+              "size": 7718
+            },
+            {
+              "digest": "da57f693bb89b5c901a049b8f8d3fb3ff02650a0bebc80a2dcaef53f2356468e",
+              "kind": "prover",
+              "size": 234894410
+            },
+            {
+              "digest": "963df4303ca470476ce4ac0635aba911f1d61774ebd323d843dfe1385bae05cd",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "27fe568351034e7a1b7be0e50da54c53c2db1bc54d27978c43c9c9c92032b9fb",
+          "derivation_id": "a588f85ac3f9e9937c8e2def28e66d42792c27d1729a61ca28aa4196b6f0d19b",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "revoke_grant_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "db75ac6df522d542403ac4618eeb49bc83b62889f4ea5a2b3b18e7eeaca0ed6e",
+            "kind": "source",
+            "size": 26208
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "db75ac6df522d542403ac4618eeb49bc83b62889f4ea5a2b3b18e7eeaca0ed6e",
+        "binary_ir": "e26652047875e884c4a3bb9bb84a4093d1df48bbca7f95593e3e746d0a6aaf76",
+        "prover": "da57f693bb89b5c901a049b8f8d3fb3ff02650a0bebc80a2dcaef53f2356468e",
+        "verifier": "963df4303ca470476ce4ac0635aba911f1d61774ebd323d843dfe1385bae05cd"
+      },
+      "cold_prepare_ms": 23939.28254203638
+    },
+    {
+      "circuit": "revoke_grant_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "40d8653e0849d0a23446ecf2224d70b82392bd41d3590ce315dcd1fa38628b5e",
+          "artifacts": [
+            {
+              "digest": "a317336fafb5befff3a31da0c0f768821f1fafa0b7345997c524716e59314622",
+              "kind": "binary_ir",
+              "size": 88673
+            },
+            {
+              "digest": "0d2c8243f9d15a564fdca1e03518f9a00b80cad8ff6cf34ede94ce117bf6715f",
+              "kind": "prover",
+              "size": 469856391
+            },
+            {
+              "digest": "48829cf7ec8401b6e54bc639d3c9baf03495ecdf921e74021c3fe91fc2d38fa8",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "4b32a7495fc769186560a3ba67ff71711333832a3a77f996fb3a4623d4f5bcc1",
+          "derivation_id": "c940d3ae7758b3c6daed4f1b9d3423bc7c2d9b64f0f136ad2559618e83422037",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "revoke_grant_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "8be1da5093d66c9369b71df71cb620c5aeeeee8ddbc0a3878a1ab0fa98035aa5",
+            "kind": "source",
+            "size": 273782
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "8be1da5093d66c9369b71df71cb620c5aeeeee8ddbc0a3878a1ab0fa98035aa5",
+        "binary_ir": "a317336fafb5befff3a31da0c0f768821f1fafa0b7345997c524716e59314622",
+        "prover": "0d2c8243f9d15a564fdca1e03518f9a00b80cad8ff6cf34ede94ce117bf6715f",
+        "verifier": "48829cf7ec8401b6e54bc639d3c9baf03495ecdf921e74021c3fe91fc2d38fa8"
+      },
+      "cold_prepare_ms": 61879.80941700516
+    },
+    {
+      "circuit": "rotate_enc_key_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "17fd5bea6d0fd838a918e8d1d2db1fcde9b8016ae55c0c96fa5d7295e617842c",
+          "artifacts": [
+            {
+              "digest": "6dbbbdf1d7a82c04ede1104a0e21b9685c821217ced445033c8c25d62ce79fec",
+              "kind": "binary_ir",
+              "size": 3276
+            },
+            {
+              "digest": "659e1c4830023cee599a696fd4037f9a77dbac082eca35b490e84833b8b88be5",
+              "kind": "prover",
+              "size": 49291116
+            },
+            {
+              "digest": "15238b09168c63a597c7d47cfe3b732fa126257bdf6b0558229d98feb5cb2322",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "185bdb0ec8dc89d0a45129ec7954cca07cda195c30037a57bf490e6923a932d8",
+          "derivation_id": "569de9e56fe455d68f008e003620992c46d5c0b010636b0aaebd44f94ed327ca",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 15,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "rotate_enc_key_with_jubjub",
+          "parameter_digest": "724c7c3d779148bb113c7ee9c034b2f27db16e6bdf315fde90105a9bad00b1de",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "c9e1e5f58c19179f290face9c90935a20c28938c4c8db2bbf0bf1fc0d10999ab",
+            "kind": "source",
+            "size": 11013
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "c9e1e5f58c19179f290face9c90935a20c28938c4c8db2bbf0bf1fc0d10999ab",
+        "binary_ir": "6dbbbdf1d7a82c04ede1104a0e21b9685c821217ced445033c8c25d62ce79fec",
+        "prover": "659e1c4830023cee599a696fd4037f9a77dbac082eca35b490e84833b8b88be5",
+        "verifier": "15238b09168c63a597c7d47cfe3b732fa126257bdf6b0558229d98feb5cb2322"
+      },
+      "cold_prepare_ms": 5923.185417021159
+    },
+    {
+      "circuit": "rotate_enc_key_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "aedcdcb08b6af2fe37b06c7610c42628006b5cf35e567348e163c4d3aad7b592",
+          "artifacts": [
+            {
+              "digest": "0a51fb926fac2cf86840912f226b48d2e5b8e8955c281f78ea67be8c6b0eb71c",
+              "kind": "binary_ir",
+              "size": 6292
+            },
+            {
+              "digest": "e15da9923170735669ef1a16907c0b205f7843b400e70a1208578f92cd4b4370",
+              "kind": "prover",
+              "size": 234892984
+            },
+            {
+              "digest": "5389d0d3d845bd94ef91bed9d501be4449a060d0def2336d4b7baedf6f410213",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "cc4f9f6fdd596c8ce3a4dd445b331bdb0510d237da7b4ec7b8b79faab337e1da",
+          "derivation_id": "77491a08b9f7f06f0f4336d61d0c2803544dba2cb6829595bc5ffa85c08c6aee",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "rotate_enc_key_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "7f22b917111f9de789a5da7d7b2c1182c8c5578b9d06bb7c11b5339ac829052f",
+            "kind": "source",
+            "size": 21785
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "7f22b917111f9de789a5da7d7b2c1182c8c5578b9d06bb7c11b5339ac829052f",
+        "binary_ir": "0a51fb926fac2cf86840912f226b48d2e5b8e8955c281f78ea67be8c6b0eb71c",
+        "prover": "e15da9923170735669ef1a16907c0b205f7843b400e70a1208578f92cd4b4370",
+        "verifier": "5389d0d3d845bd94ef91bed9d501be4449a060d0def2336d4b7baedf6f410213"
+      },
+      "cold_prepare_ms": 22588.883833028376
+    },
+    {
+      "circuit": "rotate_enc_key_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "2b12bf69176904fd398581a5c4bb32814f206fd5b052eb68af07afd6cda50657",
+          "artifacts": [
+            {
+              "digest": "2f4bf0b5bce44c87d23de6e33276bc0dd6db19c6547e37bb4b53d81b574d1a83",
+              "kind": "binary_ir",
+              "size": 87134
+            },
+            {
+              "digest": "d8f545d7a8a2729794349f77a10d88984f9a744bf35d2419f44b0fd8c6b51b39",
+              "kind": "prover",
+              "size": 469854852
+            },
+            {
+              "digest": "4b649df25e091e5ae49bf7b89e36a227e1a2f5ab13adacc22ce2c1a06926591f",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "a195c4c37542b680499b4b22fffdd90ce6d7883ec2e89b339d497e11f81919c7",
+          "derivation_id": "b569b8bbdcef9d0428efe444103eeb22bdb47346966d1812ac33be69f300a004",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "rotate_enc_key_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "2b056dde43dc3e75a651b3f19f48abf8d0fe48c6a167a561b58c5a8ee714ea5f",
+            "kind": "source",
+            "size": 269246
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "2b056dde43dc3e75a651b3f19f48abf8d0fe48c6a167a561b58c5a8ee714ea5f",
+        "binary_ir": "2f4bf0b5bce44c87d23de6e33276bc0dd6db19c6547e37bb4b53d81b574d1a83",
+        "prover": "d8f545d7a8a2729794349f77a10d88984f9a744bf35d2419f44b0fd8c6b51b39",
+        "verifier": "4b649df25e091e5ae49bf7b89e36a227e1a2f5ab13adacc22ce2c1a06926591f"
+      },
+      "cold_prepare_ms": 72762.25074997637
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_grant_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "3680da83efbc0012fe7fae5ee19f70ab74e6dd3606b5062ee4225d7e43baf5b3",
+          "artifacts": [
+            {
+              "digest": "268482cdcce97012f709257a44511e136598fc035660b6dbba397cfadbf0ba8a",
+              "kind": "binary_ir",
+              "size": 10875
+            },
+            {
+              "digest": "fc5e98c1ec92c8119441aa042348cc967d1e04503d47f12b0d2f2a22d8721b50",
+              "kind": "prover",
+              "size": 197147931
+            },
+            {
+              "digest": "043259fa82b5d28b7dbf76e96d23300e3bcbccb7985ffd6255f7aae09e0430ac",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "9b7c6bf39616d43ecba351cfeb4475d71ce935fbd3d1b50de0a896293f246a1a",
+          "derivation_id": "0070e3b55baacf129597afb01359b008e4b1342ed4f7a48ca8e9592ac3269d2c",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_to_contract_with_grant_jubjub",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "4fc97af5c50876b4bd0ea47a2123979fc4ce41ddea9c765d6443d0ef5e476a6a",
+            "kind": "source",
+            "size": 35780
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "4fc97af5c50876b4bd0ea47a2123979fc4ce41ddea9c765d6443d0ef5e476a6a",
+        "binary_ir": "268482cdcce97012f709257a44511e136598fc035660b6dbba397cfadbf0ba8a",
+        "prover": "fc5e98c1ec92c8119441aa042348cc967d1e04503d47f12b0d2f2a22d8721b50",
+        "verifier": "043259fa82b5d28b7dbf76e96d23300e3bcbccb7985ffd6255f7aae09e0430ac"
+      },
+      "cold_prepare_ms": 17017.79966702452
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_grant_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "04534a3741e93f8eb3872b0def9283e0eeccb8febfa18c249c28b2d68d1240ab",
+          "artifacts": [
+            {
+              "digest": "455fa1f9feef6028d10a27f3b345bdf02c5bd7d11fb6139aef0be96fa00cecb2",
+              "kind": "binary_ir",
+              "size": 13895
+            },
+            {
+              "digest": "786dfe46e5574dfc48db43f03be5347591fb9335e70c7fd4fbec04a2b626bd76",
+              "kind": "prover",
+              "size": 234900587
+            },
+            {
+              "digest": "3d1e50b8350fd91446f2564e5abf7e7d4119bb13438ff21bc18a5d6f853e2de5",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "ce3f9c904a6fb0adbca1f7ae1c8f073ef24f34c130d404831675fb6a984b688f",
+          "derivation_id": "f0492857513e70af7faf4b36fc9e59397bbb2969a27586d84dd46d9aea8df7a4",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_to_contract_with_grant_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "c6bc89a91a74236892fccbf1674edc5e66fc6e7c45859f0ad7e5d627fbf0f35d",
+            "kind": "source",
+            "size": 46246
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "c6bc89a91a74236892fccbf1674edc5e66fc6e7c45859f0ad7e5d627fbf0f35d",
+        "binary_ir": "455fa1f9feef6028d10a27f3b345bdf02c5bd7d11fb6139aef0be96fa00cecb2",
+        "prover": "786dfe46e5574dfc48db43f03be5347591fb9335e70c7fd4fbec04a2b626bd76",
+        "verifier": "3d1e50b8350fd91446f2564e5abf7e7d4119bb13438ff21bc18a5d6f853e2de5"
+      },
+      "cold_prepare_ms": 24069.845540972892
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_grant_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "d80657c68a74a7ad397b99a7b8765e891b63aec1c7743e3b62cb2f30ef3681d1",
+          "artifacts": [
+            {
+              "digest": "7603b29a6ce8e23662c1d239695cd26dcb5c7224bd0d1862a9c1cef72ef0d259",
+              "kind": "binary_ir",
+              "size": 95671
+            },
+            {
+              "digest": "20b6f879dbc079087130853df07bea267405c1596b409e3dc13dde07130fa6fe",
+              "kind": "prover",
+              "size": 469863389
+            },
+            {
+              "digest": "4be4b73b787c905b669ca5016b0f25bc702310b4e448482e520054216f6fdf0e",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "3a4015fea8ad62f48b16f394bf77bd47f568238ac0abdc1e7f8a611faa53030b",
+          "derivation_id": "60d59464a66bddaa17635343957b98889155545281ed8cefb3b2a5cd7fa96d1a",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_to_contract_with_grant_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "864271c1dff6c132d1290cda1abd8e29fa856e31d6dc0cd9a4a3e59a9351ea9c",
+            "kind": "source",
+            "size": 295349
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "864271c1dff6c132d1290cda1abd8e29fa856e31d6dc0cd9a4a3e59a9351ea9c",
+        "binary_ir": "7603b29a6ce8e23662c1d239695cd26dcb5c7224bd0d1862a9c1cef72ef0d259",
+        "prover": "20b6f879dbc079087130853df07bea267405c1596b409e3dc13dde07130fa6fe",
+        "verifier": "4be4b73b787c905b669ca5016b0f25bc702310b4e448482e520054216f6fdf0e"
+      },
+      "cold_prepare_ms": 57118.39391605463
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "d24fa90c2a5a99556a8fd8db277c523db63791f2fa6f70bf7f8904fb73c9124b",
+          "artifacts": [
+            {
+              "digest": "7affd1c494c23a69ae89393741ef018d98bdd241950412f405a9358d5f683b8f",
+              "kind": "binary_ir",
+              "size": 5898
+            },
+            {
+              "digest": "6d89f210faffba5b9b5853e6050148e6203c22f0e15a4f18606d31e7135e3086",
+              "kind": "prover",
+              "size": 98576810
+            },
+            {
+              "digest": "80de79cc371eecbcede1cac34aa729abc5e5e0b58da8683fa585bb8242cf6cf2",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "2ec6939c77c42dd90912f4c9d28bc2e1ae39202cbc77546b7a8c09615f0efc01",
+          "derivation_id": "5e73f97a201bd88f2f5a9c0c4d84f55f0ed98ada869c24124bd0ad51fdb371a4",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 16,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_to_contract_with_jubjub",
+          "parameter_digest": "09c877216d6589b370263e18af40a030a901b41a7a7c37ef58c9901db41f05c6",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "c087bf65963c03672d68c11eff432bac02c912d089855f0c9c8664b45c67076e",
+            "kind": "source",
+            "size": 20347
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "c087bf65963c03672d68c11eff432bac02c912d089855f0c9c8664b45c67076e",
+        "binary_ir": "7affd1c494c23a69ae89393741ef018d98bdd241950412f405a9358d5f683b8f",
+        "prover": "6d89f210faffba5b9b5853e6050148e6203c22f0e15a4f18606d31e7135e3086",
+        "verifier": "80de79cc371eecbcede1cac34aa729abc5e5e0b58da8683fa585bb8242cf6cf2"
+      },
+      "cold_prepare_ms": 9774.855791998561
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "8cd15b29eaeab4f4774447517b7259307ac2a6f1556f0ba3f476ff0f5f1fe06b",
+          "artifacts": [
+            {
+              "digest": "9818e67b1ebde1b70cb4cbbcb000de963d8894ca05ca5f3d63e625315d948b4a",
+              "kind": "binary_ir",
+              "size": 9034
+            },
+            {
+              "digest": "3d710ee2f9e8db491a45c5b7c3b863af8a6f74973b97d30a965c05aced50bc00",
+              "kind": "prover",
+              "size": 234895726
+            },
+            {
+              "digest": "aafb9d7c641bcc7a9eb79c0e7db18ab40721cb1dff480013a9ffe92eb8821c5d",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "fb365f8e7ea3467192b10e3750409fdcacb404338456ab412cb8683e1b25a697",
+          "derivation_id": "1a9dc0ab016d3ce2c4cc9fe3c9737391dfce2ee077b90c8175392362d9a5f65c",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_to_contract_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "0db43b367e679e53477200c9ab5576baa640ede5b0ddaf9da89b866a1c423daa",
+            "kind": "source",
+            "size": 31239
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "0db43b367e679e53477200c9ab5576baa640ede5b0ddaf9da89b866a1c423daa",
+        "binary_ir": "9818e67b1ebde1b70cb4cbbcb000de963d8894ca05ca5f3d63e625315d948b4a",
+        "prover": "3d710ee2f9e8db491a45c5b7c3b863af8a6f74973b97d30a965c05aced50bc00",
+        "verifier": "aafb9d7c641bcc7a9eb79c0e7db18ab40721cb1dff480013a9ffe92eb8821c5d"
+      },
+      "cold_prepare_ms": 22554.926333017647
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "84b5ed1e29e6f83d3ef5ee1297041ee7d72930a0d1739dec77b47fc832172233",
+          "artifacts": [
+            {
+              "digest": "c122aa2a0cf0cac904c4a7ca7e1260ecf755bc4bac03993a8ffc80d9a03d619a",
+              "kind": "binary_ir",
+              "size": 90075
+            },
+            {
+              "digest": "abaecff5c71bb5da95647062d80cb1b60a6cc140bca384f6a9f9d8f6e724ae46",
+              "kind": "prover",
+              "size": 469857793
+            },
+            {
+              "digest": "8a53f9c55fc22caef6eb27880cca12230a6b77464db6121e3c7f76e0c6db30e6",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "3c88cb1c6b0203290c8ce02417d8e309ec2105421eea1548460ee0ed9bc58a98",
+          "derivation_id": "475dcf28942a391fb4fced14678f0ae9073ceaddb46ed4b35f0276d03586e074",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_to_contract_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "3b89edcabbc56d04da38ab0e4c268b692769d482158ed1ed3799e487bb9642f0",
+            "kind": "source",
+            "size": 278899
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "3b89edcabbc56d04da38ab0e4c268b692769d482158ed1ed3799e487bb9642f0",
+        "binary_ir": "c122aa2a0cf0cac904c4a7ca7e1260ecf755bc4bac03993a8ffc80d9a03d619a",
+        "prover": "abaecff5c71bb5da95647062d80cb1b60a6cc140bca384f6a9f9d8f6e724ae46",
+        "verifier": "8a53f9c55fc22caef6eb27880cca12230a6b77464db6121e3c7f76e0c6db30e6"
+      },
+      "cold_prepare_ms": 54288.526500051375
+    },
+    {
+      "circuit": "withdraw_shielded_with_grant_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "692bfd8ab9a12cfd60dc23e322a17a2090f20a7a83daafc4432d81e38228db92",
+          "artifacts": [
+            {
+              "digest": "adceb619d744cc08024186eb502a6de6a5a97d6db85a2fecbb9ae7dd75b7e79c",
+              "kind": "binary_ir",
+              "size": 10355
+            },
+            {
+              "digest": "19796bf4847796d1739d3bc5868200aee13dc3422ac1776b2d475243784122dd",
+              "kind": "prover",
+              "size": 197147411
+            },
+            {
+              "digest": "1697a967dbf464b0b3dca05d4208f30ae0a4d84ed132be082c2ebd55f949df99",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "a03c00b4c9eeef274f9ab5562ef83703a0475ce7f902b5b9acfb6bda8da07e86",
+          "derivation_id": "e5b00cf12da51f5b708d5d3b2ebc9e82d5e2657ba0b997a02027951e9fdeba89",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_with_grant_jubjub",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "c7c7fb70f44d9a1400ac80884fe5b49bfab2b3c89ddc481bc3cc999db612ebec",
+            "kind": "source",
+            "size": 34150
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "c7c7fb70f44d9a1400ac80884fe5b49bfab2b3c89ddc481bc3cc999db612ebec",
+        "binary_ir": "adceb619d744cc08024186eb502a6de6a5a97d6db85a2fecbb9ae7dd75b7e79c",
+        "prover": "19796bf4847796d1739d3bc5868200aee13dc3422ac1776b2d475243784122dd",
+        "verifier": "1697a967dbf464b0b3dca05d4208f30ae0a4d84ed132be082c2ebd55f949df99"
+      },
+      "cold_prepare_ms": 16249.7744159773
+    },
+    {
+      "circuit": "withdraw_shielded_with_grant_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "ac0c595ec0404f2d0f09bcc35c9e6ea742a02371d851d2e5ac7ff9d59ef45db3",
+          "artifacts": [
+            {
+              "digest": "706e37884fb0936704135bf07a96759ef1b1f2fe34d8a20da83d7ef8775ba089",
+              "kind": "binary_ir",
+              "size": 13376
+            },
+            {
+              "digest": "e3bc46a6463d3e278237e90d4119aa2566e3f34e2b60d96ffe8f89ba064931fe",
+              "kind": "prover",
+              "size": 234900068
+            },
+            {
+              "digest": "a856c3cc48db59b965518975870e5b62f2ab2516bebb20329b2e19cd18b661b7",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "b9400c1daa64f04635a32362b7276f9eccd572312b18badd2c5d73e819844031",
+          "derivation_id": "9cb64c9fa78e389e411000568bbd935db60b8996a55c0fe28e4561e733c544b8",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_with_grant_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "767cc78b0c8b62f95b4d340061620868607807af57051446f5597751aa569878",
+            "kind": "source",
+            "size": 44618
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "767cc78b0c8b62f95b4d340061620868607807af57051446f5597751aa569878",
+        "binary_ir": "706e37884fb0936704135bf07a96759ef1b1f2fe34d8a20da83d7ef8775ba089",
+        "prover": "e3bc46a6463d3e278237e90d4119aa2566e3f34e2b60d96ffe8f89ba064931fe",
+        "verifier": "a856c3cc48db59b965518975870e5b62f2ab2516bebb20329b2e19cd18b661b7"
+      },
+      "cold_prepare_ms": 23158.376374980435
+    },
+    {
+      "circuit": "withdraw_shielded_with_grant_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "de9378c8994f0e892adb90a1ca80ee4560f826762d6d45fa71509f9b772c8689",
+          "artifacts": [
+            {
+              "digest": "da0b8e38224d29ba333a4e3535a5e893d47405cc54d610790a94f726d3b66fb2",
+              "kind": "binary_ir",
+              "size": 95129
+            },
+            {
+              "digest": "caf8e0ffbba0e68c5469ceef792e2b33f7e0efea89fb7ba052a60fdec0669593",
+              "kind": "prover",
+              "size": 469862847
+            },
+            {
+              "digest": "50eb4f5e705dc0d15f788f44ea7822828f257a6a977df77e5135636945042aca",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "b3c17639a1ba8143e52da6e429cce3ed2bd5c9ec69538d85f1474e3f9811c5b6",
+          "derivation_id": "3092337d5a823e282913062b75289284761d6e51259eb95c6d7c3c1eb3ae441b",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_with_grant_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "ac49dda9ef732a9a7dc526baf775bb7572f92d1ed69f8982c5dac61522af288a",
+            "kind": "source",
+            "size": 293698
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "ac49dda9ef732a9a7dc526baf775bb7572f92d1ed69f8982c5dac61522af288a",
+        "binary_ir": "da0b8e38224d29ba333a4e3535a5e893d47405cc54d610790a94f726d3b66fb2",
+        "prover": "caf8e0ffbba0e68c5469ceef792e2b33f7e0efea89fb7ba052a60fdec0669593",
+        "verifier": "50eb4f5e705dc0d15f788f44ea7822828f257a6a977df77e5135636945042aca"
+      },
+      "cold_prepare_ms": 55439.54508297611
+    },
+    {
+      "circuit": "withdraw_shielded_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "b74c4aed48fdd43ae82a40fc47b8407e6f2e8ec2e3689575b30ac6070232ddd8",
+          "artifacts": [
+            {
+              "digest": "3adddc4067d19ab9809caaa3c64b227ccad8d04cbe162fba8403b2c2728e9e5c",
+              "kind": "binary_ir",
+              "size": 5391
+            },
+            {
+              "digest": "0c48656916ee76661bd4e49c47eaab299d4c4cf07ac41ddfb66cd8b2641d4e22",
+              "kind": "prover",
+              "size": 98576303
+            },
+            {
+              "digest": "81036722d686c1d6296e1a123118680d0240a96ce021da12f702101e4a7c554b",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "a451536c8486dae68f428ba1d13fc137c0f29ed0f0eceaf878f0d3771ef4c462",
+          "derivation_id": "82d7f1fb5fa8a4b68fba1d5eaad06ce015d58dd9767bc04bd139ef39fd58f790",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 16,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_with_jubjub",
+          "parameter_digest": "09c877216d6589b370263e18af40a030a901b41a7a7c37ef58c9901db41f05c6",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "7f5f16ce5a776c531d6edffb65c129d2291ced12a4bbc76223905e11d468c48b",
+            "kind": "source",
+            "size": 18730
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "7f5f16ce5a776c531d6edffb65c129d2291ced12a4bbc76223905e11d468c48b",
+        "binary_ir": "3adddc4067d19ab9809caaa3c64b227ccad8d04cbe162fba8403b2c2728e9e5c",
+        "prover": "0c48656916ee76661bd4e49c47eaab299d4c4cf07ac41ddfb66cd8b2641d4e22",
+        "verifier": "81036722d686c1d6296e1a123118680d0240a96ce021da12f702101e4a7c554b"
+      },
+      "cold_prepare_ms": 8839.932458999101
+    },
+    {
+      "circuit": "withdraw_shielded_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "e303156d6a9f0936ad70d86432d217087ef27743c15d16a04fb101a738a5d6d6",
+          "artifacts": [
+            {
+              "digest": "524b55567b0f3e8e6996da23258825c643367956b9932ca59ee0240e94b61fe4",
+              "kind": "binary_ir",
+              "size": 8514
+            },
+            {
+              "digest": "40cd11f0ecf36bf55f7b432b28a54858793a262667be867074d789dad5d999db",
+              "kind": "prover",
+              "size": 234895206
+            },
+            {
+              "digest": "67f60dc3ed608b79c03cc635d09b327edf5d68774aa6576453b7a0003739b473",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "ef529f00dd92614182640d7f722b5ec6ba379c9f6a87058b458a95518a80f6b4",
+          "derivation_id": "2d5e860a13ccb57f282e9cb07823e481c249d11bf04a4073e16379472c8739e3",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "88c323da596cb4d463159a1b25c30eedffef0106729dec657b03bdd0ad020535",
+            "kind": "source",
+            "size": 29609
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "88c323da596cb4d463159a1b25c30eedffef0106729dec657b03bdd0ad020535",
+        "binary_ir": "524b55567b0f3e8e6996da23258825c643367956b9932ca59ee0240e94b61fe4",
+        "prover": "40cd11f0ecf36bf55f7b432b28a54858793a262667be867074d789dad5d999db",
+        "verifier": "67f60dc3ed608b79c03cc635d09b327edf5d68774aa6576453b7a0003739b473"
+      },
+      "cold_prepare_ms": 21897.05791702727
+    },
+    {
+      "circuit": "withdraw_shielded_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "4994d12faa12702d6013dbfa23d44f582a6a189f8ed2fb0569e9199ba25d536f",
+          "artifacts": [
+            {
+              "digest": "4f261b83715f9314de02ba5d47e24a55df4086709ff9dafff765321d590790bd",
+              "kind": "binary_ir",
+              "size": 89532
+            },
+            {
+              "digest": "79efc4faffc2358fb75aa54c1334aa1ea61b727594415e89c6e25ad8d9619cd2",
+              "kind": "prover",
+              "size": 469857250
+            },
+            {
+              "digest": "d6adc1feaabc78edb925b901ed7ff2d22a1da102b7686f8ab4a4bc552d8e4c26",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "8aef4d95182c9b8cf9743d390adfba20ea80738be0ac25a12569286dbde66cbd",
+          "derivation_id": "c47a528cbed538d10d6510d3147ced4422f8c8a73000e88768cd4eed6c68802c",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_shielded_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "5224abbbbc4a1adc0c77365d8e9a0b9c1077d12f2a78c9ff93bb82f543242f23",
+            "kind": "source",
+            "size": 277246
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "5224abbbbc4a1adc0c77365d8e9a0b9c1077d12f2a78c9ff93bb82f543242f23",
+        "binary_ir": "4f261b83715f9314de02ba5d47e24a55df4086709ff9dafff765321d590790bd",
+        "prover": "79efc4faffc2358fb75aa54c1334aa1ea61b727594415e89c6e25ad8d9619cd2",
+        "verifier": "d6adc1feaabc78edb925b901ed7ff2d22a1da102b7686f8ab4a4bc552d8e4c26"
+      },
+      "cold_prepare_ms": 57616.63358297665
+    },
+    {
+      "circuit": "withdraw_unshielded_with_grant_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "9eed209c839b2e16a6e19ad9d24729b38471d13e344f02ec8c4f41818c3616f2",
+          "artifacts": [
+            {
+              "digest": "17415c24728d9ad48acc37becd15faaca3ee900bfc63f11849cfc9d587324d57",
+              "kind": "binary_ir",
+              "size": 8019
+            },
+            {
+              "digest": "df111e31b1818f79acec90bc43252b7f1a76f0b24137637618ee8d5a20b237f7",
+              "kind": "prover",
+              "size": 98578931
+            },
+            {
+              "digest": "b4e90d3b372189aabec6f9d5dc346f4ae5757e6dc91e7f9af6f5f7a83b513e87",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "a467db88f2b8000df6261c50c0c350751a6a5eb3562cddcf8341244196c98f23",
+          "derivation_id": "5747d0d5fe019376dbf623f0f7d57989a1f7d9e09dba2b0be1156650d1310306",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 16,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_unshielded_with_grant_jubjub",
+          "parameter_digest": "09c877216d6589b370263e18af40a030a901b41a7a7c37ef58c9901db41f05c6",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "c3694f8f2c42693d9b3ab45605194d4a3dc31ba6664985902c1e64fa3b5c5f40",
+            "kind": "source",
+            "size": 26036
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "c3694f8f2c42693d9b3ab45605194d4a3dc31ba6664985902c1e64fa3b5c5f40",
+        "binary_ir": "17415c24728d9ad48acc37becd15faaca3ee900bfc63f11849cfc9d587324d57",
+        "prover": "df111e31b1818f79acec90bc43252b7f1a76f0b24137637618ee8d5a20b237f7",
+        "verifier": "b4e90d3b372189aabec6f9d5dc346f4ae5757e6dc91e7f9af6f5f7a83b513e87"
+      },
+      "cold_prepare_ms": 8713.468957983423
+    },
+    {
+      "circuit": "withdraw_unshielded_with_grant_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "f330329d894220b24bc10e301de17925d9aefc868f6808f579a90949adf9e86e",
+          "artifacts": [
+            {
+              "digest": "2dcc73fa099dc3e2363dddbb8e499a3ca76e2d9e7ac735a7bff64ab5bfe19171",
+              "kind": "binary_ir",
+              "size": 11003
+            },
+            {
+              "digest": "107cb42dc8f932aab0bfeb27733229bb56c4b8d8db917eb199bcfa62739fb128",
+              "kind": "prover",
+              "size": 234897695
+            },
+            {
+              "digest": "3e0698c18fead34537a3fca985a515778e840be7bda9f69889071e0edde34413",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "e9b4f4a92c0e9e788b6e29f9603021f52d361b509627ad7b890088ad67a46d97",
+          "derivation_id": "db4ceac3dbf67bf40861a6ece9dddb10d4fc25a86c4be9bce98813236480a4ed",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_unshielded_with_grant_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "b0ec72d2b80131da5caa38715865048ca6d27938b85263f2afff0670c9ef6328",
+            "kind": "source",
+            "size": 36467
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "b0ec72d2b80131da5caa38715865048ca6d27938b85263f2afff0670c9ef6328",
+        "binary_ir": "2dcc73fa099dc3e2363dddbb8e499a3ca76e2d9e7ac735a7bff64ab5bfe19171",
+        "prover": "107cb42dc8f932aab0bfeb27733229bb56c4b8d8db917eb199bcfa62739fb128",
+        "verifier": "3e0698c18fead34537a3fca985a515778e840be7bda9f69889071e0edde34413"
+      },
+      "cold_prepare_ms": 22717.70345797995
+    },
+    {
+      "circuit": "withdraw_unshielded_with_grant_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "96222d4539944531636b5c119b13de0de75019c130123d40554b63da71a6ec3a",
+          "artifacts": [
+            {
+              "digest": "e7b394a60fe6deb93b52bd109b48005e861fbedb40d3da03587a37f94044cb9e",
+              "kind": "binary_ir",
+              "size": 92588
+            },
+            {
+              "digest": "6b00b91de985590c9ffc31ee6c31ff9a180ebf239b76380279a4dd9eff01338a",
+              "kind": "prover",
+              "size": 469860306
+            },
+            {
+              "digest": "0e0800a7594733b079f1c88f27855fe6af44d858c6ee0ae69bec4281aa26b4b5",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "137f7f5587cd96eb410777eb355d0040a154b57c4f387acd9717b5d088344318",
+          "derivation_id": "d28c9ef58e46981b24857ccadc2fa29a857cc3c2a5b61dcaebab4b4aeb7cb438",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_unshielded_with_grant_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "0a02e65b7f4a34e93f62c92604394a2352a42090b34fd965078ab8d49602c683",
+            "kind": "source",
+            "size": 285379
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "0a02e65b7f4a34e93f62c92604394a2352a42090b34fd965078ab8d49602c683",
+        "binary_ir": "e7b394a60fe6deb93b52bd109b48005e861fbedb40d3da03587a37f94044cb9e",
+        "prover": "6b00b91de985590c9ffc31ee6c31ff9a180ebf239b76380279a4dd9eff01338a",
+        "verifier": "0e0800a7594733b079f1c88f27855fe6af44d858c6ee0ae69bec4281aa26b4b5"
+      },
+      "cold_prepare_ms": 75938.09354200494
+    },
+    {
+      "circuit": "withdraw_unshielded_with_jubjub",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "51f511c10a0e1790a75b64d01cba342fd8e185436218ba15aa072cc3f5aa1a5b",
+          "artifacts": [
+            {
+              "digest": "8a8213796ff2816a8eb30bdfec3b28e825f689180ae37663853a7c3b8c2cb4bd",
+              "kind": "binary_ir",
+              "size": 4774
+            },
+            {
+              "digest": "246a2c3278ea1744527449aab5f099f9a0856b1d0dcfdbd9335352d4c87f982e",
+              "kind": "prover",
+              "size": 49292614
+            },
+            {
+              "digest": "265a64198c2baf14b79ffdc57362c173cd0e13257e1627acae55c6cc821118c4",
+              "kind": "verifier",
+              "size": 2313
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "d58dc1475ea210ced7f15dead55969458df3cc5bd7a19de4c275bf5528ab3228",
+          "derivation_id": "a132622775e78536d104a84551c9b52e4d59eab8f66f08340c2989e125dbb446",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 15,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_unshielded_with_jubjub",
+          "parameter_digest": "724c7c3d779148bb113c7ee9c034b2f27db16e6bdf315fde90105a9bad00b1de",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "5f17d3c2335ce77121a9b5dede0cf9c16b5f5aa3bb8ede55118cebc4796a6299",
+            "kind": "source",
+            "size": 15368
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "5f17d3c2335ce77121a9b5dede0cf9c16b5f5aa3bb8ede55118cebc4796a6299",
+        "binary_ir": "8a8213796ff2816a8eb30bdfec3b28e825f689180ae37663853a7c3b8c2cb4bd",
+        "prover": "246a2c3278ea1744527449aab5f099f9a0856b1d0dcfdbd9335352d4c87f982e",
+        "verifier": "265a64198c2baf14b79ffdc57362c173cd0e13257e1627acae55c6cc821118c4"
+      },
+      "cold_prepare_ms": 5604.698042036034
+    },
+    {
+      "circuit": "withdraw_unshielded_with_k256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "b8af33b7e6f38543f496ea0c87fa15dbd6f472ed87dbecd29f58465038ae5990",
+          "artifacts": [
+            {
+              "digest": "78dc9adfd0b54adb66bb56f293df151a05ea2406418bee02856ec407763775cb",
+              "kind": "binary_ir",
+              "size": 7812
+            },
+            {
+              "digest": "773d7fe33704b070dc2d976aea3707b9ec16554e9e4123b5db0db2d32ac1c093",
+              "kind": "prover",
+              "size": 234894504
+            },
+            {
+              "digest": "a0d7624f9f25ad695511dc169d4daa9f25853f0af35bbea375f4fdb12fc943b6",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "93936b0ac91b95c5e9c5fb7a47d921b5a99185c62c311ecb4b06cfe990ad6978",
+          "derivation_id": "ca843f5d89f603338f73792c481ca244918e2c0460797cec47fd5da2e53e33bf",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 17,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_unshielded_with_k256",
+          "parameter_digest": "4a9ef6c7c0619aab74eede44b13e753e3ba54508a02dd3b7106a949aabb73b74",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "86687ed1b92a4ac33ab7d72e7eb14fe1e01e701ef99f46677d408103018a5688",
+            "kind": "source",
+            "size": 26162
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "86687ed1b92a4ac33ab7d72e7eb14fe1e01e701ef99f46677d408103018a5688",
+        "binary_ir": "78dc9adfd0b54adb66bb56f293df151a05ea2406418bee02856ec407763775cb",
+        "prover": "773d7fe33704b070dc2d976aea3707b9ec16554e9e4123b5db0db2d32ac1c093",
+        "verifier": "a0d7624f9f25ad695511dc169d4daa9f25853f0af35bbea375f4fdb12fc943b6"
+      },
+      "cold_prepare_ms": 21700.344749959186
+    },
+    {
+      "circuit": "withdraw_unshielded_with_p256",
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "06f9f277323607371d1504c4bde0d62c6763741adb291b70fdf85bf7abceab2f",
+          "artifacts": [
+            {
+              "digest": "f99341a19a55a5d384ac4eb8e308b31ebd01b999fcfb4f5b52c002b9f50a2a79",
+              "kind": "binary_ir",
+              "size": 88748
+            },
+            {
+              "digest": "b471b16ada0e75ef80eec5e6791f9e6f4487c51328b3d6931b1d40ad75e0146a",
+              "kind": "prover",
+              "size": 469856466
+            },
+            {
+              "digest": "a4b8fd3383755f6f110a2b94fe97ab48a0dadd652043b200c30eb93e81fdc209",
+              "kind": "verifier",
+              "size": 2745
+            }
+          ],
+          "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+          "bundle_id": "23892aa8ec69617513ef1f158652c239717d8a0aa3593b6b313c84d9a0b0acdb",
+          "derivation_id": "c0e602bd7b2c9356d0df936cdd49503f5d1f49f01e3b3e7e75e77cdb5d3ef9ab",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 18,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "withdraw_unshielded_with_p256",
+          "parameter_digest": "e8436dc5d8b598f169c127c745135d889744007e6d384ff126df8d1332522f86",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "841c15cbb978a8b63e90a9d1501ce37233445b0a2150ceca3133ed82b28b29d4",
+            "kind": "source",
+            "size": 273717
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "841c15cbb978a8b63e90a9d1501ce37233445b0a2150ceca3133ed82b28b29d4",
+        "binary_ir": "f99341a19a55a5d384ac4eb8e308b31ebd01b999fcfb4f5b52c002b9f50a2a79",
+        "prover": "b471b16ada0e75ef80eec5e6791f9e6f4487c51328b3d6931b1d40ad75e0146a",
+        "verifier": "a4b8fd3383755f6f110a2b94fe97ab48a0dadd652043b200c30eb93e81fdc209"
+      },
+      "cold_prepare_ms": 54616.14091694355
+    }
+  ],
+  "provider_checks": {
+    "manifest_sha256": "433e83a167167a4756a210fba71ae509ed066a3c6993f4030e1bca297cfb2a8b",
+    "lanes": [
+      {
+        "lane": "local",
+        "circuit": "deposit_unshielded",
+        "execution": {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        "artifact_sha256": {
+          "bzkir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+          "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+          "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 71.487792,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.000917000000001
+        }
+      },
+      {
+        "lane": "local",
+        "circuit": "activate_initial_device_with_jubjub",
+        "execution": {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        },
+        "artifact_sha256": {
+          "bzkir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+          "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+          "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1336.987083,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.968542000000001
+        }
+      }
+    ],
+    "provenance": {
+      "node": "v24.18.1",
+      "worker_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+      "sdk_package_lock_sha256": "3fd7470d047080db1ec2ad067fc008628596962d46f5d8b4bcfd1e36719cb69d",
+      "proof_harness_sha256": "27b4a948a37aa37d251af4a4853db45db24d5d7223640d930d7b46039eb739fd",
+      "preimage_generator_sha256": "25e355b3ff4bd7dfee396e1e72a74b323add197c9f0cfcdf0db3d93f42adee0b"
+    }
+  },
+  "scope": "All52 intercepted artifact triples independently match official output; genuine selected-two Node SDK proofs only, native macOS ARM64."
+}

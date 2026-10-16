@@ -23,6 +23,7 @@ From the Forge checkout, with Nix flakes enabled:
 export PATH="$HOME/.local/bin:$PATH"
 zkir-forge profile
 zkir-forge --profile zkir3 profile
+zkir-forge --profile zkir31 profile
 ```
 
 The installer supplies the CLI, isolated v3/JSON3.1 workers and CI helper, with a Nix GC
@@ -104,6 +105,10 @@ SDKs require complete compiler integrity/runtime metadata; bare Forge exports
 are insufficient. Use the explicit [compiler adapter/provider views guide](docs/providers/local-adapter.md)
 for independently pinned complete `/views` publication. Full-view size limits
 apply; a qualified smaller fixture does not qualify a whole consumer bundle.
+For the exact full-account JSON3.1 cohort, read the
+[Passport setup and receipt-renewal guide](docs/providers/passport-local.md).
+It covers all 52 artifact sets and two actual application proof paths on native
+macOS ARM64; full-account HTTP and Linux remain separate qualification gates.
 
 ## Validate and measure the consumer integration
 
