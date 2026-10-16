@@ -169,6 +169,7 @@ def main():
                                              timeout=300, env=environment)
                     assert refused.returncode != 0, 'unsafe compiler invocation unexpectedly succeeded'
                     assert not (output / 'compiler/contract-manifest.json').exists(), 'failed compiler emitted a final manifest'
+                    return refused
 
                 prepared = json.loads(run([binary, '--profile', 'zkir31', '--cache-dir', cache,
                     '--params-dir', params, 'prepare', work / 'local-warm/zkir/increment.zkir',
@@ -200,10 +201,14 @@ def main():
                 changed_source = original_source.replace('counter.increment(1)', 'counter.increment(2)')
                 assert changed_source != original_source, 'fixture mutation was ineffective'
                 modified_source.write_text(changed_source)
+                # The native compiler may clean failed output; establish changed IR independently.
+                modified_native = work / 'modified-native'
+                run([sys.executable, ROOT/'scripts/compiler-local.py', '--mode', 'off',
+                     '--compiler-dir', compiler, '--params-dir', params, modified_source, modified_native], env=environment)
+                assert sha(modified_native/'zkir/increment.zkir') != qualified['materialization'][0]['official_artifact_sha256']['source']
                 unqualified_output = work / 'unqualified-current-zkir'
-                refuses_adapter(adapter_command(modified_source, unqualified_output), unqualified_output)
-                assert (unqualified_output / 'zkir/increment.zkir').is_file(), 'negative test did not reach current ZKIR generation'
-                assert sha(unqualified_output / 'zkir/increment.zkir') != qualified['materialization'][0]['official_artifact_sha256']['source']
+                refusal = refuses_adapter(adapter_command(modified_source, unqualified_output), unqualified_output)
+                assert 'current circuit bytes not independently qualified' in refusal.stderr, refusal.stderr
                 adapter_controls = ['corrupt-private-export-refused-no-final-manifest',
                     'restored-private-export-retry-preserves-original-bundle',
                     'wrong-receipt-preflight-preserves-existing-output',
@@ -218,7 +223,7 @@ def main():
                 assert ranged[0] == 206 and ranged[2] == original[:8]
                 assert request('/views/' + '0' * 64 + '/missing', auth=False)[0] == 401
                 assert request('/views/' + manifest_hash + '/missing')[0] == 404
-                assert request(route, 'POST')[0] == 405
+                assert request(route, 'POST', {'Content-Type':'application/json'})[0] == 405
                 corrupt_file = provider_root / manifest_hash / 'keys/increment.prover'
                 damaged = bytearray(original)
                 damaged[-1] ^= 1

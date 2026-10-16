@@ -151,6 +151,34 @@ class LocalAdapter(unittest.TestCase):
                     adapter.policy(args)
                 command.assert_not_called()
 
+    def test_wrong_executable_and_parameter_pins(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory).resolve()
+            tools = root/'tools'
+            tools.mkdir()
+            binary = root/'forge'
+            paths = {'compactc.bin':tools/'compactc.bin', 'zkir-v3':tools/'zkir-v3',
+                     'forge':binary, 'worker':root/'midnight-zkir-forge-zkir31-worker'}
+            for path in paths.values(): path.write_bytes(b'synthetic tool')
+            (tools/'zkir').write_text('#!/bin/sh\nexit 0\n')
+            (tools/'zkir').chmod(0o700)
+            controls = dict(valid_proof_verified=True, invalid_statement_rejected=True, corrupt_proof_rejected=True)
+            record = dict(profile={'qualified':'synthetic'},worker={'identity':'synthetic'},k=6,parameter_digest='0'*64)
+            descriptor = dict(record=record,materialized=True,input_version={'major':3,'minor':1},input_format='midnight-zkir-v3.1-json')
+            q = dict(schema=1,status='passed',materialization=[{'descriptor':descriptor}],
+                     provider_checks={'lanes':[{'proof_controls':controls}]},
+                     tool_sha256={name:adapter.sha(path) for name,path in paths.items()})
+            qualification = root/'qualification.json'
+            qualification.write_text(json.dumps(q))
+            args = argparse.Namespace(binary=binary,params_dir=root,compiler_dir=tools,
+                qualification=qualification,qualification_sha256=adapter.sha(qualification))
+            binary.write_bytes(b'changed tool')
+            with self.assertRaisesRegex(ValueError,'unqualified executable: forge'): adapter.policy(args)
+            binary.write_bytes(b'synthetic tool')
+            (root/'bls_midnight_2p6').write_bytes(b'wrong parameters')
+            with patch.object(adapter,'command',return_value=json.dumps(dict(profile=record['profile'],worker=record['worker']))):
+                with self.assertRaisesRegex(ValueError,'qualified parameter bytes required'): adapter.policy(args)
+
     def test_successful_compiler_without_hook_is_refused(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory).resolve()

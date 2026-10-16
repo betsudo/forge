@@ -102,9 +102,21 @@ The existing Rust real-backend tests remain the independent uncached controls.
 server for container smoke checks. It skips private-CAS corruption and direct
 SQLite contention; do not point this mutating test at a shared service.
 
-Archives, durable jobs, HTTP provider views, namespaces, GC, TLS, resumable upload,
+Archives, durable jobs, namespaces, GC, TLS, resumable upload,
 public rate policy and full JS provider qualification remain future slices.
 See [container setup](../../container/README.md) and [CI notes](../../container/CI.md).
 
 See [API conventions and Midnight provider terminology](../api-conventions.md) for the
 CLI stdin/stdout boundary, HTTP payload conventions and local/fetch provider roles.
+
+## Verified compiler provider views
+
+An explicit `--provider-root` enables GET/HEAD `/views/{manifest_sha256}/{file}`.
+Publish complete compiler output locally with `publish-view`; the caller must
+supply the independently trusted SHA256 of its original compiler manifest.
+The service validates all inventory and metadata before conditional/range reads,
+never generates keys on reads, and preserves authentication before lookup.
+Views are separate from cache exports and snapshots. See the
+[local adapter guide](../providers/local-adapter.md) and
+[metadata guarantee research](../research/compiler-metadata-guarantees.md).
+This initial route supports identity bytes and safe two-component paths.

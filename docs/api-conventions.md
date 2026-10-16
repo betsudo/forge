@@ -22,12 +22,14 @@ Official references: [provider guide](https://docs.midnight.network/guides/deplo
 
 The exported directory includes `keys/<circuit>.prover`,
 `keys/<circuit>.verifier`, `zkir/<circuit>.bzkir`, source `.zkir` and a manifest.
-A compatible local provider consumes its base directory. A fetch provider needs an
-HTTP base serving that circuit-name layout. **Forge's current object API is not
-that endpoint**: adapt downloaded verified artifacts into the layout or separately
-serve an export directory. Browser CORS and full SDK consumer qualification are
-not implemented/established by this documentation. Always match the exact compiler,
-backend and serialization profile, rather than assuming current SDK compatibility.
+Current official SDK providers also require the original compiler integrity
+manifest and runtime metadata; a bare Forge export is insufficient. Publish a
+complete compiler bundle with `publish-view` and explicitly enable
+`serve --provider-root` for `/views/{manifest_sha256}/{file}`. The existing object
+API remains a management/download surface. Pin the independent manifest hash in
+SDK options and retain default integrity checking. See the
+[compiler adapter guide](providers/local-adapter.md). Browser CORS and TLS/CDN
+remain unqualified. Match the exact compiler, backend and serialization profile.
 
 ## CLI: arguments in, JSON out
 

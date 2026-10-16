@@ -1,0 +1,1357 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "qualification_sha256": "318b623eea54e21a581afd7b7fc0206757794b871d47d7d8fd48ac193ec0d0ab",
+  "qualification": {
+    "schema": 1,
+    "status": "passed",
+    "host": {
+      "system": "Darwin",
+      "machine": "arm64"
+    },
+    "tool_versions": {
+      "node": "v24.18.1",
+      "python": "3.14.6"
+    },
+    "compiler_version": "0.35.0 (debb05f94 2026-09-29)",
+    "tool_sha256": {
+      "compactc.bin": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+      "zkir-v3": "2e5febcbe905451cb549991f96eb91b94dfa7bc1a5deb7a41ee017964d532fb4",
+      "forge": "82b7720b4bb4ef9547829c5da69590924d66438d1dcafbd3c5d0339ce9437bf4",
+      "worker": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58"
+    },
+    "package_lock_sha256": "3fd7470d047080db1ec2ad067fc008628596962d46f5d8b4bcfd1e36719cb69d",
+    "fixture_sha256": "8567d69237a92f2446d89dbefa33069bac5a3d53ee3fcd2dbfe88a84453d0911",
+    "harness_sha256": {
+      "scripts/check-providers.py": "84a5dd2efafef75f4408ec88210c18632fbedf42b67fb87c065884798593d050",
+      "integration/providers/check.mjs": "a5dfda2799a38f5152ac2d7b473d6000b01a2d93f45c4593a10699ed45f6e94c"
+    },
+    "compiler_metadata_sha256": {
+      "compiler/contract-manifest.json": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+      "compiler/contract-info.json": "b512af98cdf2709c62c698cd9adfbd7f7a2a115ca2e455fc4871fd9df3d68fed"
+    },
+    "materialization": [
+      {
+        "circuit": "increment",
+        "cold_hit": false,
+        "warm_hit": true,
+        "descriptor": {
+          "input_format": "midnight-zkir-v3.1-json",
+          "input_version": {
+            "major": 3,
+            "minor": 1
+          },
+          "keygen_recipe": "library-keygen/default-options/no-rng",
+          "materialized": true,
+          "record": {
+            "artifact_set_id": "69c78dd16363479d6500059ff2d47b285ff315b04a4116f074107ef76edc9d77",
+            "artifacts": [
+              {
+                "digest": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+                "kind": "binary_ir",
+                "size": 102
+              },
+              {
+                "digest": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+                "kind": "prover",
+                "size": 58166
+              },
+              {
+                "digest": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef",
+                "kind": "verifier",
+                "size": 1353
+              }
+            ],
+            "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "derivation_id": "5dfed8c2d6df8ac083ccba7fe3d7ec37d1f1df959c226adda3b1ddf11e92252e",
+            "format": "midnight-zkir-v3.1-json",
+            "generation_ms": null,
+            "k": 6,
+            "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+            "name": "increment",
+            "parameter_digest": "cf2ad6be7d0fedf5bec2aaa35f6be4aca33053d74268fdf5aa54fcb2891ea6df",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "schema": 1,
+            "source": {
+              "digest": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670",
+              "kind": "source",
+              "size": 362
+            },
+            "worker": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "serialization": {
+            "binary_ir": "ir-source[v3-generic]",
+            "prover_key": "prover-key[v7](ir-source[v3-generic])",
+            "verifier_key": "verifier-key[v7]"
+          }
+        },
+        "official_artifact_sha256": {
+          "source": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670",
+          "binary_ir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+          "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+          "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+        }
+      }
+    ],
+    "provider_checks": {
+      "schema": 1,
+      "manifest_sha256": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+      "lanes": [
+        {
+          "lane": "local",
+          "artifact_runtime_version": "0.20.0",
+          "execution_assertions": 3,
+          "artifact_sha256": {
+            "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+            "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+            "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+          },
+          "proof_controls": {
+            "corrupt_proof_rejected": true,
+            "invalid_statement_rejected": true,
+            "negative_controls": 2,
+            "proof_bytes": 3845,
+            "proof_count": 1,
+            "proof_ms": 30.851833,
+            "public_inputs": 9,
+            "valid_proof_verified": true,
+            "verification_count": 1,
+            "verify_ms": 12.3745
+          }
+        },
+        {
+          "lane": "http",
+          "artifact_runtime_version": "0.20.0",
+          "execution_assertions": 3,
+          "artifact_sha256": {
+            "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+            "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+            "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+          },
+          "proof_controls": {
+            "corrupt_proof_rejected": true,
+            "invalid_statement_rejected": true,
+            "negative_controls": 2,
+            "proof_bytes": 3845,
+            "proof_count": 1,
+            "proof_ms": 30.987875000000003,
+            "public_inputs": 9,
+            "valid_proof_verified": true,
+            "verification_count": 1,
+            "verify_ms": 12.284708
+          }
+        },
+        {
+          "lane": "http-gzip",
+          "artifact_runtime_version": "0.20.0",
+          "execution_assertions": 3,
+          "artifact_sha256": {
+            "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+            "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+            "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+          },
+          "proof_controls": {
+            "corrupt_proof_rejected": true,
+            "invalid_statement_rejected": true,
+            "negative_controls": 2,
+            "proof_bytes": 3845,
+            "proof_count": 1,
+            "proof_ms": 30.889667,
+            "public_inputs": 9,
+            "valid_proof_verified": true,
+            "verification_count": 1,
+            "verify_ms": 12.290167
+          }
+        },
+        {
+          "lane": "http-private",
+          "artifact_runtime_version": "0.20.0",
+          "execution_assertions": 3,
+          "artifact_sha256": {
+            "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+            "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+            "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+          },
+          "proof_controls": {
+            "corrupt_proof_rejected": true,
+            "invalid_statement_rejected": true,
+            "negative_controls": 2,
+            "proof_bytes": 3845,
+            "proof_count": 1,
+            "proof_ms": 29.29875,
+            "public_inputs": 9,
+            "valid_proof_verified": true,
+            "verification_count": 1,
+            "verify_ms": 12.702708
+          }
+        }
+      ],
+      "controls": [
+        "bare-export-default-integrity",
+        "bare-export-missing-runtime",
+        "wrong-local-manifest-anchor",
+        "wrong-fetch-manifest-anchor",
+        "corrupt-local-prover",
+        "corrupt-fetch-prover",
+        "missing-fetch-manifest",
+        "html-fallback",
+        "missing-authentication",
+        "unsafe-local-name",
+        "unsafe-fetch-name",
+        "head-length",
+        "conditional-etag"
+      ],
+      "requests": [
+        {
+          "prefix": "plain",
+          "relative": "compiler/contract-manifest.json",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "zkir/increment.bzkir",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.verifier",
+          "method": "GET"
+        },
+        {
+          "prefix": "gzip",
+          "relative": "compiler/contract-manifest.json",
+          "method": "GET"
+        },
+        {
+          "prefix": "gzip",
+          "relative": "zkir/increment.bzkir",
+          "method": "GET"
+        },
+        {
+          "prefix": "gzip",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        },
+        {
+          "prefix": "gzip",
+          "relative": "keys/increment.verifier",
+          "method": "GET"
+        },
+        {
+          "prefix": "private",
+          "relative": "compiler/contract-manifest.json",
+          "method": "GET"
+        },
+        {
+          "prefix": "private",
+          "relative": "zkir/increment.bzkir",
+          "method": "GET"
+        },
+        {
+          "prefix": "private",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        },
+        {
+          "prefix": "private",
+          "relative": "keys/increment.verifier",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "compiler/contract-manifest.json",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "compiler/contract-manifest.json",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "compiler/contract-manifest.json",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.prover",
+          "method": "HEAD"
+        },
+        {
+          "prefix": "plain",
+          "relative": "keys/increment.prover",
+          "method": "GET"
+        }
+      ],
+      "scope": "native developer-host Node providers and isolated HTTP/gzip/auth fixture; genuine proofs; not browser, TLS/CDN, production Forge provider API or Linux qualification"
+    },
+    "scope": "real minimal Compact0.35.0 JSON3.1 fixture with official SDK5.0.0-rc.2; not full Passport/Compact integration, Linux, browser/TLS/CDN or production HTTP provider readiness",
+    "owned_scratch_cleanup": "temporary stores, copied keys, preimages and proof inputs removed on exit"
+  },
+  "lanes": [
+    {
+      "lane": "off",
+      "compiler_output_sha256": {
+        "compiler/contract-info.json": "b512af98cdf2709c62c698cd9adfbd7f7a2a115ca2e455fc4871fd9df3d68fed",
+        "compiler/contract-manifest.json": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "contract/index.d.ts": "75fcf99ee79562d177ddf680814ad19479e5e419d59e55a7becc63b2f70731cc",
+        "contract/index.js": "2bb3fc1d4ef4da147b11c451a545edcc48d901655f3da194d47f69d7668da226",
+        "contract/index.js.map": "621b8c750c8843b706e4ad16fcd723666ad708559c002ff44170b23e4aab9e3c",
+        "keys/increment.prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+        "keys/increment.verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef",
+        "zkir/increment.bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+        "zkir/increment.zkir": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670"
+      },
+      "cache_stats": null,
+      "publication": {
+        "view_id": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "reused": false
+      },
+      "provider_checks": {
+        "schema": 1,
+        "manifest_sha256": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "lanes": [
+          {
+            "lane": "local",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 32.388042,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.329666
+            }
+          },
+          {
+            "lane": "http",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 30.860125,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.481833
+            }
+          },
+          {
+            "lane": "http-gzip",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.278124999999996,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.655708
+            }
+          },
+          {
+            "lane": "http-private",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 30.413958,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.186916
+            }
+          },
+          {
+            "lane": "forge-api",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.776791,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.034375
+            }
+          }
+        ],
+        "controls": [
+          "bare-export-default-integrity",
+          "bare-export-missing-runtime",
+          "wrong-local-manifest-anchor",
+          "wrong-fetch-manifest-anchor",
+          "corrupt-local-prover",
+          "corrupt-fetch-prover",
+          "missing-fetch-manifest",
+          "html-fallback",
+          "missing-authentication",
+          "unsafe-local-name",
+          "unsafe-fetch-name",
+          "head-length",
+          "conditional-etag",
+          "forge-api-wrong-anchor",
+          "forge-api-auth",
+          "forge-api-head"
+        ],
+        "requests": [
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "HEAD"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          }
+        ],
+        "scope": "native developer-host Node providers and isolated HTTP/gzip/auth fixture; genuine proofs; not browser, TLS/CDN, production Forge provider API or Linux qualification"
+      }
+    },
+    {
+      "lane": "local-cold",
+      "compiler_output_sha256": {
+        "compiler/contract-info.json": "b512af98cdf2709c62c698cd9adfbd7f7a2a115ca2e455fc4871fd9df3d68fed",
+        "compiler/contract-manifest.json": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "contract/index.d.ts": "75fcf99ee79562d177ddf680814ad19479e5e419d59e55a7becc63b2f70731cc",
+        "contract/index.js": "2bb3fc1d4ef4da147b11c451a545edcc48d901655f3da194d47f69d7668da226",
+        "contract/index.js.map": "621b8c750c8843b706e4ad16fcd723666ad708559c002ff44170b23e4aab9e3c",
+        "keys/increment.prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+        "keys/increment.verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef",
+        "zkir/increment.bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+        "zkir/increment.zkir": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670"
+      },
+      "cache_stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 102,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 58166,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 362,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T15:44:33.370Z",
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "elapsed_ms": 368.032333,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 132.063375,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 59983,
+          "export_bytes": 64105,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 132.063375,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 1,
+          "requests": 1,
+          "total_request_ms": 368.032333
+        }
+      },
+      "publication": {
+        "view_id": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "reused": true
+      },
+      "provider_checks": {
+        "schema": 1,
+        "manifest_sha256": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "lanes": [
+          {
+            "lane": "local",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.134791,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.41425
+            }
+          },
+          {
+            "lane": "http",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.340374999999998,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.100208
+            }
+          },
+          {
+            "lane": "http-gzip",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 35.844125,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.387749999999999
+            }
+          },
+          {
+            "lane": "http-private",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.578125,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.130709
+            }
+          },
+          {
+            "lane": "forge-api",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.202625,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.116208
+            }
+          }
+        ],
+        "controls": [
+          "bare-export-default-integrity",
+          "bare-export-missing-runtime",
+          "wrong-local-manifest-anchor",
+          "wrong-fetch-manifest-anchor",
+          "corrupt-local-prover",
+          "corrupt-fetch-prover",
+          "missing-fetch-manifest",
+          "html-fallback",
+          "missing-authentication",
+          "unsafe-local-name",
+          "unsafe-fetch-name",
+          "head-length",
+          "conditional-etag",
+          "forge-api-wrong-anchor",
+          "forge-api-auth",
+          "forge-api-head"
+        ],
+        "requests": [
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "HEAD"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          }
+        ],
+        "scope": "native developer-host Node providers and isolated HTTP/gzip/auth fixture; genuine proofs; not browser, TLS/CDN, production Forge provider API or Linux qualification"
+      }
+    },
+    {
+      "lane": "local-warm",
+      "compiler_output_sha256": {
+        "compiler/contract-info.json": "b512af98cdf2709c62c698cd9adfbd7f7a2a115ca2e455fc4871fd9df3d68fed",
+        "compiler/contract-manifest.json": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "contract/index.d.ts": "75fcf99ee79562d177ddf680814ad19479e5e419d59e55a7becc63b2f70731cc",
+        "contract/index.js": "2bb3fc1d4ef4da147b11c451a545edcc48d901655f3da194d47f69d7668da226",
+        "contract/index.js.map": "621b8c750c8843b706e4ad16fcd723666ad708559c002ff44170b23e4aab9e3c",
+        "keys/increment.prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+        "keys/increment.verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef",
+        "zkir/increment.bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+        "zkir/increment.zkir": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670"
+      },
+      "cache_stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 102,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 58166,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 362,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 102,
+            "errors": 0,
+            "hit_bytes": 102,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-warm/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 58166,
+            "errors": 0,
+            "hit_bytes": 58166,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-warm/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-warm/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+          },
+          {
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "bytes": 362,
+            "errors": 0,
+            "hit_bytes": 362,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-warm/zkir/increment.zkir",
+            "requests": 1,
+            "sha256": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T15:44:35.841Z",
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "elapsed_ms": 173.99,
+            "estimated_generation_avoided_ms": 132.063375,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-warm/zkir/increment.zkir"
+          },
+          {
+            "at": "2026-10-16T15:44:33.370Z",
+            "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+            "elapsed_ms": 368.032333,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 132.063375,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/integration/providers/.local/adapter-api-ptgbjegf/local-cold/zkir/increment.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 59983,
+          "export_bytes": 64105,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 132.063375,
+          "generation_ms": 132.063375,
+          "hit_rate": 0.5,
+          "hits": 1,
+          "misses": 1,
+          "requests": 2,
+          "total_request_ms": 542.022333
+        }
+      },
+      "publication": {
+        "view_id": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "reused": true
+      },
+      "provider_checks": {
+        "schema": 1,
+        "manifest_sha256": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+        "lanes": [
+          {
+            "lane": "local",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.525833000000002,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.527999999999999
+            }
+          },
+          {
+            "lane": "http",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 35.512625,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.230875000000001
+            }
+          },
+          {
+            "lane": "http-gzip",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 30.941791,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.714208
+            }
+          },
+          {
+            "lane": "http-private",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 32.921042,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.283042
+            }
+          },
+          {
+            "lane": "forge-api",
+            "artifact_runtime_version": "0.20.0",
+            "execution_assertions": 3,
+            "artifact_sha256": {
+              "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+            },
+            "proof_controls": {
+              "corrupt_proof_rejected": true,
+              "invalid_statement_rejected": true,
+              "negative_controls": 2,
+              "proof_bytes": 3845,
+              "proof_count": 1,
+              "proof_ms": 31.9925,
+              "public_inputs": 9,
+              "valid_proof_verified": true,
+              "verification_count": 1,
+              "verify_ms": 12.547834
+            }
+          }
+        ],
+        "controls": [
+          "bare-export-default-integrity",
+          "bare-export-missing-runtime",
+          "wrong-local-manifest-anchor",
+          "wrong-fetch-manifest-anchor",
+          "corrupt-local-prover",
+          "corrupt-fetch-prover",
+          "missing-fetch-manifest",
+          "html-fallback",
+          "missing-authentication",
+          "unsafe-local-name",
+          "unsafe-fetch-name",
+          "head-length",
+          "conditional-etag",
+          "forge-api-wrong-anchor",
+          "forge-api-auth",
+          "forge-api-head"
+        ],
+        "requests": [
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "gzip",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "zkir/increment.bzkir",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "private",
+            "relative": "keys/increment.verifier",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "compiler/contract-manifest.json",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "HEAD"
+          },
+          {
+            "prefix": "plain",
+            "relative": "keys/increment.prover",
+            "method": "GET"
+          }
+        ],
+        "scope": "native developer-host Node providers and isolated HTTP/gzip/auth fixture; genuine proofs; not browser, TLS/CDN, production Forge provider API or Linux qualification"
+      }
+    }
+  ],
+  "adapter_controls": [
+    "corrupt-private-export-refused-no-final-manifest",
+    "restored-private-export-retry-preserves-original-bundle",
+    "wrong-receipt-preflight-preserves-existing-output",
+    "modified-source-unqualified-zkir-refused-no-final-manifest"
+  ],
+  "api_controls": [
+    "authenticated-read",
+    "head",
+    "conditional",
+    "range",
+    "authentication-before-missing-lookup",
+    "undeclared-file",
+    "read-only-route",
+    "corrupt-head",
+    "corrupt-conditional",
+    "corrupt-range",
+    "corrupt-sibling-refuses-manifest",
+    "restored-bytes-recover"
+  ],
+  "harness_sha256": {
+    "scripts/check-provider-view-adapter.py": "2839b86fc891c9be097667f52c978ebd5b8f3cb1400e536fee1f8370112f590f",
+    "scripts/compiler-local.py": "6b24a7290c14d6398495c24432dd4875d8fc353860d626ad5ed86c75ddd78018",
+    "integration/providers/check.mjs": "a5dfda2799a38f5152ac2d7b473d6000b01a2d93f45c4593a10699ed45f6e94c"
+  },
+  "scope": "native macOS ARM64 minimal Compact0.35 JSON3.1 fixture; real CLI, local compiler wrapper, official SDK Node/Fetch and authenticated Forge HTTP provider views; not arbitrary circuits, full Passport, Linux, browser/TLS/CDN or hosted savings",
+  "owned_scratch_cleanup": "private compiler outputs, caches, keys, token, preimages and proof inputs removed on exit"
+}

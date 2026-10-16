@@ -250,3 +250,8 @@ before accepting local or HTTP hits; a matching version string is insufficient.
 Product versions use `YYYY.M.PATCH` calendar versioning. The current local candidate
 is `2026.10.0`; see [milestone scope and acceptance](docs/milestones/2026.10.0.md).
 A candidate version does not imply a published binary release.
+
+The opt-in [compiler adapter and provider-view guide](docs/providers/local-adapter.md)
+explains complete compiler metadata preservation, independently pinned manifests
+and exact source qualification. Bare key exports do not satisfy current SDK
+provider integrity requirements.

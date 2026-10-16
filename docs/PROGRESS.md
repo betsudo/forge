@@ -806,3 +806,52 @@
   Issue#4 remains open for those appropriate production/browser/transport gates.
 - Source guide: docs/providers/qualification.md; compiler flag remains proposed.
   Nix package was built without reinstalling the shared CLI or changing pins.
+
+## 2026-10-16 — provider-view API and compiler-facing local adapter (#4/#6)
+
+- Added local `publish-view` with independently supplied raw compiler-manifest
+  SHA256, bounded strict complete inventory/runtime metadata checks, private copies,
+  atomic no-replace publication and verified idempotency. Explicit provider roots
+  remain separate from cache snapshots. Existing v2/v3/JSON3.1 pins are unchanged.
+- Added explicit `serve --provider-root` GET/HEAD `/views/{id}/{file}`. Existing
+  authentication/admission apply; full view validation precedes HEAD/304/ranges.
+  Responses stream a verified private descriptor, avoiding verify/reopen races.
+  Initial identity encoding only, no browser/CORS/TLS/CDN or public-service claim.
+- Added Forge-owned `scripts/compiler-local.py`, default off, opt-in local mode.
+  Actual compiler owns its output and emits original metadata after a process-only
+  qualified keygen hook. Initial support is source-specific Compact0.35/JSON3.1,
+  not an upstream flag or arbitrary Passport/consumer integration. Exact tool,
+  worker, descriptor, source, parameter and artifact pins are independently checked.
+- Independent identity/reliability review found source swaps could pass an overly
+  broad final hash check and a successful compiler could skip the hook. Fixed exact
+  path/hash and roster checking, official probe availability, hook completion and
+  final manifest checks; reject protected-input/output overlap. Added regressions.
+- Nix package built locally (shared installation unchanged). Final receipt
+  `docs/evidence/provider-view-adapter-local.json`: native macOS ARM64, fresh4-lane
+  official SDK baseline plus off/cold/warm5-lane runs, totaling19genuine proofs/
+  verifications and38invalid-statement/corrupt-proof rejections. Compiler output
+  inventory is byte-identical across off/cold/warm; original raw manifest identity
+  is `0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46`.
+  Local adapter cold stats show1miss/0hits; warm stats1miss/1hit, zeroerrors.
+  Node lanes read original complete bundles; the additional Fetch lane reads the
+  actual authenticated Forge view. No CI speedup is claimed from this small fixture.
+- All12actual API controls and4adapter refusal/recovery controls passed, including
+  corrupted private export refusal, byte-restored retry, wrong receipt preserving
+  existing output, changed source refusal, corrupt HEAD/conditional/range refusal
+  and restored view recovery. The compiler cleans failed outputs, so the harness
+  establishes changed IR through an independent native compile before refusal.
+  A valid JSON content type is supplied when testing method405 after media checks.
+- Local checks: all non-ignored Rust tests passed; provider-view12tests; adapter
+  12tests; Cargo formatting/Clippy with warnings denied; existing HTTP, recovery,
+  snapshot, factory/commit/OpenSpec and docs checks passed. Expensive unrelated
+  ignored backend qualifications were not rerun; real proofs above cover this
+  exact new compiler/provider cohort. Owned scratch keys/caches/tokens/preimages
+  are cleaned on success and failure. No additional worktree was created.
+- Research/usage: `docs/research/compiler-metadata-guarantees.md` and
+  `docs/providers/local-adapter.md`. Guarantee requires complete original compiler
+  output plus an independently trusted manifest pin; self-consistent hashes alone
+  do not establish compiler provenance. Every request currently verifies the whole
+  view, a deliberate read-throughput limit requiring measurement on large bundles.
+- Compact/other checkouts unchanged; Cloudflare deferred; no push, deployment,
+  remote workflow, merge or release. Local source-specific qualification is not
+  Linux/full Passport/browser qualification or release readiness.

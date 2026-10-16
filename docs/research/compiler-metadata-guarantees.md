@@ -80,3 +80,7 @@ remain unqualified/deferred. Explicit provider roots are outside cache snapshots
 - [Original real provider qualification](../evidence/provider-sdk-local.json),
   [provider view specification](../../openspec/changes/provider-view-api/specs/provider-views/spec.md),
   [adapter specification](../../openspec/changes/compiler-local-adapter/specs/compiler-adapter/spec.md).
+
+Final local API/adapter evidence: [native off/cold/warm receipt](../evidence/provider-view-adapter-local.json).
+It records complete output identities, actual SDK proof controls, cache statistics
+and corruption/refusal/recovery checks. Scope remains the exact native fixture.
