@@ -23,7 +23,10 @@ parser.add_argument('--runtime-python', type=Path, default=Path(sys.executable))
 parser.add_argument('--params-dir', type=Path, default=Path.home()/'.cache/midnight/zk-params')
 parser.add_argument('--deny-nix', action='store_true')
 parser.add_argument('--recovery', action='store_true')
+parser.add_argument('--require-nix-free', action='store_true', help='Refuse qualification when a Nix store or nix executable is present')
 args = parser.parse_args()
+if args.require_nix_free:
+    assert not Path('/nix/store').exists() and shutil.which('nix') is None, 'a real Nix-free consumer environment is required'
 archives = [p for p in args.directory.glob('midnight-zkir-forge-*.tar.gz') if not p.name.endswith('-runtime-sources.tar.gz')]
 assert len(archives) == 1, 'one native candidate required'
 archive = archives[0].resolve()
@@ -89,5 +92,5 @@ else:sys.exit(2)
         recovery=json.loads(run(*command))
     print(json.dumps({'schema':1,'candidate_sha256':hashlib.file_digest(archive.open('rb'),'sha256').hexdigest(),
                       'source_commit':manifest['source_commit'],'version':manifest['version'],
-                      'target':manifest['target'],'fake_gh_install':True,'runtime_python_uses_nix':str(runtime).startswith('/nix/'),'runtime_denies_nix_and_checkout':args.deny_nix,
-                      'profiles':profiles,'recovery':recovery,'scope':'real relocated native bundle and isolated prefix; Python origin reported separately; not a clean-host, Linux or real GitHub download qualification'}))
+                      'target':manifest['target'],'fake_gh_install':True,'runtime_python_uses_nix':str(runtime).startswith('/nix/'),'runtime_denies_nix_and_checkout':args.deny_nix,'required_nix_free_environment':args.require_nix_free,
+                      'profiles':profiles,'recovery':recovery,'scope':'real relocated native bundle and isolated prefix; host/environment facts recorded separately; fake GitHub transport, not a real release download'}))
