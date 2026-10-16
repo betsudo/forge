@@ -554,3 +554,17 @@
   the Intel correction. All four shell derivations evaluate through a local Git
   override; pin is not remotely fetchable until separately authorized publication.
   docs/evidence/consumer-example-pin.json distinguishes evaluation from runtime.
+
+## 2026-10-16 — clean Linux recovery parameter isolation
+
+- Actual unprivileged Nix-free Linux recovery exposed a harness omission: direct
+  JSON3 worker proof checks did not receive the explicit parameter directory.
+  Developer-host checks had valid ambient parameters, but did not prove this
+  isolation premise. The worker calls now receive --params-dir explicitly.
+- Independent narrow review found no blocker. The actual installed9359068 Linux
+  candidate passed all three recovery profiles with no MIDNIGHT_PP, no mounts,
+  no Nix/build checkout, uid1000 and network disabled. Separate fresh-parameter
+  HTTPS proof/negative controls also passed all three profiles. Final receipts
+  and archive/source/notices audit are undergoing independent review.
+- Candidate source and the external recovery-harness SHA are recorded separately;
+  this test-only fix changes no runtime payload, key identity or cache behavior.

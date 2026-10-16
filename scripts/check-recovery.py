@@ -149,7 +149,7 @@ with tempfile.TemporaryDirectory(prefix='forge-recovery-') as directory:
                 variable='MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER' if selector=='zkir31' else 'MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER'
                 name='midnight-zkir-forge-zkir31-worker' if selector=='zkir31' else 'midnight-zkir-forge-zkir3-worker'
                 worker = Path(os.environ.get(variable,str(binary.parent/name)))
-                proof = invoke([worker, 'qualify-export', '--output', export, '--circuit-name', 'proof'])
+                proof = invoke([worker, '--params-dir', args.params_dir, 'qualify-export', '--output', export, '--circuit-name', 'proof'])
             assert all(proof[name] for name in (
                 'valid_proof_verified', 'invalid_statement_rejected', 'corrupt_proof_rejected'))
             profiles.append({'profile': selector, 'accounting_failure_rollback': True,
