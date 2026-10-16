@@ -16,7 +16,7 @@
           toolchain = pkgs.rust-bin.stable."1.98.1".minimal.override { extensions = [ "rustfmt" "clippy" ]; };
       in {
         default = pkgs.mkShell {
-          packages = with pkgs; [ toolchain pkg-config openssl sqlite python3 nodejs_24 git gnupg ripgrep pi-coding-agent ];
+          packages = with pkgs; [ toolchain pkg-config openssl sqlite python3 nodejs_24 git gnupg ripgrep actionlint pi-coding-agent ];
           shellHook = ''
             export CARGO_BUILD_JOBS="''${CARGO_BUILD_JOBS:-2}"
           '';

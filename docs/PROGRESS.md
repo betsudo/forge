@@ -855,3 +855,34 @@
 - Compact/other checkouts unchanged; Cloudflare deferred; no push, deployment,
   remote workflow, merge or release. Local source-specific qualification is not
   Linux/full Passport/browser qualification or release readiness.
+
+## 2026-10-16 — trusted CI review and quality gates (#11)
+
+- Inspected midnight-did reference workflows at revision
+  `4e7f6b0f69bf4e2c8506a9693f8d0c3dfe68e550`: trusted-base commit integrity,
+  conventional PR metadata, stable quality contexts and security boundaries.
+  Added Forge-specific OpenSpec and `docs/ci-quality-gates.md`.
+- Added a read-only trusted-base PR gate: conventional PR title and every commit,
+  explicit real same-repo issue references on PR and every commit, matching author
+  DCO, GitHub-verified valid OpenPGP signatures. Enumerates every commit (bounded
+  at250), rechecks live base/head/metadata and refuses stale/partial verification.
+  No execution of PR code, cache/artifact restoration or privileged write token.
+- Independent review hardened event/live base SHA/ref/repository consistency and
+  issue repository identity to reject transferred-issue redirects. Signature trust
+  is GitHub's verification, not a local key allowlist. Issue relevance remains review.
+- Added stable `Forge quality gate` covering mandatory ordinary checks and any
+  explicitly requested real proofs; failed/cancelled/skipped required checks fail.
+  Added pinned-Nix actionlint1.7.12 to existing local/CI check entrypoint, dependency
+  update proposals for Actions/allCargo graphs/providerSDK npm, and PR template.
+  No automatic merging, compatibility pin changes or application code changes.
+- Local validation passed:28API policy controls plus grammar controls, original
+  commit-hook policy tests, actionlint across workflows, OpenSpec and documentation
+  build/link checks. Existing Rust/proof checks were not repeated for workflow/docs/
+  Node policy-only changes. No hosted API enforcement/workflow was dispatched.
+- Gate activation needs trusted-base bootstrap followed by owner-configured branch
+  rules (required contexts, approvals, signed commits, no force pushes/deletions).
+  These settings were documented, not mutated; first introduction PR cannot use a
+  verifier absent from its base. Bot PRs do not bypass signing/DCO/issue rules.
+  Audits/secret scans/coverage/fuzzing need scoped baselines before additional gates.
+- Signed local delivery only. Compact unchanged, Cloudflare deferred, no push,
+  branch-settings changes, merge, deployment or release.

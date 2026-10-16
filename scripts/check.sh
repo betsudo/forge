@@ -4,6 +4,8 @@ node scripts/factory-audit.mjs
 node scripts/check-spec.mjs
 node scripts/check-profile.mjs
 node scripts/test-commit-policy.mjs
+node scripts/test-pr-integrity.mjs
+actionlint
 cargo fmt --check
 cargo fmt --manifest-path workers/zkir3/Cargo.toml --check
 cargo fmt --manifest-path workers/zkir31/Cargo.toml --check

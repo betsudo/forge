@@ -23,3 +23,10 @@ Use `codex/issue-N-description` branches and Conventional Commit subjects, e.g.
 `feat(cache): add verified local reuse`. Every authored commit uses `git commit
 -S -s` with the existing configured identity and `Assisted-by: AI`, and references
 its issue. If signing fails, report it; never invent an identity or unsigned fallback.
+
+PRs use the [review/CI quality policy](docs/ci-quality-gates.md). Every commit must
+link a real same-repository issue and carry an author-matching DCO and verified
+OpenPGP signature. PR titles are conventional too; use the PR template. Local
+hooks help, while the trusted-base GitHub gate enforces every PR commit after
+owner-authorized activation. Required branch settings are documented separately;
+local workflow files alone cannot prevent merging.

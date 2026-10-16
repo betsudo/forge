@@ -1,0 +1,32 @@
+name: PR integrity
+on:
+  # Read-only metadata gate: only exact trusted base code executes, never PR code.
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, ready_for_review]
+permissions:
+  contents: read
+  pull-requests: read
+  issues: read
+concurrency:
+  group: integrity-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  integrity:
+    name: PR integrity gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.base.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v4
+        with:
+          node-version: '24'
+      - name: Verify metadata and every commit using trusted base policy
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: node scripts/check-pr-integrity.mjs

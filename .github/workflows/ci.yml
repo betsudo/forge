@@ -82,3 +82,23 @@ jobs:
           ./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1
           ./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge --real
           ./bootstrap.sh -- python3 scripts/check-snapshot.py --binary target/debug/midnight-zkir-forge --real
+
+  quality-gate:
+    name: Forge quality gate
+    if: always()
+    needs: [checks, real-proofs]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 2
+    steps:
+      - name: Require all mandatory checks
+        env:
+          EXPECT_PROOFS: ${{ github.event_name == 'workflow_dispatch' && inputs.real_proofs }}
+          PROOF_RESULT: ${{ needs.real-proofs.result }}
+          CHECK_RESULT: ${{ needs.checks.result }}
+        run: |
+          test "$CHECK_RESULT" = success
+          if [ "$EXPECT_PROOFS" = true ]; then
+            test "$PROOF_RESULT" = success
+          else
+            test "$PROOF_RESULT" = skipped
+          fi
