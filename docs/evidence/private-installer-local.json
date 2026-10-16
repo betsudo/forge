@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "platform": "aarch64-apple-darwin",
+  "offline_fake_gh": true,
+  "install_reinstall_upgrade_rollback": true,
+  "checksum_download_archive_conflict_refusals": true,
+  "concurrent_installer_refused": true,
+  "killed_installer_lock_recovery": true,
+  "activation_and_first_link_interruption_recovery": true,
+  "same_tag_replacement_refused": true,
+  "scope": "private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim",
+  "date": "2026-10-16",
+  "review": "Independent contract_review found no remaining installer/descriptor blockers after resource caps, activation recovery and exact-commit builder changes.",
+  "nix_worker_build": "native aarch64-darwin worker source closure build passed",
+  "consumer_flake_evaluation": "aarch64-darwin devShell evaluated via local Git override; package outputs also evaluated for x86_64-linux",
+  "candidate_status": "Final lock-aware macOS ARM64 candidate built at a0badb8, installed/proved with Nix and checkout runtime reads denied, and passed ordinary real recovery; see milestone-2026.10.0-local.json. Clean no-Nix consumer-host qualification remains pending.",
+  "linux_status": "Nix flake supported as a build definition; portable tarball production deliberately refuses Nix ELF dependencies and still needs implementation/qualification.",
+  "metadata_checksum_and_expansion_budgets": true
+}

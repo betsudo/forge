@@ -1,0 +1,145 @@
+{
+  "http": {
+    "schema": 1,
+    "http_source_roundtrip": true,
+    "auth_and_remote_binding": true,
+    "head_etag_range": true,
+    "path_inputs_refused": true,
+    "sqlite_contention_admission_and_responsive_liveness": true,
+    "corruption_refused_before_conditional_response": true,
+    "real_proofs": [
+      {
+        "profile": "ledger8-v2",
+        "downloaded_warm_artifacts_prove_and_reject_invalid_controls": true
+      },
+      {
+        "profile": "zkir3",
+        "downloaded_warm_artifacts_prove_and_reject_invalid_controls": true
+      }
+    ],
+    "scope": "isolated real HTTP process; local private store"
+  },
+  "recovery": {
+    "schema": 1,
+    "primary_error_preserved_after_accounting_failure": true,
+    "profiles": [
+      {
+        "profile": "ledger8-v2",
+        "accounting_failure_rollback": true,
+        "resolve_accounting_atomic": true,
+        "export_obstacle_retry": true,
+        "killed_after_export_before_commit": true,
+        "uncommitted_metrics_rolled_back": true,
+        "corrupt_export_owner_repair": true,
+        "warm_export_rebuild": true,
+        "same_output_identity": true,
+        "real_proof_controls": true
+      },
+      {
+        "profile": "zkir3",
+        "accounting_failure_rollback": true,
+        "resolve_accounting_atomic": true,
+        "export_obstacle_retry": true,
+        "killed_after_export_before_commit": true,
+        "uncommitted_metrics_rolled_back": true,
+        "corrupt_export_owner_repair": true,
+        "warm_export_rebuild": true,
+        "same_output_identity": true,
+        "real_proof_controls": true
+      }
+    ],
+    "scope": "private local stores; no Compact or remote operations"
+  },
+  "snapshot": {
+    "schema": 1,
+    "relocation": true,
+    "writer_contention_timeout_and_reader_coexistence": true,
+    "wal_backup_standalone": true,
+    "concurrent_no_replace": true,
+    "hostile_and_corrupt_payloads_refused": [
+      "missing",
+      "extra",
+      "symlink",
+      "traversal",
+      "duplicate",
+      "producer",
+      "schema",
+      "ready",
+      "partial",
+      "empty-directory",
+      "corrupt-bytes"
+    ],
+    "killed_snapshot_not_published": true,
+    "ci_key_and_policy_guards": true,
+    "real_proofs": [
+      {
+        "profile": "ledger8-v2",
+        "warm_restored_artifacts_prove": true,
+        "invalid_controls_rejected": true,
+        "evicted_identity_and_exports_preserved": true,
+        "ci_budget_growth_and_stat_deltas": true
+      },
+      {
+        "profile": "zkir3",
+        "warm_restored_artifacts_prove": true,
+        "invalid_controls_rejected": true,
+        "evicted_identity_and_exports_preserved": true,
+        "ci_budget_growth_and_stat_deltas": true
+      }
+    ],
+    "scope": "isolated local process e2e; no Compact or remote cache operations"
+  },
+  "parity": {
+    "schema": 1,
+    "profiles": [
+      {
+        "profile": "ledger8-v2",
+        "descriptor_parity": true,
+        "legacy_manifest_preserved": true,
+        "parameter_errors_distinct": true,
+        "source_pin": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        },
+        "cold_process_ms": 205.99937497172505,
+        "warm_process_ms": 19.83483403455466,
+        "job_delta": {
+          "requests": 1,
+          "hits": 1,
+          "misses": 0,
+          "errors": 0
+        }
+      },
+      {
+        "profile": "zkir3",
+        "descriptor_parity": true,
+        "legacy_manifest_preserved": true,
+        "parameter_errors_distinct": true,
+        "source_pin": "3a7ae0361d03e6eed4fc91e31f6600f334f605d5",
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v6]"
+        },
+        "cold_process_ms": 819.1338750184514,
+        "warm_process_ms": 470.69537499919534,
+        "job_delta": {
+          "requests": 1,
+          "hits": 1,
+          "misses": 0,
+          "errors": 0
+        }
+      }
+    ],
+    "scope": "local native descriptor/error tests; proof controls executed separately; Compact unchanged"
+  },
+  "schema": 1,
+  "date": "2026-10-16",
+  "version": "2026.10.0",
+  "platform": "aarch64-darwin",
+  "fast_suite": "bootstrap --check passed",
+  "independent_review": "contract_review: version metadata/locks/Nix/OpenAPI/Compose align; no dependency changes",
+  "scope": "local source runtime; no portable-target release claim"
+}

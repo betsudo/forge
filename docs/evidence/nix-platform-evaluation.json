@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "date": "2026-10-16",
+  "issue": 18,
+  "packages": {
+    "aarch64-darwin": {
+      "derivation": "/nix/store/76048fnshxhsi3li90snm92vfm550vv6-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "aarch64-linux": {
+      "derivation": "/nix/store/wix147gmrq4mgaj19sxq5yaacplc683h-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "x86_64-darwin": {
+      "derivation": "/nix/store/9dfj7cyvfkbs773brjkwnk0ksabjss4n-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "x86_64-linux": {
+      "derivation": "/nix/store/ib512gai9say79rl8xhlq3y3k4iyn8pb-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    }
+  },
+  "shells": {
+    "aarch64-darwin": "/nix/store/d07frb84vyzraxc7d7hasaqsw0pbbpfx-nix-shell.drv",
+    "aarch64-linux": "/nix/store/h11h8fbh3gm6fpv1wbal669bi8hsgzbk-nix-shell.drv",
+    "x86_64-darwin": "/nix/store/kxp3bdsll6s5vcci60k0wzlqjmk6j7b8-nix-shell.drv",
+    "x86_64-linux": "/nix/store/26rggn4pmz1s2nc5iygfakknnfj533aa-nix-shell.drv"
+  },
+  "existing_lock_nodes_unchanged": true,
+  "added_intel_input": {
+    "locked": {
+      "lastModified": 1791970671,
+      "narHash": "sha256-yla7eoYsREf9hmwvgy2wCtUe7cJxiHgfAUvj9wxqk9o=",
+      "owner": "NixOS",
+      "repo": "nixpkgs",
+      "rev": "5b00df4a0973895c8023f2b0227c7942c963d065",
+      "type": "github"
+    },
+    "original": {
+      "owner": "NixOS",
+      "ref": "nixpkgs-26.05-darwin",
+      "repo": "nixpkgs",
+      "type": "github"
+    }
+  },
+  "review": "Independent contract_review found no blocker; consumer pin corrected and all four consumer shell derivations evaluate.",
+  "scope": "four-system derivation evaluation only; no Intel/Linux build or runtime qualification claim",
+  "consumer_example_pin": "f3801e08f1e3af0f1a2c7b3e0e6a5c7070fa4d3a",
+  "consumer_shells": {
+    "aarch64-darwin": "/nix/store/wbydlp6ipppkpbbax9py2i6vl6s18jpp-nix-shell.drv",
+    "aarch64-linux": "/nix/store/blshgc534fcghpik1ynn9as3kyxvlirc-nix-shell.drv",
+    "x86_64-darwin": "/nix/store/z60zc609gmhbnqqlwy7j8kb3xpjvrl93-nix-shell.drv",
+    "x86_64-linux": "/nix/store/f0xb87j8hy9vaamawbp0qbd56myxgm7l-nix-shell.drv"
+  },
+  "consumer_pin_publication_status": "signed local commit only; evaluated using same-commit local Git override, remote SSH fetch requires later publication",
+  "final_package_source_commit": "a0badb8d91b7c1f0f8c023031515b8d78e6c515d",
+  "final_packages": {
+    "aarch64-darwin": {
+      "derivation": "/nix/store/qg64aa3lqdi4w71jmlxifyqg2wq9wwxm-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "aarch64-linux": {
+      "derivation": "/nix/store/r5ml8rx8z306yz4sppg5qhykqxv8r8cl-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "x86_64-darwin": {
+      "derivation": "/nix/store/ya707y7mdrbgjmjfaslhs3yhiivlqmwy-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    },
+    "x86_64-linux": {
+      "derivation": "/nix/store/njz5d4n8dczbf810xq91sgdhvwy5h1hf-midnight-zkir-forge-2026.10.0.drv",
+      "package": "midnight-zkir-forge",
+      "version": "2026.10.0",
+      "worker": "midnight-zkir-forge-zkir3-worker"
+    }
+  }
+}

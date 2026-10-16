@@ -119,43 +119,14 @@ async fn main() {
             eprintln!("{error:#}");
             println!(
                 "{}",
-                json!({"schema":1,"error":{"code":error_code(&error),"message":format!("{error:#}")}})
+                json!({"schema":1,"error":{"code":error_code(&error),"message":error_code(&error),"retryable":midnight_zkir_forge::error::classify(&error).retryable(),"availability_fallback":midnight_zkir_forge::error::classify(&error).availability_fallback()}})
             );
             std::process::exit(1);
         }
     }
 }
 fn error_code(error: &anyhow::Error) -> &'static str {
-    let text = format!("{error:#}");
-    if let Some(code) = [
-        "snapshot_destination_exists",
-        "snapshot_profile_mismatch",
-        "snapshot_partition_mismatch",
-        "snapshot_schema_mismatch",
-        "snapshot_unsafe_path",
-        "snapshot_limit",
-        "snapshot_busy",
-        "snapshot_publish_failed",
-    ]
-    .into_iter()
-    .find(|code| text.contains(code))
-    {
-        code
-    } else if text.contains("profile_format_mismatch") {
-        "profile_format_mismatch"
-    } else if text.contains("unsupported_zkir_version") {
-        "unsupported_zkir_version"
-    } else if text.contains("worker_profile_mismatch") {
-        "worker_profile_mismatch"
-    } else if text.contains("artifact_identity_changed") {
-        "artifact_identity_changed"
-    } else if text.contains("integrity") {
-        "integrity_error"
-    } else if text.contains("parameter") {
-        "parameters_unavailable"
-    } else {
-        "request_failed"
-    }
+    midnight_zkir_forge::error::classify(error).code()
 }
 async fn run(cli: Cli) -> Result<Value> {
     if matches!(cli.command, Command::Profile) {
@@ -243,9 +214,18 @@ async fn run(cli: Cli) -> Result<Value> {
     }
     let store = Store::open(&root)?;
     match cli.command {
-        Command::Import { input, name } => Ok(serde_json::to_value(
-            application::import_with_profile(&store, &input, name.as_deref(), cli.profile)?,
-        )?),
+        Command::Import { input, name } => {
+            let record =
+                application::import_with_profile(&store, &input, name.as_deref(), cli.profile)?;
+            let mut value = serde_json::to_value(&record)?;
+            value["descriptor"] = serde_json::to_value(
+                midnight_zkir_forge::descriptor::ArtifactDescriptor::from_record(
+                    &record,
+                    &store.read(&record.source)?,
+                )?,
+            )?;
+            Ok(value)
+        }
         Command::Ensure { bundle_id, output } => {
             application::ensure_with_profile(
                 &store,
@@ -279,7 +259,9 @@ async fn run(cli: Cli) -> Result<Value> {
         }
         Command::Inspect { bundle_id } => {
             let (record, ready) = store.load(&bundle_id)?;
-            Ok(json!({"schema":1,"record":record,"ready":ready}))
+            Ok(
+                json!({"schema":1,"descriptor":midnight_zkir_forge::descriptor::ArtifactDescriptor::from_record(&record, &store.read(&record.source)?)?,"record":record,"ready":ready}),
+            )
         }
         Command::Resolve {
             bundle_id,

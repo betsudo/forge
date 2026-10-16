@@ -83,3 +83,10 @@ HTTP errors are JSON with stable codes and appropriate status; filesystem
 implementation diagnostics are withheld. When a bearer token is configured,
 every route except liveness requires it. Non-loopback binding requires a token.
 No CORS is enabled; remote TLS belongs at a trusted proxy boundary.
+
+## Compatibility increment
+
+The local compiler-compatibility increment adds a transport-neutral `descriptor`
+and typed error classification. See [consumer contract](compatibility.md) for the
+field inventory, legacy-sidecar rules and independent acceptance/fallback policy.
+CLI error messages now use safe public code text; full diagnostics remain on stderr.

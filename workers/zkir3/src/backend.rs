@@ -55,15 +55,41 @@ pub async fn parameters(
     }
     let k = ir.k();
     let name = MidnightDataProvider::name_k(k);
+    let path = provider.dir.join(&name);
+    let present = match std::fs::symlink_metadata(&path) {
+        Ok(metadata) => {
+            ensure!(
+                metadata.is_file() && !metadata.file_type().is_symlink(),
+                crate::error::Kind::InvalidParameters
+            );
+            true
+        }
+        Err(error) if error.kind() == io::ErrorKind::NotFound => false,
+        Err(error) => {
+            return Err(anyhow::Error::new(error).context(crate::error::Kind::InternalError));
+        }
+    };
     let mut reader = provider
         .get_file(
             &name,
             "missing verified parameters; supply --params-dir or explicitly use --fetch-params",
         )
-        .await?;
+        .await
+        .map_err(|error| {
+            let kind = if error.kind() == io::ErrorKind::InvalidData {
+                crate::error::Kind::InvalidParameters
+            } else if !present && error.kind() == io::ErrorKind::NotFound {
+                crate::error::Kind::ParametersUnavailable
+            } else {
+                crate::error::Kind::InternalError
+            };
+            anyhow::Error::new(error).context(kind)
+        })?;
     // get_file verifies upstream's pinned digest before these bytes are used.
     let mut bytes = Vec::new();
-    reader.read_to_end(&mut bytes)?;
+    reader
+        .read_to_end(&mut bytes)
+        .context(crate::error::Kind::InvalidParameters)?;
     Ok(Parameters {
         k,
         digest: digest(&bytes),
@@ -72,7 +98,9 @@ pub async fn parameters(
 }
 
 pub fn parse(raw: &[u8]) -> Result<IrSource> {
-    IrSource::load(raw).context("official pinned ZKIR v3 parser rejected input")
+    IrSource::load(raw)
+        .context("official pinned ZKIR v3 parser rejected input")
+        .context(crate::error::Kind::InvalidInput)
 }
 
 pub async fn generate(ir: &IrSource, params: &Parameters) -> Result<Vec<(ArtifactKind, Vec<u8>)>> {

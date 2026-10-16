@@ -8,3 +8,7 @@ pub mod store;
 pub mod zkir3;
 
 mod filesystem;
+
+pub mod error;
+
+pub mod descriptor;

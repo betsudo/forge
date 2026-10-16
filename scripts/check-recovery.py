@@ -23,7 +23,9 @@ binary = args.binary.resolve()
 def invoke(command, success=True, cwd=None):
     result = subprocess.run(list(map(str, command)), capture_output=True, text=True, timeout=120, cwd=cwd)
     assert (result.returncode == 0) == success, (result.returncode, result.stdout, result.stderr)
-    return json.loads(result.stdout)
+    value = json.loads(result.stdout)
+    if not success: value['_stderr'] = result.stderr
+    return value
 
 
 def cli(store, *command, success=True):
@@ -45,13 +47,13 @@ with tempfile.TemporaryDirectory(prefix='forge-recovery-') as directory:
     registered = cli(store, 'import', ROOT / 'fixtures/assert.zkir')
     bundle = registered['bundle_id']
     accounting_fault(store, True)
-    error = cli(store, 'ensure', '0' * 64, success=False)['error']['message']
+    error = cli(store, 'ensure', '0' * 64, success=False)['_stderr']
     assert 'bundle not registered' in error and 'injected accounting failure' in error
     assert not cli(store, 'inspect', bundle)['ready']
     accounting_fault(store, False)
     assert cli(store, 'stats')['totals']['requests'] == 0
     # After the accounting fault is removed, the primary error is still actionable.
-    error = cli(store, 'ensure', '0' * 64, success=False)['error']['message']
+    error = cli(store, 'ensure', '0' * 64, success=False)['_stderr']
     assert 'bundle not registered' in error and 'injected accounting failure' not in error
     assert cli(store, 'stats')['totals']['errors'] == 1
 
@@ -65,11 +67,11 @@ with tempfile.TemporaryDirectory(prefix='forge-recovery-') as directory:
             # Missing parameters and a failed accounting write must preserve both diagnostics.
             accounting_fault(store, True)
             error = cli(store, '--params-dir', temp / 'missing-params', 'ensure', bundle,
-                        success=False)['error']['message']
+                        success=False)['_stderr']
             assert 'injected accounting failure' in error and 'parameter' in error.lower()
             assert not cli(store, 'inspect', bundle)['ready']
             # Inject successful-generation accounting failure: metadata must roll back.
-            error = cli(store, *ensure, success=False)['error']['message']
+            error = cli(store, *ensure, success=False)['_stderr']
             assert 'injected accounting failure' in error
             assert not cli(store, 'inspect', bundle)['ready']
             assert cli(store, 'stats')['totals']['requests'] == 0

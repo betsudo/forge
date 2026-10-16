@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "date": "2026-10-16",
+  "platform": "aarch64-darwin",
+  "scope": "tiny genuine qualification fixtures only; not DID/passport, HTTP transfer or CDN measurements",
+  "gzip_level": 6,
+  "profiles": [
+    {
+      "profile": "ledger8-v2",
+      "fixture": "assert.zkir",
+      "derivation_id": "e92af04377670ceadd6f082d10b0151bab8623f141fdf763538f0c62dc3d3f9a",
+      "files": [
+        {
+          "kind": "source",
+          "raw_bytes": 151,
+          "gzip_bytes": 131,
+          "gzip_over_raw": 0.8675496688741722,
+          "compression_ms": 0.0664590043015778,
+          "decoded_sha256": "5913d032c0aa79c5e43e249f7cc92a8dd0bad1c1f1775d10a5e6095eed7c65ef"
+        },
+        {
+          "kind": "binary_ir",
+          "raw_bytes": 28,
+          "gzip_bytes": 48,
+          "gzip_over_raw": 1.7142857142857142,
+          "compression_ms": 0.01570803578943014,
+          "decoded_sha256": "3d11698d0dabb11dfefc2d063eac364c9d89ba5ab7366fbcc5ff4b7ceec1af09"
+        },
+        {
+          "kind": "prover",
+          "raw_bytes": 5309,
+          "gzip_bytes": 5332,
+          "gzip_over_raw": 1.0043322659634584,
+          "compression_ms": 0.06608298281207681,
+          "decoded_sha256": "274164be1d41476d8c62a4b730f500543d01251bba7554ca4fd1b876ae8f1b18"
+        },
+        {
+          "kind": "verifier",
+          "raw_bytes": 1255,
+          "gzip_bytes": 535,
+          "gzip_over_raw": 0.4262948207171315,
+          "compression_ms": 0.04358298610895872,
+          "decoded_sha256": "50e8b3e48256fe90ce4f360008b050bea24d556d258508e383c63c1b7815730d"
+        }
+      ]
+    },
+    {
+      "profile": "zkir3",
+      "fixture": "assert-v3.zkir",
+      "derivation_id": "478e2809aab71d1fc0b41f9d568b4092db3c56a61032c988b963d7ef8c709881",
+      "files": [
+        {
+          "kind": "source",
+          "raw_bytes": 215,
+          "gzip_bytes": 172,
+          "gzip_over_raw": 0.8,
+          "compression_ms": 0.04474999150261283,
+          "decoded_sha256": "c15cda61876efdef8694fbc9594e63cb85617495b31c421d77cabcf5ac24f81c"
+        },
+        {
+          "kind": "binary_ir",
+          "raw_bytes": 49,
+          "gzip_bytes": 65,
+          "gzip_over_raw": 1.3265306122448979,
+          "compression_ms": 0.01266703475266695,
+          "decoded_sha256": "f20ad0b4d289a40b1ca4aefcdb15193dbabecf53f18d4ea688550df4f14d215a"
+        },
+        {
+          "kind": "prover",
+          "raw_bytes": 5359,
+          "gzip_bytes": 5382,
+          "gzip_over_raw": 1.0042918454935623,
+          "compression_ms": 0.06787496386095881,
+          "decoded_sha256": "2d6c8e479b92b08e49e4dc319bc1a50bddc6e6e2923c1c722d5cac31d6447eda"
+        },
+        {
+          "kind": "verifier",
+          "raw_bytes": 1255,
+          "gzip_bytes": 535,
+          "gzip_over_raw": 0.4262948207171315,
+          "compression_ms": 0.041834020521491766,
+          "decoded_sha256": "f133d165261db3bb66a10de45e712d9dda053dd2d970a9bfd75be4f5c09f4f99"
+        }
+      ]
+    }
+  ]
+}

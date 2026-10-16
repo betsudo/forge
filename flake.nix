@@ -1,14 +1,18 @@
 {
   description = "Midnight ZKIR Forge: local ledger8 artifact cache";
   inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  # Current unstable no longer supports Intel macOS; keep that target on stable.
+  inputs.nixpkgs-intel.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
   inputs.rust-overlay.url = "github:oxalica/rust-overlay/ca7f624be3935a5bc46d2c240515491ab8675503";
   inputs.rust-overlay.inputs.nixpkgs.follows = "nixpkgs";
-  outputs = { self, nixpkgs, rust-overlay }:
+  outputs = { self, nixpkgs, nixpkgs-intel, rust-overlay }:
     let
       systems = [ "aarch64-darwin" "x86_64-darwin" "aarch64-linux" "x86_64-linux" ];
       eachSystem = nixpkgs.lib.genAttrs systems;
+      platformPkgs = system: if system == "x86_64-darwin" then nixpkgs-intel else nixpkgs;
+      version = (builtins.fromTOML (builtins.readFile ./Cargo.toml)).package.version;
     in {
-      devShells = eachSystem (system: let pkgs = import nixpkgs { inherit system; overlays = [ (import rust-overlay) ]; };
+      devShells = eachSystem (system: let pkgs = import (platformPkgs system) { inherit system; overlays = [ (import rust-overlay) ]; };
           toolchain = pkgs.rust-bin.stable."1.98.1".minimal.override { extensions = [ "rustfmt" "clippy" ]; };
       in {
         default = pkgs.mkShell {
@@ -18,12 +22,13 @@
           '';
         };
       });
-      packages = eachSystem (system: let pkgs = import nixpkgs { inherit system; overlays = [ (import rust-overlay) ]; };
+      packages = eachSystem (system: let pkgs = import (platformPkgs system) { inherit system; overlays = [ (import rust-overlay) ]; };
           toolchain = pkgs.rust-bin.stable."1.98.1".minimal.override { extensions = [ "rustfmt" "clippy" ]; };
           worker = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
             pname = "midnight-zkir-forge-zkir3-worker";
-            version = "0.2.0";
-            src = pkgs.lib.fileset.toSource { root = ./workers/zkir3; fileset = ./workers/zkir3; };
+            inherit version;
+            src = pkgs.lib.fileset.toSource { root = ./.; fileset = pkgs.lib.fileset.unions [ ./workers/zkir3 ./src/error.rs ]; };
+            sourceRoot = "source/workers/zkir3";
             cargoLock = {
               lockFile = ./workers/zkir3/Cargo.lock;
               outputHashes."midnight-base-crypto-1.0.0" = "sha256-mYOsQLJ5f8WJfuu13pEQAiQ3N2mPNNjUGQnzIQuJuOA=";
@@ -33,7 +38,7 @@
           };
           forge = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
           pname = "midnight-zkir-forge";
-          version = "0.2.0";
+          inherit version;
           src = pkgs.lib.fileset.toSource {
             root = ./.;
             fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ./scripts/forge-ci.py ];
@@ -58,7 +63,7 @@
       } // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         dockerImage = pkgs.dockerTools.buildLayeredImage {
           name = "midnight-zkir-forge";
-          tag = "0.2.0";
+          tag = version;
           contents = [ forge pkgs.cacert ];
           extraCommands = ''
             mkdir -p data params tmp run/secrets
@@ -78,7 +83,7 @@
             Labels = {
               "org.opencontainers.image.title" = "Midnight ZKIR Forge";
               "org.opencontainers.image.source" = "https://github.com/input-output-hk/midnight-zkir-forge";
-              "org.opencontainers.image.version" = "0.2.0";
+              "org.opencontainers.image.version" = version;
             };
           };
         };

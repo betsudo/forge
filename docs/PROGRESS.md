@@ -345,3 +345,116 @@
 - README/site/workflow guide now link the deployed site and record current scope.
   Non-blocking action-runtime deprecation annotations are recorded; no unrelated
   action upgrades were introduced. Compact and other checkouts remain untouched.
+
+
+## 2026-10-16 — issue #12 compiler contract
+
+- Added one strict path-free descriptor shared by CLI, export sidecars and HTTP.
+  Its validated decode entrypoint rejects ambiguous/unknown fields and inconsistent
+  identities. Existing identity transcripts and immutable legacy manifest bytes stay
+  intact; missing verified sidecars can be added atomically. Snapshot validation
+  accepts old exports and checks new sidecars.
+- Typed errors originate at parameter/backend/store/worker boundaries, keeping
+  absent parameters distinct from corrupt bytes. CLI public JSON and HTTP are
+  sanitized; private diagnostics remain on stderr. Policy never parses strings.
+- Native full bootstrap, strict premise controls and real both-profile HTTP,
+  snapshot and recovery suites pass. Real proofs, verification and negative
+  controls execute on warm exports/downloads. Timing and request deltas are in
+  docs/evidence/compiler-compatibility-local.json; tiny fixtures are not consumer
+  speedup claims. Independent agent review completed; Nix worker source closure
+  builds with the shared typed-error module.
+- Local source delivery only; installed CLI is unchanged. No Compact edits,
+  consumer qualification claim, push, release, deployment or hosted run.
+
+
+## 2026-10-16 — issue #11 private installer
+
+- Implemented exact-tag authenticated gh/Python installation, bounded downloads,
+  strict manifests/inventories, bounded gzip/tar parsing and safe staged extraction.
+  Root CLI, v3 worker and CI helper activate through one pointer under a separate
+  binary root; existing Nix launchers are refused rather than overwritten.
+- Offline fake-gh e2e passes install/reinstall/upgrade/rollback, checksum/path/
+  conflict refusals, live/killed lock recovery, before/after activation termination
+  and interrupted first-link retry. Independent review blockers are resolved.
+- Candidate tooling builds the exact clean Git commit through locked Nix, copies
+  ancillary files from that recorded commit and inspects/relocates native loaders.
+  It does not accept arbitrary stale executable inputs as source provenance.
+- Pinned private-flake documentation/example and native devShell evaluation pass.
+  No binary release exists yet. Native candidate execution, clean no-Nix consumer
+  qualification, licensing audit and Linux portable production remain explicit
+  gates; no broad portability claim. Receipt: docs/evidence/private-installer-local.json.
+
+
+## 2026-10-16 — issues #13–#16 research contracts
+
+- Proposed bounded GitHub snapshot/action transport with exact local recipe reuse,
+  provider-view qualification and a reproducible genuine-proof benchmark protocol.
+  DID v0.7.0 codegen measured 0.4505s for 12 JSON2.0 circuits; keygen savings are
+  unmeasured. Passport's required Compact0.35.0 is absent. Historical job durations
+  are allocation evidence, not claimed optimization results.
+- Named the optional component Forge Proof Relay: exact binary requests, pinned
+  server/builtin/parameter context, private HMAC request identities, independently
+  verified responses, unchanged miss forwarding and mandatory uncached proving
+  coverage. It is a proposal, not runtime cache behavior or an assertion bypass.
+- Documented official published-crate availability and explicit worker/profile
+  matrix without changing current pins or claiming generic ledger9 support.
+- Compared Rust cloud admission, native keygen placement and object/CDN providers
+  with dated prices and explicit cost exclusions. Transparent key compression
+  preserves decoded identity and exact provider integrity/runtime metadata;
+  DID/passport compression measurements remain pending.
+- Independent cross-reviews report no remaining blockers after clarifications.
+  Research index: docs/research/README.md. OpenSpec structure checks pass; no
+  consumer checkout, Compact, hosted workflow, cloud or publication change.
+
+
+## 2026-10-16 — issue #17 calendar milestone
+
+- Created GitHub milestone 2026.10.0 without an invented deadline and assigned
+  issues #1–#17, including newly scoped research issues #13–#16 and version #17.
+  Local autonomous goal/acceptance is docs/milestones/2026.10.0.md.
+- Product versions are YYYY.M.PATCH (month without leading zeros); current
+  CLI/worker/locks/Nix/Compose/OpenAPI agree on 2026.10.0. Backend dependency
+  versions/pins and historical receipts remain unchanged.
+- Full native bootstrap and both-profile real descriptor parity, HTTP-downloaded
+  proof, snapshot and failure-recovery controls pass for the calendar candidate.
+  Receipt: docs/evidence/calver-local.json. Review found no version/identity blocker.
+- No push, tag, release upload, hosted run or deployment. Portable Linux/other
+  architectures and clean no-Nix consumer qualification are separate release gates.
+
+
+## 2026-10-16 — issue #18 four-platform Nix evaluation correction
+
+- Final evaluation exposed that locked Nixpkgs26.11 drops Intel macOS although
+  Forge advertised x86_64-darwin. Added separately revision/hash-locked official
+  nixpkgs-26.05-darwin only for Intel macOS; original Nixpkgs/rust-overlay lock
+  nodes and Midnight crate pins remain byte-for-byte unchanged.
+- All four package and dev-shell derivations now evaluate; independent review
+  found no blocker. Receipt: docs/evidence/nix-platform-evaluation.json. Intel
+  build/runtime and Linux proof qualification remain distinct pending gates.
+- The earlier source09b0b1a macOS ARM64 candidate successfully installed under
+  fake-gh local transport and executed real v2/v3 proof controls with /nix and
+  checkout runtime reads denied. Its relocated CLI/worker also passed ordinary
+  real recovery. The new lock conservatively changes build identity, so a new
+  native candidate/receipt follows rather than reusing the earlier claim.
+
+
+## 2026-10-16 — 2026.10.0 local acceptance
+
+- Built the final lock-aware native candidate from exact signed source a0badb8.
+  Actual local fake-gh installation with external Python passed while denying
+  /nix and checkout runtime reads. Both v2/v3 genuine proof verification,
+  reproducibility and invalid-statement/corrupt-proof controls pass.
+- The verified relocated CLI and paired worker separately passed ordinary real
+  recovery: accounting rollback, killed-before-COMMIT recovery, export repair,
+  warm reconstruction and preserved output identities with real proof controls.
+- Final-source full bootstrap, real descriptor premise/parity, HTTP-downloaded
+  proof and snapshot suites pass. All four package/main-shell/consumer-shell
+  derivations evaluate. Existing Midnight/Nixpkgs/Rust-overlay pins stay unchanged;
+  only the separately locked Intel Darwin input was added.
+- Acceptance matrix: docs/milestones/2026.10.0-acceptance.md. Complete native/source
+  receipt: docs/evidence/milestone-2026.10.0-local.json. Research contracts and exact
+  consumer observations are complete; measured CI savings, Linux/Intel runtime,
+  clean no-Nix host, license audit and real release download remain explicit gates.
+- GitHub milestone includes issues1–18. No push, release/tag/upload, hosted dispatch,
+  deployment, Compact/other-checkout edits or shared CLI reinstallation. Installed
+  shared Nix CLI remains0.2.0; this increment delivers source and local candidate.

@@ -1648,7 +1648,7 @@ dependencies = [
 
 [[package]]
 name = "midnight-zkir-forge-zkir3-worker"
-version = "0.2.0"
+version = "2026.10.0"
 dependencies = [
  "anyhow",
  "clap",

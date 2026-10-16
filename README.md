@@ -226,3 +226,14 @@ agent's global skill installation.
 See [local recovery](docs/recovery.md) for failure policy, safe owner actions,
 transactional metrics and local crash/retry tests. Request timing excludes final
 transaction commit and process overhead; use process wall time for end-to-end measurements.
+
+See [private installer and pinned Nix setup](docs/install-release.md) for the
+local release-installer increment and immutable flake consumption. Binary release
+assets remain unpublished pending per-target qualification.
+
+Compiler consumers should read the [descriptor and error contract](docs/compatibility.md)
+before accepting local or HTTP hits; a matching version string is insufficient.
+
+Product versions use `YYYY.M.PATCH` calendar versioning. The current local candidate
+is `2026.10.0`; see [milestone scope and acceptance](docs/milestones/2026.10.0.md).
+A candidate version does not imply a published binary release.
