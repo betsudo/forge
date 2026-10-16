@@ -652,3 +652,17 @@
   Use a fresh lean cache partition, including the isolated JSON3.1 lockfile, so
   restores cannot reintroduce earlier large build trees. Preserve all checks
   and the separately opt-in genuine-proof job. Compact is unchanged.
+
+## 2026-10-16 — CI correction passed and product feedback recorded
+
+- Signed d90377b passed hosted run38867598283, including all ordinary checks and
+  cache save. The owner account then merged PR19 and updated PR20 with main;
+  merge head d3ab2e8 has an identical file tree and passed run38869892304 in2m.
+  No merge was performed by this CI-fix session. Genuine-proof hosted job remains
+  explicitly opt-in; existing local proof evidence keeps its original scope.
+- Product feedback is assessed in docs/research/ci-pilot-review.md: prioritize
+  actual x86_64 Linux portable-runtime qualification, a thin JSON3.1 Action and
+  enrolled-consumer hosted cache-transfer measurements. Preserve legacy profiles;
+  park relay/hosting/provider service expansion. A two-week trial has not started
+  and no design partner has been claimed. Linked Claude audit is sign-in gated;
+  detailed findings await accessible text. Compact remains unchanged.
