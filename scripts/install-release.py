@@ -16,7 +16,7 @@ import tarfile
 import tempfile
 import time
 
-REPOSITORY = 'input-output-hk/midnight-zkir-forge'
+REPOSITORY = 'betsudo/forge'
 COMMANDS = ('midnight-zkir-forge', 'midnight-zkir-forge-zkir3-worker', 'midnight-zkir-forge-ci')
 WORKER31 = 'midnight-zkir-forge-zkir31-worker'
 MAX_DOWNLOAD = 1024 ** 3

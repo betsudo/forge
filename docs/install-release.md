@@ -7,40 +7,32 @@ are the target matrix; clean-runtime qualification is tracked separately per tar
 
 ## Nix users: use the existing package directly
 
-Authorized users can pin this private repository without cloning a working tree.
-The default package includes CLI, exact v3 worker and CI helper:
+The repository home is [betsudo/forge](https://github.com/betsudo/forge).
+Pin a full reviewed commit without cloning a working tree. The default package
+includes the CLI, matched workers and CI helper:
 
 ```sh
-nix profile install 'git+ssh://git@github.com/input-output-hk/midnight-zkir-forge?rev=5d9c4c62b8c59b4a2939943b762032ff9f390be8'
-# Or use a temporary shell:
-nix shell 'git+ssh://git@github.com/input-output-hk/midnight-zkir-forge?rev=5d9c4c62b8c59b4a2939943b762032ff9f390be8'
+nix profile install 'github:betsudo/forge/9b1d7bbd6f55d05adb8d0543c16b659ac24e6e80'
+nix shell 'github:betsudo/forge/9b1d7bbd6f55d05adb8d0543c16b659ac24e6e80'
 ```
 
-That is an existing published source commit, not the unpushed installer increment.
-Its Nixpkgs input no longer evaluates for Intel macOS; use the corrected pin below
-after its publication, or a local Git input on this machine.
-Replace it with a reviewed full commit when adopting later changes. Native systems:
-`aarch64-darwin`, `x86_64-darwin`, `aarch64-linux`, `x86_64-linux`. Native validation
-and actual runtime support are reported in progress/evidence, not inferred from
-flake evaluation alone. Authentication requires GitHub SSH read access; `gh auth
-login` by itself does not configure SSH. Do not put tokens in flake URLs or files.
-
-[examples/nix/flake.nix](../examples/nix/flake.nix) pins reviewed local commit
-`6c6490d25ff83366ee09ba5056f4c4638bc1ad85`, including the Intel macOS correction and isolated JSON3.1 worker. It
-is not published yet: remote readers cannot fetch it until publication is separately
-authorized. On this machine use a `git+file://` input for this checkout with the
-same full revision. Keep its generated `flake.lock` in the consumer repository;
-Nix itself is required. No consumer/Compact checkout is modified here.
+The example pins the migrated baseline. Replace it with a reviewed full commit
+when adopting changes. [examples/nix/flake.nix](../examples/nix/flake.nix) shows
+how to include Forge in a consumer development shell. Commit the generated
+consumer `flake.lock`. Native outputs cover `aarch64-darwin`, `x86_64-darwin`,
+`aarch64-linux` and `x86_64-linux`; evaluation alone does not qualify runtime
+support. Consult the source-specific qualification evidence and current progress.
+Nix is required; Compact and consumer checkouts are unchanged.
 
 ## Binary users: intended flow once qualified assets exist
 
 Install `gh` and Python 3.11+, authenticate with `gh auth login`, and obtain read
-access to this private repository. Read permission also exposes source code;
+access to the release repository (authentication is required for private repositories). Read permission also exposes source code;
 release download is not a separate download-only permission.
 
 Download `install-release.py` and `SHA256SUMS` from one explicit release into a
 fresh scratch directory with `gh release download TAG --repo
-input-output-hk/midnight-zkir-forge --pattern install-release.py --pattern
+betsudo/forge --pattern install-release.py --pattern
 SHA256SUMS --dir DIRECTORY`. Inspect/check the script, then run:
 
 ```sh

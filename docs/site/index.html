@@ -20,7 +20,7 @@
 </span>
 </a>
 <div class="header-links">
-<a href="https://github.com/input-output-hk/midnight-zkir-forge">GitHub ↗</a>
+<a href="https://github.com/betsudo/forge">GitHub ↗</a>
 <button id="menu-toggle" aria-expanded="false" aria-controls="sidebar">Menu</button>
 </div>
 </header>
@@ -87,8 +87,8 @@
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
-<code>git clone https://github.com/input-output-hk/midnight-zkir-forge.git
-cd midnight-zkir-forge
+<code>git clone https://github.com/betsudo/forge.git
+cd forge
 ./bootstrap.sh --check
 ./scripts/install-local.sh
 export PATH=&quot;$HOME/.local/bin:$PATH&quot;
@@ -190,7 +190,7 @@ run only when materialization needs new keys.</p>
 <tr><td>HTTP failures / auth</td><td>JSON errors with stable codes and HTTP status; optional bearer token protects all routes except liveness. Non-loopback binds require a token. No CORS is enabled.</td></tr>
 </tbody></table></div>
 <p><a href="openapi.json">OpenAPI route/status/schema reference</a> ·
-<a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/docs/api-conventions.md">API conventions and automation example</a>.</p>
+<a href="https://github.com/betsudo/forge/blob/main/docs/api-conventions.md">API conventions and automation example</a>.</p>
 </section>
 <section id="profiles" data-title="Exact profiles. Explicit compatibility.">
 <p class="eyebrow">DOCUMENTATION / 03</p>
@@ -332,7 +332,7 @@ docker load --input result-image
 # Mount a persistent cache and bind the published port to loopback.</code>
 </pre>
 </div>
-<p>Image creation is separate from publishing. No registry push, hosted service or production release is implied. Follow the <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/container/README.md">container guide</a> for the exact image, volume and token configuration.</p>
+<p>Image creation is separate from publishing. No registry push, hosted service or production release is implied. Follow the <a href="https://github.com/betsudo/forge/blob/main/container/README.md">container guide</a> for the exact image, volume and token configuration.</p>
 </section>
 <section id="snapshots">
 <p class="eyebrow">PORTABLE VERIFIED ARTIFACTS</p>
@@ -347,7 +347,7 @@ midnight-zkir-forge-ci --help</code></pre>
 profile and actual parameter bytes; report hit deltas from a post-restore baseline.
 Only trusted successful runs with generation growth should prepare a bounded save.
 Snapshot checksums verify bytes; trusted workflow scopes establish provenance.</p>
-<p><a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/docs/ci-cache.md">Snapshot contract and CI helper setup ↗</a></p>
+<p><a href="https://github.com/betsudo/forge/blob/main/docs/ci-cache.md">Snapshot contract and CI helper setup ↗</a></p>
 </section>
 <section id="metrics" data-title="Measure reuse. Preserve identity.">
 <p class="eyebrow">DOCUMENTATION / 06</p>
@@ -389,10 +389,10 @@ midnight-zkir-forge ensure BUNDLE_ID</code>
 ./bootstrap.sh -- python3 scripts/check-docs.py</code>
 </pre>
 </div>
-<p>Prepared workflows run bounded fast checks and offer explicit real-proof qualification; publication stays manual. See the <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/container/CI.md">CI and Pages guide</a>.</p>
+<p>Prepared workflows run bounded fast checks and offer explicit real-proof qualification; publication stays manual. See the <a href="https://github.com/betsudo/forge/blob/main/container/CI.md">CI and Pages guide</a>.</p>
 <p>Fast checks cover deterministic behavior. Explicit real-backend qualification generates fresh keys, compares reproduction, proves valid statements and rejects invalid statements and corrupted proofs. Lifecycle checks use temporary stores.</p>
 <p>
-<a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/SPEC.md">Product specification</a> · <a href="https://github.com/input-output-hk/midnight-zkir-forge/tree/main/openspec/changes">OpenSpec changes</a> · <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/docs/PROGRESS.md">Qualification evidence</a> · <a href="https://github.com/input-output-hk/midnight-zkir-forge/blob/main/CONTRIBUTING.md">Contributing</a>
+<a href="https://github.com/betsudo/forge/blob/main/SPEC.md">Product specification</a> · <a href="https://github.com/betsudo/forge/tree/main/openspec/changes">OpenSpec changes</a> · <a href="https://github.com/betsudo/forge/blob/main/docs/PROGRESS.md">Qualification evidence</a> · <a href="https://github.com/betsudo/forge/blob/main/CONTRIBUTING.md">Contributing</a>
 </p>
 </section>
 <footer>

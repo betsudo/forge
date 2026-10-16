@@ -16,7 +16,7 @@ for every circuit in the selected JSON3.1 workload. Generate the current ZKIR
 before using it; preserve compiler/manifests and exact backend compatibility.
 
 For another repository, pin this Action to a reviewed full commit:
-`input-output-hk/midnight-zkir-forge/.github/actions/zkir31-cache@FULL_REVIEWED_SHA`.
+`betsudo/forge/.github/actions/zkir31-cache@FULL_REVIEWED_SHA`.
 Replace that placeholder before use. Access to this private Action and the
 private CLI source/assets must already be provisioned by the repository owner;
 a consumer's ordinary `GITHUB_TOKEN` does not grant access to another private
@@ -37,7 +37,7 @@ steps:
   # current ZKIR with the exact qualified compiler before this point.
   - name: Restore verified keys
     id: forge
-    uses: input-output-hk/midnight-zkir-forge/.github/actions/zkir31-cache@FULL_REVIEWED_SHA
+    uses: betsudo/forge/.github/actions/zkir31-cache@FULL_REVIEWED_SHA
     with:
       phase: restore
       binary: ${{ steps.install.outputs.binary }}
@@ -54,7 +54,7 @@ steps:
     run: ./run-existing-proof-bearing-tests.sh
   - name: Save eligible key growth
     if: success()
-    uses: input-output-hk/midnight-zkir-forge/.github/actions/zkir31-cache@FULL_REVIEWED_SHA
+    uses: betsudo/forge/.github/actions/zkir31-cache@FULL_REVIEWED_SHA
     with:
       phase: save
       binary: ${{ steps.install.outputs.binary }}

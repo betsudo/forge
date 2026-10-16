@@ -1,5 +1,8 @@
 # Midnight ZKIR Forge
 
+Repository home: [betsudo/forge](https://github.com/betsudo/forge). Historical
+issues, PRs and qualification links remain in the original repository.
+
 Local CLI and initial HTTP cache for Midnight ZKIR and generated prover/verifier keys, with a
 Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
 

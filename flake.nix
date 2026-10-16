@@ -98,7 +98,7 @@
             Env = [ "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt" ];
             Labels = {
               "org.opencontainers.image.title" = "Midnight ZKIR Forge";
-              "org.opencontainers.image.source" = "https://github.com/input-output-hk/midnight-zkir-forge";
+              "org.opencontainers.image.source" = "https://github.com/betsudo/forge";
               "org.opencontainers.image.version" = version;
             };
           };

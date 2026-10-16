@@ -705,3 +705,15 @@
   path filters avoid heavy qualification on future docs-only PRs. Independent
   review found no blocker in these orchestration-only changes; final actual
   portable-composite result remains its own run. Compact/payload pins unchanged.
+
+## 2026-10-16 — repository home moved to betsudo/forge
+
+- Owner authorized copying signed history, retained branches and tags into
+  betsudo/forge. Original checkout and repository remain intact. Tracking:
+  https://github.com/betsudo/forge/issues/1.
+- Owner confirmed public visibility is acceptable. Current installer, Action,
+  Nix consumer and container/docs entrypoints now use the new home.
+- Historical issues, PRs and immutable qualification receipts retain their
+  original links; GitHub metadata, release assets and settings are not migrated.
+- Backend pins, package names, default cache and Compact remain unchanged.
+  No release or Pages deployment is part of the copy.
