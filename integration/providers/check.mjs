@@ -1,4 +1,4 @@
-// Qualification fixture only: this server is not Forge's production HTTP API.
+// Test fixture plus optional real Forge provider-view endpoint.
 import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -60,6 +60,9 @@ const {Contract, ledger} = await import(pathToFileURL(path.join(bundle, 'contrac
 await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
 const base = `http://127.0.0.1:${server.address().port}`;
 const lanes = [], controls = [];
+const api = process.env.FORGE_PROVIDER_VIEW_URL;
+const apiToken = process.env.FORGE_PROVIDER_VIEW_TOKEN;
+const apiOptions = {...options, fetchFunc:(url, init)=>fetch(url, {...init, headers:{...init.headers, Authorization:`Bearer ${apiToken}`}})};
 try {
   for (const [lane, provider] of [
     ['local', new NodeZkConfigProvider(bundle, options)],
@@ -67,6 +70,7 @@ try {
     ['http-gzip', new FetchZkConfigProvider(`${base}/gzip`, options)],
     ['http-private', new FetchZkConfigProvider(`${base}/private`, {...options,
       fetchFunc:(url, init)=>fetch(url, {...init, headers:{...init.headers, Authorization:`Bearer ${token}`}})})]
+    , ...(api ? [['forge-api', new FetchZkConfigProvider(api, apiOptions)]] : [])
   ]) {
     assert.equal(await provider.getArtifactRuntimeVersion(), '0.20.0');
     const ir = await provider.getZKIR(name), prover = await provider.getProverKey(name), verifier = await provider.getVerifierKey(name);
@@ -129,6 +133,14 @@ try {
   assert.equal(conditional.status,304);
   controls.push('head-length','conditional-etag');
   assert.equal(hash(await fs.readFile(path.join(bundle,'compiler/contract-manifest.json'))),anchor);
+  if (api) {
+    await refuses('forge-api-wrong-anchor', ()=>new FetchZkConfigProvider(api,{...apiOptions, expectedManifestHash:'0'.repeat(64)}).getProverKey(name));
+    assert.equal((await fetch(`${api}/keys/${name}.prover`)).status,401);
+    const head = await fetch(`${api}/keys/${name}.prover`,{method:'HEAD',headers:{Authorization:`Bearer ${apiToken}`}});
+    assert.equal(head.status,200);
+    assert.equal(Number(head.headers.get('content-length')),originalProver.length);
+    controls.push('forge-api-auth','forge-api-head');
+  }
   console.log(JSON.stringify({schema:1, manifest_sha256:anchor, lanes, controls, requests,
     scope:'native developer-host Node providers and isolated HTTP/gzip/auth fixture; genuine proofs; not browser, TLS/CDN, production Forge provider API or Linux qualification'}));
 } finally {

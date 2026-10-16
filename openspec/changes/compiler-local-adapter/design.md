@@ -4,12 +4,13 @@ Ship a Forge-owned Python wrapper for qualified Compact0.35.0/JSON3.1 locally.
 This is not a newly shipped upstream flag. Explicit off runs the actual official
 compiler unchanged and never initializes Forge. Explicit local uses a private
 process-only PATH shim for zkir-v3 compile-many, invokes the actual compiler
-binary, and restores the ordinary official tool for unknown commands. No binary,
+binary, and refuses unknown keygen commands without fallback. No binary,
 checkout or global PATH is modified. The normal compiler still emits current
 ZKIR, TypeScript, contract-info and its final integrity manifest after keygen.
 
 Require a consumer-owned exact qualification receipt plus independent digest
-anchor. Pin actual compiler/native tool/Forge/matched-worker bytes, backend/
+anchor. The initial receipt is a source-specific allowlist; a new circuit needs
+a new independently qualified receipt. Pin actual compiler/native tool/Forge/matched-worker bytes, backend/
 format/serialization/recipe and parameter premises; observed producer facts cannot
 qualify themselves. Refuse mismatched tools/overrides/current input, unsafe output
 aliases/symlinks, binary-only stale inputs and changed source. Parameter downloads
