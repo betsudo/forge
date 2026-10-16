@@ -1,0 +1,98 @@
+name: Midnight ZKIR Forge JSON3.1 cache
+description: Restore verified artifact keys before real tests, then explicitly save trusted growth.
+inputs:
+  phase:
+    description: Explicit restore or save phase; execute real tests between phases.
+    required: true
+  binary:
+    description: Absolute path to an already installed, pinned Forge CLI.
+    required: true
+  params-dir:
+    description: Absolute verified parameter directory; required for restore.
+  parameters:
+    description: JSON array of parameter filenames; required for restore.
+  workload-files:
+    description: JSON array of workspace-relative source/lock/config files; required for restore.
+  workload:
+    description: Exact workload selector and compiler/generation flags; required for restore.
+  slot:
+    description: Unique job-local cache slot, reused by its save phase.
+    default: default
+  max-bytes:
+    description: Maximum validated unpacked snapshot bytes, at most 1 GiB.
+    default: '268435456'
+  trusted-ref:
+    description: Only successful push/manual runs at this branch may save.
+    default: refs/heads/main
+  tests-passed:
+    description: Set true only after all ordinary real proofs, verification and assertions pass.
+    default: 'false'
+outputs:
+  cache-dir:
+    description: Private writable Forge store; pass this to the ordinary test command.
+    value: ${{ steps.plan.outputs.cache_dir }}
+  restored:
+    description: Whether a snapshot was actually verified and restored; not a test result.
+    value: ${{ steps.restore.outputs.restored }}
+  report-file:
+    description: Save-phase metrics/decision receipt, outside the artifact snapshot.
+    value: ${{ steps.save.outputs.report_file }}
+  publish:
+    description: Save was admitted by the helper; transport success is checked separately.
+    value: ${{ steps.save.outputs.publish }}
+runs:
+  using: composite
+  steps:
+    - name: Validate phase and plan exact JSON3.1 key
+      id: plan
+      shell: bash
+      env:
+        FORGE_JOB_INDEX: ${{ strategy.job-index }}
+        FORGE_PHASE: ${{ inputs.phase }}
+        FORGE_BINARY: ${{ inputs.binary }}
+        FORGE_PARAMS_DIR: ${{ inputs.params-dir }}
+        FORGE_PARAMETERS: ${{ inputs.parameters }}
+        FORGE_WORKLOAD_FILES: ${{ inputs.workload-files }}
+        FORGE_WORKLOAD: ${{ inputs.workload }}
+        FORGE_SLOT: ${{ inputs.slot }}
+        FORGE_MAX_BYTES: ${{ inputs.max-bytes }}
+        FORGE_TRUSTED_REF: ${{ inputs.trusted-ref }}
+      run: python3 "$GITHUB_ACTION_PATH/run.py" plan
+    - name: Download partition-scoped snapshot
+      if: inputs.phase == 'restore'
+      id: transport
+      uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5, Node24
+      with:
+        path: ${{ steps.plan.outputs.snapshot }}
+        key: ${{ steps.plan.outputs.primary }}
+        restore-keys: ${{ steps.plan.outputs.restore_keys }}
+        enableCrossOsArchive: false
+        fail-on-cache-miss: false
+      env:
+        SEGMENT_DOWNLOAD_TIMEOUT_MINS: '5'
+    - name: Verify restored bytes and start job metrics
+      if: inputs.phase == 'restore'
+      id: restore
+      shell: bash
+      env:
+        FORGE_SLOT: ${{ inputs.slot }}
+        FORGE_BINARY: ${{ inputs.binary }}
+        FORGE_MATCHED_KEY: ${{ steps.transport.outputs.cache-matched-key }}
+      run: python3 "$GITHUB_ACTION_PATH/run.py" restore
+    - name: Report and admit only explicit trusted growth
+      if: always() && inputs.phase == 'save'
+      id: save
+      shell: bash
+      env:
+        FORGE_SLOT: ${{ inputs.slot }}
+        FORGE_BINARY: ${{ inputs.binary }}
+        FORGE_TESTS_PASSED: ${{ inputs.tests-passed }}
+        FORGE_JOB_STATUS: ${{ job.status }}
+      run: python3 "$GITHUB_ACTION_PATH/run.py" save
+    - name: Upload eligible snapshot
+      if: success() && inputs.phase == 'save' && steps.save.outputs.publish == 'true'
+      uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5, Node24
+      with:
+        path: ${{ steps.save.outputs.snapshot }}
+        key: ${{ steps.save.outputs.primary }}
+        enableCrossOsArchive: false

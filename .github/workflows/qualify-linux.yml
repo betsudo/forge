@@ -1,0 +1,172 @@
+name: Native Linux portable installer
+on:
+  pull_request:
+    paths:
+      - '.github/actions/zkir31-cache/action.yml'
+      - '.github/actions/zkir31-cache/run.py'
+      - '.github/workflows/qualify-linux.yml'
+      - 'scripts/qualify-linux*.py'
+      - 'scripts/check-linux-qualification.py'
+      - 'scripts/build-release.py'
+      - 'scripts/install-release.py'
+      - 'scripts/linux-runtime*.py'
+      - 'scripts/cargo-notices.py'
+      - 'scripts/forge-ci.py'
+      - 'scripts/check-release-candidate.py'
+      - 'scripts/check-recovery.py'
+      - 'src/**'
+      - 'workers/**'
+      - 'Cargo.*'
+      - 'flake.*'
+      - 'build.rs'
+      - 'bootstrap.sh'
+      - 'fixtures/**'
+      - 'licenses/**'
+      - 'LICENSE'
+permissions:
+  contents: read
+concurrency:
+  group: qualify-linux-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+jobs:
+  installed-x86_64:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          persist-credentials: false
+          fetch-depth: 0
+      - name: Reclaim documented hosted-runner preinstalled SDK space
+        run: |
+          # Disposable GitHub VM only; these SDKs are not used by Forge or Nix.
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+          df -h /
+      - uses: cachix/install-nix-action@3c6342b75005b9cc7c7d4069c3e9179247c89012 # v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            max-jobs = 2
+            cores = 2
+      - name: Host qualification preconditions
+        run: ./bootstrap.sh -- python3 scripts/check-linux-qualification.py
+      - name: Build exact committed native candidate and source notices
+        run: |
+          mkdir -p .local/qualification-x86
+          revision="$(git rev-parse HEAD)"
+          ./bootstrap.sh -- nix build --no-link --json --print-build-logs --cores 2 "git+file://$PWD?rev=$revision#default" > >(tee .local/qualification-x86/native-build.json) 2> >(tee .local/qualification-x86/native-build.stderr >&2)
+          ./bootstrap.sh -- python3 scripts/build-release.py --tag v2026.10.0 --output .local/qualification-x86/candidate > >(tee .local/qualification-x86/producer.json) 2> >(tee .local/qualification-x86/producer.stderr >&2)
+      - name: Installed real proofs and recovery without Nix, then fresh verified HTTPS
+        run: ./bootstrap.sh -- python3 scripts/qualify-linux.py --candidate .local/qualification-x86/candidate --output .local/qualification-x86/receipts
+      - name: Verify portable Action CLI and fetch verified public parameters
+        id: action-cli
+        run: |
+          ./bootstrap.sh -- python3 - <<'PYCODE'
+          import importlib.util, json, os, pathlib, subprocess
+          revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          candidate = pathlib.Path('.local/qualification-x86/candidate').resolve()
+          spec = importlib.util.spec_from_file_location('installer', candidate/'install-release.py')
+          installer = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(installer)
+          archives = [p for p in candidate.glob('*.tar.gz') if not p.name.endswith('-runtime-sources.tar.gz')]
+          assert len(archives) == 1
+          archive = archives[0]
+          digest = installer.digest(archive)
+          assert digest == installer.checksum((candidate/'SHA256SUMS').read_bytes(), archive.name)
+          destination = pathlib.Path(os.environ['RUNNER_TEMP'])/'forge-action-portable'
+          assert not destination.exists()
+          destination.mkdir()
+          root = installer.extract(archive, destination, archive.name.removesuffix('.tar.gz'))
+          manifest = json.loads((root/'manifest.json').read_text())
+          installer.inventory(root, manifest)
+          assert manifest['source_commit'] == revision and manifest['target'] == 'x86_64-unknown-linux-gnu'
+          installer.runtime(manifest['minimum'])
+          environment = dict(os.environ)
+          environment.pop('LD_FOR_BUILD', None)
+          for variable in ['MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER', 'MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER']:
+              environment.pop(variable, None)
+          installer.smoke(root, manifest, environment=environment)
+          binary = root/'bin/midnight-zkir-forge'
+          pathlib.Path('.local/qualification-x86/action-portable.json').write_text(json.dumps({
+              'candidate_sha256':digest, 'source_commit':revision, 'target':manifest['target'],
+              'inventory_verified':True, 'smoke_passed':True}, indent=2)+'\n')
+          params = pathlib.Path(os.environ['RUNNER_TEMP']) / 'forge-action-smoke-params'
+          assert not params.exists()
+          proof = json.loads(subprocess.check_output([str(binary), '--profile', 'zkir31',
+              '--params-dir', str(params), '--fetch-params', 'qualify'], text=True, env=environment))
+          pathlib.Path('.local/qualification-x86/action-parameters.json').write_text(json.dumps(proof, indent=2)+'\n')
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write('binary='+str(binary)+'\nparams='+str(params)+'\n')
+          PYCODE
+      - name: Restore JSON3.1 artifacts through actual GitHub cache transport
+        id: action-restore
+        uses: ./.github/actions/zkir31-cache
+        with:
+          phase: restore
+          binary: ${{ steps.action-cli.outputs.binary }}
+          params-dir: ${{ steps.action-cli.outputs.params }}
+          parameters: '["bls_midnight_2p4"]'
+          workload-files: '["fixtures/assert-v31.zkir"]'
+          workload: native-x86_64-fixture-proof
+          slot: native-smoke
+      - name: Execute ordinary genuine proof and negative controls after restore
+        env:
+          FORGE_BINARY: ${{ steps.action-cli.outputs.binary }}
+          FORGE_PARAMS: ${{ steps.action-cli.outputs.params }}
+          FORGE_STORE: ${{ steps.action-restore.outputs.cache-dir }}
+        run: |
+          python3 - <<'PYCODE'
+          import json, os, pathlib, subprocess
+          binary = pathlib.Path(os.environ['FORGE_BINARY'])
+          prepared = json.loads(subprocess.check_output([str(binary), '--profile', 'zkir31',
+              '--cache-dir', os.environ['FORGE_STORE'], '--params-dir', os.environ['FORGE_PARAMS'],
+              'prepare', 'fixtures/assert-v31.zkir', '--name', 'proof'], text=True))
+          proof = json.loads(subprocess.check_output([str(binary.parent/'midnight-zkir-forge-zkir31-worker'),
+              'qualify-export', '--output', prepared['export']['base'], '--circuit-name', 'proof',
+              '--params-dir', os.environ['FORGE_PARAMS']], text=True))
+          assert all(proof[key] for key in ['valid_proof_verified', 'invalid_statement_rejected', 'corrupt_proof_rejected'])
+          pathlib.Path('.local/qualification-x86/action-proof.json').write_text(json.dumps({'prepare':prepared, 'proof':proof}, indent=2)+'\n')
+          PYCODE
+      - name: Report successful tests and enforce PR restore-only admission
+        id: action-save
+        uses: ./.github/actions/zkir31-cache
+        with:
+          phase: save
+          binary: ${{ steps.action-cli.outputs.binary }}
+          slot: native-smoke
+          tests-passed: 'true'
+      - name: Retain Action decision and assert no PR cache write
+        env:
+          FORGE_PUBLISH: ${{ steps.action-save.outputs.publish }}
+          FORGE_REPORT: ${{ steps.action-save.outputs.report-file }}
+          FORGE_RESTORED: ${{ steps.action-restore.outputs.restored }}
+        run: |
+          python3 - <<'PYCODE'
+          import json, os, pathlib, shutil
+          assert os.environ['FORGE_PUBLISH'] == 'false', 'PR must never publish cache growth'
+          shutil.copyfile(os.environ['FORGE_REPORT'], '.local/qualification-x86/action-save.json')
+          pathlib.Path('.local/qualification-x86/action-transport.json').write_text(json.dumps({
+              'restored':os.environ['FORGE_RESTORED'], 'publish':False,
+              'scope':'actual PR transport and composite wiring; no remote warm-cache speedup claim'}, indent=2)+'\n')
+          PYCODE
+      - name: Retain lightweight raw qualification evidence and failure diagnostics
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-x86_64-evidence-${{ github.event.pull_request.head.sha }}
+          path: |
+            .local/qualification-x86
+            !.local/qualification-x86/candidate/**
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: error
+      - name: Retain private candidate and corresponding runtime sources separately
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-x86_64-candidate-${{ github.event.pull_request.head.sha }}
+          path: .local/qualification-x86/candidate
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: ignore
