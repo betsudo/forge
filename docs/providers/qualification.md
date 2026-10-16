@@ -84,7 +84,7 @@ modify the shared installed CLI, or mutate another checkout.
 ./bootstrap.sh -- nix build .#default --no-link --print-out-paths
 # Use the printed package's absolute CLI path:
 ./bootstrap.sh -- python3 scripts/check-providers.py \
-  --binary /nix/store/PRINTED-PACKAGE/bin/midnight-zkir-forge \
+  --binary /nix/store/PRINTED-PACKAGE/bin/zkir-forge \
   --compiler-dir /absolute/qualified/compact-0.35.0 \
   --params-dir /absolute/verified/parameters \
   --output /absolute/new-receipt.json

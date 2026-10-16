@@ -93,7 +93,7 @@ present sidecars against their historical export record/source. Current snapshot
 producer partitioning remains conservative; no old-producer bypass or silent
 snapshot migration is introduced.
 
-Run `scripts/check-compatibility.py --binary target/debug/midnight-zkir-forge`
+Run `scripts/check-compatibility.py --binary target/debug/zkir-forge`
 through `./bootstrap.sh --` for both-profile descriptor parity, legacy export and
 CLI/HTTP parameter controls. It needs verified local k4 parameters. Rust descriptor
 unit/ignored real tests cover strict decoding and independent premise changes.

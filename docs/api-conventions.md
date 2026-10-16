@@ -51,7 +51,7 @@ remain unqualified. Match the exact compiler, backend and serialization profile.
 import json, subprocess
 
 result = subprocess.run(
-    ["midnight-zkir-forge", "prepare", "/absolute/path/circuit.zkir"],
+    ["zkir-forge", "prepare", "/absolute/path/circuit.zkir"],
     capture_output=True, text=True,
 )
 if result.returncode:

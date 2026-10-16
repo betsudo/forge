@@ -114,9 +114,9 @@ These existing commands are real; choose the exact qualified profile and current
 circuit bytes. They do not patch Compact's compiler pipeline:
 
 ```sh
-midnight-zkir-forge --profile zkir31 --params-dir /verified/parameters \
+zkir-forge --profile zkir31 --params-dir /verified/parameters \
   prepare /absolute/current/circuit.zkir --name circuit
-midnight-zkir-forge stats
+zkir-forge stats
 ```
 
 Read the returned `export.base`, `export.files`, descriptor and digests; use an

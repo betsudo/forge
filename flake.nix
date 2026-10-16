@@ -51,6 +51,7 @@
           };
           forge = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
           pname = "midnight-zkir-forge";
+          meta.mainProgram = "zkir-forge";
           inherit version;
           src = pkgs.lib.fileset.toSource {
             root = ./.;
@@ -65,11 +66,12 @@
           MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER = "${worker}/bin/midnight-zkir-forge-zkir3-worker";
           MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER = "${worker31}/bin/midnight-zkir-forge-zkir31-worker";
           postInstall = ''
+            ln -sf zkir-forge $out/bin/midnight-zkir-forge
             ln -s ${worker}/bin/midnight-zkir-forge-zkir3-worker $out/bin/midnight-zkir-forge-zkir3-worker
             ln -s ${worker31}/bin/midnight-zkir-forge-zkir31-worker $out/bin/midnight-zkir-forge-zkir31-worker
             install -Dm644 scripts/forge-ci.py $out/share/midnight-zkir-forge/forge-ci.py
             makeWrapper ${pkgs.python3}/bin/python3 $out/bin/midnight-zkir-forge-ci \
-              --add-flags "$out/share/midnight-zkir-forge/forge-ci.py --binary $out/bin/midnight-zkir-forge"
+              --add-flags "$out/share/midnight-zkir-forge/forge-ci.py --binary $out/bin/zkir-forge"
           '';
         };
       in {
@@ -91,7 +93,7 @@
           config = {
             User = "65532:65532";
             WorkingDir = "/data";
-            Entrypoint = [ "${forge}/bin/midnight-zkir-forge" "--cache-dir" "/data" "--params-dir" "/params" ];
+            Entrypoint = [ "${forge}/bin/zkir-forge" "--cache-dir" "/data" "--params-dir" "/params" ];
             Cmd = [ "serve" "--listen" "0.0.0.0:8787" "--token-file" "/run/secrets/forge-token" ];
             ExposedPorts."8787/tcp" = { };
             Volumes."/data" = { };

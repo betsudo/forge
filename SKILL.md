@@ -11,7 +11,7 @@ an integration workflow; it does not authorize unrelated checkout changes.
 
 ## Locate and install
 
-Locate the Forge checkout or an existing `midnight-zkir-forge` on PATH. Resolve
+Locate the Forge checkout or an existing `zkir-forge` on PATH. Resolve
 reference paths below relative to this Forge checkout. If already installed,
 inspect `--version`, `--help` and `profile` before deciding whether to rebuild.
 
@@ -21,13 +21,13 @@ From the Forge checkout, with Nix flakes enabled:
 ./bootstrap.sh --check
 ./scripts/install-local.sh
 export PATH="$HOME/.local/bin:$PATH"
-midnight-zkir-forge profile
-midnight-zkir-forge --profile zkir3 profile
+zkir-forge profile
+zkir-forge --profile zkir3 profile
 ```
 
 The installer supplies the CLI, isolated v3 worker and CI helper, with a Nix GC
 root. Configure the PATH in the consumer's agent/test launcher if it does not
-inherit the shell environment, or invoke `$HOME/.local/bin/midnight-zkir-forge`
+inherit the shell environment, or invoke `$HOME/.local/bin/zkir-forge`
 explicitly. No service process is needed for local integration. Reinstall after
 adopting a new Forge revision; do not edit shell startup files without a request.
 
@@ -58,8 +58,8 @@ acquisition. Keep official parameter verification enabled. Fixture qualification
 can check the toolchain, but does not replace the consumer's own proof tests:
 
 ```sh
-midnight-zkir-forge qualify
-midnight-zkir-forge --profile zkir3 qualify
+zkir-forge qualify
+zkir-forge --profile zkir3 qualify
 ```
 
 ## Integrate at the artifact-generation boundary
@@ -68,9 +68,9 @@ Keep circuit compilation producing the current ZKIR. Replace only repeated,
 compatible key generation with `prepare` on that file's exact current bytes:
 
 ```sh
-midnight-zkir-forge --profile ledger8-v2 prepare /absolute/path/circuit.zkir
+zkir-forge --profile ledger8-v2 prepare /absolute/path/circuit.zkir
 # For the separately qualified v3 consumer:
-midnight-zkir-forge --profile zkir3 prepare /absolute/path/circuit.zkir
+zkir-forge --profile zkir3 prepare /absolute/path/circuit.zkir
 ```
 
 Invoke via subprocess argument arrays. Check exit status, parse stdout as JSON,

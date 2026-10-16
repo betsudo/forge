@@ -10,7 +10,7 @@ remains proposed wherever this subset does not implement it.
 ```sh
 ./bootstrap.sh -- cargo build --locked --manifest-path workers/zkir3/Cargo.toml --target-dir target
 ./bootstrap.sh -- cargo build --locked
-./bootstrap.sh -- target/debug/midnight-zkir-forge serve
+./bootstrap.sh -- target/debug/zkir-forge serve
 ```
 
 Default listener is `127.0.0.1:8787`; the default cache remains
@@ -85,10 +85,10 @@ storage/backend availability; it does not guarantee all parameter sizes exist.
 
 ```sh
 ./bootstrap.sh --check
-./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge
+./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/zkir-forge
 # Explicit real key generation/proof coverage; verified parameters must exist:
 ./bootstrap.sh -- cargo build --locked --example qualify-http-fixture
-./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge --real
+./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/zkir-forge --real
 ```
 
 The fast suite starts a real authenticated process and checks upload/source

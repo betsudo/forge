@@ -24,8 +24,9 @@ python3 scripts/check-compiler-local.py
 python3 scripts/check-ci-trial.py
 python3 scripts/check-linux-qualification.py
 python3 scripts/check-installer.py
-python3 scripts/check-recovery.py --binary target/debug/midnight-zkir-forge
-python3 scripts/check-snapshot.py --binary target/debug/midnight-zkir-forge
-python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge
+python3 scripts/check-local-install.py
+python3 scripts/check-recovery.py --binary target/debug/zkir-forge
+python3 scripts/check-snapshot.py --binary target/debug/zkir-forge
+python3 scripts/check-http.py --binary target/debug/zkir-forge
 python3 scripts/build-docs.py
 python3 scripts/check-docs.py

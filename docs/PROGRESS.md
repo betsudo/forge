@@ -886,3 +886,25 @@
   Audits/secret scans/coverage/fuzzing need scoped baselines before additional gates.
 - Signed local delivery only. Compact unchanged, Cloudflare deferred, no push,
   branch-settings changes, merge, deployment or release.
+
+## 2026-10-17 — primary `zkir-forge` command (#11, PR12)
+
+- Added primary Cargo/Nix CLI `zkir-forge`, shared-source compatibility entrypoint
+  `midnight-zkir-forge`, explicit primary help/version/usage and Nix mainProgram.
+  Installed Nix legacy command points to the primary executable. Worker/helper,
+  package/library names, cache/env variables and asset stems remain stable.
+- Portable packaging copies the final relocated/signed executable into both regular
+  command files; inventory refuses different alias bytes. Old schema1 legacy-only
+  releases remain supported. The installed primary launcher uses a stable managed
+  target that survives historical rollback. Both launcher collisions refuse before
+  portable activation; independent review prompted equivalent Nix pre-build guards.
+- Updated active docs/site/skill examples, default CI-helper selection and tests.
+  Historical qualification receipts remain immutable; new executable bytes still
+  require exact qualification rather than editing an old allowlist.
+- Local Rust tests (including both names/help/version/profile/shared store), Clippy,
+  formatting/profile gates passed. Installer fixture checks cover old/new/reinstall/
+  rollback, corrupt alias and both-name collisions; Nix launcher fixtures cover
+  managed upgrade and4collision refusals before build. CLI/HTTP/recovery/snapshot,
+  Action/reporter, OpenSpec/docs/actionlint and commit/PR policy checks passed.
+- Shared installation and default store were not modified. PR12 will receive signed
+  commits and exact-head CI checks. Compact remains unchanged; no merge/deployment.

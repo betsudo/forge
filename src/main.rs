@@ -9,6 +9,8 @@ use std::path::PathBuf;
 
 #[derive(Parser)]
 #[command(
+    name = "zkir-forge",
+    bin_name = "zkir-forge",
     version,
     about = "Verified local Midnight ledger8 circuit artifact cache"
 )]

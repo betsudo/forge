@@ -19,6 +19,7 @@ import time
 REPOSITORY = 'betsudo/forge'
 COMMANDS = ('midnight-zkir-forge', 'midnight-zkir-forge-zkir3-worker', 'midnight-zkir-forge-ci')
 WORKER31 = 'midnight-zkir-forge-zkir31-worker'
+PRIMARY = 'zkir-forge'
 MAX_DOWNLOAD = 1024 ** 3
 MAX_UNPACKED = 2 * 1024 ** 3
 
@@ -132,7 +133,7 @@ def inventory(root, manifest):
         path = PurePosixPath(entry['path'])
         require(not path.is_absolute() and path.parts and all(p not in ('.', '..') for p in path.parts) and '\\' not in str(path), 'unsafe inventory path')
         require(str(path) == entry['path'] and entry['path'] not in declared, 'duplicate/noncanonical inventory')
-        allowed = str(path) in {*('bin/' + name for name in payload_commands), 'share/midnight-zkir-forge/forge-ci.py'}
+        allowed = str(path) in {*('bin/' + name for name in payload_commands), 'share/midnight-zkir-forge/forge-ci.py', 'bin/' + PRIMARY}
         allowed |= len(path.parts) >= 2 and path.parts[0] in ('LICENSES', 'lib')
         require(allowed and type(entry['bytes']) is int and entry['bytes'] >= 0 and type(entry['executable']) is bool, 'unexpected payload')
         require(re.fullmatch('[0-9a-f]{64}', entry['sha256']), 'invalid file hash')
@@ -157,6 +158,11 @@ def inventory(root, manifest):
         require(bool(path.stat().st_mode & 0o111) == entry['executable'], 'payload mode mismatch')
         actual.add(name)
     require(actual == set(declared), 'missing installed file')
+    # Legacy schema1 archives remain installable; new dual-name archives must
+    # describe two regular, executable byte-identical representations.
+    if 'bin/' + PRIMARY in declared:
+        primary, legacy = declared['bin/' + PRIMARY], declared['bin/midnight-zkir-forge']
+        require(all(primary[key] == legacy[key] for key in ('bytes', 'sha256', 'executable')) and primary['executable'], 'CLI alias bytes differ')
 
 
 def extract(archive_path, destination, expected_root):
@@ -209,7 +215,15 @@ def smoke(root, manifest, environment=None):
         require(result.returncode == 0, 'staged executable failed; active release unchanged')
         return strict_json(result.stdout) if structured else result.stdout
     cli = root / 'bin/midnight-zkir-forge'
-    require(run(cli, '--version', structured=False).strip() == 'midnight-zkir-forge ' + manifest['version'], 'package version mismatch')
+    version = run(cli, '--version', structured=False).strip()
+    require(version in {name + ' ' + manifest['version'] for name in ('midnight-zkir-forge', PRIMARY)}, 'package version mismatch')
+    primary = root / 'bin' / PRIMARY
+    if primary.is_file():
+        require(version == PRIMARY + ' ' + manifest['version'] and run(primary, '--version', structured=False).strip() == version, 'primary CLI version mismatch')
+        require(run(primary, 'profile') == manifest['profiles']['root'], 'primary root profile mismatch')
+        require(run(primary, '--profile', 'zkir3', 'profile') == manifest['profiles']['v3'], 'primary worker profile mismatch')
+        if 'v31' in manifest['profiles']:
+            require(run(primary, '--profile', 'zkir31', 'profile') == manifest['profiles']['v31'], 'primary3.1 worker profile mismatch')
     require(run(cli, 'profile') == manifest['profiles']['root'], 'root profile mismatch')
     require(run(cli, '--profile', 'zkir3', 'profile') == manifest['profiles']['v3'], 'default worker discovery/profile mismatch')
     env['MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER'] = str(root / 'bin/midnight-zkir-forge-zkir3-worker')
@@ -238,6 +252,8 @@ def install(version, prefix, expected_sha=None):
     for directory in (prefix, prefix / 'share', root.parent, root, root / 'releases', prefix / 'bin'):
         managed_directory(directory)
     links = {prefix / 'bin' / name: root / 'current/bin' / name for name in COMMANDS}
+    # Keep the public new name usable across upgrades and historical rollbacks.
+    links[prefix / 'bin' / PRIMARY] = root / 'current/bin/midnight-zkir-forge'
     for path, expected in links.items():
         require(not os.path.lexists(path) or (path.is_symlink() and path.readlink() == expected), 'unrelated executable exists; choose --prefix or retire old launcher explicitly: ' + str(path))
     with os.fdopen(os.open(root / '.install.lock', os.O_RDWR | os.O_CREAT | os.O_NOFOLLOW, 0o600), 'w') as lock:

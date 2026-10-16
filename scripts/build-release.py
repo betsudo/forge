@@ -11,6 +11,8 @@ def _prepare(tag,output,commit,frozen):
  nix=shutil.which('nix') or '/nix/var/nix/profiles/default/bin/nix'
  built=json.loads(run(nix,'build','--no-link','--json','--cores','2',f'git+file://{ROOT}?rev={commit}#default'))
  package=pathlib.Path(built[0]['outputs']['out'])
+ installer.require((package/'bin'/installer.PRIMARY).is_file(), 'primary CLI missing from package')
+ installer.require(installer.digest(package/'bin'/installer.PRIMARY)==installer.digest(package/'bin/midnight-zkir-forge'), 'package CLI aliases differ')
  native_commands=['midnight-zkir-forge','midnight-zkir-forge-zkir3-worker']
  worker31=package/'bin'/installer.WORKER31
  if worker31.exists():native_commands.append(installer.WORKER31)
@@ -71,6 +73,10 @@ os.execv(sys.executable,[sys.executable,str(root/'share/midnight-zkir-forge/forg
    # requirement. The explicit qualification target is Debian12/glibc2.36;
    # older hosts require a separate qualification rather than an inferred claim.
    minimum={'os_version':None,'libc_family':'glibc','libc_version':'2.36'}
+  # Relocate/sign one executable only, then copy its final bytes. Linux launchers
+  # intentionally share the legacy lib/ELF name and identical closure commitment.
+  shutil.copyfile(root/'bin/midnight-zkir-forge',root/'bin'/installer.PRIMARY)
+  (root/'bin'/installer.PRIMARY).chmod(0o755)
   environment=dict(os.environ)
   # Nix exports this build-tool selector; it is not a runtime loader setting.
   # Keep all actual LD_* controls intact in both consumer and producer checks.

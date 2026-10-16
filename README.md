@@ -40,8 +40,8 @@ Check a consumer's exact pin and serialization;
 no ledger9 transaction/network qualification is implied.
 
 ```sh
-midnight-zkir-forge --profile zkir3 prepare /absolute/path/to/circuit.zkir
-midnight-zkir-forge --profile zkir3 qualify
+zkir-forge --profile zkir3 prepare /absolute/path/to/circuit.zkir
+zkir-forge --profile zkir3 qualify
 ```
 
 
@@ -53,7 +53,7 @@ From this checkout, with Nix flakes enabled:
 ./bootstrap.sh --check
 ./scripts/install-local.sh
 export PATH="$HOME/.local/bin:$PATH"
-midnight-zkir-forge --version
+zkir-forge --version
 ```
 
 Add the PATH line to your shell profile and configure the same PATH in agent
@@ -66,8 +66,8 @@ normal Nix garbage collection. No shell profile or credential file is changed.
 ## Use in test setup
 
 ```sh
-midnight-zkir-forge prepare /absolute/path/to/circuit.zkir > artifacts.json
-midnight-zkir-forge stats
+zkir-forge prepare /absolute/path/to/circuit.zkir > artifacts.json
+zkir-forge stats
 ```
 
 `prepare` imports exact input bytes, generates on a miss, verifies a warm hit,
@@ -81,7 +81,7 @@ cache (`MIDNIGHT_PP`, else the upstream XDG/HOME default). Missing parameters
 fail explicitly. To allow acquisition from the official provider:
 
 ```sh
-midnight-zkir-forge --fetch-params prepare ./fixtures/assert.zkir
+zkir-forge --fetch-params prepare ./fixtures/assert.zkir
 ```
 
 `--params-dir /absolute/parameter/cache` overrides the parameter directory.
@@ -91,14 +91,14 @@ bundle and are not counted as Forge CAS bytes.
 For separate registration and materialization:
 
 ```sh
-midnight-zkir-forge import ./fixtures/assert.zkir
-midnight-zkir-forge ensure BUNDLE_ID
-midnight-zkir-forge inspect BUNDLE_ID
-midnight-zkir-forge resolve BUNDLE_ID --artifact prover
-midnight-zkir-forge export BUNDLE_ID --output /new/provider-layout
-midnight-zkir-forge evict BUNDLE_ID --dry-run
-midnight-zkir-forge evict BUNDLE_ID
-midnight-zkir-forge ensure BUNDLE_ID
+zkir-forge import ./fixtures/assert.zkir
+zkir-forge ensure BUNDLE_ID
+zkir-forge inspect BUNDLE_ID
+zkir-forge resolve BUNDLE_ID --artifact prover
+zkir-forge export BUNDLE_ID --output /new/provider-layout
+zkir-forge evict BUNDLE_ID --dry-run
+zkir-forge evict BUNDLE_ID
+zkir-forge ensure BUNDLE_ID
 ```
 
 `resolve` and `export` never trigger generation. JSON goes to stdout; diagnostics
@@ -118,7 +118,7 @@ import json, subprocess
 from pathlib import Path
 
 result = subprocess.run(
-    [str(Path.home() / ".local/bin/midnight-zkir-forge"),
+    [str(Path.home() / ".local/bin/zkir-forge"),
      "prepare", str(Path("generated/zkir/circuit.zkir").resolve())],
     check=True, text=True, capture_output=True,
 )
@@ -134,10 +134,10 @@ Use private temporary stores for corruption/lifecycle tests. Keep one uncached
 qualification job to exercise key generation:
 
 ```sh
-midnight-zkir-forge qualify
+zkir-forge qualify
 ./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1
 ./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1
-./bootstrap.sh -- python3 scripts/check-cli.py --binary target/debug/midnight-zkir-forge
+./bootstrap.sh -- python3 scripts/check-cli.py --binary target/debug/zkir-forge
 ```
 
 The bundled assert circuits are for qualification. V3 qualification uses its
@@ -255,3 +255,8 @@ The opt-in [compiler adapter and provider-view guide](docs/providers/local-adapt
 explains complete compiler metadata preservation, independently pinned manifests
 and exact source qualification. Bare key exports do not satisfy current SDK
 provider integrity requirements.
+
+`zkir-forge` is the primary CLI. `midnight-zkir-forge` remains a compatibility
+alias with the same commands and store. Package/crate names, worker/helper names,
+`~/.midnight-zkir-forge`, environment variables and release asset stems remain
+stable. Both commands display `zkir-forge` in help/version for new installations.

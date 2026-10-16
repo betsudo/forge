@@ -8,7 +8,7 @@ support is limited to independently qualified Compact0.35.0 JSON3.1 sources.
 ```sh
 ./bootstrap.sh -- python3 scripts/compiler-local.py \
   --mode local --compiler-dir /absolute/compiler \
-  --binary /absolute/package/bin/midnight-zkir-forge \
+  --binary /absolute/package/bin/zkir-forge \
   --qualification /absolute/qualification.json \
   --qualification-sha256 TRUSTED_RECEIPT_SHA256 \
   --params-dir /absolute/parameters --cache-dir /absolute/private-cache \
@@ -28,9 +28,9 @@ the compiler does not finish its manifest; retry compilation in owned output.
 Publish a complete successful compiler output with its independently pinned hash:
 
 ```sh
-midnight-zkir-forge publish-view /absolute/output \
+zkir-forge publish-view /absolute/output \
   --manifest-sha256 TRUSTED_MANIFEST_SHA256 --provider-root /absolute/views
-midnight-zkir-forge serve --provider-root /absolute/views \
+zkir-forge serve --provider-root /absolute/views \
   --listen 127.0.0.1:8787 --token-file /absolute/private-token
 ```
 
@@ -58,7 +58,7 @@ project dependencies already installed):
 
 ```sh
 ./bootstrap.sh -- python3 scripts/check-provider-view-adapter.py \
-  --binary /absolute/package/bin/midnight-zkir-forge \
+  --binary /absolute/package/bin/zkir-forge \
   --compiler-dir /absolute/compiler --params-dir /absolute/parameters \
   --output /absolute/new-receipt.json
 ```

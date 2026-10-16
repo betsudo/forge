@@ -7,12 +7,12 @@ both cold generation and warm restore. Compact is unchanged by this implementati
 ## Local snapshot and restore
 
 Install both commands with `./scripts/install-local.sh`. The Nix package includes
-`midnight-zkir-forge` and `midnight-zkir-forge-ci` (Python is supplied by Nix).
+`zkir-forge` and `midnight-zkir-forge-ci` (Python is supplied by Nix).
 
 ```sh
-midnight-zkir-forge --cache-dir "$HOME/.midnight-zkir-forge" snapshot \
+zkir-forge --cache-dir "$HOME/.midnight-zkir-forge" snapshot \
   --output /absolute/existing-parent/forge-snapshot --max-bytes 1073741824
-midnight-zkir-forge --cache-dir /absolute/existing-parent/new-job-cache restore \
+zkir-forge --cache-dir /absolute/existing-parent/new-job-cache restore \
   /absolute/existing-parent/forge-snapshot --max-bytes 1073741824
 ```
 
@@ -69,7 +69,7 @@ midnight-zkir-forge-ci baseline --key /tmp/forge-key.json \
 
 # Run the ordinary test suite with its already-qualified Forge adapter here.
 # Example cache request only (this command does not itself test proofs):
-midnight-zkir-forge --cache-dir /tmp/new-forge-job --params-dir "$MIDNIGHT_PP" \
+zkir-forge --cache-dir /tmp/new-forge-job --params-dir "$MIDNIGHT_PP" \
   prepare fixtures/assert.zkir --name proof
 
 midnight-zkir-forge-ci report --key /tmp/forge-key.json \
@@ -144,7 +144,7 @@ restored v2 and v3 keys, with verified local k4 parameters available:
 ```sh
 ./bootstrap.sh -- cargo build --locked --example qualify-http-fixture
 ./bootstrap.sh -- python3 scripts/check-snapshot.py \
-  --binary target/debug/midnight-zkir-forge --real
+  --binary target/debug/zkir-forge --real
 ```
 
 The real suite runs cold generation, budget refusal, trusted save preparation,

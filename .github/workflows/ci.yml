@@ -76,12 +76,12 @@ jobs:
       - name: Fetch verified parameters and execute proof and HTTP e2e controls
         run: |
           export MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER="$PWD/target/debug/midnight-zkir-forge-zkir3-worker"
-          ./bootstrap.sh -- target/debug/midnight-zkir-forge --fetch-params qualify
-          ./bootstrap.sh -- target/debug/midnight-zkir-forge --profile zkir3 --fetch-params qualify
+          ./bootstrap.sh -- target/debug/zkir-forge --fetch-params qualify
+          ./bootstrap.sh -- target/debug/zkir-forge --profile zkir3 --fetch-params qualify
           ./bootstrap.sh -- cargo test --locked --test real_backend -- --ignored --test-threads=1
           ./bootstrap.sh -- cargo test --locked --test zkir3 -- --ignored --test-threads=1
-          ./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge --real
-          ./bootstrap.sh -- python3 scripts/check-snapshot.py --binary target/debug/midnight-zkir-forge --real
+          ./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/zkir-forge --real
+          ./bootstrap.sh -- python3 scripts/check-snapshot.py --binary target/debug/zkir-forge --real
 
   quality-gate:
     name: Forge quality gate
