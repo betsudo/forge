@@ -22,7 +22,7 @@ midnight-zkir = { git = "https://github.com/midnightntwrk/midnight-ledger", rev 
 midnight-transient-crypto = { git = "https://github.com/midnightntwrk/midnight-ledger", rev = "b5d3e965a18e4cac17fac4f38446fc55c524439a" }
 midnight-base-crypto = { git = "https://github.com/midnightntwrk/midnight-ledger", rev = "b5d3e965a18e4cac17fac4f38446fc55c524439a" }
 midnight-serialize = { git = "https://github.com/midnightntwrk/midnight-ledger", rev = "b5d3e965a18e4cac17fac4f38446fc55c524439a" }
-midnight-proofs = "=0.7.1"
+midnight-proofs = "=0.8.3"
 midnight-circuits = "=6.1.0"
 midnight-curves = "=0.2.0"
 midnight-zk-stdlib = "=1.1.0"
