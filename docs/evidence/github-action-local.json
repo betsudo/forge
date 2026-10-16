@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "controls": [
+    "unsupported-platform",
+    "unsafe-slot",
+    "state-symlink",
+    "input-array",
+    "pull-request",
+    "wrong-branch",
+    "failed-tests",
+    "failed-step",
+    "cancelled-step",
+    "reused-slot",
+    "corrupt-present-snapshot",
+    "wrong-partition",
+    "changed-workload"
+  ],
+  "real_proofs": [
+    {
+      "binary_ir_tag": "ir-source[v3-generic]",
+      "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+      "corrupt_proof_rejected": true,
+      "format": "midnight-zkir-v3.1-json",
+      "invalid_statement_rejected": true,
+      "k": 4,
+      "parameter_sha256": "232f401fad10c7ddf8828d2aa4c85c6506c5da09795998cecaeb9f75fc8f6ada",
+      "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+      "protocol": 1,
+      "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914",
+      "used_exported_artifacts": true,
+      "valid_proof_verified": true
+    },
+    {
+      "binary_ir_tag": "ir-source[v3-generic]",
+      "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+      "corrupt_proof_rejected": true,
+      "format": "midnight-zkir-v3.1-json",
+      "invalid_statement_rejected": true,
+      "k": 4,
+      "parameter_sha256": "232f401fad10c7ddf8828d2aa4c85c6506c5da09795998cecaeb9f75fc8f6ada",
+      "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+      "protocol": 1,
+      "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914",
+      "used_exported_artifacts": true,
+      "valid_proof_verified": true
+    }
+  ],
+  "scope": "local Action orchestration; platform gate bypassed only in test harness; no remote transfer/native portability claim",
+  "tested_runtime_source_commit": "c40e45b0647ad9caf754a2d5d78340d37046434d",
+  "action_wrapper_sha256": "a63fe0979bacf274997ffa96685e3c5d316d467c0e6a21c1389ae97fa46f40f4",
+  "test_harness_sha256": "e8b7c50d54a6b3d7542f83f386ce59e40da0f2f095fce6b0a035f3fede2d1890",
+  "independent_review": "No blocking identity/transport/write-admission issue found; matrix job index added to generation identity."
+}

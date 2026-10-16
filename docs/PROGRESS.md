@@ -666,3 +666,26 @@
   park relay/hosting/provider service expansion. A two-week trial has not started
   and no design partner has been claimed. Linked Claude audit is sign-in gated;
   detailed findings await accessible text. Compact remains unchanged.
+
+## 2026-10-16 — issue #21 JSON3.1 Action and native qualification implementation
+
+- Owner authorized native x86_64 Linux installer qualification and a thin Action,
+  signed pushes and a review PR without merging. Contract is github-action-pilot.
+- Composite restore/save Action delegates partitioning, byte verification, baseline,
+  reporting and trusted-growth admission to installed helpers; pinned cache v5
+  transports only snapshots. Metadata stays outside cache and PRs cannot save.
+- Local installed JSON3.1 cold/warm lanes each execute fresh genuine proof and
+  invalid-statement/corrupt-proof controls;13phase/input/trust controls pass.
+  Native platform preflight is bypassed only by this labeled developer-host test.
+  Receipt: github-action-local.json. Independent review found no blocker; matrix
+  index now distinguishes immutable save generation across matrix jobs.
+- Native PR workflow builds an exact committed candidate through Nix, tests all3
+  installed profiles offline as UID1000 in clean x86_64 Debian12 without Nix/Rust/
+  checkout mounts, then separate verified fresh HTTPS acquisition. A following
+  actual composite smoke executes JSON3.1 proof controls and enforces PR no-save.
+  Actual native result remains pending; no release or cache-speedup claim yet.
+- Browser retry allowed the public audit to render after the owner-described
+  network delay; the anonymous embedded dashboard still says it has no contents
+  and sign-in is needed for artifact data. Detailed findings remain inaccessible.
+  The pasted product review is recorded; relay/hosting and consumer trial stay
+  outside this implementation. Compact and existing profile pins are unchanged.
