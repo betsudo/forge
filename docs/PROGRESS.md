@@ -969,3 +969,18 @@
 - Independent review found no blocker; narrowed interruption claims and added hook
   entrypoint/CLI sentinel controls in response. No broader consumer qualification
   or speedup claim, pin/Compact/shared-installation/cache change or publication.
+
+## 2026-10-17 — lightweight Cargo compatibility launcher (#13/#30)
+
+- Replaced full primary-source inclusion with a std-only Unix sibling exec.
+  Resolves real executable location, refuses missing/self-referential primaries,
+  never searches PATH and preserves OS args/environment/stdio/signals/status.
+  Nix shared symlinks and portable identical-byte aliases are unchanged.
+- Two dual-name/isolated-install controls passed: profiles/store/help/version,
+  missing primary/PATH decoy, hardlink recursion, symlink/unrelated cwd, Unicode/
+  space arguments, inherited environment and nonzero status. Independent review
+  found no blocker. Both Cargo bins must be installed together; documented.
+- Same-host sequential warm debug rebuild/link: full alias56,539,752bytes/3.223s,
+  launcher684,232bytes/0.839s. This is not a clean/release build benchmark. Receipt:
+  docs/evidence/cli-alias-build-local.json. Exact package/worker/installer checks
+  remain part of the milestone qualification; no new Linux runtime claim yet.

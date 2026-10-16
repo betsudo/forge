@@ -260,3 +260,11 @@ provider integrity requirements.
 alias with the same commands and store. Package/crate names, worker/helper names,
 `~/.midnight-zkir-forge`, environment variables and release asset stems remain
 stable. Both commands display `zkir-forge` in help/version for new installations.
+
+For Cargo source installs, install the default bins together. The legacy Cargo
+command is a lightweight launcher for its sibling `zkir-forge`; installing only
+`--bin midnight-zkir-forge` is insufficient. Nix uses a shared executable symlink;
+portable distributions retain identical command bytes. Both names intentionally
+print `zkir-forge ...` for help/version. Scripts parsing the previous legacy
+version prefix must update; the executable alias preserves invocation, not that
+display prefix.
