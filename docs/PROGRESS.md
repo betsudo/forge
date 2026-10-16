@@ -502,3 +502,19 @@
   include its elapsed time. Passport explicitly pairs generation/proof workers.
   Independent benchmark review found no other blocking timing/control issue.
   Final optimized-binary runs and clean-host installed receipts remain pending.
+
+## 2026-10-16 — final native candidate and disk cleanup
+
+- Signed source c40e45b produced the three-profile macOS ARM64 bundle. External
+  Python installed it through fake GitHub transport with Nix and checkout reads
+  denied. All three genuine proof/negative controls and installed recovery suites
+  pass: docs/evidence/private-installer-darwin-three-profile.json. This remains
+  restricted-host evidence; the actual Nix-free macOS host/VM is unavailable.
+- Full local bootstrap passed, including both isolated workers and fast process
+  suites: docs/evidence/qualification-full-check-c40e45b.json. Public k4 parameters
+  in the prepared clean-Mac consumer kit match all three qualification receipts.
+- No obsolete worktrees exist for this session. Removed completed compilation
+  caches and three superseded native bundles (about 2.2 GiB); retained current
+  candidate, binaries, consumer kit, benchmark inputs and all evidence. No shared
+  Nix/Docker pruning or other checkout changes. Final Linux qualification and
+  sequential transport-inclusive benchmark runs remain in progress.
