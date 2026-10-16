@@ -65,7 +65,7 @@ restore process time before normal keygen/proofs. Corruption and wrong-profile c
 refusal controls, never silently treated as availability misses.
 
 Full account codegen was measured separately three times: **400.918s, 297.993s,
-and 304.043s** (median **304.043s**). Every run produced the same exact52-file
+and 304.043s** (median **304.043s**). Every run produced the same exact 52-file
 ZKIR roster and hashes. [Raw codegen receipt](../evidence/passport-codegen.json).
 Reproduce with `scripts/bench-passport-codegen.py` through the Nix bootstrap.
 Artifact lanes reuse its exact current emitted roster, measuring the copy, runtime
@@ -89,15 +89,51 @@ the consumer's exact existing npm lock in scratch without dependency upgrades or
 package lifecycle scripts. No changes are made to consumer source or shared
 Compact installations.
 
-Result receipt and measured values are added only after all lane/proof checks pass.
+## Measured result
+
+The final optimized, relocated macOS ARM64 candidate ran all 15 lanes successfully.
+Each lane retained both genuine account proofs, both positive verifications, four
+negative controls and 18 state/transcript assertions: **30 proofs, 30 positive
+verifications, 60 negative controls and 270 assertions** in total.
+
+| Lane | Median selected artifact/proof workflow |
+| --- | ---: |
+| Official uncached batch keygen | 3.934s |
+| Cold Forge, including new snapshot/compression | 6.499s |
+| Warm restored Forge | 4.338s |
+| Partial restored Forge, one hit/one miss | 6.811s |
+| Absent local transport, normal generation | 6.537s |
+
+**Warm restoration was 0.403s slower (10.3%) for this selected workload.** It
+eliminated key generation, but its verified preparation/worker/export work,
+helper planning and local snapshot restoration cost enough to erase that saving.
+Median warm preparation was 1.118s, planning 0.163s and restore 0.610s; median
+uncached batch keygen was 1.637s. Actual proving remained around 1.92s per lane
+in either case. These phase medians are separate summaries, not an additive
+reconstruction of the median total. This result does not justify enabling Forge
+for this narrow workload purely for speed, nor predict the full 52-key account
+build or hosted CI/network performance.
+
+The host remained shared: an existing trust-registry Compact compilation was
+active and untouched. Root and Linux qualification held their own heavy work
+during the measured window. The earlier codegen measurements also ran under
+shared build load. No isolated-capacity performance claim is made.
+
+[Unmodified raw measurement receipt](../evidence/passport-benchmark.json) and
+[provenance/requirement audit](../evidence/passport-benchmark-audit.json) record
+raw repetitions, per-job statistics, helper/transport costs, output/parameter
+identities and the verified signed c40e45b source/archive. The measured CLI and
+paired worker are the same optimized portable bytes as the installer candidate;
+the later producer-only change does not replace the measured Rust payload.
+Independent receipt review found no blocker. All measured stores, snapshots,
+preimages and runtime dependency copies were removed after evidence capture.
 
 ```sh
-MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER="$PWD/.local/qualification/passport/bin/midnight-zkir-forge-zkir31-worker" \
 ./bootstrap.sh -- python3 scripts/bench-passport.py \
   --source .local/ci-consumers/passport \
   --compiler-dir .local/qualification/passport/tools/compiler \
-  --binary target/debug/midnight-zkir-forge \
-  --worker .local/qualification/passport/bin/midnight-zkir-forge-zkir31-worker \
+  --binary .local/qualification/native-runtime/midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin/bin/midnight-zkir-forge \
+  --worker .local/qualification/native-runtime/midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin/bin/midnight-zkir-forge-zkir31-worker \
   --emitted .local/qualification/passport/emitted/account \
   --params-dir "$HOME/.cache/midnight/zk-params" \
   --work .local/qualification/passport/benchmark \

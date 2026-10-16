@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "source_commit": "6c6490d25ff83366ee09ba5056f4c4638bc1ad85",
+  "private_remote_pin_not_published": true,
+  "qualification": "evaluation only; actual runtime qualification is per OS/architecture",
+  "local_override": "git+file://<repository>?rev=<source_commit>",
+  "dev_shell_derivations": {
+    "aarch64-darwin": "/nix/store/vkg5kj8lwwpjpbjh3kjqp2mw4rzy04c1-nix-shell.drv",
+    "x86_64-darwin": "/nix/store/dhz0vss9chbghwpa5ayx9k7izhb73n7p-nix-shell.drv",
+    "aarch64-linux": "/nix/store/argj26jyygqk4imf06fa4ir2yy8zaw12-nix-shell.drv",
+    "x86_64-linux": "/nix/store/33cgzxahfbkv1nl3d90hdhlm2zhc2vsf-nix-shell.drv"
+  }
+}

@@ -26,7 +26,7 @@ flake evaluation alone. Authentication requires GitHub SSH read access; `gh auth
 login` by itself does not configure SSH. Do not put tokens in flake URLs or files.
 
 [examples/nix/flake.nix](../examples/nix/flake.nix) pins reviewed local commit
-`f3801e08f1e3af0f1a2c7b3e0e6a5c7070fa4d3a`, including the Intel macOS correction. It
+`6c6490d25ff83366ee09ba5056f4c4638bc1ad85`, including the Intel macOS correction and isolated JSON3.1 worker. It
 is not published yet: remote readers cannot fetch it until publication is separately
 authorized. On this machine use a `git+file://` input for this checkout with the
 same full revision. Keep its generated `flake.lock` in the consumer repository;

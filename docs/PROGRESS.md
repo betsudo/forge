@@ -540,3 +540,17 @@
 - Timings include local compression/restore/helper work, exclude declared prior-job
   seed manufacture, and disclose external shared-host compiler load. They exclude
   actual GitHub network latency and do not establish whole-CI savings.
+
+## 2026-10-16 — final Passport benchmark and consumer pin
+
+- All15 selected Passport lanes passed:30fresh genuine proofs,30verifications,
+  60negative controls and270application assertions. Exact official artifacts,
+  paired-worker identity, helper partitions/restore/miss and timing arithmetic
+  passed independent review. Raw/audit receipts: docs/evidence/passport-benchmark*.json.
+- Median seconds: uncached3.934, cold6.499, warm4.338, partial6.811, unavailable6.537.
+  Warm is0.403s slower; preserve that negative result. Full52-circuit codegen and
+  hosted network transport remain separate. Shared-host load is disclosed.
+- Consumer flake example now pins reviewed local6c6490d with JSON3.1 support and
+  the Intel correction. All four shell derivations evaluate through a local Git
+  override; pin is not remotely fetchable until separately authorized publication.
+  docs/evidence/consumer-example-pin.json distinguishes evaluation from runtime.
