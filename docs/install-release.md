@@ -124,3 +124,9 @@ paths with `check-release-candidate.py --require-nix-free --recovery`. That
 precondition refuses a machine with a Nix store or Nix executable. A sandbox on a
 Nix-equipped developer Mac is recorded separately and cannot satisfy this gate.
 No binary release has been published.
+
+The owner deferred the clean Nix-free macOS VM test on 2026-10-16. The download
+was cancelled before guest boot; no guest installation, proof or recovery tests
+ran. Temporary owned VM files were removed. Existing macOS ARM64 evidence is
+restricted-host only; Nix-free macOS support must not be claimed from it. See
+[deferral and cleanup receipt](evidence/private-installer-macos-deferred.json).

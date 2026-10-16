@@ -627,3 +627,18 @@
   active; no actual guest qualification result exists yet. Run network-denied
   real proof/recovery and separate fresh HTTPS controls after boot, retain/review
   receipts, then remove only the owned VM/cache. #11 remains open.
+
+## 2026-10-16 — clean-Mac qualification deferred by owner
+
+- Owner requested skipping this VM step for now and explicitly documenting what
+  was not tested. Stopped the queued continuation before interrupting the owned
+  download; confirmed both processes and the controller terminated. No guest
+  boot, installation, proof/recovery or fresh HTTPS tests ran.
+- Removed only the owned Tart home, checkpoint/interrupted cache and staged
+  Python package. Kept final candidates, consumer kit, scripts/logs and existing
+  evidence. Receipt: private-installer-macos-deferred.json.
+- Linux ARM64 clean Nix-free qualification and macOS ARM64 restricted-host
+  qualification remain valid with their original scopes. Actual Nix-free macOS,
+  Intel runtime and authenticated release download remain unqualified. The
+  clean-Mac task stays unchecked as a deferred publication gate; current local
+  work is complete under the revised owner scope. No publication or Compact edits.

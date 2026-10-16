@@ -28,7 +28,7 @@ Final local candidate receipt: docs/evidence/milestone-2026.10.0-local.json.
 - [x] Exercise optional-worker upgrades and legacy rollback without dangling stable links.
 - [x] Produce final three-profile candidates from clean signed sources (Linux9359068, macOSa65d3f0; exact per-platform provenance retained).
 - [x] Run actual installed CLI proof and recovery controls on clean Nix-free Linux ARM64 (Debian12 userland, recorded kernel); Intel remains unqualified.
-- [ ] Run actual installed CLI proof and recovery controls on a clean Nix-free macOS host/VM.
+- [ ] DEFERRED by owner on 2026-10-16: actual installed CLI proof and recovery controls on a clean Nix-free macOS host/VM; no guest tests ran.
 - [x] Record final independent review and qualification evidence, explicitly retaining the unmet clean-Mac gate; no publication.
 
 A macOS sandbox denying Nix/checkout reads is useful evidence, but does not
@@ -48,3 +48,8 @@ pass;777payload files and422Cargo notice identities independently reviewed.
 The refreshed11-file clean-Mac kit uses the corrected explicit-parameter harness;
 private-installer-macos-consumer-kit.json records its checksums. Actual Nix-free
 macOS remains the single unmet required qualification gate.
+
+Owner scope update (2026-10-16): skip the VM qualification for now. The unchecked
+clean-Mac task is a future publication gate, not unfinished work in the current
+local increment. Download/continuation stopped and owned temporary VM/cache files
+removed; see docs/evidence/private-installer-macos-deferred.json.
