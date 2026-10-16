@@ -74,7 +74,14 @@ requests wait, for at most ten seconds each. Overflow/expiry returns
 `429 provider_reads_busy` with `Retry-After: 1`; a slow active stream may therefore
 require explicit consumer retry. Cancellation returns waiting capacity and never
 releases active blocking verification early. This remains a single-owner service;
-large-file throughput needs measurement.
+large-file throughput is workload-specific. The local range baseline uses an
+actual24,648,297-byte prover key: eight resumed requests return one file's bytes
+but create197,186,376logical snapshot bytes. The directly measured reader peak is
+one file sequentially and two files with two concurrent reads. Every HEAD,304 or
+range still verifies/spools the entire selected file before responding. Prefer
+one full GET or a small number of resume requests over many tiny chunks; do not
+disable byte verification to reduce this cost. See the
+[range cost baseline](range-cost.md).
 
 Compiler staging uses private sibling directories outside output on the same
 filesystem. A killed hook may leave a private `.forge-keygen-*` sibling, but it

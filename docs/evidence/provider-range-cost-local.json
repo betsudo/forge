@@ -1,0 +1,138 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "host": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "manifest_sha256": "116db2fc254487b819919721d705366c08dfc0b1cbbdf3ac30d521beda6ba9b1",
+  "artifact": "keys/activate_initial_device_with_jubjub.prover",
+  "artifact_sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+  "artifact_bytes": 24648297,
+  "tools": {
+    "cli_sha256": "5780bfe4b0b27ffbcffff980f6f7a14e874e3624714742824fc9cd4c882c3cc0",
+    "reader_sha256": "20e43561dee3004c6677483028906d532041f07984b168b2b24720c0289e30bb",
+    "harness_sha256": "bc2a4a1e6bacf9f329a776625c1995980ce17507a83464e393c20250c59097c8"
+  },
+  "provider_reader": {
+    "inventory_path": "keys/activate_initial_device_with_jubjub.prover",
+    "manifest_sha256": "116db2fc254487b819919721d705366c08dfc0b1cbbdf3ac30d521beda6ba9b1",
+    "rows": [
+      {
+        "concurrency": 1,
+        "mode": "full",
+        "peak_live_snapshot_logical_bytes": 24648297,
+        "requests": 1,
+        "returned_bytes": 24648297,
+        "snapshot_allocated_bytes": 24649728,
+        "snapshot_logical_bytes": 24648297,
+        "wall_ms": 84.78225
+      },
+      {
+        "concurrency": 1,
+        "mode": "sequential-ranges",
+        "peak_live_snapshot_logical_bytes": 24648297,
+        "requests": 8,
+        "returned_bytes": 24648297,
+        "snapshot_allocated_bytes": 197197824,
+        "snapshot_logical_bytes": 197186376,
+        "wall_ms": 673.2902079999999
+      },
+      {
+        "concurrency": 2,
+        "mode": "concurrent-ranges",
+        "peak_live_snapshot_logical_bytes": 49296594,
+        "requests": 8,
+        "returned_bytes": 24648297,
+        "snapshot_allocated_bytes": 197197824,
+        "snapshot_logical_bytes": 197186376,
+        "wall_ms": 403.14404199999996
+      }
+    ],
+    "schema": 1,
+    "scope": "Actual provider reader; logical descriptor lengths and filesystem allocation, not physical device I/O; warm local filesystem, no HTTP in this submeasurement"
+  },
+  "http": [
+    {
+      "repeat": 1,
+      "mode": "full",
+      "requests": 1,
+      "concurrency": 1,
+      "wall_ms": 276.8425830290653,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 1,
+      "mode": "sequential-ranges",
+      "requests": 8,
+      "concurrency": 1,
+      "wall_ms": 916.6567499632947,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 1,
+      "mode": "concurrent-ranges",
+      "requests": 8,
+      "concurrency": 2,
+      "wall_ms": 377.4751659948379,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 2,
+      "mode": "full",
+      "requests": 1,
+      "concurrency": 1,
+      "wall_ms": 165.2206250000745,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 2,
+      "mode": "sequential-ranges",
+      "requests": 8,
+      "concurrency": 1,
+      "wall_ms": 704.5465830015019,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 2,
+      "mode": "concurrent-ranges",
+      "requests": 8,
+      "concurrency": 2,
+      "wall_ms": 377.7445839950815,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 3,
+      "mode": "full",
+      "requests": 1,
+      "concurrency": 1,
+      "wall_ms": 157.55954099586233,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 3,
+      "mode": "sequential-ranges",
+      "requests": 8,
+      "concurrency": 1,
+      "wall_ms": 1079.1180839878507,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    },
+    {
+      "repeat": 3,
+      "mode": "concurrent-ranges",
+      "requests": 8,
+      "concurrency": 2,
+      "wall_ms": 567.635458020959,
+      "response_body_bytes": 24648297,
+      "digest_verified": true
+    }
+  ],
+  "decision": "Retain full-file verification and anonymous snapshots; document measured amplification. No persistent trusted marker or unchecked range optimization.",
+  "scope": "Warm local filesystem and authenticated loopback; logical snapshot lengths/allocation measured directly, not physical device counters. No hosted/CDN/CI or cold-cache throughput claim.",
+  "cleanup": "owned views, snapshot descriptors, token, server and temporary stores removed"
+}

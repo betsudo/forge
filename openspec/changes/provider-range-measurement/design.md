@@ -13,3 +13,11 @@ No network throughput, cold-page-cache, browser/CDN or CI saving is inferred fro
 loopback. Corruption/mutation/range semantics retain existing recovery controls.
 Retain the implementation unless an independently reviewed optimization preserves
 all verification/TOCTOU/resource guarantees and demonstrates value.
+
+Measurement carrier amendment: use an explicitly reduced-export private Passport
+source copy, retaining all bodies/pure exports. Require its two emitted ZKIR files
+and official artifacts to match independently qualified unchanged-account bytes.
+The actual compiler emits the complete carrier metadata. Run fresh selected SDK
+proofs. This avoids treating an over-budget52-circuit view as supported and does
+not replace full-account local adapter qualification. Record source transform and
+hashes; never modify the consumer checkout or synthesize compiler manifests.

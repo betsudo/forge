@@ -997,3 +997,29 @@
   Promise.all; exact-package real SDK proof qualification remains a separate gate.
 - HTTP/OpenAPI/provider limits match implementation. Installer fixtures, OpenSpec
   and documentation checks pass. No platform/hosted readiness claim or publication.
+
+## 2026-10-17 — fresh package and range-cost evidence (#13/#28/#29/#30)
+
+- Fresh Nix package xywbgzg14vn44qpqdlxk7v7bd36vbwa9 built with existing pins.
+  Full bootstrap check passes. Installed killed-writer CLI acceptance and real
+  recovery across ledger8-v2/zkir3/zkir31 pass, plus real installed snapshot and
+  downloaded-artifact HTTP proof controls. No shared installation was changed.
+- Exact minimal compiler/provider qualification passes19genuine proof lanes
+  (4baseline+3adapter lanes of5),38negative proof controls,12API control groups
+  and5adapter controls. SDK requests binary IR/prover/verifier via Promise.all;
+  genuine executions/proofs remain. Independent evidence/hash review passes.
+- Actual24,648,297-byte Passport activation prover key:8ranges return one file's
+  bytes while producing197,186,376logical snapshot bytes; reader peak1file
+  sequential/2concurrent. Three-repetition loopback medians165/917/378ms for
+  full/sequential/two-concurrent modes on a shared warm host. Not physical device
+  counters or hosted throughput. Keep full-file verification; no trusted marker.
+- A private reduced-export carrier retains all circuit bodies/pure exports and
+  compiler-produced complete carrier metadata. Its2ZKIR+6artifact hashes match
+  unchanged-account qualification; fresh2SDK proofs/2verifications/4negative
+  controls/18assertions include exact worker/SDK/generator provenance. This does
+  not qualify full52-account HTTP. Original full output exceeds4GiB serving
+  budget; limits stay unchanged. Full local Node adapter qualification continues.
+- Evidence: provider-api-burst-local.json, provider-range-cost-local.json,
+  passport-range-fixture{-proofs}-local.json and installed-cli-*-2026.10.1.json.
+  Range guide documents scopes and reproducibility. Compact/pins/other checkouts,
+  shared CLI/default store, Cloudflare and publication remain unchanged.

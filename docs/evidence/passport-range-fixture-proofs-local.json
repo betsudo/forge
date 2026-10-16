@@ -1,0 +1,71 @@
+{
+  "manifest_sha256": "116db2fc254487b819919721d705366c08dfc0b1cbbdf3ac30d521beda6ba9b1",
+  "lanes": [
+    {
+      "lane": "local",
+      "circuit": "deposit_unshielded",
+      "execution": {
+        "circuit": "deposit_unshielded",
+        "assertions": 9,
+        "preimageBytes": 240,
+        "privateWitnessCalls": 0,
+        "publicOps": 34,
+        "privateOutputs": 0
+      },
+      "artifact_sha256": {
+        "bzkir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+        "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+        "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+      },
+      "proof_controls": {
+        "corrupt_proof_rejected": true,
+        "invalid_statement_rejected": true,
+        "negative_controls": 2,
+        "proof_bytes": 3845,
+        "proof_count": 1,
+        "proof_ms": 70.350541,
+        "public_inputs": 141,
+        "valid_proof_verified": true,
+        "verification_count": 1,
+        "verify_ms": 14.857333
+      }
+    },
+    {
+      "lane": "local",
+      "circuit": "activate_initial_device_with_jubjub",
+      "execution": {
+        "circuit": "activate_initial_device_with_jubjub",
+        "assertions": 9,
+        "preimageBytes": 524,
+        "privateWitnessCalls": 0,
+        "publicOps": 40,
+        "privateOutputs": 0
+      },
+      "artifact_sha256": {
+        "bzkir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+        "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+        "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+      },
+      "proof_controls": {
+        "corrupt_proof_rejected": true,
+        "invalid_statement_rejected": true,
+        "negative_controls": 2,
+        "proof_bytes": 5765,
+        "proof_count": 1,
+        "proof_ms": 1497.216458,
+        "public_inputs": 143,
+        "valid_proof_verified": true,
+        "verification_count": 1,
+        "verify_ms": 14.433290999999999
+      }
+    }
+  ],
+  "provenance": {
+    "node": "v24.18.1",
+    "worker_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+    "sdk_package_lock_sha256": "3fd7470d047080db1ec2ad067fc008628596962d46f5d8b4bcfd1e36719cb69d",
+    "proof_harness_sha256": "27b4a948a37aa37d251af4a4853db45db24d5d7223640d930d7b46039eb739fd",
+    "preimage_generator_sha256": "25e355b3ff4bd7dfee396e1e72a74b323add197c9f0cfcdf0db3d93f42adee0b"
+  },
+  "scope": "Reduced-export benchmark carrier; complete compiler-produced carrier metadata, selected2actualPassportcircuitbytes andkeys; notfullaccountqualification"
+}
