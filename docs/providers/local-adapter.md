@@ -69,7 +69,12 @@ No persistent verified marker is trusted. The requested file is copied into an
 anonymous verified snapshot to avoid verify/reopen races, including for ranges.
 A dedicated two-permit pool bounds provider verification/streaming independently
 of cache work; two maximum-size files can consume up to2GiB temporary space.
-This remains a single-owner service; large-file throughput needs measurement.
+A normal parallel three-artifact SDK fetch can wait for capacity: at most eight
+requests wait, for at most ten seconds each. Overflow/expiry returns
+`429 provider_reads_busy` with `Retry-After: 1`; a slow active stream may therefore
+require explicit consumer retry. Cancellation returns waiting capacity and never
+releases active blocking verification early. This remains a single-owner service;
+large-file throughput needs measurement.
 
 Compiler staging uses private sibling directories outside output on the same
 filesystem. A killed hook may leave a private `.forge-keygen-*` sibling, but it

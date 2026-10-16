@@ -1674,9 +1674,19 @@
             "description": "Invalid range"
           },
           "429": {
-            "description": "Admission busy"
+            "description": "Provider waiting queue full or ten-second admission wait expired; provider_reads_busy",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 1
+                },
+                "description": "Retry after one second"
+              }
+            }
           }
-        }
+        },
+        "description": "Two active verification/streams, at most eight waiting reads and ten seconds admission wait. Requested bytes are fully verified before any response."
       },
       "head": {
         "summary": "Read an immutable complete compiler provider view; never generates keys",
@@ -1723,9 +1733,19 @@
             "description": "Invalid range"
           },
           "429": {
-            "description": "Admission busy"
+            "description": "Provider waiting queue full or ten-second admission wait expired; provider_reads_busy",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer",
+                  "const": 1
+                },
+                "description": "Retry after one second"
+              }
+            }
           }
-        }
+        },
+        "description": "Two active verification/streams, at most eight waiting reads and ten seconds admission wait. Requested bytes are fully verified before any response."
       }
     }
   },

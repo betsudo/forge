@@ -984,3 +984,16 @@
   launcher684,232bytes/0.839s. This is not a clean/release build benchmark. Receipt:
   docs/evidence/cli-alias-build-local.json. Exact package/worker/installer checks
   remain part of the milestone qualification; no new Linux runtime claim yet.
+
+## 2026-10-17 — bounded provider SDK bursts (#28/#30)
+
+- Retained two active verification/stream permits; added eight waiting slots and
+  ten-second timeout. Overflow/expiry returns existing429provider_reads_busy and
+  Retry-After:1. No cache DB/work admission coupling, keygen or persistent marker.
+- Deterministic unit controls cover three-artifact admission, queue overflow, wait
+  timeout/cancellation, active cancellation ownership and restored capacity. All
+  four pass, plus13provider-view tests and root Clippy. Independent ownership/
+  concurrency review found no blocker. SDK harness now fetches3artifacts via
+  Promise.all; exact-package real SDK proof qualification remains a separate gate.
+- HTTP/OpenAPI/provider limits match implementation. Installer fixtures, OpenSpec
+  and documentation checks pass. No platform/hosted readiness claim or publication.

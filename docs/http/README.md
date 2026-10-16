@@ -125,3 +125,10 @@ Provider reads use two dedicated verification/stream permits and do not open the
 cache database or consume cache-work admission. Full publish/reuse validation and
 `zkir-forge verify-view VIEW --manifest-sha256 HASH` detect any corrupted sibling.
 Ordinary reads validate the selected representation, not every sibling file.
+
+Provider reads have two active verification/stream permits, separate from cache
+admission. Up to eight further reads wait at most ten seconds; overflow or expiry
+returns `429 provider_reads_busy` with `Retry-After: 1`. This admits the ordinary
+SDK burst for a circuit's binary IR, prover and verifier without increasing active
+snapshot memory/disk limits. Waiting cancellation returns its slot; active
+verification retains capacity until the blocking task stops and streaming ends.
