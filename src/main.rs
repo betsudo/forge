@@ -71,6 +71,14 @@ enum Command {
     },
     /// Per-file and total local hit/miss/timing statistics (JSON).
     Stats,
+    /// Preserve a complete original compiler bundle as an immutable provider view.
+    PublishView {
+        input: PathBuf,
+        #[arg(long)]
+        manifest_sha256: String,
+        #[arg(long)]
+        provider_root: PathBuf,
+    },
     /// Publish a consistent verified directory snapshot of an existing store.
     Snapshot {
         #[arg(long)]
@@ -109,6 +117,8 @@ enum Command {
         listen: std::net::SocketAddr,
         #[arg(long)]
         token_file: Option<PathBuf>,
+        #[arg(long)]
+        provider_root: Option<PathBuf>,
     },
 }
 #[tokio::main(flavor = "current_thread")]
@@ -187,11 +197,30 @@ async fn run(cli: Cli) -> Result<Value> {
             },
         );
     }
+    if let Command::PublishView {
+        input,
+        manifest_sha256,
+        provider_root,
+    } = &cli.command
+    {
+        midnight_zkir_forge::provider_view::separate_roots(
+            provider_root,
+            &cli.cache_dir
+                .clone()
+                .unwrap_or(application::default_cache_dir()?),
+        )?;
+        return midnight_zkir_forge::provider_view::publish(input, manifest_sha256, provider_root);
+    }
     let root = match cli.cache_dir {
         Some(path) => path,
         None => application::default_cache_dir()?,
     };
-    if let Command::Serve { listen, token_file } = &cli.command {
+    if let Command::Serve {
+        listen,
+        token_file,
+        provider_root,
+    } = &cli.command
+    {
         return http::serve(http::Config {
             root,
             params_dir: cli.params_dir,
@@ -199,6 +228,7 @@ async fn run(cli: Cli) -> Result<Value> {
             profile: cli.profile,
             listen: *listen,
             token_file: token_file.clone(),
+            provider_root: provider_root.clone(),
         })
         .await;
     }
@@ -285,6 +315,7 @@ async fn run(cli: Cli) -> Result<Value> {
         Command::Qualify
         | Command::QualifyExport { .. }
         | Command::Profile
+        | Command::PublishView { .. }
         | Command::Serve { .. }
         | Command::Snapshot { .. }
         | Command::Restore { .. } => unreachable!(),

@@ -41,6 +41,7 @@ pub struct Config {
     pub profile: Option<ProfileSelector>,
     pub listen: SocketAddr,
     pub token_file: Option<PathBuf>,
+    pub provider_root: Option<PathBuf>,
 }
 struct Service {
     config: Config,
@@ -123,6 +124,16 @@ pub async fn serve(config: Config) -> Result<Value> {
         config.listen.ip().is_loopback() || token.is_some(),
         "non-loopback HTTP binding requires --token-file"
     );
+    if let Some(provider) = &config.provider_root {
+        crate::provider_view::separate_roots(provider, &config.root)?;
+        ensure!(
+            std::fs::symlink_metadata(provider)?.is_dir()
+                && !std::fs::symlink_metadata(provider)?
+                    .file_type()
+                    .is_symlink(),
+            "provider root must be an existing directory"
+        );
+    }
     // Fail before listening if configured storage/backend is unavailable.
     let store = Store::open(&config.root)?;
     let mut probe = tempfile::NamedTempFile::new_in(store.root.join("staging"))?;
@@ -162,6 +173,7 @@ pub async fn serve(config: Config) -> Result<Value> {
         .route("/v1/bundles/{id}/materializations", post(materialize))
         .route("/v1/bundles/{id}/circuits/{name}/source", get(source))
         .route("/v1/objects/{digest}", get(object))
+        .route("/views/{id}/{*file}", get(provider_file))
         .fallback(|| async { ApiError(StatusCode::NOT_FOUND, "not_found") })
         .layer(middleware::from_fn_with_state(state.clone(), guard))
         .with_state(state);
@@ -487,7 +499,7 @@ async fn download(
         .try_acquire_owned()
         .map_err(|_| ApiError(StatusCode::TOO_MANY_REQUESTS, "downloads_busy"))?;
     let requested = digest.clone();
-    let (mut file, artifact) = state
+    let (file, artifact) = state
         .work(move |_, store| {
             let clock = Instant::now();
             let tx = store.lock()?;
@@ -558,18 +570,69 @@ async fn download(
             Ok((file, artifact))
         })
         .await?;
+    file_response(
+        file,
+        artifact.size,
+        &digest,
+        if artifact.kind == ArtifactKind::Source {
+            "application/json"
+        } else {
+            "application/octet-stream"
+        },
+        headers,
+        method,
+        stream_permit,
+    )
+}
+async fn provider_file(
+    State(state): State<Shared>,
+    Path((id, path)): Path<(String, String)>,
+    headers: HeaderMap,
+    method: Method,
+) -> std::result::Result<Response, ApiError> {
+    validate_id(&id).map_err(|_| bad("invalid_id"))?;
+    let root = state
+        .config
+        .provider_root
+        .clone()
+        .ok_or(ApiError(StatusCode::NOT_FOUND, "not_found"))?;
+    let permit = state
+        .downloads
+        .clone()
+        .try_acquire_owned()
+        .map_err(|_| ApiError(StatusCode::TOO_MANY_REQUESTS, "downloads_busy"))?;
+    let content_type = if path.ends_with(".json") || path.ends_with(".zkir") {
+        "application/json"
+    } else if path.ends_with(".js") {
+        "text/javascript"
+    } else {
+        "application/octet-stream"
+    };
+    let (file, digest, size) = state
+        .work(move |_, _| {
+            let view = root.join(&id);
+            if !view.exists() {
+                return Err(anyhow::anyhow!(crate::error::Kind::NotFound));
+            }
+            crate::provider_view::read(&view, &id, &path)
+        })
+        .await?;
+    file_response(file, size, &digest, content_type, headers, method, permit)
+}
+fn file_response(
+    mut file: File,
+    size: u64,
+    digest: &str,
+    content_type: &str,
+    headers: HeaderMap,
+    method: Method,
+    stream_permit: OwnedSemaphorePermit,
+) -> std::result::Result<Response, ApiError> {
     let etag = format!("\"{}\"", digest);
     let mut builder = Response::builder()
         .header(header::ETAG, &etag)
         .header(header::ACCEPT_RANGES, "bytes")
-        .header(
-            header::CONTENT_TYPE,
-            if artifact.kind == ArtifactKind::Source {
-                "application/json"
-            } else {
-                "application/octet-stream"
-            },
-        );
+        .header(header::CONTENT_TYPE, content_type);
     if headers
         .get(header::IF_NONE_MATCH)
         .and_then(|v| v.to_str().ok())
@@ -584,7 +647,7 @@ async fn download(
             .unwrap());
     }
     let mut start = 0;
-    let mut length = artifact.size;
+    let mut length = size;
     let mut status = StatusCode::OK;
     // Range applies to GET; RFC HEAD describes the complete representation.
     if method == Method::GET
@@ -594,18 +657,18 @@ async fn download(
             .get(header::IF_RANGE)
             .is_none_or(|v| v.to_str().ok() == Some(&etag));
         if if_range_matches {
-            if let Some((first, last)) = value.to_str().ok().and_then(|v| range(v, artifact.size)) {
+            if let Some((first, last)) = value.to_str().ok().and_then(|v| range(v, size)) {
                 start = first;
                 length = last - first + 1;
                 status = StatusCode::PARTIAL_CONTENT;
                 builder = builder.header(
                     header::CONTENT_RANGE,
-                    format!("bytes {first}-{last}/{}", artifact.size),
+                    format!("bytes {first}-{last}/{}", size),
                 );
             } else {
                 return Ok(builder
                     .status(StatusCode::RANGE_NOT_SATISFIABLE)
-                    .header(header::CONTENT_RANGE, format!("bytes */{}", artifact.size))
+                    .header(header::CONTENT_RANGE, format!("bytes */{}", size))
                     .body(Body::empty())
                     .unwrap());
             }

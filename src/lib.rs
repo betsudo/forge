@@ -15,3 +15,5 @@ pub mod descriptor;
 
 pub mod worker;
 pub mod zkir31;
+
+pub mod provider_view;
