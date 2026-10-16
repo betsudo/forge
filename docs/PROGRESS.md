@@ -1023,3 +1023,18 @@
   passport-range-fixture{-proofs}-local.json and installed-cli-*-2026.10.1.json.
   Range guide documents scopes and reproducibility. Compact/pins/other checkouts,
   shared CLI/default store, Cloudflare and publication remain unchanged.
+
+## 2026-10-17 — local handoff routing and qualification scope (#6/#30)
+
+- Repository skill now lists the exact JSON3.1 profile and distinguishes bare
+  exports from complete compiler provider views/limits. Global skill, vault home
+  and consumer starter prompt point to betsudo/forge and preserve original-proof
+  requirements. Both skill frontmatters pass the official skill validator using
+  temporary pinned-Nix PyYAML; product/dependency pins are unchanged.
+- Read-only shared CLI check reports0.2.0. It was not reinstalled; current tested
+  candidate has a separate workspace-local Nix GC root. Personal handoff marks
+  full52consumer qualification in progress, not delivered from selected2proofs.
+- Full local bootstrap, fresh package and smaller-provider evidence are retained.
+  The52official output pairs are complete; independent Forge artifact matching
+  continues. Removed completed-session owned build intermediates after preserving
+  the tested range reader/alias artifact; no shared artifact store was deleted.
