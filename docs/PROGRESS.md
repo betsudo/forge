@@ -936,3 +936,21 @@
 - Created follow-ups in2026.10.0: #13duplicate Cargo binary compilation,
   #14configurable keygen timeout, #15broader exact consumer qualification. No
   automatic unqualified-circuit fallback, Compact edits, cloud work or merge.
+
+## 2026-10-17 — next local milestone defined (#30)
+
+- PR12 merged as 7273d75a329fef65d7b22d6bc0b543e60d5bfbfd. Its final
+  review found no blockers; additional admission/range follow-ups are #28/#29.
+- Created 2026.10.1 — Qualified local key reuse, milestone2 and tracking issue30.
+  Ordered #14 timeout, #15 exact selected Passport qualification, #6/#7 local
+  integration/recovery, #28 bounded provider admission, #29 measured range cost
+  and #13 duplicate CLI build removal. These issues moved into the new milestone.
+- Charter: docs/planning/2026.10.1-local-reuse.md. Completion requires fresh
+  genuine proof/control evidence and independent identity/concurrency review;
+  partial local evidence cannot close Linux or hosted qualification gates.
+- Autonomous work is local and finite, with OpenSpec, Nix, issue-linked signed
+  DCO commits and isolated stores. No scheduled supervision, push, PR publication,
+  merge, release, deployment, shared-installation/cache change or Compact edits.
+  Existing official pins remain fixed; Cloudflare and clean-Mac VM stay deferred.
+- Planning changes only; no new consumer qualification or performance result is
+  claimed. The first implementation issue is #14 (bounded keygen timeout).
