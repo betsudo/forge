@@ -12,3 +12,6 @@ mod filesystem;
 pub mod error;
 
 pub mod descriptor;
+
+pub mod worker;
+pub mod zkir31;

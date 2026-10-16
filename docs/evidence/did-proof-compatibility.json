@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "consumer_commit": "4e7f6b0f69bf4e2c8506a9693f8d0c3dfe68e550",
+  "versions": {
+    "@midnight-ntwrk/ledger-v8": "8.1.0",
+    "@midnight-ntwrk/compact-runtime": "0.16.0",
+    "@midnight-ntwrk/onchain-runtime-v3": "3.0.0"
+  },
+  "dependency_lock_sha256": "24265a806d3bb2dc51f797217ee0e4c20a4a7f39499ebfd026ae613663511a96",
+  "execution": {
+    "assertions": 5,
+    "preimageBytes": 557,
+    "publicOps": 33,
+    "privateOutputs": 2
+  },
+  "proof": {
+    "k": 11,
+    "negative_controls": 2,
+    "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+    "proof_bytes": 3317,
+    "proof_ms": 397.710125,
+    "proofs": 1,
+    "public_inputs": 121,
+    "verifications": 1,
+    "verify_ms": 20.3815
+  },
+  "scope": "genuine DID deactivate proof with exact consumer dependency lock; not full localnet transaction/API suite",
+  "timing_qualification": "functional proof qualification during concurrent compilation; these timing samples are not benchmark results"
+}

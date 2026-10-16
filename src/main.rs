@@ -2,7 +2,7 @@ use anyhow::Result;
 use clap::{Parser, Subcommand};
 use midnight_zkir_forge::{
     application, backend, domain::ArtifactKind, engine::ProfileSelector, http, snapshot,
-    store::Store, zkir3,
+    store::Store,
 };
 use serde_json::{Value, json};
 use std::path::PathBuf;
@@ -98,6 +98,10 @@ enum Command {
     },
     /// Fresh real keygen twice, valid proof and invalid-statement control.
     Qualify,
+    /// Verify the genuine minimal fixture using already exported keys (qualification only).
+    QualifyExport {
+        input: PathBuf,
+    },
     Profile,
     /// Serve the initial single-owner HTTP API. Remote binding requires a token.
     Serve {
@@ -130,18 +134,21 @@ fn error_code(error: &anyhow::Error) -> &'static str {
 }
 async fn run(cli: Cli) -> Result<Value> {
     if matches!(cli.command, Command::Profile) {
-        if cli.profile == Some(ProfileSelector::Zkir3) {
-            let (mut value, worker) = zkir3::call("profile", &[], None, false, None, None)?;
+        if let Some(spec) = cli.profile.and_then(ProfileSelector::worker) {
+            let (mut value, worker) = spec.call("profile", &[], None, false, None, None)?;
+            if spec.format == midnight_zkir_forge::zkir31::FORMAT {
+                value["ledger_revision"] = spec.ledger_revision.into();
+            }
             value["worker"] = serde_json::to_value(worker)?;
             return Ok(value);
         }
         return Ok(
-            json!({"schema":1,"formats":["midnight-zkir-v2-json","midnight-zkir-v3-json"],"selectors":["ledger8-v2","zkir3"],"profile":backend::PROFILE,"ledger_revision":backend::LEDGER_REV,"build_fingerprint":application::build_fingerprint()}),
+            json!({"schema":1,"formats":["midnight-zkir-v2-json","midnight-zkir-v3-json","midnight-zkir-v3.1-json"],"selectors":["ledger8-v2","zkir3","zkir31"],"profile":backend::PROFILE,"ledger_revision":backend::LEDGER_REV,"build_fingerprint":application::build_fingerprint()}),
         );
     }
     if matches!(cli.command, Command::Qualify) {
-        if cli.profile == Some(ProfileSelector::Zkir3) {
-            let (mut value, worker) = zkir3::call(
+        if let Some(spec) = cli.profile.and_then(ProfileSelector::worker) {
+            let (mut value, worker) = spec.call(
                 "qualify",
                 &[],
                 cli.params_dir.as_deref(),
@@ -153,6 +160,9 @@ async fn run(cli: Cli) -> Result<Value> {
             return Ok(value);
         }
         return application::qualify(cli.params_dir.as_deref(), cli.fetch_params).await;
+    }
+    if let Command::QualifyExport { input } = &cli.command {
+        return application::qualify_export(input, cli.params_dir.as_deref()).await;
     }
     if let Command::Restore {
         input,
@@ -273,6 +283,7 @@ async fn run(cli: Cli) -> Result<Value> {
         Command::Evict { bundle_id, dry_run } => store.evict(&bundle_id, dry_run),
         Command::Stats => store.stats(),
         Command::Qualify
+        | Command::QualifyExport { .. }
         | Command::Profile
         | Command::Serve { .. }
         | Command::Snapshot { .. }

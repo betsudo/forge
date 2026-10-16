@@ -1,0 +1,716 @@
+{
+  "schema": 1,
+  "consumer_commit": "4e7f6b0f69bf4e2c8506a9693f8d0c3dfe68e550",
+  "compiler": "0.31.1",
+  "status": "passed",
+  "circuits": [
+    {
+      "name": "deactivate",
+      "source_sha256": "0104892364fe7c0fe55247099ba0ea138f2eccbad6478524aafc73f3b078e7b6",
+      "artifact_sha256": {
+        "binary_ir": "71811f1d9c95ac5d014db7db384f373e0b259f9ea04fd52a1b329c29f8e59978",
+        "prover": "b5dbe8ea5812a03ff08bfcfc9082e57e0a091a992c9e00f6f84a0e6e91f8da3b",
+        "verifier": "503dcd90dd2135e678877412cec4cf3fa54e31349aad479a7ccef30d96995df5"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "bc9129451b2e6629e49ae92b8f97ce3bcd0d6a5e05ac3f8b57a2fdf1674c6ba8",
+          "artifacts": [
+            {
+              "digest": "71811f1d9c95ac5d014db7db384f373e0b259f9ea04fd52a1b329c29f8e59978",
+              "kind": "binary_ir",
+              "size": 670
+            },
+            {
+              "digest": "b5dbe8ea5812a03ff08bfcfc9082e57e0a091a992c9e00f6f84a0e6e91f8da3b",
+              "kind": "prover",
+              "size": 688594
+            },
+            {
+              "digest": "503dcd90dd2135e678877412cec4cf3fa54e31349aad479a7ccef30d96995df5",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "fe767fd4d3a598351f36ba2ea5de9b7546aff954039512947b08679cf1f4e988",
+          "derivation_id": "f9d4d72bece0ae928bc4b1da6bec0ae23a7d3ecd6f7f8f037d7aa2f1e2d107e0",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "deactivate",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "0104892364fe7c0fe55247099ba0ea138f2eccbad6478524aafc73f3b078e7b6",
+            "kind": "source",
+            "size": 9955
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "recoverControllerKey",
+      "source_sha256": "235763fa23e8efefeabfd2f3dc3deb2f25bd8362ff5d9a20c02462a46a121e27",
+      "artifact_sha256": {
+        "binary_ir": "0337dcec880291c1809f649aa872b497ee765bb8a41ecb70269fb422b63c5201",
+        "prover": "f62ce86b7e6b3b3afa42cf42977c258628c1e3083ca2033c8b090914c17c095c",
+        "verifier": "92130ed352bd0b3de0e417b0b7722bd94846dce528d828efb0f484f9269d41c7"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "6701ff3d31bb3d9d54effb682fd5da9302bd9ffa34c29fd8c6f31e7fd2466f9f",
+          "artifacts": [
+            {
+              "digest": "0337dcec880291c1809f649aa872b497ee765bb8a41ecb70269fb422b63c5201",
+              "kind": "binary_ir",
+              "size": 969
+            },
+            {
+              "digest": "f62ce86b7e6b3b3afa42cf42977c258628c1e3083ca2033c8b090914c17c095c",
+              "kind": "prover",
+              "size": 689036
+            },
+            {
+              "digest": "92130ed352bd0b3de0e417b0b7722bd94846dce528d828efb0f484f9269d41c7",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "3eb45931bd95b433238a34b682db90188a9be87a04f068e2676a9864103629b8",
+          "derivation_id": "3664ee2c40159ed2e1e6eadeca5dbb930d7f2776a2dba02574325fa1881f8dba",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "recoverControllerKey",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "235763fa23e8efefeabfd2f3dc3deb2f25bd8362ff5d9a20c02462a46a121e27",
+            "kind": "source",
+            "size": 14060
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "removeSchnorrJubjubVerificationMethod",
+      "source_sha256": "62cc45f68f44e4f43084bd55e676dd83ae5428c68db3b9f7f088390c1824b3e9",
+      "artifact_sha256": {
+        "binary_ir": "8a03e504515e51b76e31deef652003ec882477393b4c6fa3151a57d36893460c",
+        "prover": "5c8da50264e143f1820536ebe1f497d130da3579a11a83f32e0e89f19fcc0ae6",
+        "verifier": "12fda23df11e62a4396442f260f3af13fb0adf33c90cb8b934a7d9a34a017249"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "5c201770b85a9f9696f4928e691df8ed18d9f82d64188ea34b01b08e6ae6e187",
+          "artifacts": [
+            {
+              "digest": "8a03e504515e51b76e31deef652003ec882477393b4c6fa3151a57d36893460c",
+              "kind": "binary_ir",
+              "size": 1050
+            },
+            {
+              "digest": "5c8da50264e143f1820536ebe1f497d130da3579a11a83f32e0e89f19fcc0ae6",
+              "kind": "prover",
+              "size": 688838
+            },
+            {
+              "digest": "12fda23df11e62a4396442f260f3af13fb0adf33c90cb8b934a7d9a34a017249",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "0ab00d995ec488424bae487a50b6b41dbf102ec3af596512a27da25d7493ebc6",
+          "derivation_id": "b62d42dcbc02a5f27f2e07736c0f56b024c7d6d355b443070f9dcd8688d60877",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "removeSchnorrJubjubVerificationMethod",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "62cc45f68f44e4f43084bd55e676dd83ae5428c68db3b9f7f088390c1824b3e9",
+            "kind": "source",
+            "size": 16142
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "removeService",
+      "source_sha256": "e1649337f8a262d3b67bb1ae913e81427dca1fa8951df7743e304c0bb13ebb32",
+      "artifact_sha256": {
+        "binary_ir": "68239d8a7a08289369738ba137d22b45245b1782b9e9906057b0285190f586a5",
+        "prover": "74203234bf8dd5e94274b2e9638e3bdab7084a0faf9bd1f6d6034e2f0af641ef",
+        "verifier": "8ed93cf7f4635705ef54a90c3548225e8e45db1726b6f8a97ebf49f21d064200"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "8922acca37b946adf48c75eae2cf24f80aa8859e1060513046ab6b2e921b6bbd",
+          "artifacts": [
+            {
+              "digest": "68239d8a7a08289369738ba137d22b45245b1782b9e9906057b0285190f586a5",
+              "kind": "binary_ir",
+              "size": 699
+            },
+            {
+              "digest": "74203234bf8dd5e94274b2e9638e3bdab7084a0faf9bd1f6d6034e2f0af641ef",
+              "kind": "prover",
+              "size": 688589
+            },
+            {
+              "digest": "8ed93cf7f4635705ef54a90c3548225e8e45db1726b6f8a97ebf49f21d064200",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "e4a64ce29f9be2466027b33ac1f5be874ec751356e1a5dbdc899bf5154b47612",
+          "derivation_id": "5d01e1f583bb7d61f0cbdf8c6cdd73a067a3b9ea389479bf1b84e97fd7fbaa04",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "removeService",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "e1649337f8a262d3b67bb1ae913e81427dca1fa8951df7743e304c0bb13ebb32",
+            "kind": "source",
+            "size": 10019
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "removeVerificationMethod",
+      "source_sha256": "bdd2df1c30883c58891b67f410a0fa66656830c0b481dadb42880f0a7667efd3",
+      "artifact_sha256": {
+        "binary_ir": "aa64f8e03acd343057d02eefd03d13d0c3b82acd4b1d122db120276cacda5f45",
+        "prover": "1a65afbb09a65e1ed4fb1e6b67d50a8df7aff66f2bc7dc37258eaea94b2f596e",
+        "verifier": "6d6cce46107e803d456700e6b99c1a2b0ac107a1196c2e341f4113be4871b03a"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "ee8bbb03252a864f4877ae2f7295ca1704fac5e756e47ec592fbfe3052aecc64",
+          "artifacts": [
+            {
+              "digest": "aa64f8e03acd343057d02eefd03d13d0c3b82acd4b1d122db120276cacda5f45",
+              "kind": "binary_ir",
+              "size": 1057
+            },
+            {
+              "digest": "1a65afbb09a65e1ed4fb1e6b67d50a8df7aff66f2bc7dc37258eaea94b2f596e",
+              "kind": "prover",
+              "size": 688875
+            },
+            {
+              "digest": "6d6cce46107e803d456700e6b99c1a2b0ac107a1196c2e341f4113be4871b03a",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "c681a3a2b0ca698f52042a04e41d5d11defad29f9cd10c26dd1e2d1249f4da38",
+          "derivation_id": "7a11e951995c4fd212380a1099bf59911d21d87585f404b6d8954d25fab46949",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "removeVerificationMethod",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "bdd2df1c30883c58891b67f410a0fa66656830c0b481dadb42880f0a7667efd3",
+            "kind": "source",
+            "size": 16187
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "rotateControllerKey",
+      "source_sha256": "f199e5c570d002caf820f938c58c566a8b0b4cc67a22cca6fd3a2fd6c78cd3b3",
+      "artifact_sha256": {
+        "binary_ir": "a28fc03466fbdbf5969e9a3893efca6af67e3fbb56521f140ac5207ce9a2fd2c",
+        "prover": "e02640c39d3dcea71ebaaa37b1a4102e34320208c9a759428989ad8a08272a0d",
+        "verifier": "453b2cc40994523f1a5b0c9632ed30bac72696852524b09b3ad07f3a6663f651"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "d933b5cb834800eee689f103bd773956c2cffbcaebb2dbb75cfdc68e09acf34f",
+          "artifacts": [
+            {
+              "digest": "a28fc03466fbdbf5969e9a3893efca6af67e3fbb56521f140ac5207ce9a2fd2c",
+              "kind": "binary_ir",
+              "size": 968
+            },
+            {
+              "digest": "e02640c39d3dcea71ebaaa37b1a4102e34320208c9a759428989ad8a08272a0d",
+              "kind": "prover",
+              "size": 689028
+            },
+            {
+              "digest": "453b2cc40994523f1a5b0c9632ed30bac72696852524b09b3ad07f3a6663f651",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "c228533c4fcea11b96b01d32d4493a722422aab4e4bece167d232ae3a639fb7c",
+          "derivation_id": "3f15d4c0e136aecec554812bdccee551d3d460aa9075ba08a9ac20900dc2974b",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "rotateControllerKey",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "f199e5c570d002caf820f938c58c566a8b0b4cc67a22cca6fd3a2fd6c78cd3b3",
+            "kind": "source",
+            "size": 14057
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "setAlsoKnownAs",
+      "source_sha256": "0a9eb28bbff7edfb6610420d3eee36e1abfc45bdc9aea072a224eee5a2ce9896",
+      "artifact_sha256": {
+        "binary_ir": "218c6b1d4ea9284dd6393f7f7faf1f4241d622611e622e39fc2fad23222f0af7",
+        "prover": "f3359e4c130532e3155a10f1fafc46e80103c9d9ec43fbf3c3ffde2ff82244f5",
+        "verifier": "5e920941178dac6fe1b6831eb7365ec2336f1e76cfbc709a2263f6141d6849d5"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "86b9e2988fd7d0677aafc6fae276298b1a5e663e6305520e09f159fa3cc23233",
+          "artifacts": [
+            {
+              "digest": "218c6b1d4ea9284dd6393f7f7faf1f4241d622611e622e39fc2fad23222f0af7",
+              "kind": "binary_ir",
+              "size": 1086
+            },
+            {
+              "digest": "f3359e4c130532e3155a10f1fafc46e80103c9d9ec43fbf3c3ffde2ff82244f5",
+              "kind": "prover",
+              "size": 689248
+            },
+            {
+              "digest": "5e920941178dac6fe1b6831eb7365ec2336f1e76cfbc709a2263f6141d6849d5",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "78e2afad7e50819fd34f8eba78d9f8e5743ee9e54ff0b83a961113447a338e11",
+          "derivation_id": "1acbf1eed27918c107e70a7f4bc7805d397f0e6131a63618ef0d20dbf578f274",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "setAlsoKnownAs",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "0a9eb28bbff7edfb6610420d3eee36e1abfc45bdc9aea072a224eee5a2ce9896",
+            "kind": "source",
+            "size": 14729
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "setSchnorrJubjubVerificationMethod",
+      "source_sha256": "45b6d35f1f587e790d35b1821177b39053bba930d828aae8a42cce9383a2c0e2",
+      "artifact_sha256": {
+        "binary_ir": "07e78124c1e44de00d8b759f9058315d3fff143303c203a6db770a59f7cc97e8",
+        "prover": "cca9bb4b460e72123117941531ace9c51a0081b3507916288a484f119cbcd405",
+        "verifier": "bdca57a0ecde6aa97f36e9a4e007ab6606e9c53e3c74bd25f69a0de6b9a4cd5c"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "07ca8bea719fb1ef886e2a2845342a55dcad522c8132e4145c980ee09ef1a252",
+          "artifacts": [
+            {
+              "digest": "07e78124c1e44de00d8b759f9058315d3fff143303c203a6db770a59f7cc97e8",
+              "kind": "binary_ir",
+              "size": 1191
+            },
+            {
+              "digest": "cca9bb4b460e72123117941531ace9c51a0081b3507916288a484f119cbcd405",
+              "kind": "prover",
+              "size": 689481
+            },
+            {
+              "digest": "bdca57a0ecde6aa97f36e9a4e007ab6606e9c53e3c74bd25f69a0de6b9a4cd5c",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "08d92ab5379214bb66d59f936a1f82bc1670833bdcf8ca94f5ca66f5a8676439",
+          "derivation_id": "e8baa71fdaa79fe81378024123bbce6183a4aa6b6aec6b7bafe9cdbb048f964c",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "setSchnorrJubjubVerificationMethod",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "45b6d35f1f587e790d35b1821177b39053bba930d828aae8a42cce9383a2c0e2",
+            "kind": "source",
+            "size": 16425
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "setService",
+      "source_sha256": "f02be21a52815b1bebb37658fdba77dcca245ec1f889799224f3c2b43a46b1f0",
+      "artifact_sha256": {
+        "binary_ir": "bdc7810af70c7ea37c4414ae345bec13f2bd579bf0088f39e43bc72da11cd1a0",
+        "prover": "c92a133001f1e1d420d79d891ff48a76845dd87171fba69fd3df93016457d4b9",
+        "verifier": "b6afb793c060771cd7aca373bc99d7462ef30eebda1ff93505b65157ea1efa88"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "0c15354315031b9f4a792311921065c3785f74d897ffe5225fdd0f3cfd29a6d2",
+          "artifacts": [
+            {
+              "digest": "bdc7810af70c7ea37c4414ae345bec13f2bd579bf0088f39e43bc72da11cd1a0",
+              "kind": "binary_ir",
+              "size": 1037
+            },
+            {
+              "digest": "c92a133001f1e1d420d79d891ff48a76845dd87171fba69fd3df93016457d4b9",
+              "kind": "prover",
+              "size": 689331
+            },
+            {
+              "digest": "b6afb793c060771cd7aca373bc99d7462ef30eebda1ff93505b65157ea1efa88",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "c485a60ea7fee09df12e6be5658ab80124dd895cb770cecab1928ffa47c48396",
+          "derivation_id": "aa47793f97bf0bc7bf8220b7a50afa559276905b8857bef899b242ab00541158",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "setService",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "f02be21a52815b1bebb37658fdba77dcca245ec1f889799224f3c2b43a46b1f0",
+            "kind": "source",
+            "size": 14594
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "setVerificationMethod",
+      "source_sha256": "b8d635a19860d6af62d1f97584e1d3abc811b607307663b27c8d5d3635e7ad41",
+      "artifact_sha256": {
+        "binary_ir": "5cb5762fd4d57f6ebf70e80a3667292b9f2982b56ceebc7049b5df0fa2c6d4b6",
+        "prover": "0811b64480029ced94eb0f823fbe8f0cb4caa6e662316d15175ff244081f011d",
+        "verifier": "2d7272099b0c3e3067d86fc0ba09979c99d409280bb5f6d38d9e946142dc0f4f"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "7f91aae9e213cadd2a676106e3112ac99d1383aac8955e48d9cfa82583229e54",
+          "artifacts": [
+            {
+              "digest": "5cb5762fd4d57f6ebf70e80a3667292b9f2982b56ceebc7049b5df0fa2c6d4b6",
+              "kind": "binary_ir",
+              "size": 2023
+            },
+            {
+              "digest": "0811b64480029ced94eb0f823fbe8f0cb4caa6e662316d15175ff244081f011d",
+              "kind": "prover",
+              "size": 1349033
+            },
+            {
+              "digest": "2d7272099b0c3e3067d86fc0ba09979c99d409280bb5f6d38d9e946142dc0f4f",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "b3f87b22ffc112072a69b30c8a939263358f65fc6692251510ef68ff16d365c5",
+          "derivation_id": "a7c901b88a977a85b816ca9ad1c76fd1605d9ac150fd873ab4abb9ecdc6da74a",
+          "generation_ms": null,
+          "k": 12,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "setVerificationMethod",
+          "parameter_digest": "ef08eb3fcf62df8f72c515cffa027e681808b530cb016eea104115545ef6d5c8",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "b8d635a19860d6af62d1f97584e1d3abc811b607307663b27c8d5d3635e7ad41",
+            "kind": "source",
+            "size": 27314
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "setVerificationMethodRelation",
+      "source_sha256": "38f7d0d642cdf3c96020abf85e99f8fe9583368c5054bcf30d17ee3e7e862e65",
+      "artifact_sha256": {
+        "binary_ir": "545c67c436af8bfed8be439fdd1679213d5304e70caedae25f594258382d8033",
+        "prover": "19d51d877b9dcae9421d2a875ddb3fa98d1bc0519f4fcb30801d5daa27d68d2c",
+        "verifier": "903cad040b8f49da9b19213f240761b5ed6f39ce9b239435a2b30c2d5a269ef5"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "7c91f22f20e5cd6bded89281d4606f8a83c9245250ae6ed959218d7173479c84",
+          "artifacts": [
+            {
+              "digest": "545c67c436af8bfed8be439fdd1679213d5304e70caedae25f594258382d8033",
+              "kind": "binary_ir",
+              "size": 3600
+            },
+            {
+              "digest": "19d51d877b9dcae9421d2a875ddb3fa98d1bc0519f4fcb30801d5daa27d68d2c",
+              "kind": "prover",
+              "size": 1352930
+            },
+            {
+              "digest": "903cad040b8f49da9b19213f240761b5ed6f39ce9b239435a2b30c2d5a269ef5",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "b275de4b1ccca5e0c54e3855cb4c1af3d4855e49cc81569028a5823405021351",
+          "derivation_id": "62bc6f793cde5a3766d7664a42407475c396cdbed0f8cf4b80f224c3177fcf28",
+          "generation_ms": null,
+          "k": 12,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "setVerificationMethodRelation",
+          "parameter_digest": "ef08eb3fcf62df8f72c515cffa027e681808b530cb016eea104115545ef6d5c8",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "38f7d0d642cdf3c96020abf85e99f8fe9583368c5054bcf30d17ee3e7e862e65",
+            "kind": "source",
+            "size": 46279
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    },
+    {
+      "name": "verifySchnorrJubjubDigestSignature",
+      "source_sha256": "19dbac6217cc323aa7f565d3f0f903e13ba57ad6b367be831558f4b3cb1ab839",
+      "artifact_sha256": {
+        "binary_ir": "fa09077cf347230a5263b79de2053789e26b19af873506bdc336c2a8d5360b5e",
+        "prover": "2f94d5973521839dcc3453635d8447141ab9125db3bd2951daf60ebe08e524c7",
+        "verifier": "8f03e886938a8226dc45fdcf35fe3f40cc1c913658b6d2aac1887a53fdfa5484"
+      },
+      "descriptor": {
+        "input_format": "midnight-zkir-v2-json",
+        "input_version": {
+          "major": 2,
+          "minor": 0
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "b39595916f51a5455b55b47557cbbadb8d51e265d792cba0c4addf73e4914b51",
+          "artifacts": [
+            {
+              "digest": "fa09077cf347230a5263b79de2053789e26b19af873506bdc336c2a8d5360b5e",
+              "kind": "binary_ir",
+              "size": 381
+            },
+            {
+              "digest": "2f94d5973521839dcc3453635d8447141ab9125db3bd2951daf60ebe08e524c7",
+              "kind": "prover",
+              "size": 687799
+            },
+            {
+              "digest": "8f03e886938a8226dc45fdcf35fe3f40cc1c913658b6d2aac1887a53fdfa5484",
+              "kind": "verifier",
+              "size": 1591
+            }
+          ],
+          "build_fingerprint": "54fbd7eade3a178271ec9f8e041eeceae15e082620c87d74e3ab889dc7d699e5",
+          "bundle_id": "61777491e07c60eb3fc59040ff77e938d545f724dce6d6fc1bd818f6b4aed3a0",
+          "derivation_id": "b0c72cc7854562b4b15d136e191bbbb823a9450780578ac9327c6d9d1688580b",
+          "generation_ms": null,
+          "k": 11,
+          "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+          "name": "verifySchnorrJubjubDigestSignature",
+          "parameter_digest": "9901589d7956ff58be0d85569b2f455b77b58c3758026ffb5bbe4807000b96d1",
+          "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "19dbac6217cc323aa7f565d3f0f903e13ba57ad6b367be831558f4b3cb1ab839",
+            "kind": "source",
+            "size": 4847
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v2]",
+          "prover_key": "prover-key[v7](ir-source[v2])",
+          "verifier_key": "verifier-key[v6]"
+        }
+      }
+    }
+  ]
+}

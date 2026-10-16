@@ -143,7 +143,7 @@ fn real_v3_proofs_cache_identity_and_profile_separation() {
     let refused = Command::new(cli())
         .arg("--cache-dir")
         .arg(temp.path())
-        .arg("prepare")
+        .args(["--profile", "zkir3", "prepare"])
         .arg(unsupported_path)
         .output()
         .unwrap();

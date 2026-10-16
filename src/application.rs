@@ -59,7 +59,7 @@ pub fn import_bytes_with_profile(
     } else {
         store.put(bytes)?;
         let r = Record {
-            format: if matches!(circuit, engine::Circuit::V3(_)) {
+            format: if !matches!(circuit, engine::Circuit::V2(_)) {
                 Some(circuit.format().to_owned())
             } else {
                 None
@@ -342,6 +342,8 @@ pub fn build_fingerprint() -> String {
     bytes.extend(include_bytes!("backend.rs"));
     bytes.extend(include_bytes!("engine.rs"));
     bytes.extend(include_bytes!("zkir3.rs"));
+    bytes.extend(include_bytes!("worker.rs"));
+    bytes.extend(include_bytes!("zkir31.rs"));
     bytes.extend(include_bytes!("../Cargo.toml"));
     bytes.extend(include_bytes!("../flake.lock"));
     bytes.extend(env!("FORGE_RUSTC_VERSION").as_bytes());
@@ -383,4 +385,58 @@ pub fn default_cache_dir() -> Result<std::path::PathBuf> {
 
 pub fn absolute_input(path: &Path) -> Result<String> {
     Ok(fs::canonicalize(path)?.to_string_lossy().into_owned())
+}
+
+/// A fixed genuine fixture control; never a general proof-response API/cache.
+pub async fn qualify_export(directory: &Path, params_dir: Option<&Path>) -> Result<Value> {
+    let manifest: Record = serde_json::from_slice(&fs::read(directory.join("manifest.json"))?)?;
+    crate::snapshot::record_valid(&manifest)?;
+    ensure!(
+        manifest.profile.as_deref() == Some(backend::PROFILE),
+        crate::error::Kind::ProfileFormatMismatch
+    );
+    ensure!(
+        manifest.source.digest == digest(include_bytes!("../fixtures/assert.zkir")),
+        crate::error::Kind::InvalidInput
+    );
+    let mut artifacts = Vec::new();
+    for (kind, folder, extension) in [
+        (ArtifactKind::BinaryIr, "zkir", "bzkir"),
+        (ArtifactKind::Prover, "keys", "prover"),
+        (ArtifactKind::Verifier, "keys", "verifier"),
+    ] {
+        let bytes = fs::read(
+            directory
+                .join(folder)
+                .join(format!("{}.{}", manifest.name, extension)),
+        )?;
+        let entry = manifest
+            .artifacts
+            .iter()
+            .find(|a| a.kind == kind)
+            .context(crate::error::Kind::IntegrityError)?;
+        ensure!(
+            entry.digest == digest(&bytes) && entry.size == bytes.len() as u64,
+            crate::error::Kind::IntegrityError
+        );
+        artifacts.push(bytes);
+    }
+    let ir = backend::parse(include_bytes!("../fixtures/assert.zkir"))?;
+    let params = backend::parameters(&ir, params_dir, false).await?;
+    ensure!(
+        manifest.parameter_digest.as_deref() == Some(params.digest.as_str()),
+        crate::error::Kind::InvalidParameters
+    );
+    backend::qualify(
+        &params,
+        &backend::LocalResolver {
+            ir: artifacts.remove(0),
+            prover: artifacts.remove(0),
+            verifier: artifacts.remove(0),
+        },
+    )
+    .await?;
+    Ok(
+        json!({"valid_proof_verified":true,"invalid_statement_rejected":true,"corrupt_proof_rejected":true,"used_downloaded_artifacts":true}),
+    )
 }

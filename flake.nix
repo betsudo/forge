@@ -36,12 +36,25 @@
             nativeBuildInputs = [ pkgs.pkg-config ];
             buildInputs = [ pkgs.openssl ];
           };
+          worker31 = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
+            pname = "midnight-zkir-forge-zkir31-worker";
+            inherit version;
+            src = pkgs.lib.fileset.toSource { root = ./.; fileset = pkgs.lib.fileset.unions [ ./workers/zkir31 ./src/error.rs ]; };
+            sourceRoot = "source/workers/zkir31";
+            cargoLock = {
+              lockFile = ./workers/zkir31/Cargo.lock;
+              outputHashes."midnight-base-crypto-1.1.0" = "sha256-efaVU+wDP87weye/J9jO4HbixQ9KyVmyK1IrSxGn6c4=";
+              outputHashes."midnight-zkir-3.1.0-rc.1" = "sha256-zYjKc5jNnUXqHVCzovcSOuh7wvjzQN4unb19IbBwbiQ=";
+            };
+            nativeBuildInputs = [ pkgs.pkg-config ];
+            buildInputs = [ pkgs.openssl ];
+          };
           forge = (pkgs.makeRustPlatform { cargo = toolchain; rustc = toolchain; }).buildRustPackage {
           pname = "midnight-zkir-forge";
           inherit version;
           src = pkgs.lib.fileset.toSource {
             root = ./.;
-            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ./scripts/forge-ci.py ];
+            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ./workers/zkir31 ./benchmarks ./scripts/forge-ci.py ];
           };
           cargoLock = {
             lockFile = ./Cargo.lock;
@@ -50,8 +63,10 @@
           nativeBuildInputs = [ pkgs.pkg-config pkgs.makeWrapper ];
           buildInputs = [ pkgs.openssl ];
           MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER = "${worker}/bin/midnight-zkir-forge-zkir3-worker";
+          MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER = "${worker31}/bin/midnight-zkir-forge-zkir31-worker";
           postInstall = ''
             ln -s ${worker}/bin/midnight-zkir-forge-zkir3-worker $out/bin/midnight-zkir-forge-zkir3-worker
+            ln -s ${worker31}/bin/midnight-zkir-forge-zkir31-worker $out/bin/midnight-zkir-forge-zkir31-worker
             install -Dm644 scripts/forge-ci.py $out/share/midnight-zkir-forge/forge-ci.py
             makeWrapper ${pkgs.python3}/bin/python3 $out/bin/midnight-zkir-forge-ci \
               --add-flags "$out/share/midnight-zkir-forge/forge-ci.py --binary $out/bin/midnight-zkir-forge"
@@ -60,6 +75,7 @@
       in {
         default = forge;
         zkir3-worker = worker;
+        zkir31-worker = worker31;
       } // pkgs.lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
         dockerImage = pkgs.dockerTools.buildLayeredImage {
           name = "midnight-zkir-forge";

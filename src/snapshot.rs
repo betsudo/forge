@@ -3,7 +3,7 @@ use crate::{
     application, backend,
     domain::{ArtifactKind, Record, WorkerProvenance, identity, validate_id, validate_name},
     store::SCHEMA_SQL,
-    zkir3,
+    zkir3, zkir31,
 };
 use anyhow::{Context, Result, ensure};
 use rusqlite::{Connection, OpenFlags, TransactionBehavior};
@@ -34,6 +34,8 @@ struct Producer {
     profile: String,
     ledger_revision: String,
     worker: Option<WorkerProvenance>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    worker31: Option<WorkerProvenance>,
 }
 #[derive(Debug, Serialize, Deserialize)]
 #[serde(deny_unknown_fields)]
@@ -67,6 +69,7 @@ struct Summary {
     parameter_digests: BTreeSet<String>,
     formats: BTreeSet<String>,
     has_v3: bool,
+    has_v31: bool,
 }
 pub struct Scope {
     pub profile: Option<crate::engine::ProfileSelector>,
@@ -79,6 +82,7 @@ fn check_scope(summary: &Summary, scope: &Scope) -> Result<()> {
                 (backend::PROFILE, "midnight-zkir-v2-json")
             }
             crate::engine::ProfileSelector::Zkir3 => (zkir3::PROFILE, zkir3::FORMAT),
+            crate::engine::ProfileSelector::Zkir31 => (zkir31::PROFILE, zkir31::FORMAT),
         };
         crate::require!(
             summary.profiles.iter().all(|p| p == profile)
@@ -102,7 +106,7 @@ fn check_scope(summary: &Summary, scope: &Scope) -> Result<()> {
     }
     Ok(())
 }
-fn producer(v3: bool) -> Result<Producer> {
+fn producer(v3: bool, v31: bool) -> Result<Producer> {
     let worker = if v3 {
         Some(zkir3::call("profile", &[], None, false, None, None)?.1)
     } else {
@@ -113,6 +117,11 @@ fn producer(v3: bool) -> Result<Producer> {
         profile: backend::PROFILE.to_owned(),
         ledger_revision: backend::LEDGER_REV.to_owned(),
         worker,
+        worker31: if v31 {
+            Some(zkir31::call("profile", &[], None, false, None, None)?.1)
+        } else {
+            None
+        },
     })
 }
 fn regular(path: &Path, directory: bool) -> Result<()> {
@@ -361,7 +370,10 @@ pub(crate) fn record_valid(record: &Record) -> Result<()> {
     validate_id(&record.source.digest)?;
     let format = record.format.as_deref().unwrap_or("midnight-zkir-v2-json");
     crate::require!(
-        matches!(format, "midnight-zkir-v2-json" | "midnight-zkir-v3-json"),
+        matches!(
+            format,
+            "midnight-zkir-v2-json" | "midnight-zkir-v3-json" | "midnight-zkir-v3.1-json"
+        ),
         crate::error::Kind::SnapshotProfileMismatch,
         "snapshot_profile_mismatch"
     );
@@ -406,13 +418,14 @@ pub(crate) fn record_valid(record: &Record) -> Result<()> {
             crate::error::Kind::IntegrityError,
             "snapshot_integrity_error: artifact identity"
         );
-        let v3 = format == "midnight-zkir-v3-json";
-        let profile = if v3 { zkir3::PROFILE } else { backend::PROFILE };
-        let rev = if v3 {
-            zkir3::REVISION
-        } else {
-            backend::LEDGER_REV
+        let worker_spec = match format {
+            zkir3::FORMAT => Some(&zkir3::SPEC),
+            zkir31::FORMAT => Some(&zkir31::SPEC),
+            _ => None,
         };
+        let v3 = worker_spec.is_some();
+        let profile = worker_spec.map_or(backend::PROFILE, |s| s.profile);
+        let rev = worker_spec.map_or(backend::LEDGER_REV, |s| s.ledger_revision);
         crate::require!(
             record.profile.as_deref() == Some(profile)
                 && record.ledger_revision.as_deref() == Some(rev),
@@ -448,7 +461,8 @@ pub(crate) fn record_valid(record: &Record) -> Result<()> {
                 .as_ref()
                 .context("snapshot_integrity_error: worker missing")?;
             crate::require!(
-                worker.profile == profile && worker.source_revision == rev,
+                worker.profile == profile
+                    && worker.source_revision == worker_spec.expect("worker profile").revision,
                 crate::error::Kind::SnapshotProfileMismatch,
                 "snapshot_profile_mismatch"
             );
@@ -611,6 +625,7 @@ fn validate_payload(root: &Path, inventory: &[Entry]) -> Result<Summary> {
                     .unwrap_or_else(|| "midnight-zkir-v2-json".to_owned()),
             );
             summary.has_v3 |= record.format.as_deref() == Some(zkir3::FORMAT);
+            summary.has_v31 |= record.format.as_deref() == Some(zkir31::FORMAT);
             if let Some(p) = record.profile {
                 summary.profiles.insert(p);
             }
@@ -840,7 +855,7 @@ pub fn create(
     let mut manifest = Manifest {
         schema: 1,
         format: "midnight-zkir-forge/snapshot/v1".to_owned(),
-        producer: producer(summary.has_v3)?,
+        producer: producer(summary.has_v3, summary.has_v31)?,
         partition,
         files: entries,
         snapshot_id: String::new(),
@@ -924,7 +939,11 @@ pub fn restore(
         "snapshot_partition_mismatch"
     );
     crate::require!(
-        manifest.producer == producer(manifest.producer.worker.is_some())?,
+        manifest.producer
+            == producer(
+                manifest.producer.worker.is_some(),
+                manifest.producer.worker31.is_some()
+            )?,
         crate::error::Kind::SnapshotProfileMismatch,
         "snapshot_profile_mismatch: producer differs"
     );
@@ -974,7 +993,8 @@ pub fn restore(
     let summary = validate_payload(staging.path(), &manifest.files)?;
     check_scope(&summary, scope)?;
     crate::require!(
-        summary.has_v3 == manifest.producer.worker.is_some(),
+        summary.has_v3 == manifest.producer.worker.is_some()
+            && summary.has_v31 == manifest.producer.worker31.is_some(),
         crate::error::Kind::SnapshotProfileMismatch,
         "snapshot_profile_mismatch: worker declaration"
     );

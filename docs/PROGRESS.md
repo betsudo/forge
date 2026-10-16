@@ -458,3 +458,23 @@
 - GitHub milestone includes issues1–18. No push, release/tag/upload, hosted dispatch,
   deployment, Compact/other-checkout edits or shared CLI reinstallation. Installed
   shared Nix CLI remains0.2.0; this increment delivers source and local candidate.
+
+
+## 2026-10-16 — issues #11/#13 exact consumer integration in progress
+
+- Added isolated Compact0.35.0 JSON3.1 worker pinned to official ZKIR e82d81d2
+  and ledger9a8777c4; existing v2/JSON3.0 pins and identity transcripts are unchanged.
+  ZKIR source and ledger revisions are separately represented. Verifier serialization
+  is v7 only for the new profile. Ledger9 transactions/network remain deferred.
+- Parent concurrent requests join one generation; strict descriptor premises reject
+  swapped source/ledger revisions and minors. Local three-profile snapshot/helper
+  controls prove restored warm exports, reject invalid/corrupt proofs, preserve
+  evicted identities and reject a changed worker31 provenance. Local three-profile
+  recovery controls pass; final installed-candidate receipts remain pending.
+- Exact DID/Passport compiler artifact and genuine application preimage qualification
+  receipts are in docs/evidence/did-* and passport-*. All52 Passport codegen outputs
+  match across three full runs. These are compatibility measurements; final paired
+  release-binary transport-inclusive benchmarks remain pending.
+- Independent parent identity/concurrency review found and resolved the separate
+  repository revision issue. No further blocking finding in the reviewed Rust paths.
+  No Compact/other checkout edits, publication or shared CLI replacement.
