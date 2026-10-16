@@ -1,0 +1,48 @@
+{
+  "schema": 1,
+  "status": "actual VM image download in progress; guest not yet booted or qualified",
+  "image": {
+    "image": "ghcr.io/cirruslabs/macos-tahoe-vanilla",
+    "manifest_digest": "sha256:eeec54bfe1f076e27786c5d92b89187a05b1d109b5071eb2dcdf02d596e34640",
+    "compressed_layer_bytes": 23990480836,
+    "virtual_disk_bytes": 50000000000
+  },
+  "tool": {
+    "version": "2.41.1",
+    "source_release": "https://github.com/openai/tart/releases/tag/2.41.1",
+    "source_asset": {
+      "name": "tart.tar.gz",
+      "size": 22959557,
+      "digest": "sha256:e680a734febccfce7d4e910c1f7f13fc3b00f19a181c945e2d746de3214c32c2",
+      "browser_download_url": "https://github.com/openai/tart/releases/download/2.41.1/tart.tar.gz"
+    },
+    "packaging": "isolated local Nix derivation uses existing locked Nixpkgs; no global installation"
+  },
+  "guest_runtime": {
+    "version": "3.14.8",
+    "release_page": "https://www.python.org/downloads/release/python-3148/",
+    "url": "https://www.python.org/ftp/python/3.14.8/python-3.14.8-macos11.pkg",
+    "sha256": "507fc086c5c006ff875d344a75b4e67b8fb3c401f1bc4908c6250adb673d4907",
+    "bytes": 75240265,
+    "signature": "Package \"python-3.14.8-macos.pkg\":\n   Status: signed by a developer certificate issued by Apple for distribution\n   Notarization: trusted by the Apple notary service\n   Signed with a trusted timestamp on: 2026-09-30 19:00:05 +0000\n   Certificate Chain:\n    1. Developer ID Installer: Python Software Foundation (BMM5U3QVKW)\n       Expires: 2030-05-21 16:16:18 +0000\n       SHA256 Fingerprint:\n           5D BA F2 7E 6E 8A 6D DA 57 A1 29 49 1F D6 9A 18 3C A8 B0 D4 A8 F8 \n           95 94 6D 56 9D B5 34 D4 5D 3B\n       ------------------------------------------------------------------------\n    2. Developer ID Certification Authority\n       Expires: 2031-09-17 00:00:00 +0000\n       SHA256 Fingerprint:\n           F1 6C D3 C5 4C 7F 83 CE A4 BF 1A 3E 6A 08 19 C8 AA A8 E4 A1 52 8F \n           D1 44 71 5F 35 06 43 D2 DF 3A\n       ------------------------------------------------------------------------\n    3. Apple Root CA\n       Expires: 2035-02-09 21:40:36 +0000\n       SHA256 Fingerprint:\n           B0 B1 73 0E CB C7 FF 45 05 14 2C 49 F1 29 5E 6E DA 6B CA ED 7E 2C \n           68 C5 BE 91 B5 A1 10 01 F0 24\n\n",
+    "scope": "staged guest-only official Nix-free Python installer; not installed on host"
+  },
+  "host": {
+    "macos": "26.2",
+    "machine": "arm64",
+    "free_bytes_observed_now": 78946344960,
+    "hypervisor_supported": true
+  },
+  "isolation_plan": {
+    "tart_home": "session-owned .local/qualification/macos-vm/tart-home",
+    "automatic_pruning_disabled": true,
+    "free_space_floor_bytes": 10737418240,
+    "shared_directories": [],
+    "host_credentials_copied": false,
+    "proof_recovery_network": "deny via sandbox within actual Nix-free guest",
+    "fresh_https_checks": "separate network-enabled qualification"
+  },
+  "candidate_source": "a65d3f00b4eb061a4e46c8769bd866e0767f7d02",
+  "independent_plan_review": "no blocker; record rustc and Gatekeeper stdout/stderr/status, launch argv and guest mounts",
+  "qualification_result": "pending; no clean-Mac support claim"
+}

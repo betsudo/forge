@@ -609,3 +609,21 @@
 - Removed the completed478MiB debug target and empty failed packaging directory;
   preserved all final assets, c40 benchmark payload, exact inputs and evidence.
   Linux-owned resources were already cleaned; no shared Nix/Docker pruning.
+
+## 2026-10-16 — clean-Mac VM staging resumed
+
+- Owner freed space; host capacity became69–75GiB free after initially still
+  reporting16GiB. Confirmed native Apple hypervisor support. The last actual
+  Nix-free Mac gate can now be attempted using a temporary local VM.
+- Started pinned vanilla Tahoe image download into a session-owned Tart home,
+  with automatic pruning disabled and a10GiB free-space floor. Official Tart
+  2.41.1 is hash-pinned and packaged through Nix; existing Forge/Nix pins remain
+  unchanged. No global VM tool/profile or host credential configuration changed.
+- Staged official PSF Python3.14.8 for the guest, verifying SHA and trusted Apple
+  installer signature; not installed on host. Independent VM-plan review found
+  no blocker. Record real guest Nix/Cargo/rustc absence, OS/mounts/Gatekeeper facts
+  and launch argv without host-directory sharing before running frozen a65 assets.
+- Preflight: docs/evidence/private-installer-macos-vm-preflight.json. Download is
+  active; no actual guest qualification result exists yet. Run network-denied
+  real proof/recovery and separate fresh HTTPS controls after boot, retain/review
+  receipts, then remove only the owned VM/cache. #11 remains open.
