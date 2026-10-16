@@ -26,10 +26,10 @@ Final local candidate receipt: docs/evidence/milestone-2026.10.0-local.json.
 - [x] Collect exact Apple libiconv source, patches and BSD/APSL notices separately from Linux.
 - [x] Extend installer/profile inventory to the independently pinned JSON3.1 worker.
 - [x] Exercise optional-worker upgrades and legacy rollback without dangling stable links.
-- [ ] Produce final three-profile candidates from a clean signed source commit.
+- [x] Produce final three-profile candidates from clean signed sources (Linux9359068, macOSa65d3f0; exact per-platform provenance retained).
 - [x] Run actual installed CLI proof and recovery controls on clean Nix-free Linux ARM64 (Debian12 userland, recorded kernel); Intel remains unqualified.
 - [ ] Run actual installed CLI proof and recovery controls on a clean Nix-free macOS host/VM.
-- [ ] Record final independent review and qualification evidence; no publication.
+- [x] Record final independent review and qualification evidence, explicitly retaining the unmet clean-Mac gate; no publication.
 
 A macOS sandbox denying Nix/checkout reads is useful evidence, but does not
 complete the real Nix-free macOS environment requirement.
@@ -41,3 +41,10 @@ all3 installed proof/recovery profiles as UID1000 without Nix/checkout/mounts/ne
 or MIDNIGHT_PP, and separate fresh HTTPS retrieval per profile. The external
 recovery harness fix is signed in4006a29 and its actual digest is recorded.
 This completes Linux ARM64 local qualification, not macOS or Intel qualification.
+
+Latest macOSa65d3f0 restricted-host receipt/audit: docs/evidence/
+private-installer-darwin-a65d3f0-*.json. All3 installed proof/recovery profiles
+pass;777payload files and422Cargo notice identities independently reviewed.
+The refreshed11-file clean-Mac kit uses the corrected explicit-parameter harness;
+private-installer-macos-consumer-kit.json records its checksums. Actual Nix-free
+macOS remains the single unmet required qualification gate.

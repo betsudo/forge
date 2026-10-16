@@ -588,3 +588,24 @@
   session-owned Nix volume, retaining all final assets and raw receipts. Disk free
   increased14to20GiB; reused images and unrelated resources were untouched.
   Exact cleanup inventory/digests are retained in the runtime audit receipt.
+
+## 2026-10-16 — final macOS candidate and clean-host handoff
+
+- The9359068 macOS compile succeeded, but packaging correctly refused after a
+  concurrent evidence commit changed HEAD. Retried packaging from clean signed
+  a65d3f0 using the completed cached build, keeping HEAD fixed until completion.
+- Latest relocated macOS26.2 ARM64 bundle passed installation and all3 genuine
+  proof/negative/reproducibility/recovery profiles with external Python, verified
+  temporary parameters outside checkout, and Nix/checkout reads denied. Final
+  receipt and independent audit: private-installer-darwin-a65d3f0-*.json. Review
+  verified777payload files,422Cargo notice identities and exact source companion.
+- Historical c40 benchmark receipts remain immutable and explicitly attributed to
+  that payload. New main CLI bytes differ; both workers are identical. No latest
+  payload timing claim is inferred from those measurements.
+- Refreshed the11-file clean-Mac consumer kit with a65 assets and the explicit-
+  parameter recovery harness; all checksums verify. Kit receipt records actual
+  minimum macOS26.2 and strict --require-nix-free --recovery command. A real Nix-
+  free Mac/VM is unavailable, so #11 and the overall goal remain open.
+- Removed the completed478MiB debug target and empty failed packaging directory;
+  preserved all final assets, c40 benchmark payload, exact inputs and evidence.
+  Linux-owned resources were already cleaned; no shared Nix/Docker pruning.

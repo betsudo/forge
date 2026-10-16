@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "source_commit": "a65d3f00b4eb061a4e46c8769bd866e0767f7d02",
+  "candidate_sha256": "928ff3665bde047d04d3250fcb665bdcab9a5a3e9781e7ab0ec1c54cdcdb313a",
+  "kit_checksum_file_sha256": "d9a462fe84a582b25192a934660266e1085a1bde5d9e890603b8008c1cb4da5f",
+  "files": 11,
+  "recovery_harness_sha256": "d0275de18762dd8ed58255a9da765ade00bbf344deb66e9832587d110268ffa9",
+  "runtime_python": "external trusted Python3.11+ required",
+  "required_host": "actual Nix-free macOS ARM64 >=26.2; no host currently available",
+  "result": "kit prepared and file digests verified; actual clean-Mac execution pending"
+}
