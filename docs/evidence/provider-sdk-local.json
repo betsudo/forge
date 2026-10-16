@@ -1,0 +1,332 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "tool_versions": {
+    "node": "v24.18.1",
+    "python": "3.14.6"
+  },
+  "compiler_version": "0.35.0 (debb05f94 2026-09-29)",
+  "tool_sha256": {
+    "compactc.bin": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+    "zkir-v3": "2e5febcbe905451cb549991f96eb91b94dfa7bc1a5deb7a41ee017964d532fb4",
+    "forge": "c96c3b9f97157e875b46f47ab09ac872df2622aa8dae849ae2c9626afc15a97a",
+    "worker": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58"
+  },
+  "package_lock_sha256": "3fd7470d047080db1ec2ad067fc008628596962d46f5d8b4bcfd1e36719cb69d",
+  "fixture_sha256": "8567d69237a92f2446d89dbefa33069bac5a3d53ee3fcd2dbfe88a84453d0911",
+  "harness_sha256": {
+    "scripts/check-providers.py": "84a5dd2efafef75f4408ec88210c18632fbedf42b67fb87c065884798593d050",
+    "integration/providers/check.mjs": "35567553d12cc40e7b7eb3851a3e2712dbff9bdc43e2b90f2d51e41a5e9d59a6"
+  },
+  "compiler_metadata_sha256": {
+    "compiler/contract-manifest.json": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+    "compiler/contract-info.json": "b512af98cdf2709c62c698cd9adfbd7f7a2a115ca2e455fc4871fd9df3d68fed"
+  },
+  "materialization": [
+    {
+      "circuit": "increment",
+      "cold_hit": false,
+      "warm_hit": true,
+      "descriptor": {
+        "input_format": "midnight-zkir-v3.1-json",
+        "input_version": {
+          "major": 3,
+          "minor": 1
+        },
+        "keygen_recipe": "library-keygen/default-options/no-rng",
+        "materialized": true,
+        "record": {
+          "artifact_set_id": "69c78dd16363479d6500059ff2d47b285ff315b04a4116f074107ef76edc9d77",
+          "artifacts": [
+            {
+              "digest": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+              "kind": "binary_ir",
+              "size": 102
+            },
+            {
+              "digest": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+              "kind": "prover",
+              "size": 58166
+            },
+            {
+              "digest": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef",
+              "kind": "verifier",
+              "size": 1353
+            }
+          ],
+          "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+          "bundle_id": "ac8e914f69e8810a4f445e90eb2a41b360f0fa9c66d535702714cf2f387e970e",
+          "derivation_id": "5dfed8c2d6df8ac083ccba7fe3d7ec37d1f1df959c226adda3b1ddf11e92252e",
+          "format": "midnight-zkir-v3.1-json",
+          "generation_ms": null,
+          "k": 6,
+          "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+          "name": "increment",
+          "parameter_digest": "cf2ad6be7d0fedf5bec2aaa35f6be4aca33053d74268fdf5aa54fcb2891ea6df",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "schema": 1,
+          "source": {
+            "digest": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670",
+            "kind": "source",
+            "size": 362
+          },
+          "worker": {
+            "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+            "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+            "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+            "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+          }
+        },
+        "schema": 1,
+        "serialization": {
+          "binary_ir": "ir-source[v3-generic]",
+          "prover_key": "prover-key[v7](ir-source[v3-generic])",
+          "verifier_key": "verifier-key[v7]"
+        }
+      },
+      "official_artifact_sha256": {
+        "source": "6b894828e34f757fec5df0e5872a5fbede9c7cb8fa2fbbb20c7e827717914670",
+        "binary_ir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+        "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+        "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+      }
+    }
+  ],
+  "provider_checks": {
+    "schema": 1,
+    "manifest_sha256": "0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46",
+    "lanes": [
+      {
+        "lane": "local",
+        "artifact_runtime_version": "0.20.0",
+        "execution_assertions": 3,
+        "artifact_sha256": {
+          "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+          "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+          "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 29.986959,
+          "public_inputs": 9,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.280959
+        }
+      },
+      {
+        "lane": "http",
+        "artifact_runtime_version": "0.20.0",
+        "execution_assertions": 3,
+        "artifact_sha256": {
+          "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+          "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+          "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 29.001915999999998,
+          "public_inputs": 9,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.3205
+        }
+      },
+      {
+        "lane": "http-gzip",
+        "artifact_runtime_version": "0.20.0",
+        "execution_assertions": 3,
+        "artifact_sha256": {
+          "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+          "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+          "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 30.600875,
+          "public_inputs": 9,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 11.887958000000001
+        }
+      },
+      {
+        "lane": "http-private",
+        "artifact_runtime_version": "0.20.0",
+        "execution_assertions": 3,
+        "artifact_sha256": {
+          "bzkir": "5a47eac4e5660793ad2cfb49acf773a24707498773a4b23f88eb4e53e6e3598c",
+          "prover": "6fa13f54b055be31d4809c59dfd96b08e809641f43bc0d83951cbfb4162ac010",
+          "verifier": "e5e72349fbd569eb276a3945165659fc68daebc58b94a1d66e52b977027924ef"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 28.286292,
+          "public_inputs": 9,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 11.946709
+        }
+      }
+    ],
+    "controls": [
+      "bare-export-default-integrity",
+      "bare-export-missing-runtime",
+      "wrong-local-manifest-anchor",
+      "wrong-fetch-manifest-anchor",
+      "corrupt-local-prover",
+      "corrupt-fetch-prover",
+      "missing-fetch-manifest",
+      "html-fallback",
+      "missing-authentication",
+      "unsafe-local-name",
+      "unsafe-fetch-name",
+      "head-length",
+      "conditional-etag"
+    ],
+    "requests": [
+      {
+        "prefix": "plain",
+        "relative": "compiler/contract-manifest.json",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "zkir/increment.bzkir",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.verifier",
+        "method": "GET"
+      },
+      {
+        "prefix": "gzip",
+        "relative": "compiler/contract-manifest.json",
+        "method": "GET"
+      },
+      {
+        "prefix": "gzip",
+        "relative": "zkir/increment.bzkir",
+        "method": "GET"
+      },
+      {
+        "prefix": "gzip",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      },
+      {
+        "prefix": "gzip",
+        "relative": "keys/increment.verifier",
+        "method": "GET"
+      },
+      {
+        "prefix": "private",
+        "relative": "compiler/contract-manifest.json",
+        "method": "GET"
+      },
+      {
+        "prefix": "private",
+        "relative": "zkir/increment.bzkir",
+        "method": "GET"
+      },
+      {
+        "prefix": "private",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      },
+      {
+        "prefix": "private",
+        "relative": "keys/increment.verifier",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "compiler/contract-manifest.json",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "compiler/contract-manifest.json",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "compiler/contract-manifest.json",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.prover",
+        "method": "HEAD"
+      },
+      {
+        "prefix": "plain",
+        "relative": "keys/increment.prover",
+        "method": "GET"
+      }
+    ],
+    "scope": "native developer-host Node providers and isolated HTTP/gzip/auth fixture; genuine proofs; not browser, TLS/CDN, production Forge provider API or Linux qualification"
+  },
+  "scope": "real minimal Compact0.35.0 JSON3.1 fixture with official SDK5.0.0-rc.2; not full Passport/Compact integration, Linux, browser/TLS/CDN or production HTTP provider readiness",
+  "owned_scratch_cleanup": "temporary stores, copied keys, preimages and proof inputs removed on exit",
+  "npm_provider_releases": [
+    {
+      "name": "@midnight-ntwrk/midnight-js-node-zk-config-provider",
+      "version": "5.0.0-rc.2",
+      "integrity": "sha512-ObkNLSQJC9leKlUuRQKsmCA8xKESO6DveL/R075lw/8bSQzt3E7iUYekwzaXQmOCxTeh7QxkF9mRe9DJ+K6Gsw==",
+      "shasum": "91776f77229812badc6cfd8fabc7e1071c97dbcf"
+    },
+    {
+      "name": "@midnight-ntwrk/midnight-js-fetch-zk-config-provider",
+      "version": "5.0.0-rc.2",
+      "integrity": "sha512-AxaPQORJzdI7zrSyoZhNd/+hbJvEMlC/PVgbcOqjr0U7zSfY1L46eLSXdVA9gTHYenZejuH3Uga7fPqHyBQrhw==",
+      "shasum": "de37dc8c7d32dbff2402b242ad625181ad21555c"
+    }
+  ]
+}

@@ -782,3 +782,27 @@
   found no blocker; fixed minor reference spacing. Documentation-only contract
   delivery does not claim a compiler runtime integration or measured speedup.
 - Next local work: pinned Node/Fetch provider qualification under issue#4.
+
+## 2026-10-16 — local SDK provider qualification (#4 partial delivery)
+
+- Pinned official Node/Fetch providers5.0.0-rc.2 and runtime0.20.0 in a private
+  test-only npm project with lockfile. Node/npm are Nix-owned. Current packages
+  require compiler integrity metadata by default: bare Forge exports are rejected.
+- Real native macOS ARM64 Compact0.35.0 fixture normal compilation precedes
+  cold/warm Forge JSON3.1 comparisons. Official and cached source/binary IR/keys
+  match exactly; copied private key files leave original compiler manifest/info
+  unchanged. No compiler or other checkout was edited or built.
+- Local, HTTP, gzip HTTP and authenticated HTTP SDK reads each execute a fresh
+  contract call, actual proof and verification. Total4proofs/4verifications,
+  8proof negative controls and12state/trace assertions. All13 provider/HTTP
+  refusal/HEAD/ETag controls passed after locked npm ci.
+- Independent review found no blocker; moved generated-contract import before
+  binding the fixture listener and publish the receipt after scratch cleanup.
+  Final receipt: docs/evidence/provider-sdk-local.json, including harness/lock/
+  compiler/CLI/worker/metadata/parameter identities and original publisher package
+  integrity. Local stores, preimages and copied proof artifacts are removed.
+- This is a qualified Node/loopback HTTP fixture, not production Forge provider
+  serving, Linux Passport, browser/TLS/CDN, hosted deployment or a speedup claim.
+  Issue#4 remains open for those appropriate production/browser/transport gates.
+- Source guide: docs/providers/qualification.md; compiler flag remains proposed.
+  Nix package was built without reinstalling the shared CLI or changing pins.

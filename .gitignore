@@ -32,3 +32,6 @@ result
 
 # Python validation bytecode
 __pycache__/
+
+# Pinned provider qualification dependencies
+node_modules/
