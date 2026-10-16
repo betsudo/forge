@@ -1038,3 +1038,20 @@
   The52official output pairs are complete; independent Forge artifact matching
   continues. Removed completed-session owned build intermediates after preserving
   the tested range reader/alias artifact; no shared artifact store was deleted.
+
+## 2026-10-17 — selected-workload result retained (#7/#30)
+
+- Re-ran the existing exact selected2Passport benchmark with the current fresh
+  Nix CLI/worker.15lanes (5x3),30actual proofs/30verifications,60negative
+  controls and270assertions pass. Changed exact source produces a new derivation,
+  corrupt CAS and wrong profile refuse without availability fallback.
+- Warm local archive restore median5365.489ms versus4154.748ms uncached: saving
+  -1210.741ms (~29.1%slower). Preserve this negative result. The copied current
+  emitted codegen, selected2standalone keygen, transport planning/restore/save and
+  proof scope are explicit; full52keygen/compiler/modern provider and hostedCI
+  are not inferred. Concurrent developer-host load is disclosed.
+- Independent receipt review recomputed every median/total, checked all correctness
+  counts/tool/harness/referenced-codegen hashes and found no blocker. Companion
+  provenance pins CI helper/preimage generator. All owned stores/snapshots/runtime
+  dependency/preimage copies were cleaned after capture. Full52local adapter
+  qualification remains a separate ongoing gate. No push or Compact changes.

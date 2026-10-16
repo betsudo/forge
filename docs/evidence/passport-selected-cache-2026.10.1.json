@@ -1,0 +1,3718 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "recorded_at_utc": "2026-10-16T21:41:32.539732+00:00",
+  "consumer": {
+    "commit": "0d7bb0bc834f2d45d9fe2d84c4d022a30d648423"
+  },
+  "selected_key_circuits": [
+    "deposit_unshielded",
+    "activate_initial_device_with_jubjub"
+  ],
+  "proof_circuits": [
+    "deposit_unshielded",
+    "activate_initial_device_with_jubjub"
+  ],
+  "complete_circuit_roster": [
+    "activate_initial_device_with_jubjub",
+    "activate_initial_device_with_k256",
+    "activate_initial_device_with_p256",
+    "add_device_with_jubjub",
+    "add_device_with_k256",
+    "add_device_with_p256",
+    "append_inbox_with_jubjub",
+    "append_inbox_with_k256",
+    "append_inbox_with_p256",
+    "deposit_shielded",
+    "deposit_unshielded",
+    "issue_grant_with_jubjub",
+    "issue_grant_with_k256",
+    "issue_grant_with_p256",
+    "publish_recovery_session_with_jubjub",
+    "publish_recovery_session_with_k256",
+    "publish_recovery_session_with_p256",
+    "recover_cancel_with_jubjub",
+    "recover_cancel_with_k256",
+    "recover_cancel_with_p256",
+    "recover_finalise",
+    "recover_submit",
+    "remove_device_with_jubjub",
+    "remove_device_with_k256",
+    "remove_device_with_p256",
+    "revoke_all_grants_with_jubjub",
+    "revoke_all_grants_with_k256",
+    "revoke_all_grants_with_p256",
+    "revoke_grant_with_jubjub",
+    "revoke_grant_with_k256",
+    "revoke_grant_with_p256",
+    "rotate_enc_key_with_jubjub",
+    "rotate_enc_key_with_k256",
+    "rotate_enc_key_with_p256",
+    "withdraw_shielded_to_contract_with_grant_jubjub",
+    "withdraw_shielded_to_contract_with_grant_k256",
+    "withdraw_shielded_to_contract_with_grant_p256",
+    "withdraw_shielded_to_contract_with_jubjub",
+    "withdraw_shielded_to_contract_with_k256",
+    "withdraw_shielded_to_contract_with_p256",
+    "withdraw_shielded_with_grant_jubjub",
+    "withdraw_shielded_with_grant_k256",
+    "withdraw_shielded_with_grant_p256",
+    "withdraw_shielded_with_jubjub",
+    "withdraw_shielded_with_k256",
+    "withdraw_shielded_with_p256",
+    "withdraw_unshielded_with_grant_jubjub",
+    "withdraw_unshielded_with_grant_k256",
+    "withdraw_unshielded_with_grant_p256",
+    "withdraw_unshielded_with_jubjub",
+    "withdraw_unshielded_with_k256",
+    "withdraw_unshielded_with_p256"
+  ],
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "cpu_count": 12,
+    "performance_isolation": "shared developer host; concurrent qualification work; not isolated CI capacity"
+  },
+  "scope": "local selected-workload proof/key benchmark; not full Passport CI or localnet transaction submission",
+  "dependency_setup_ms": 3617.2878749785013,
+  "dependency_lock_sha256": "a57a8056dfa3989a6fb237f0ff071b172f4864082173ba9c4274c09eac9bee51",
+  "dependency_lock_premise": "npm ci uses exact unchanged pinned consumer package-lock.json; no minimal dependency re-resolution",
+  "tool_hashes": {
+    "compactc.bin": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+    "zkir-v3": "2e5febcbe905451cb549991f96eb91b94dfa7bc1a5deb7a41ee017964d532fb4",
+    "zkir-forge": "5780bfe4b0b27ffbcffff980f6f7a14e874e3624714742824fc9cd4c882c3cc0",
+    "midnight-zkir-forge-zkir31-worker": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58"
+  },
+  "profile": {
+    "binary_ir_tag": "ir-source[v3-generic]",
+    "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+    "format": "midnight-zkir-v3.1-json",
+    "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+    "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+    "protocol": 1,
+    "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914",
+    "worker": {
+      "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+      "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+      "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+      "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+    }
+  },
+  "identities": {
+    "deposit_unshielded": {
+      "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+      "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9",
+      "binary_ir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+    },
+    "activate_initial_device_with_jubjub": {
+      "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+      "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e",
+      "binary_ir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+    }
+  },
+  "descriptors": {
+    "deposit_unshielded": {
+      "input_format": "midnight-zkir-v3.1-json",
+      "input_version": {
+        "major": 3,
+        "minor": 1
+      },
+      "keygen_recipe": "library-keygen/default-options/no-rng",
+      "materialized": true,
+      "record": {
+        "artifact_set_id": "617555f16f47722b90ddec0860f013ad24d4f0daeb6836078bd240ab02cb5ba1",
+        "artifacts": [
+          {
+            "digest": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+            "kind": "binary_ir",
+            "size": 1654
+          },
+          {
+            "digest": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+            "kind": "prover",
+            "size": 446790
+          },
+          {
+            "digest": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9",
+            "kind": "verifier",
+            "size": 1353
+          }
+        ],
+        "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+        "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+        "derivation_id": "312cda054f527506d59e12d365779f0aa7f071f209e1844283d1a6c4aff8b629",
+        "format": "midnight-zkir-v3.1-json",
+        "generation_ms": null,
+        "k": 9,
+        "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+        "name": "deposit_unshielded",
+        "parameter_digest": "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+        "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+        "schema": 1,
+        "source": {
+          "digest": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d",
+          "kind": "source",
+          "size": 4975
+        },
+        "worker": {
+          "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+          "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+        }
+      },
+      "schema": 1,
+      "serialization": {
+        "binary_ir": "ir-source[v3-generic]",
+        "prover_key": "prover-key[v7](ir-source[v3-generic])",
+        "verifier_key": "verifier-key[v7]"
+      }
+    },
+    "activate_initial_device_with_jubjub": {
+      "input_format": "midnight-zkir-v3.1-json",
+      "input_version": {
+        "major": 3,
+        "minor": 1
+      },
+      "keygen_recipe": "library-keygen/default-options/no-rng",
+      "materialized": true,
+      "record": {
+        "artifact_set_id": "22dd35c824a4fb6bdc846928c995c62bf78f185c37ebb4f118e85ab5b1d5dc5c",
+        "artifacts": [
+          {
+            "digest": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+            "kind": "binary_ir",
+            "size": 1993
+          },
+          {
+            "digest": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+            "kind": "prover",
+            "size": 24648297
+          },
+          {
+            "digest": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e",
+            "kind": "verifier",
+            "size": 2313
+          }
+        ],
+        "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+        "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+        "derivation_id": "565f7f55070254472581cf01b203b5738de1a1d44d86dcb4362d4bf0efe9d59e",
+        "format": "midnight-zkir-v3.1-json",
+        "generation_ms": null,
+        "k": 14,
+        "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+        "name": "activate_initial_device_with_jubjub",
+        "parameter_digest": "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244",
+        "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+        "schema": 1,
+        "source": {
+          "digest": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b",
+          "kind": "source",
+          "size": 6789
+        },
+        "worker": {
+          "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+          "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+        }
+      },
+      "schema": 1,
+      "serialization": {
+        "binary_ir": "ir-source[v3-generic]",
+        "prover_key": "prover-key[v7](ir-source[v3-generic])",
+        "verifier_key": "verifier-key[v7]"
+      }
+    }
+  },
+  "negative_controls": {
+    "corrupt_consumer_prover": "integrity_error; fallback refused",
+    "wrong_profile": "profile_format_mismatch; fallback refused",
+    "changed_exact_source": "miss; same math is not exact source identity"
+  },
+  "rows": [
+    {
+      "repetition": 0,
+      "lane": "uncached",
+      "emitted_copy_ms": 42.733000009320676,
+      "execution_ms": 337.00616704300046,
+      "restore_ms": 0.0,
+      "planning_ms": 0.0,
+      "restore_result": null,
+      "partition": null,
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 1651.87862503808,
+      "proof_process_ms": 1926.8996249884367,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 0,
+      "hits": [],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 65.53420799999999,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.648459
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1371.175916,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.341375
+        }
+      ],
+      "total_ms": 3985.87079095887,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 3985.87079095887,
+      "sampled_peak_job_disk_bytes": 58599710
+    },
+    {
+      "repetition": 0,
+      "lane": "cold",
+      "emitted_copy_ms": 34.229541022796184,
+      "execution_ms": 335.13829205185175,
+      "restore_ms": 0.0,
+      "planning_ms": 161.88362502725795,
+      "restore_result": null,
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 3294.89337495761,
+      "proof_process_ms": 2362.9152080393396,
+      "snapshot_ms": 394.5636670105159,
+      "compression_ms": 316.2656659842469,
+      "archive_bytes": 12689434,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 71.338834,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.940709
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1647.768375,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.4995
+        }
+      ],
+      "total_ms": 6978.763207967859,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6978.763207967859,
+      "sampled_peak_job_disk_bytes": 119749326,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:39:59.154Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2687.680875,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1781.250959,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:39:56.349Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 402.051166,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 153.424958,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 1934.675917,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3089.732041
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 1934.675917
+      }
+    },
+    {
+      "repetition": 0,
+      "lane": "warm-restored",
+      "emitted_copy_ms": 33.244292018935084,
+      "execution_ms": 748.1751249288209,
+      "restore_ms": 698.6176250502467,
+      "planning_ms": 256.28641701769084,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 50280843,
+          "cache_dir": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/cache",
+          "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+          "producer": {
+            "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "b41336b591b466cfa20eabbc3cb6e1f838e129c3af86d167610403a9a2928afb",
+          "summary": {
+            "bundles": 2,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+              "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 2
+          }
+        }
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 547.0574999926612,
+      "availability_attempt": null,
+      "key_prepare_ms": 1103.1444159452803,
+      "proof_process_ms": 1959.983249020297,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 12689434,
+      "snapshot_bytes": 0,
+      "hits": [
+        true,
+        true
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 66.80475,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.690625
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1406.075875,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.554875000000001
+        }
+      ],
+      "total_ms": 4878.812749986537,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 4878.812749986537,
+      "sampled_peak_job_disk_bytes": 134043440,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 1993,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 24648297,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 2313,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 6789,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:40:05.149Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 739.006084,
+            "estimated_generation_avoided_ms": 1781.250959,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:04.302Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 178.161625,
+            "estimated_generation_avoided_ms": 153.424958,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-warm-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T21:39:59.154Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2687.680875,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1781.250959,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:39:56.349Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 402.051166,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 153.424958,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 1934.675917,
+          "generation_ms": 1934.675917,
+          "hit_rate": 0.5,
+          "hits": 2,
+          "misses": 2,
+          "requests": 4,
+          "total_request_ms": 4006.89975
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 2,
+        "misses": 0,
+        "errors": 0,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "repetition": 0,
+      "lane": "partial-restored",
+      "emitted_copy_ms": 28.947207960300148,
+      "execution_ms": 352.6559170568362,
+      "restore_ms": 332.51470897812396,
+      "planning_ms": 160.83804197842255,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 954794,
+          "cache_dir": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/cache",
+          "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+          "producer": {
+            "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "69e2c75f871ea4bc968609e5dbd778773a6f86e2043fc6d396b3d52eed6b6d9a",
+          "summary": {
+            "bundles": 1,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 1
+          }
+        }
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 325.7407919736579,
+      "availability_attempt": null,
+      "key_prepare_ms": 3025.973708019592,
+      "proof_process_ms": 3003.437750041485,
+      "snapshot_ms": 560.0085000041872,
+      "compression_ms": 324.3310000398196,
+      "archive_bytes": 12689548,
+      "restored_archive_bytes": 322044,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        true,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 64.116,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.627834
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 2449.186542,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.790249999999999
+        }
+      ],
+      "total_ms": 7916.679834015667,
+      "prior_job_seed_ms_excluded": 748.746833007317,
+      "observed_wall_ms": 8665.426667022984,
+      "sampled_peak_job_disk_bytes": 121753512,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:40:11.846Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2650.0822089999997,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1766.007291,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:09.078Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 178.737625,
+            "estimated_generation_avoided_ms": 174.41145799999998,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:08.275Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 439.493583,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 174.41145799999998,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 174.41145799999998,
+          "generation_ms": 1940.418749,
+          "hit_rate": 0.3333333333333333,
+          "hits": 1,
+          "misses": 2,
+          "requests": 3,
+          "total_request_ms": 3268.313417
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 1,
+        "misses": 1,
+        "errors": 0,
+        "generation_ms": 1766.007291
+      }
+    },
+    {
+      "repetition": 0,
+      "lane": "unavailable",
+      "emitted_copy_ms": 57.204000011552125,
+      "execution_ms": 643.0186239304021,
+      "restore_ms": 232.37350000999868,
+      "planning_ms": 251.77816703217104,
+      "restore_result": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a"
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 232.37350000999868,
+      "availability_attempt": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a"
+      },
+      "key_prepare_ms": 3885.2830010000616,
+      "proof_process_ms": 1996.6058329446241,
+      "snapshot_ms": 392.03820802504197,
+      "compression_ms": 306.2323330086656,
+      "archive_bytes": 12689492,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 73.81908299999999,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.656083
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1433.146958,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.47425
+        }
+      ],
+      "total_ms": 7858.929832989816,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 7858.929832989816,
+      "sampled_peak_job_disk_bytes": 119224697,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:40:20.979Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 3225.599083,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 2233.637292,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:17.634Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 404.153458,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 161.482833,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/0-unavailable/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 2395.120125,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3629.752541
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 2395.120125
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "uncached",
+      "emitted_copy_ms": 28.946417034603655,
+      "execution_ms": 355.72420904645696,
+      "restore_ms": 0.0,
+      "planning_ms": 0.0,
+      "restore_result": null,
+      "partition": null,
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 1711.764583014883,
+      "proof_process_ms": 2108.388707973063,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 0,
+      "hits": [],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 71.562916,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.502875
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1500.7439580000002,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.636708
+        }
+      ],
+      "total_ms": 4238.916083006188,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 4238.916083006188,
+      "sampled_peak_job_disk_bytes": 58599710
+    },
+    {
+      "repetition": 1,
+      "lane": "cold",
+      "emitted_copy_ms": 23.30483397236094,
+      "execution_ms": 348.79420802462846,
+      "restore_ms": 0.0,
+      "planning_ms": 161.122958001215,
+      "restore_result": null,
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 3435.9051670180634,
+      "proof_process_ms": 2069.4050829624757,
+      "snapshot_ms": 382.0470409700647,
+      "compression_ms": 306.4111249987036,
+      "archive_bytes": 12689475,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 73.04825,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.02525
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1505.225417,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.66375
+        }
+      ],
+      "total_ms": 6801.494958985131,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6801.494958985131,
+      "sampled_peak_job_disk_bytes": 121323357,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:40:31.979Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2721.8122089999997,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1836.793334,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:29.119Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 483.454666,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 197.612709,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 2034.406043,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3205.266875
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 2034.406043
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "warm-restored",
+      "emitted_copy_ms": 25.68833396071568,
+      "execution_ms": 823.0149170267396,
+      "restore_ms": 739.4784160424024,
+      "planning_ms": 290.3936250368133,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 50280843,
+          "cache_dir": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/cache",
+          "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+          "producer": {
+            "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "703537271296d9e22adef1b1a71de7b8dd2f63cb80970689372b4b0515a1ec39",
+          "summary": {
+            "bundles": 2,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+              "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 2
+          }
+        }
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 616.664084023796,
+      "availability_attempt": null,
+      "key_prepare_ms": 1110.5407919967547,
+      "proof_process_ms": 2408.723624947015,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 12689475,
+      "snapshot_bytes": 0,
+      "hits": [
+        true,
+        true
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 81.965209,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.921666
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1818.618042,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 18.939042
+        }
+      ],
+      "total_ms": 5489.10554201575,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 5489.10554201575,
+      "sampled_peak_job_disk_bytes": 134043440,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 1993,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 24648297,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 2313,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 6789,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:40:37.799Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 743.744417,
+            "estimated_generation_avoided_ms": 1836.793334,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:36.947Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 182.043416,
+            "estimated_generation_avoided_ms": 197.612709,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-warm-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:31.979Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2721.8122089999997,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1836.793334,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:29.119Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 483.454666,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 197.612709,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 2034.406043,
+          "generation_ms": 2034.406043,
+          "hit_rate": 0.5,
+          "hits": 2,
+          "misses": 2,
+          "requests": 4,
+          "total_request_ms": 4131.054708
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 2,
+        "misses": 0,
+        "errors": 0,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "partial-restored",
+      "emitted_copy_ms": 58.845332998316735,
+      "execution_ms": 376.5014170203358,
+      "restore_ms": 330.73266700375825,
+      "planning_ms": 168.8394169905223,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 954794,
+          "cache_dir": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/cache",
+          "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+          "producer": {
+            "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "772377259849254eda71ced1d61b02579312debe3e6e36496ddecceba96f8295",
+          "summary": {
+            "bundles": 1,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 1
+          }
+        }
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 323.44233395997435,
+      "availability_attempt": null,
+      "key_prepare_ms": 3251.419334032107,
+      "proof_process_ms": 1934.0995010570623,
+      "snapshot_ms": 362.3987080063671,
+      "compression_ms": 300.5729999858886,
+      "archive_bytes": 12689525,
+      "restored_archive_bytes": 322025,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        true,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 68.447791,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.760542
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1376.3835,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.504790999999999
+        }
+      ],
+      "total_ms": 6859.154499950819,
+      "prior_job_seed_ms_excluded": 792.2246250091121,
+      "observed_wall_ms": 7651.379124959931,
+      "sampled_peak_job_disk_bytes": 119654795,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:40:45.312Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2873.305042,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1995.2443340000002,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:42.319Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 179.82279200000002,
+            "estimated_generation_avoided_ms": 221.051542,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:41.543Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 491.794167,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 221.05154199999998,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 221.051542,
+          "generation_ms": 2216.295876,
+          "hit_rate": 0.3333333333333333,
+          "hits": 1,
+          "misses": 2,
+          "requests": 3,
+          "total_request_ms": 3544.922001
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 1,
+        "misses": 1,
+        "errors": 0,
+        "generation_ms": 1995.2443340000002
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "unavailable",
+      "emitted_copy_ms": 23.44424999319017,
+      "execution_ms": 337.323083949741,
+      "restore_ms": 161.06208402197808,
+      "planning_ms": 159.9036249681376,
+      "restore_result": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a"
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 161.06208402197808,
+      "availability_attempt": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a"
+      },
+      "key_prepare_ms": 3284.3960839672945,
+      "proof_process_ms": 2012.5437499955297,
+      "snapshot_ms": 361.9128339923918,
+      "compression_ms": 303.58524998882785,
+      "archive_bytes": 12689482,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 69.48195799999999,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.853667
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1447.5688340000002,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.573958999999999
+        }
+      ],
+      "total_ms": 6718.932124960702,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6718.932124960702,
+      "sampled_peak_job_disk_bytes": 120274031,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:40:51.962Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2676.705708,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1774.743834,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:40:49.168Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 393.566584,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 154.391625,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/1-unavailable/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 1929.135459,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3070.272292
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 1929.135459
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "uncached",
+      "emitted_copy_ms": 24.646583013236523,
+      "execution_ms": 347.16624999418855,
+      "restore_ms": 0.0,
+      "planning_ms": 0.0,
+      "restore_result": null,
+      "partition": null,
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 1700.1529580447823,
+      "proof_process_ms": 2059.206542035099,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 0,
+      "hits": [],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 80.185291,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.082334
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1491.5148330000002,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.327291
+        }
+      ],
+      "total_ms": 4154.74800002994,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 4154.74800002994,
+      "sampled_peak_job_disk_bytes": 58599710
+    },
+    {
+      "repetition": 2,
+      "lane": "cold",
+      "emitted_copy_ms": 21.783792006317526,
+      "execution_ms": 533.1110839615576,
+      "restore_ms": 0.0,
+      "planning_ms": 262.9388750065118,
+      "restore_result": null,
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 4250.9092089603655,
+      "proof_process_ms": 5870.147707988508,
+      "snapshot_ms": 364.2794580082409,
+      "compression_ms": 306.68920796597376,
+      "archive_bytes": 12689485,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 70.37570799999999,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 83.876333
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 4173.92325,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.493166
+        }
+      ],
+      "total_ms": 11689.229624986183,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 11689.229624986183,
+      "sampled_peak_job_disk_bytes": 120274014,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:41:03.957Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 3419.668292,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 2431.196958,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:41:00.378Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 564.72225,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 292.341625,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 2723.538583,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3984.390542
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 2723.538583
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "warm-restored",
+      "emitted_copy_ms": 22.68816699506715,
+      "execution_ms": 354.3940830277279,
+      "restore_ms": 644.9181250063702,
+      "planning_ms": 167.44854196440428,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 50280843,
+          "cache_dir": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/cache",
+          "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+          "producer": {
+            "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "e767ff6d75cfcca37f74be874ce4b432d8d25b3cf90c260a29265d46ad7e19e8",
+          "summary": {
+            "bundles": 2,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+              "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 2
+          }
+        }
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 563.4950419771485,
+      "availability_attempt": null,
+      "key_prepare_ms": 1267.668542044703,
+      "proof_process_ms": 2815.967748989351,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 12689485,
+      "snapshot_bytes": 0,
+      "hits": [
+        true,
+        true
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 153.0955,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.488834
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 2080.599666,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.009291
+        }
+      ],
+      "total_ms": 5365.489291958511,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 5365.489291958511,
+      "sampled_peak_job_disk_bytes": 134043440,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 1993,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 24648297,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 2313,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 6789,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:41:13.048Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 795.8691249999999,
+            "estimated_generation_avoided_ms": 2431.196958,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:41:12.130Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 246.432792,
+            "estimated_generation_avoided_ms": 292.341625,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-warm-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T21:41:03.957Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 3419.668292,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 2431.196958,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:41:00.378Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 564.72225,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 292.341625,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 2723.538583,
+          "generation_ms": 2723.538583,
+          "hit_rate": 0.5,
+          "hits": 2,
+          "misses": 2,
+          "requests": 4,
+          "total_request_ms": 5026.692459
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 2,
+        "misses": 0,
+        "errors": 0,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "partial-restored",
+      "emitted_copy_ms": 28.237874968908727,
+      "execution_ms": 427.8659170377068,
+      "restore_ms": 434.07095898874104,
+      "planning_ms": 194.37212502816692,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 954794,
+          "cache_dir": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/cache",
+          "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+          "producer": {
+            "build_fingerprint": "7c8e5fe42eb896b330d2054f1dabbb0496e82e44bdc98e186b6cc0185b228318",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "82f3a83e23bcd510964e46b5f0c8415f006dd43da408943e37dcfc66b9e42d0e",
+          "summary": {
+            "bundles": 1,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 1
+          }
+        }
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 426.7421669792384,
+      "availability_attempt": null,
+      "key_prepare_ms": 3244.276292040013,
+      "proof_process_ms": 2252.1147510269657,
+      "snapshot_ms": 378.8873750017956,
+      "compression_ms": 318.51929100230336,
+      "archive_bytes": 12689528,
+      "restored_archive_bytes": 321999,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        true,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 85.06750000000001,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.020417
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1638.609333,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.510665999999999
+        }
+      ],
+      "total_ms": 7368.394416989759,
+      "prior_job_seed_ms_excluded": 834.23291699728,
+      "observed_wall_ms": 8202.627333987039,
+      "sampled_peak_job_disk_bytes": 121753507,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:41:21.154Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2824.465417,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1924.248042,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:41:18.200Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 198.74425000000002,
+            "estimated_generation_avoided_ms": 194.135208,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T21:41:17.189Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 464.830833,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 194.135208,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 194.135208,
+          "generation_ms": 2118.38325,
+          "hit_rate": 0.3333333333333333,
+          "hits": 1,
+          "misses": 2,
+          "requests": 3,
+          "total_request_ms": 3488.0405
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 1,
+        "misses": 1,
+        "errors": 0,
+        "generation_ms": 1924.248042
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "unavailable",
+      "emitted_copy_ms": 24.065834004431963,
+      "execution_ms": 363.4002070175484,
+      "restore_ms": 161.69683303451166,
+      "planning_ms": 162.45366696966812,
+      "restore_result": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a"
+      },
+      "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a",
+      "helper_restore_ms": 161.69683303451166,
+      "availability_attempt": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "532162c63b61c40b3c4614bc005937d0812eefd3345d0982178462f3f85dc16a"
+      },
+      "key_prepare_ms": 3809.8316659452394,
+      "proof_process_ms": 2038.9375000377186,
+      "snapshot_ms": 431.29783298354596,
+      "compression_ms": 379.927417030558,
+      "archive_bytes": 12689459,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 69.813458,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.664125
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1482.8278340000002,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.346625
+        }
+      ],
+      "total_ms": 7452.4350829888135,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 7452.4350829888135,
+      "sampled_peak_job_disk_bytes": 119749349,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T21:41:28.726Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2915.20775,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1861.413875,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T21:41:25.670Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 637.8926660000001,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 193.899542,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/betsudo/forge/.local/qualification/passport/milestone-2026.10.1-selected/2-unavailable/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 2055.313417,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3553.100416
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 2055.313417
+      }
+    }
+  ],
+  "median_total_ms": {
+    "uncached": 4154.74800002994,
+    "cold": 6978.763207967859,
+    "warm-restored": 5365.489291958511,
+    "partial-restored": 7368.394416989759,
+    "unavailable": 7452.4350829888135
+  },
+  "warm_saving_ms": -1210.7412919285707,
+  "uncached_keygen": "one official zkir-v3 compile-many invocation for the exact two selected circuits; full52-circuit keygen is outside scope",
+  "separate_codegen_receipt": {
+    "path": "docs/evidence/passport-codegen.json",
+    "sha256": "f06a4d56bacfb913869b65747ae8665e21dbc76af97108871dc7522376b3b2f8"
+  },
+  "harness_sha256": "8c5d061d128fd1a13400c1a774cbd611a450612bf4a537b1d8b5d594d4ff944e",
+  "codegen_scope": "Full account codegen is separately measured; lane totals include copied current compiler output, actual key preparation, runtime execution, proofs, verification and local transport. No complete CI total modeled.",
+  "transport": "local archive compression/extraction and validated Forge restore; no hosted cache upload/download latency",
+  "owned_work_cleanup": "All measured stores, snapshots, preimages, node_modules and proof copies removed after evidence capture"
+}
