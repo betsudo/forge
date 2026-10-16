@@ -112,3 +112,38 @@ its corresponding warm restore. The runner removes the remaining owned work
 Python exceptions. It never deletes shared parameters, installed compilers,
 existing consumer checkouts, unrelated containers or global caches. A forcibly
 killed process can require explicit cleanup of that exact owned work directory.
+
+## Measured local result — 2026-10-16
+
+[Raw 15-lane receipt](../evidence/did-cache-benchmark.json) and
+[candidate/count provenance](../evidence/did-cache-benchmark-provenance.json) use
+the optimized relocated macOS ARM64 candidate from signed source `c40e45b` and
+the optimized helper recorded in `did-proof-helper-build.json`. All 12 circuits'
+artifacts match fresh official output in every repetition. Across the five lanes,
+15 fresh genuine proofs, 15 positive verifications, 30 proof negative controls
+and 75 application assertions ran.
+
+| Lane | Median total (s) | Hits / requests per job |
+| --- | ---: | ---: |
+| uncached | 6.857 | official batch |
+| cold | 9.325 | 0 / 12 |
+| warm-restored | 2.492 | 12 / 12 |
+| partial-restored | 10.247 | 1 / 12 |
+| unavailable | 11.585 | 0 / 12 |
+
+Warm restored saved **4.366 s (63.7%)** against the uncached median in this
+selected local workload. Cold, partial and unavailable paths were slower than
+uncached; caching is not automatically a win when generation plus snapshot
+publication dominates. Warm restore included a median 0.903 s of extraction and
+verified helper restoration of a 19.24 MB compressed snapshot. Cold snapshot
+creation and compression medians were 0.798 s and 0.363 s. Component medians
+are independently computed and need not add to the total median.
+
+Measurements ran sequentially within Forge, on a shared developer host with an
+external trust-registry key compiler active; a lightweight installer suite briefly
+overlapped early runs. Lanes were ordered, not randomized, and OS caches were
+not flushed. Retain all raw repetitions and observed variation; this is neither
+an isolated hardware comparison nor a whole hosted-CI speedup. GitHub network,
+authentication and upload/download time remains unmeasured. The 4.366 s local
+median saving is the available budget for additional hosted transport overhead,
+not a promised CI reduction.

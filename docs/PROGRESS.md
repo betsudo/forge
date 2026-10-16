@@ -525,3 +525,18 @@
   behavior and actual loader-override refusals are unchanged. Independent narrow
   review found no blocker; fake-GitHub installer failure/recovery suite passes.
   Cached Linux producer will qualify this fix after the benchmark window.
+
+## 2026-10-16 — final DID benchmark
+
+- Optimized portable c40e45b candidate completed three repetitions of all five
+  exact DID v0.7.0 lanes. All12 circuit artifact triples match the official tool;
+  every lane ran fresh deactivate execution, five assertions, genuine proof,
+  verification and two negative controls. Independent evidence review found
+  no blocker in identity, counts, partition policy or timing arithmetic.
+- Median total seconds: uncached6.857, cold9.325, warm-restored2.492,
+  partial-restored10.247, unavailable11.585. Warm local saving4.366s; negative
+  results in other lanes are retained. Source receipts/raw repetitions and
+  candidate provenance are docs/evidence/did-cache-benchmark*.json.
+- Timings include local compression/restore/helper work, exclude declared prior-job
+  seed manufacture, and disclose external shared-host compiler load. They exclude
+  actual GitHub network latency and do not establish whole-CI savings.
