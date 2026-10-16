@@ -72,6 +72,9 @@ os.execv(sys.executable,[sys.executable,str(root/'share/midnight-zkir-forge/forg
    # older hosts require a separate qualification rather than an inferred claim.
    minimum={'os_version':None,'libc_family':'glibc','libc_version':'2.36'}
   environment=dict(os.environ)
+  # Nix exports this build-tool selector; it is not a runtime loader setting.
+  # Keep all actual LD_* controls intact in both consumer and producer checks.
+  environment.pop('LD_FOR_BUILD',None)
   for variable in ('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER','MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER'):environment.pop(variable,None)
   def profile(*args):return json.loads(subprocess.run([str(root/'bin/midnight-zkir-forge'),*args],env=environment,check=True,capture_output=True,text=True).stdout)
   files=[]
@@ -80,7 +83,7 @@ os.execv(sys.executable,[sys.executable,str(root/'share/midnight-zkir-forge/forg
   profiles={'root':profile('profile'),'v3':profile('--profile','zkir3','profile')}
   if installer.WORKER31 in native_commands:profiles['v31']=profile('--profile','zkir31','profile')
   manifest={'schema':1,'tag':tag,'version':tag[1:],'source_commit':commit,'target':target,'minimum':minimum,'profiles':profiles,'files':files}
-  (root/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');installer.runtime(minimum);installer.inventory(root,manifest);installer.smoke(root,manifest)
+  (root/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');installer.runtime(minimum);installer.inventory(root,manifest);installer.smoke(root,manifest,environment=environment)
   with tarfile.open(archive,'w:gz') as tar:tar.add(root,arcname=stem)
  (output/'install-release.py').write_text(run('git','-C',ROOT,'show',commit+':scripts/install-release.py'))
  sums=''.join(f'{installer.digest(path)}  {path.name}\n' for path in [archive,output/'install-release.py',*companions])

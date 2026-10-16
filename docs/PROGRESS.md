@@ -518,3 +518,10 @@
   candidate, binaries, consumer kit, benchmark inputs and all evidence. No shared
   Nix/Docker pruning or other checkout changes. Final Linux qualification and
   sequential transport-inclusive benchmark runs remain in progress.
+
+- Linux producer smoke exposed Nix's `LD_FOR_BUILD` build-tool variable matching
+  the deliberate strict runtime `LD_*` guard. Producer now removes only that
+  build-only variable from its explicit smoke environment; ordinary installer
+  behavior and actual loader-override refusals are unchanged. Independent narrow
+  review found no blocker; fake-GitHub installer failure/recovery suite passes.
+  Cached Linux producer will qualify this fix after the benchmark window.

@@ -200,8 +200,8 @@ def extract_tar(expanded, destination, expected_root):
     return destination / expected_root
 
 
-def smoke(root, manifest):
-    env = dict(os.environ)
+def smoke(root, manifest, environment=None):
+    env = dict(os.environ if environment is None else environment)
     env.pop('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER', None)
     env.pop('MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER', None)
     def run(*args, structured=True):
