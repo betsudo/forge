@@ -3,6 +3,9 @@
 Repository home: [betsudo/forge](https://github.com/betsudo/forge). Historical
 issues, PRs and qualification links remain in the original repository.
 
+Next validation: [Passport hosted CI trial reporting](docs/ci-trial.md).
+The owner selected Passport; hosted savings and the two-week trial remain unmeasured.
+
 Local CLI and initial HTTP cache for Midnight ZKIR and generated prover/verifier keys, with a
 Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
 

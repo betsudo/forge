@@ -717,3 +717,31 @@
   original links; GitHub metadata, release assets and settings are not migrated.
 - Backend pins, package names, default cache and Compact remain unchanged.
   No release or Pages deployment is part of the copy.
+
+## 2026-10-16 — Passport CI measurement preparation (betsudo/forge #2)
+
+- Owner selected Passport JSON3.1 as the first target. The earlier two selected
+  circuits and exact consumer commit remain the starting premise; the negative
+  local warm result is retained. No consumer checkout was modified.
+- Added a standard-library offline five-lane whole-job comparison reporter over
+  a predeclared plan, exact identity/parameter/runner premises, unique hosted job
+  URLs, raw evidence digests and matching declared correctness counts. It checks
+  job-local hit/miss/error counters and actual transport-byte declarations.
+- Reports all paired savings and per-lane medians/nearest-rank p95, preserving
+  regressions and the agreed threshold. It does not verify producer-declared
+  proof counts or infer billed minutes/money. Raw evidence needs independent audit.
+- Local validation through bootstrap: five test groups including28 refusal
+  cases, CLI no-overwrite/no-output-on-invalid-input and derived-statistic overflow
+  control passed. OpenSpec, existing four fast Action controls, site build/check
+  and diff checks passed. Synthetic fixtures are not proof/performance evidence.
+- Independent review identified stage-sum wording and serialization-before-create
+  fixes; both are applied and the overflow refusal is exercised. Runtime/cache
+  code and dependency pins are unchanged, so no cryptographic retest is claimed.
+- Contract and producer guidance: openspec/changes/ci-trial-reporting and
+  docs/ci-trial.md. Linux Passport tool/worker byte qualification, reviewed frozen
+  plan, actual hosted producer/collector and the two-week study remain follow-up.
+- Migration main b35efea CI38899359224 passed. The earlier final source2d938c4
+  native run38878440021 also passed (portable Action, all3profile proof/recovery,
+  fresh HTTPS); it was correctness qualification, not a hosted warm-cache saving.
+- No push, workflow dispatch, release, deployment, cache upload or VM work in this
+  increment. Compact, shared installed CLI and other checkouts remain unchanged.

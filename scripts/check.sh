@@ -18,6 +18,7 @@ cargo clippy --locked --manifest-path workers/zkir3/Cargo.toml --target-dir targ
 cargo clippy --locked --manifest-path workers/zkir31/Cargo.toml --target-dir target/zkir31 --all-targets -- -D warnings
 python3 scripts/check-cargo-notices.py
 python3 scripts/check-github-action.py
+python3 scripts/check-ci-trial.py
 python3 scripts/check-linux-qualification.py
 python3 scripts/check-installer.py
 python3 scripts/check-recovery.py --binary target/debug/midnight-zkir-forge
