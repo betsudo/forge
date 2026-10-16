@@ -49,6 +49,19 @@ fn exact_profile_concurrency_and_descriptor() {
     assert_eq!(a["artifact_set_id"], b["artifact_set_id"]);
     assert_eq!(a["ledger_revision"], zkir31::SPEC.ledger_revision);
     assert_eq!(a["worker"]["source_revision"], zkir31::REVISION);
+    // A portable installer exposes only its stable CLI link. Resolve paired
+    // workers beside the actual versioned executable, including on macOS.
+    #[cfg(unix)]
+    {
+        let release=temp.path().join("version/bin");std::fs::create_dir_all(&release).unwrap();
+        std::fs::copy(env!("CARGO_BIN_EXE_midnight-zkir-forge"),release.join("midnight-zkir-forge")).unwrap();
+        let worker=std::env::var_os("MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER").map(std::path::PathBuf::from).unwrap_or_else(||std::path::Path::new(env!("CARGO_BIN_EXE_midnight-zkir-forge")).parent().unwrap().join("midnight-zkir-forge-zkir31-worker"));
+        std::os::unix::fs::symlink(worker,release.join("midnight-zkir-forge-zkir31-worker")).unwrap();
+        let stable=temp.path().join("stable-forge");std::os::unix::fs::symlink(release.join("midnight-zkir-forge"),&stable).unwrap();
+        let result=Command::new(stable).env_remove("MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER").args(["--profile","zkir31","profile"]).output().unwrap();
+        assert!(result.status.success(),"{}",String::from_utf8_lossy(&result.stderr));
+        let value:Value=serde_json::from_slice(&result.stdout).unwrap();assert_eq!(value["ledger_revision"],zkir31::SPEC.ledger_revision);
+    }
     let store = Store::open(temp.path()).unwrap();
     let (record, _) = store.load(a["bundle_id"].as_str().unwrap()).unwrap();
     let raw = std::fs::read(&input).unwrap();

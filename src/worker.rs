@@ -27,6 +27,7 @@ impl WorkerSpec {
             return Ok(path.into());
         }
         Ok(std::env::current_exe()?
+            .canonicalize()?
             .parent()
             .context("CLI has no parent")?
             .join(self.executable_name))
