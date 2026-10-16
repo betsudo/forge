@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "source_commit": "48d91812a619da2caf99e423a53d388aadd922b3",
+  "run_id": 38872428954,
+  "run_url": "https://github.com/input-output-hk/midnight-zkir-forge/actions/runs/38872428954",
+  "conclusion": "success",
+  "duration_seconds": 1587,
+  "target": "x86_64-unknown-linux-gnu",
+  "consumer_image": "python:3.11-slim-bookworm@sha256:8a00ecb83ed9d0864dfd102a1bdb2067fda907ceb30bb86d09da9ee558b19590",
+  "consumer_uid": 1000,
+  "checked_by_successful_workflow_assertions": [
+    "native x86_64 Linux host and container",
+    "no Nix, Rust tools, build checkout or host mounts in consumer",
+    "installed all-three-profile real proofs, reproducibility and negative controls with network disabled",
+    "installed failure recovery for all three profiles",
+    "separate verified fresh HTTPS parameters and proof controls per profile",
+    "actual composite cache-restore transport and fresh JSON3.1 proof/negative controls using Nix-installed CLI",
+    "PR save denied despite explicit successful tests",
+    "owned containers removed"
+  ],
+  "artifact": {
+    "id": 12035251064,
+    "name": "linux-x86_64-qualification-48d91812a619da2caf99e423a53d388aadd922b3",
+    "size_in_bytes": 260224126,
+    "digest": "sha256:296af2bf193c92769c28c45988283f331305c0abae2f982a7c7aa23ed7f2c420"
+  },
+  "evidence_scope": "Successful native workflow and its checked assertions at exact signed source; raw artifact retained by GitHub. Local full download failed due network read timeout, so no local full-archive or raw-receipt audit is claimed here.",
+  "remaining_scope": "Final workflow also exercises the composite with the portable archive and splits lightweight evidence from candidate assets. Its run is separate. Authenticated release downloading, actual hosted warm-cache round trip and consumer CI savings are not qualified."
+}

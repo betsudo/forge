@@ -1,6 +1,28 @@
 name: Native Linux portable installer
 on:
   pull_request:
+    paths:
+      - '.github/actions/zkir31-cache/action.yml'
+      - '.github/actions/zkir31-cache/run.py'
+      - '.github/workflows/qualify-linux.yml'
+      - 'scripts/qualify-linux*.py'
+      - 'scripts/check-linux-qualification.py'
+      - 'scripts/build-release.py'
+      - 'scripts/install-release.py'
+      - 'scripts/linux-runtime*.py'
+      - 'scripts/cargo-notices.py'
+      - 'scripts/forge-ci.py'
+      - 'scripts/check-release-candidate.py'
+      - 'scripts/check-recovery.py'
+      - 'src/**'
+      - 'workers/**'
+      - 'Cargo.*'
+      - 'flake.*'
+      - 'build.rs'
+      - 'bootstrap.sh'
+      - 'fixtures/**'
+      - 'licenses/**'
+      - 'LICENSE'
 permissions:
   contents: read
 concurrency:
@@ -32,22 +54,47 @@ jobs:
       - name: Build exact committed native candidate and source notices
         run: |
           mkdir -p .local/qualification-x86
+          revision="$(git rev-parse HEAD)"
+          ./bootstrap.sh -- nix build --no-link --json --print-build-logs --cores 2 "git+file://$PWD?rev=$revision#default" > >(tee .local/qualification-x86/native-build.json) 2> >(tee .local/qualification-x86/native-build.stderr >&2)
           ./bootstrap.sh -- python3 scripts/build-release.py --tag v2026.10.0 --output .local/qualification-x86/candidate > >(tee .local/qualification-x86/producer.json) 2> >(tee .local/qualification-x86/producer.stderr >&2)
       - name: Installed real proofs and recovery without Nix, then fresh verified HTTPS
         run: ./bootstrap.sh -- python3 scripts/qualify-linux.py --candidate .local/qualification-x86/candidate --output .local/qualification-x86/receipts
-      - name: Prepare pinned Action CLI and verified public parameters
+      - name: Verify portable Action CLI and fetch verified public parameters
         id: action-cli
         run: |
           ./bootstrap.sh -- python3 - <<'PYCODE'
-          import json, os, pathlib, subprocess
+          import importlib.util, json, os, pathlib, subprocess
           revision = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
-          package = json.loads(subprocess.check_output(['nix', 'build', '--no-link', '--json',
-              'git+file://' + os.getcwd() + '?rev=' + revision + '#default'], text=True))[0]['outputs']['out']
-          binary = pathlib.Path(package) / 'bin/midnight-zkir-forge'
+          candidate = pathlib.Path('.local/qualification-x86/candidate').resolve()
+          spec = importlib.util.spec_from_file_location('installer', candidate/'install-release.py')
+          installer = importlib.util.module_from_spec(spec)
+          spec.loader.exec_module(installer)
+          archives = [p for p in candidate.glob('*.tar.gz') if not p.name.endswith('-runtime-sources.tar.gz')]
+          assert len(archives) == 1
+          archive = archives[0]
+          digest = installer.digest(archive)
+          assert digest == installer.checksum((candidate/'SHA256SUMS').read_bytes(), archive.name)
+          destination = pathlib.Path(os.environ['RUNNER_TEMP'])/'forge-action-portable'
+          assert not destination.exists()
+          destination.mkdir()
+          root = installer.extract(archive, destination, archive.name.removesuffix('.tar.gz'))
+          manifest = json.loads((root/'manifest.json').read_text())
+          installer.inventory(root, manifest)
+          assert manifest['source_commit'] == revision and manifest['target'] == 'x86_64-unknown-linux-gnu'
+          installer.runtime(manifest['minimum'])
+          environment = dict(os.environ)
+          environment.pop('LD_FOR_BUILD', None)
+          for variable in ['MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER', 'MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER']:
+              environment.pop(variable, None)
+          installer.smoke(root, manifest, environment=environment)
+          binary = root/'bin/midnight-zkir-forge'
+          pathlib.Path('.local/qualification-x86/action-portable.json').write_text(json.dumps({
+              'candidate_sha256':digest, 'source_commit':revision, 'target':manifest['target'],
+              'inventory_verified':True, 'smoke_passed':True}, indent=2)+'\n')
           params = pathlib.Path(os.environ['RUNNER_TEMP']) / 'forge-action-smoke-params'
           assert not params.exists()
           proof = json.loads(subprocess.check_output([str(binary), '--profile', 'zkir31',
-              '--params-dir', str(params), '--fetch-params', 'qualify'], text=True))
+              '--params-dir', str(params), '--fetch-params', 'qualify'], text=True, env=environment))
           pathlib.Path('.local/qualification-x86/action-parameters.json').write_text(json.dumps(proof, indent=2)+'\n')
           with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
               output.write('binary='+str(binary)+'\nparams='+str(params)+'\n')
@@ -103,12 +150,23 @@ jobs:
               'restored':os.environ['FORGE_RESTORED'], 'publish':False,
               'scope':'actual PR transport and composite wiring; no remote warm-cache speedup claim'}, indent=2)+'\n')
           PYCODE
-      - name: Retain candidate, sources, exact hashes and raw qualification evidence
+      - name: Retain lightweight raw qualification evidence and failure diagnostics
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
-          name: linux-x86_64-qualification-${{ github.event.pull_request.head.sha }}
-          path: .local/qualification-x86
+          name: linux-x86_64-evidence-${{ github.event.pull_request.head.sha }}
+          path: |
+            .local/qualification-x86
+            !.local/qualification-x86/candidate/**
           include-hidden-files: true
           retention-days: 14
           if-no-files-found: error
+      - name: Retain private candidate and corresponding runtime sources separately
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: linux-x86_64-candidate-${{ github.event.pull_request.head.sha }}
+          path: .local/qualification-x86/candidate
+          include-hidden-files: true
+          retention-days: 14
+          if-no-files-found: ignore

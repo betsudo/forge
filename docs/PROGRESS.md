@@ -689,3 +689,19 @@
   and sign-in is needed for artifact data. Detailed findings remain inaccessible.
   The pasted product review is recorded; relay/hosting and consumer trial stay
   outside this implementation. Compact and existing profile pins are unchanged.
+
+## 2026-10-16 — native x86_64 installed qualification passed
+
+- Signed48d9181 passed native run38872428954 in26m27s and ordinary CI38872428794.
+  Clean native x86_64 Debian12/Python UID1000 passed all3 installed profiles'
+  offline proof/reproducibility/negative/recovery controls and separate fresh
+  verified HTTPS controls. Actual composite transport/proof/PR-no-save smoke
+  passed using the Nix-installed CLI. Exact workflow checkpoint and artifact
+  identity: private-installer-linux-x86_64-checkpoint.json.
+- Local260MB artifact download failed with a network read timeout after partial
+  transfer; no local full-archive/raw-receipt audit is claimed. The final workflow
+  splits small evidence from candidate/source artifacts, uses the verified portable
+  archive for combined Action smoke and streams exact Nix build logs. Relevant
+  path filters avoid heavy qualification on future docs-only PRs. Independent
+  review found no blocker in these orchestration-only changes; final actual
+  portable-composite result remains its own run. Compact/payload pins unchanged.

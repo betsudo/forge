@@ -4,7 +4,7 @@
 - [x] Implement restore/save composite Action over existing helpers.
 - [x] Add local phase, trust, partition and failure tests without skipped real tests.
 - [x] Add native x86_64 Linux producer and clean installed-consumer qualification.
-- [ ] Execute native qualification and retain exact proof/recovery/environment receipts.
+- [x] Execute native qualification and retain exact proof/recovery/environment receipts in successful source48d9181 run38872428954; local full-artifact transfer failed and final portable-composite follow-up is separate.
 - [x] Obtain independent identity/concurrency/transport review and resolve blockers.
 - [x] Document consumer usage, remaining qualification limits and cleanup.
 - [ ] Push signed DCO commits and open review PR; do not merge.

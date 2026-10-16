@@ -117,7 +117,7 @@ verified payload hashes, runtime source correspondence and original dependency
 notices. See [installed receipt](evidence/private-installer-linux-three-profile.json)
 and [runtime/source audit](evidence/private-installer-linux-runtime-audit.json).
 The test used local fake GitHub transport; authenticated release downloading is
-not qualified. Native Intel and actual Nix-free macOS remain unqualified.
+not qualified. Native Intel macOS and actual Nix-free macOS remain unqualified. Native x86_64 Linux qualification is recorded below.
 
 On a real clean consumer host, use external Python and absolute verified parameter
 paths with `check-release-candidate.py --require-nix-free --recovery`. That
@@ -130,3 +130,21 @@ was cancelled before guest boot; no guest installation, proof or recovery tests
 ran. Temporary owned VM files were removed. Existing macOS ARM64 evidence is
 restricted-host only; Nix-free macOS support must not be claimed from it. See
 [deferral and cleanup receipt](evidence/private-installer-macos-deferred.json).
+
+## Native x86_64 Linux follow-up
+
+Signed source `48d9181` passed [native run38872428954](https://github.com/input-output-hk/midnight-zkir-forge/actions/runs/38872428954):
+all three installed profiles' genuine proofs/reproducibility/negative controls and
+recovery as UID1000 in clean Nix-free Debian12/Python with no checkout mounts and
+network disabled, plus separate fresh verified HTTPS parameter controls. Existing
+legacy profile pins remain unchanged. This is actual x86_64 execution, not ARM
+emulation or flake evaluation. See the [exact checkpoint](evidence/private-installer-linux-x86_64-checkpoint.json)
+for the successful workflow's assertions and retained artifact identity. Its local
+full download timed out, so a local raw-archive audit is not inferred.
+
+The [JSON3.1 Action](../.github/actions/zkir31-cache/README.md) wraps installed CLI
+helpers with explicit restore/save phases. The final qualification workflow tests
+the verified portable archive through that Action and retains small evidence and
+large candidate/source artifacts separately. Consult PR22's exact run status for
+that follow-up. No private release asset has been published or authenticated
+release download qualified. The macOS no-Nix deferral remains unchanged.
