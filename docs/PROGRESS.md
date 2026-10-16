@@ -717,3 +717,222 @@
   original links; GitHub metadata, release assets and settings are not migrated.
 - Backend pins, package names, default cache and Compact remain unchanged.
   No release or Pages deployment is part of the copy.
+
+## 2026-10-16 — Passport CI measurement preparation (betsudo/forge #2)
+
+- Owner selected Passport JSON3.1 as the first target. The earlier two selected
+  circuits and exact consumer commit remain the starting premise; the negative
+  local warm result is retained. No consumer checkout was modified.
+- Added a standard-library offline five-lane whole-job comparison reporter over
+  a predeclared plan, exact identity/parameter/runner premises, unique hosted job
+  URLs, raw evidence digests and matching declared correctness counts. It checks
+  job-local hit/miss/error counters and actual transport-byte declarations.
+- Reports all paired savings and per-lane medians/nearest-rank p95, preserving
+  regressions and the agreed threshold. It does not verify producer-declared
+  proof counts or infer billed minutes/money. Raw evidence needs independent audit.
+- Local validation through bootstrap: five test groups including28 refusal
+  cases, CLI no-overwrite/no-output-on-invalid-input and derived-statistic overflow
+  control passed. OpenSpec, existing four fast Action controls, site build/check
+  and diff checks passed. Synthetic fixtures are not proof/performance evidence.
+- Independent review identified stage-sum wording and serialization-before-create
+  fixes; both are applied and the overflow refusal is exercised. Runtime/cache
+  code and dependency pins are unchanged, so no cryptographic retest is claimed.
+- Contract and producer guidance: openspec/changes/ci-trial-reporting and
+  docs/ci-trial.md. Linux Passport tool/worker byte qualification, reviewed frozen
+  plan, actual hosted producer/collector and the two-week study remain follow-up.
+- Migration main b35efea CI38899359224 passed. The earlier final source2d938c4
+  native run38878440021 also passed (portable Action, all3profile proof/recovery,
+  fresh HTTPS); it was correctness qualification, not a hosted warm-cache saving.
+- No push, workflow dispatch, release, deployment, cache upload or VM work in this
+  increment. Compact, shared installed CLI and other checkouts remain unchanged.
+
+## 2026-10-16 — next-ten planning pause
+
+- Owner paused implementation and set priorities: Compact compiler flag/provider
+  synergy first, local CLI keygen reuse second, CI reuse third. Reporter work
+  remains locally complete/unpublished and does not supersede that ordering.
+- Reused betsudo/forge issue #2 and created/replanned #3–#11 with concrete
+  acceptance criteria, dependencies and execution boundaries. Milestone:
+  2026.10.0 — Compact integration and Forge reuse, with no promised deadline.
+- Ranked queue: docs/planning/next-ten-2026-10-16.md. Hosted delivery design is
+  the small Rust/Wasm Worker/D1/R2/CDN candidate, native Rust Lambda as an
+  alternative; native CLI/CI workers generate keys. No hosted deployment planned
+  by this action. Current official-source refresher is linked in the plan.
+- CI trial remains unstarted/unscheduled and negative results remain valid;
+  compiler/local usefulness is assessed independently of CI savings.
+- No code implementation, dispatch, VM work, consumer/Compact edits or release
+  occurred during planning. Historical evidence stays source-specific.
+
+## 2026-10-16 — compiler integration contract (#3), local backlog resumed
+
+- Owner resumed the current backlog locally, with Cloudflare deferred. Kept
+  priority order: compiler/provider contract, local reuse, then CI. No push or
+  external workflow execution is implied by the resume.
+- Audited current Compact source05a7885f read-only. All8 inspected source file
+  digests and existing unrelated working changes are recorded in
+  docs/evidence/compact-compiler-boundary.json. No Compact files/builds/tests changed.
+- Defined proposed off/local/fetch compiler opt-in, independently qualified policy,
+  original uncached behavior and typed safe fallback. Actual flags/fetch support
+  are not claimed. Key materialization belongs before normal compiler integrity
+  manifest generation; post-compile injection is not equivalent.
+- Existing test shim remains v2-only with an older exact-build guard. Contract
+  explicitly preserves it, current ZKIR, private outputs, proof/assertion runs,
+  parameter verification and verifier identity across eviction.
+- OpenSpec structure and diff checks passed. Independent source/contract review
+  found no blocker; fixed minor reference spacing. Documentation-only contract
+  delivery does not claim a compiler runtime integration or measured speedup.
+- Next local work: pinned Node/Fetch provider qualification under issue#4.
+
+## 2026-10-16 — local SDK provider qualification (#4 partial delivery)
+
+- Pinned official Node/Fetch providers5.0.0-rc.2 and runtime0.20.0 in a private
+  test-only npm project with lockfile. Node/npm are Nix-owned. Current packages
+  require compiler integrity metadata by default: bare Forge exports are rejected.
+- Real native macOS ARM64 Compact0.35.0 fixture normal compilation precedes
+  cold/warm Forge JSON3.1 comparisons. Official and cached source/binary IR/keys
+  match exactly; copied private key files leave original compiler manifest/info
+  unchanged. No compiler or other checkout was edited or built.
+- Local, HTTP, gzip HTTP and authenticated HTTP SDK reads each execute a fresh
+  contract call, actual proof and verification. Total4proofs/4verifications,
+  8proof negative controls and12state/trace assertions. All13 provider/HTTP
+  refusal/HEAD/ETag controls passed after locked npm ci.
+- Independent review found no blocker; moved generated-contract import before
+  binding the fixture listener and publish the receipt after scratch cleanup.
+  Final receipt: docs/evidence/provider-sdk-local.json, including harness/lock/
+  compiler/CLI/worker/metadata/parameter identities and original publisher package
+  integrity. Local stores, preimages and copied proof artifacts are removed.
+- This is a qualified Node/loopback HTTP fixture, not production Forge provider
+  serving, Linux Passport, browser/TLS/CDN, hosted deployment or a speedup claim.
+  Issue#4 remains open for those appropriate production/browser/transport gates.
+- Source guide: docs/providers/qualification.md; compiler flag remains proposed.
+  Nix package was built without reinstalling the shared CLI or changing pins.
+
+## 2026-10-16 — provider-view API and compiler-facing local adapter (#4/#6)
+
+- Added local `publish-view` with independently supplied raw compiler-manifest
+  SHA256, bounded strict complete inventory/runtime metadata checks, private copies,
+  atomic no-replace publication and verified idempotency. Explicit provider roots
+  remain separate from cache snapshots. Existing v2/v3/JSON3.1 pins are unchanged.
+- Added explicit `serve --provider-root` GET/HEAD `/views/{id}/{file}`. Existing
+  authentication/admission apply; full view validation precedes HEAD/304/ranges.
+  Responses stream a verified private descriptor, avoiding verify/reopen races.
+  Initial identity encoding only, no browser/CORS/TLS/CDN or public-service claim.
+- Added Forge-owned `scripts/compiler-local.py`, default off, opt-in local mode.
+  Actual compiler owns its output and emits original metadata after a process-only
+  qualified keygen hook. Initial support is source-specific Compact0.35/JSON3.1,
+  not an upstream flag or arbitrary Passport/consumer integration. Exact tool,
+  worker, descriptor, source, parameter and artifact pins are independently checked.
+- Independent identity/reliability review found source swaps could pass an overly
+  broad final hash check and a successful compiler could skip the hook. Fixed exact
+  path/hash and roster checking, official probe availability, hook completion and
+  final manifest checks; reject protected-input/output overlap. Added regressions.
+- Nix package built locally (shared installation unchanged). Final receipt
+  `docs/evidence/provider-view-adapter-local.json`: native macOS ARM64, fresh4-lane
+  official SDK baseline plus off/cold/warm5-lane runs, totaling19genuine proofs/
+  verifications and38invalid-statement/corrupt-proof rejections. Compiler output
+  inventory is byte-identical across off/cold/warm; original raw manifest identity
+  is `0cd0ef3e79d9f2e1250e95cf4198e305b519a3ac71b4ab8f40da041e8bd4dc46`.
+  Local adapter cold stats show1miss/0hits; warm stats1miss/1hit, zeroerrors.
+  Node lanes read original complete bundles; the additional Fetch lane reads the
+  actual authenticated Forge view. No CI speedup is claimed from this small fixture.
+- All12actual API controls and4adapter refusal/recovery controls passed, including
+  corrupted private export refusal, byte-restored retry, wrong receipt preserving
+  existing output, changed source refusal, corrupt HEAD/conditional/range refusal
+  and restored view recovery. The compiler cleans failed outputs, so the harness
+  establishes changed IR through an independent native compile before refusal.
+  A valid JSON content type is supplied when testing method405 after media checks.
+- Local checks: all non-ignored Rust tests passed; provider-view12tests; adapter
+  12tests; Cargo formatting/Clippy with warnings denied; existing HTTP, recovery,
+  snapshot, factory/commit/OpenSpec and docs checks passed. Expensive unrelated
+  ignored backend qualifications were not rerun; real proofs above cover this
+  exact new compiler/provider cohort. Owned scratch keys/caches/tokens/preimages
+  are cleaned on success and failure. No additional worktree was created.
+- Research/usage: `docs/research/compiler-metadata-guarantees.md` and
+  `docs/providers/local-adapter.md`. Guarantee requires complete original compiler
+  output plus an independently trusted manifest pin; self-consistent hashes alone
+  do not establish compiler provenance. Every request currently verifies the whole
+  view, a deliberate read-throughput limit requiring measurement on large bundles.
+- Compact/other checkouts unchanged; Cloudflare deferred; no push, deployment,
+  remote workflow, merge or release. Local source-specific qualification is not
+  Linux/full Passport/browser qualification or release readiness.
+
+## 2026-10-16 — trusted CI review and quality gates (#11)
+
+- Inspected midnight-did reference workflows at revision
+  `4e7f6b0f69bf4e2c8506a9693f8d0c3dfe68e550`: trusted-base commit integrity,
+  conventional PR metadata, stable quality contexts and security boundaries.
+  Added Forge-specific OpenSpec and `docs/ci-quality-gates.md`.
+- Added a read-only trusted-base PR gate: conventional PR title and every commit,
+  explicit real same-repo issue references on PR and every commit, matching author
+  DCO, GitHub-verified valid OpenPGP signatures. Enumerates every commit (bounded
+  at250), rechecks live base/head/metadata and refuses stale/partial verification.
+  No execution of PR code, cache/artifact restoration or privileged write token.
+- Independent review hardened event/live base SHA/ref/repository consistency and
+  issue repository identity to reject transferred-issue redirects. Signature trust
+  is GitHub's verification, not a local key allowlist. Issue relevance remains review.
+- Added stable `Forge quality gate` covering mandatory ordinary checks and any
+  explicitly requested real proofs; failed/cancelled/skipped required checks fail.
+  Added pinned-Nix actionlint1.7.12 to existing local/CI check entrypoint, dependency
+  update proposals for Actions/allCargo graphs/providerSDK npm, and PR template.
+  No automatic merging, compatibility pin changes or application code changes.
+- Local validation passed:28API policy controls plus grammar controls, original
+  commit-hook policy tests, actionlint across workflows, OpenSpec and documentation
+  build/link checks. Existing Rust/proof checks were not repeated for workflow/docs/
+  Node policy-only changes. No hosted API enforcement/workflow was dispatched.
+- Gate activation needs trusted-base bootstrap followed by owner-configured branch
+  rules (required contexts, approvals, signed commits, no force pushes/deletions).
+  These settings were documented, not mutated; first introduction PR cannot use a
+  verifier absent from its base. Bot PRs do not bypass signing/DCO/issue rules.
+  Audits/secret scans/coverage/fuzzing need scoped baselines before additional gates.
+- Signed local delivery only. Compact unchanged, Cloudflare deferred, no push,
+  branch-settings changes, merge, deployment or release.
+
+## 2026-10-17 — primary `zkir-forge` command (#11, PR12)
+
+- Added primary Cargo/Nix CLI `zkir-forge`, shared-source compatibility entrypoint
+  `midnight-zkir-forge`, explicit primary help/version/usage and Nix mainProgram.
+  Installed Nix legacy command points to the primary executable. Worker/helper,
+  package/library names, cache/env variables and asset stems remain stable.
+- Portable packaging copies the final relocated/signed executable into both regular
+  command files; inventory refuses different alias bytes. Old schema1 legacy-only
+  releases remain supported. The installed primary launcher uses a stable managed
+  target that survives historical rollback. Both launcher collisions refuse before
+  portable activation; independent review prompted equivalent Nix pre-build guards.
+- Updated active docs/site/skill examples, default CI-helper selection and tests.
+  Historical qualification receipts remain immutable; new executable bytes still
+  require exact qualification rather than editing an old allowlist.
+- Local Rust tests (including both names/help/version/profile/shared store), Clippy,
+  formatting/profile gates passed. Installer fixture checks cover old/new/reinstall/
+  rollback, corrupt alias and both-name collisions; Nix launcher fixtures cover
+  managed upgrade and4collision refusals before build. CLI/HTTP/recovery/snapshot,
+  Action/reporter, OpenSpec/docs/actionlint and commit/PR policy checks passed.
+- Shared installation and default store were not modified. PR12 will receive signed
+  commits and exact-head CI checks. Compact remains unchanged; no merge/deployment.
+
+## 2026-10-17 — PR12 review fixes (#4/#6)
+
+- Provider reads now validate fresh pinned manifest/metadata and exact bounded
+  inventory, then hash/copy only the requested representation. Unrelated corrupt
+  bytes no longer block unrelated reads. Full `verify-view`, staging/publication,
+  existing-target reuse and concurrent-winner reuse still audit every byte; no
+  persistent verified marker exists. Requested HEAD/304/range checks remain strict.
+- Dedicated two-permit provider verification/stream admission avoids opening the
+  cache store or using cache-work permits. Cancellation retains a blocking task's
+  permit until it stops, then the response owns it through streaming. Two1GiB
+  snapshots bound provider spool use; ranges still verify the whole requested file.
+- Explicit publish cache roots now work without HOME; verify-view requires no cache
+  root. Compiler staging is private and outside its final output, with same-device
+  checks before copying and mountpoint preflight before compiler cleanup. SIGKILL
+  may leave owned private sibling staging, but retry cannot include it in manifests.
+  Old inside-output leftovers require a fresh owned output, not wildcard deletion.
+- Independent identity/concurrency review passed, including all full-publication
+  paths and cancellation ownership. Rust tests include13provider-view cases and
+  2admission/cancellation cases;13adapter cases include a killed child after staging,
+  exact private permissions, no inside-output stage and successful retry. Local
+  Rust/Clippy/format, CLI/HTTP/recovery/snapshot, OpenSpec/docs/actionlint checks pass.
+- Updated real SDK harness to preserve unrelated reads on sibling corruption while
+  explicit full audit refuses, and to compile/prove with a leftover sibling stage.
+  Fresh qualification and exact-head hosted results are recorded in PR12 after run.
+- Created follow-ups in2026.10.0: #13duplicate Cargo binary compilation,
+  #14configurable keygen timeout, #15broader exact consumer qualification. No
+  automatic unqualified-circuit fallback, Compact edits, cloud work or merge.

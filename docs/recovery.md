@@ -64,7 +64,7 @@ process-kill tests do not establish power-loss or failing-disk durability.
 # Verified k4 parameters required; no network retrieval by default:
 ./bootstrap.sh -- cargo build --locked --example qualify-http-fixture
 ./bootstrap.sh -- python3 scripts/check-recovery.py \
-  --binary target/debug/midnight-zkir-forge --real
+  --binary target/debug/zkir-forge --real
 ```
 
 Fast checks exercise primary-error preservation when accounting also fails,

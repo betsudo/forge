@@ -1,0 +1,12 @@
+{
+  "name": "forge-provider-qualification",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pinned SDK provider qualification; never replaces actual proof execution",
+  "dependencies": {
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "5.0.0-rc.2",
+    "@midnight-ntwrk/midnight-js-fetch-zk-config-provider": "5.0.0-rc.2",
+    "@midnight-ntwrk/compact-runtime": "0.20.0"
+  }
+}

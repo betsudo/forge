@@ -3,7 +3,7 @@
   "info": {
     "title": "Midnight ZKIR Forge \u2014 initial HTTP subset",
     "version": "2026.10.0",
-    "description": "Single-owner service. Raw single-circuit uploads and synchronous materialization. No archives, durable jobs, namespaces, HTTP provider views or hosted registry guarantees. Bearer authentication is enforced when a token file is configured and required for non-loopback binding. No CORS; TLS belongs at a trusted reverse proxy. Parameter acquisition is an explicit operator option."
+    "description": "Single-owner service. Raw single-circuit uploads and synchronous materialization. No archives, durable jobs, namespaces or hosted registry guarantees. Bearer authentication is enforced when a token file is configured and required for non-loopback binding. No CORS; TLS belongs at a trusted reverse proxy. Parameter acquisition is an explicit operator option. Optional verified immutable compiler views are published locally with publish-view and explicitly enabled by --provider-root; identity encoding only. Provider reads verify pinned metadata/inventory and the selected file only; full audits use local verify-view and publication/reuse. Two dedicated provider permits bound hashing/streaming without consuming cache work; no persistent verified marker."
   },
   "servers": [
     {
@@ -1627,6 +1627,106 @@
           }
         }
       }
+    },
+    "/views/{id}/{file}": {
+      "get": {
+        "summary": "Read an immutable complete compiler provider view; never generates keys",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "description": "Safe two-component compiler inventory path, e.g. keys/increment.prover",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verified original bytes"
+          },
+          "206": {
+            "description": "Verified byte range"
+          },
+          "304": {
+            "description": "Verified unchanged bytes"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "View or inventory path absent"
+          },
+          "409": {
+            "description": "View integrity refused"
+          },
+          "416": {
+            "description": "Invalid range"
+          },
+          "429": {
+            "description": "Admission busy"
+          }
+        }
+      },
+      "head": {
+        "summary": "Read an immutable complete compiler provider view; never generates keys",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          {
+            "name": "file",
+            "in": "path",
+            "required": true,
+            "description": "Safe two-component compiler inventory path, e.g. keys/increment.prover",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Verified original bytes"
+          },
+          "206": {
+            "description": "Verified byte range"
+          },
+          "304": {
+            "description": "Verified unchanged bytes"
+          },
+          "401": {
+            "description": "Authentication required"
+          },
+          "404": {
+            "description": "View or inventory path absent"
+          },
+          "409": {
+            "description": "View integrity refused"
+          },
+          "416": {
+            "description": "Invalid range"
+          },
+          "429": {
+            "description": "Admission busy"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1890,7 +1990,7 @@
                 "enum": [
                   "midnight-zkir-v2-json",
                   "midnight-zkir-v3-json",
-              "midnight-zkir-v3.1-json"
+                  "midnight-zkir-v3.1-json"
                 ]
               },
               "worker": {

@@ -151,7 +151,7 @@ def prepare_save(args):
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--binary',type=Path,default=Path.home()/'.local/bin/midnight-zkir-forge')
+    parser.add_argument('--binary',type=Path,default=(Path.home()/'.local/bin/zkir-forge' if (Path.home()/'.local/bin/zkir-forge').exists() else Path.home()/'.local/bin/midnight-zkir-forge'))
     subs=parser.add_subparsers(dest='command',required=True)
     p=subs.add_parser('key');p.add_argument('--workspace',type=Path,required=True);p.add_argument('--params-dir',type=Path,required=True);p.add_argument('--parameter',action='append',required=True);p.add_argument('--input',action='append',required=True);p.add_argument('--profile',choices=['ledger8-v2','zkir3','zkir31'],required=True);p.add_argument('--workload',required=True);p.add_argument('--generation',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--github-output',type=Path)
     for name in ('baseline','report','restore','prepare-save'):

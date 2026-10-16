@@ -47,7 +47,7 @@ def runtime(root):
     traced = subprocess.run([str(commands[0][0]), '--version'],
                             env=dict(environment, LD_TRACE_LOADED_OBJECTS='1'),
                             capture_output=True, text=True, timeout=30)
-    assert 'midnight-zkir-forge ' not in traced.stdout
+    assert 'midnight-zkir-forge ' not in traced.stdout and 'zkir-forge ' not in traced.stdout
     return {'mode': 'runtime', 'controls': controls,
             'no_nix_store': not Path('/nix').exists(),
             'no_build_checkout': not Path('/source').exists(),

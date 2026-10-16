@@ -8,11 +8,16 @@ with tempfile.TemporaryDirectory(prefix='forge-installer-test-') as d:
  def fixture(tag,hostile=False):
   folder=releases/tag;folder.mkdir();stem=f'midnight-zkir-forge-{tag}-{native}';payload=temp/(tag+'-payload');(payload/'bin').mkdir(parents=True);(payload/'share/midnight-zkir-forge').mkdir(parents=True);(payload/'LICENSES').mkdir()
   profiles={'root':{'fixture':'root'},'v3':{'fixture':'worker'}}
-  modern=tag=='v1.2.0'
+  modern=tag in ('v1.2.0','v1.4.0')
   if modern:profiles['root']['formats']=['midnight-zkir-v3.1-json'];profiles['v31']={'fixture':'worker31'}
   for name in module.COMMANDS+((module.WORKER31,) if modern else ()):
    path=payload/'bin'/name
-   path.write_text('#!/bin/sh\ncase "$*" in\n *--version*) echo "midnight-zkir-forge '+tag[1:]+'";;\n *zkir31*) echo \'{"fixture":"worker31"}\';;\n *zkir3*) echo \'{"fixture":"worker"}\';;\n *profile*) echo \''+json.dumps(profiles['root'])+'\';;\n *) echo help;;\nesac\n');path.chmod(0o755)
+   path.write_text('#!/bin/sh\ncase "$*" in\n *--version*) echo "'+('zkir-forge' if modern else 'midnight-zkir-forge')+' '+tag[1:]+'";;\n *zkir31*) echo \'{"fixture":"worker31"}\';;\n *zkir3*) echo \'{"fixture":"worker"}\';;\n *profile*) echo \''+json.dumps(profiles['root'])+'\';;\n *) echo help;;\nesac\n');path.chmod(0o755)
+  if modern:
+   shutil.copyfile(payload/'bin/midnight-zkir-forge',payload/'bin'/module.PRIMARY)
+   (payload/'bin'/module.PRIMARY).chmod(0o755)
+   if tag=='v1.4.0':
+    with (payload/'bin'/module.PRIMARY).open('a') as changed:changed.write('# different alias bytes\n')
   (payload/'share/midnight-zkir-forge/forge-ci.py').write_text('# fixture only\n');(payload/'LICENSES/LICENSE').write_text('fixture license\n')
   files=[{'path':p.relative_to(payload).as_posix(),'bytes':p.stat().st_size,'sha256':module.digest(p),'executable':bool(p.stat().st_mode&0o111)} for p in sorted(payload.rglob('*')) if p.is_file()]
   minimum={'os_version':platform.mac_ver()[0] if platform.system()=='Darwin' else None,'libc_family':'glibc' if platform.system()=='Linux' else None,'libc_version':platform.libc_ver()[1] if platform.system()=='Linux' else None}
@@ -24,7 +29,7 @@ with tempfile.TemporaryDirectory(prefix='forge-installer-test-') as d:
     entry=tarfile.TarInfo('../escape');entry.size=1;tar.addfile(entry,io.BytesIO(b'x'))
   (folder/'SHA256SUMS').write_text(module.digest(archive)+'  '+archive.name+'\n')
   return folder,archive
- for tag in ['v1.0.0','v1.1.0','v1.2.0','v1.3.0']:fixture(tag,tag=='v1.3.0')
+ for tag in ['v1.0.0','v1.1.0','v1.2.0','v1.3.0','v1.4.0']:fixture(tag,tag=='v1.3.0')
  gh=bin_dir/'gh';gh.write_text('#!'+sys.executable+'\n'+'''import json,os,pathlib,shutil,sys,time
 args=sys.argv[1:];remote=pathlib.Path(os.environ['FIXTURE_REMOTE'])
 if args[:2]==['release','view']:
@@ -49,6 +54,9 @@ else:sys.exit(2)
   assert (r.returncode==0)==ok,(r.stdout,r.stderr)
   return json.loads(r.stdout) if ok else r.stderr
  first=command();active=prefix/'share/midnight-zkir-forge/binary/current';old=active.resolve();assert command()['directory']==first['directory']
+ assert (prefix/'bin'/module.PRIMARY).readlink()==active/'bin/midnight-zkir-forge'
+ assert subprocess.check_output([str(prefix/'bin'/module.PRIMARY),'--version'],text=True).strip()=='midnight-zkir-forge 1.0.0'
+ assert 'CLI alias bytes differ' in command('v1.4.0',ok=False) and active.resolve()==old
  assert 'checksum' in command(extra=('--sha256','0'*64),ok=False) and active.resolve()==old
  assert 'GitHub download failed' in command(environment=dict(env,FAIL_DOWNLOAD='1'),ok=False) and active.resolve()==old
  command('v1.3.0',ok=False);assert active.resolve()==old and not (prefix/'escape').exists()
@@ -85,6 +93,8 @@ else:sys.exit(2)
  # New optional worker installs through the same pointer and rolls back to a legacy release.
  modern=command('v1.2.0');assert active.resolve()!=old
  assert (active/'bin'/module.WORKER31).is_file()
+ assert subprocess.check_output([str(prefix/'bin'/module.PRIMARY),'--version'],text=True).strip()=='zkir-forge 1.2.0'
+ assert module.digest(active/'bin'/module.PRIMARY)==module.digest(active/'bin/midnight-zkir-forge')
  assert not os.path.lexists(prefix/'bin'/module.WORKER31)
  modern_manifest=json.loads((active/'manifest.json').read_text())
  missing=json.loads(json.dumps(modern_manifest));missing['profiles'].pop('v31')
@@ -96,6 +106,7 @@ else:sys.exit(2)
  except ValueError as error:assert 'incomplete' in str(error)
  else:raise AssertionError('declared missing worker accepted')
  command();assert active.resolve()==old
+ assert subprocess.check_output([str(prefix/'bin'/module.PRIMARY),'--version'],text=True).strip()=='midnight-zkir-forge 1.0.0'
  for name in module.COMMANDS:assert (prefix/'bin'/name).resolve().is_file()
  # Kill at publication boundaries without adding production fault hooks.
  driver = r"""
@@ -136,9 +147,11 @@ m.install('v1.1.0',pathlib.Path(prefix))
   for name in module.COMMANDS:assert (destination/'bin'/name).resolve().is_file()
   command()  # Restore the original active release for subsequent refusal checks.
  # An unrelated launcher (including a Nix link) must not be replaced.
- conflict=temp/'conflict';(conflict/'bin').mkdir(parents=True);existing=conflict/'bin/midnight-zkir-forge';existing.symlink_to('/nix/store/fixture/bin/midnight-zkir-forge')
- command(dest=conflict,ok=False);assert existing.readlink()==pathlib.Path('/nix/store/fixture/bin/midnight-zkir-forge')
+ for name in ('midnight-zkir-forge',module.PRIMARY):
+  conflict=temp/('conflict-'+name);(conflict/'bin').mkdir(parents=True);existing=conflict/'bin'/name;existing.symlink_to('/nix/store/fixture/bin/'+name)
+  command(dest=conflict,ok=False);assert existing.readlink()==pathlib.Path('/nix/store/fixture/bin/'+name)
+  assert not (conflict/'share/midnight-zkir-forge/binary/current').exists()
  # Same tag changed content cannot silently replace the pinned installation.
  folder=releases/'v1.0.0';archive=next(folder.glob('*.tar.gz'));data=archive.read_bytes();archive.write_bytes(data+b'changed');(folder/'SHA256SUMS').write_text(module.digest(archive)+'  '+archive.name+'\n')
  assert 'tag content changed' in command(ok=False) and active.resolve()==old
- print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'install_reinstall_upgrade_rollback':True,'optional_worker_upgrade_legacy_rollback':True,'advertised_missing_worker_refused':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'metadata_checksum_and_expansion_budgets':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))
+ print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'install_reinstall_upgrade_rollback':True,'primary_alias_upgrade_legacy_rollback':True,'alias_corruption_refused':True,'both_launcher_collisions_refused_before_activation':True,'optional_worker_upgrade_legacy_rollback':True,'advertised_missing_worker_refused':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'metadata_checksum_and_expansion_budgets':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))

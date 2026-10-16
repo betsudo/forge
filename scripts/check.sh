@@ -4,6 +4,8 @@ node scripts/factory-audit.mjs
 node scripts/check-spec.mjs
 node scripts/check-profile.mjs
 node scripts/test-commit-policy.mjs
+node scripts/test-pr-integrity.mjs
+actionlint
 cargo fmt --check
 cargo fmt --manifest-path workers/zkir3/Cargo.toml --check
 cargo fmt --manifest-path workers/zkir31/Cargo.toml --check
@@ -18,10 +20,13 @@ cargo clippy --locked --manifest-path workers/zkir3/Cargo.toml --target-dir targ
 cargo clippy --locked --manifest-path workers/zkir31/Cargo.toml --target-dir target/zkir31 --all-targets -- -D warnings
 python3 scripts/check-cargo-notices.py
 python3 scripts/check-github-action.py
+python3 scripts/check-compiler-local.py
+python3 scripts/check-ci-trial.py
 python3 scripts/check-linux-qualification.py
 python3 scripts/check-installer.py
-python3 scripts/check-recovery.py --binary target/debug/midnight-zkir-forge
-python3 scripts/check-snapshot.py --binary target/debug/midnight-zkir-forge
-python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge
+python3 scripts/check-local-install.py
+python3 scripts/check-recovery.py --binary target/debug/zkir-forge
+python3 scripts/check-snapshot.py --binary target/debug/zkir-forge
+python3 scripts/check-http.py --binary target/debug/zkir-forge
 python3 scripts/build-docs.py
 python3 scripts/check-docs.py

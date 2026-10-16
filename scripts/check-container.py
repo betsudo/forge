@@ -30,7 +30,7 @@ try:
                '--tmpfs', '/tmp:mode=1777,size=256m', '--mount',
                f'type=volume,source={volume},target=/data', args.image]
     version = docker(*command, '--version').stdout.strip()
-    assert version.startswith('midnight-zkir-forge 0.2.'), version
+    assert version.startswith('zkir-forge '), version
     refused = docker(*command, 'serve', '--listen', '0.0.0.0:8787', check=False)
     assert refused.returncode != 0, 'public bind without token must fail'
     error = (refused.stdout + refused.stderr).lower()

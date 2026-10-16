@@ -41,6 +41,7 @@ pub struct Config {
     pub profile: Option<ProfileSelector>,
     pub listen: SocketAddr,
     pub token_file: Option<PathBuf>,
+    pub provider_root: Option<PathBuf>,
 }
 struct Service {
     config: Config,
@@ -49,8 +50,10 @@ struct Service {
     generation: Arc<Semaphore>,
     downloads: Arc<Semaphore>,
     uploads: Arc<Semaphore>,
+    provider_reads: Arc<Semaphore>,
 }
 type Shared = Arc<Service>;
+#[derive(Debug)]
 struct ApiError(StatusCode, &'static str);
 impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
@@ -83,6 +86,26 @@ fn classify(error: anyhow::Error) -> ApiError {
     )
 }
 impl Service {
+    // The permit lives in the blocking task, then follows its verified response.
+    // Dropping a cancelled HTTP future must not free capacity while hashing runs.
+    async fn provider_work<T, F>(
+        self: &Arc<Self>,
+        task: F,
+    ) -> std::result::Result<(T, OwnedSemaphorePermit), ApiError>
+    where
+        T: Send + 'static,
+        F: FnOnce() -> Result<T> + Send + 'static,
+    {
+        let permit = self
+            .provider_reads
+            .clone()
+            .try_acquire_owned()
+            .map_err(|_| ApiError(StatusCode::TOO_MANY_REQUESTS, "provider_reads_busy"))?;
+        tokio::task::spawn_blocking(move || Ok((task()?, permit)))
+            .await
+            .map_err(|_| ApiError(StatusCode::INTERNAL_SERVER_ERROR, "worker_failed"))?
+            .map_err(classify)
+    }
     async fn work<T, F>(self: &Arc<Self>, task: F) -> std::result::Result<T, ApiError>
     where
         T: Send + 'static,
@@ -123,6 +146,16 @@ pub async fn serve(config: Config) -> Result<Value> {
         config.listen.ip().is_loopback() || token.is_some(),
         "non-loopback HTTP binding requires --token-file"
     );
+    if let Some(provider) = &config.provider_root {
+        crate::provider_view::separate_roots(provider, &config.root)?;
+        ensure!(
+            std::fs::symlink_metadata(provider)?.is_dir()
+                && !std::fs::symlink_metadata(provider)?
+                    .file_type()
+                    .is_symlink(),
+            "provider root must be an existing directory"
+        );
+    }
     // Fail before listening if configured storage/backend is unavailable.
     let store = Store::open(&config.root)?;
     let mut probe = tempfile::NamedTempFile::new_in(store.root.join("staging"))?;
@@ -139,6 +172,7 @@ pub async fn serve(config: Config) -> Result<Value> {
         generation: Arc::new(Semaphore::new(1)),
         downloads: Arc::new(Semaphore::new(8)),
         uploads: Arc::new(Semaphore::new(2)),
+        provider_reads: Arc::new(Semaphore::new(2)),
     });
     let app = Router::new()
         .route(
@@ -162,6 +196,7 @@ pub async fn serve(config: Config) -> Result<Value> {
         .route("/v1/bundles/{id}/materializations", post(materialize))
         .route("/v1/bundles/{id}/circuits/{name}/source", get(source))
         .route("/v1/objects/{digest}", get(object))
+        .route("/views/{id}/{*file}", get(provider_file))
         .fallback(|| async { ApiError(StatusCode::NOT_FOUND, "not_found") })
         .layer(middleware::from_fn_with_state(state.clone(), guard))
         .with_state(state);
@@ -487,7 +522,7 @@ async fn download(
         .try_acquire_owned()
         .map_err(|_| ApiError(StatusCode::TOO_MANY_REQUESTS, "downloads_busy"))?;
     let requested = digest.clone();
-    let (mut file, artifact) = state
+    let (file, artifact) = state
         .work(move |_, store| {
             let clock = Instant::now();
             let tx = store.lock()?;
@@ -558,18 +593,64 @@ async fn download(
             Ok((file, artifact))
         })
         .await?;
+    file_response(
+        file,
+        artifact.size,
+        &digest,
+        if artifact.kind == ArtifactKind::Source {
+            "application/json"
+        } else {
+            "application/octet-stream"
+        },
+        headers,
+        method,
+        stream_permit,
+    )
+}
+async fn provider_file(
+    State(state): State<Shared>,
+    Path((id, path)): Path<(String, String)>,
+    headers: HeaderMap,
+    method: Method,
+) -> std::result::Result<Response, ApiError> {
+    validate_id(&id).map_err(|_| bad("invalid_id"))?;
+    let root = state
+        .config
+        .provider_root
+        .clone()
+        .ok_or(ApiError(StatusCode::NOT_FOUND, "not_found"))?;
+    let content_type = if path.ends_with(".json") || path.ends_with(".zkir") {
+        "application/json"
+    } else if path.ends_with(".js") {
+        "text/javascript"
+    } else {
+        "application/octet-stream"
+    };
+    let ((file, digest, size), permit) = state
+        .provider_work(move || {
+            let view = root.join(&id);
+            if !view.exists() {
+                return Err(anyhow::anyhow!(crate::error::Kind::NotFound));
+            }
+            crate::provider_view::read(&view, &id, &path)
+        })
+        .await?;
+    file_response(file, size, &digest, content_type, headers, method, permit)
+}
+fn file_response(
+    mut file: File,
+    size: u64,
+    digest: &str,
+    content_type: &str,
+    headers: HeaderMap,
+    method: Method,
+    stream_permit: OwnedSemaphorePermit,
+) -> std::result::Result<Response, ApiError> {
     let etag = format!("\"{}\"", digest);
     let mut builder = Response::builder()
         .header(header::ETAG, &etag)
         .header(header::ACCEPT_RANGES, "bytes")
-        .header(
-            header::CONTENT_TYPE,
-            if artifact.kind == ArtifactKind::Source {
-                "application/json"
-            } else {
-                "application/octet-stream"
-            },
-        );
+        .header(header::CONTENT_TYPE, content_type);
     if headers
         .get(header::IF_NONE_MATCH)
         .and_then(|v| v.to_str().ok())
@@ -584,7 +665,7 @@ async fn download(
             .unwrap());
     }
     let mut start = 0;
-    let mut length = artifact.size;
+    let mut length = size;
     let mut status = StatusCode::OK;
     // Range applies to GET; RFC HEAD describes the complete representation.
     if method == Method::GET
@@ -594,18 +675,18 @@ async fn download(
             .get(header::IF_RANGE)
             .is_none_or(|v| v.to_str().ok() == Some(&etag));
         if if_range_matches {
-            if let Some((first, last)) = value.to_str().ok().and_then(|v| range(v, artifact.size)) {
+            if let Some((first, last)) = value.to_str().ok().and_then(|v| range(v, size)) {
                 start = first;
                 length = last - first + 1;
                 status = StatusCode::PARTIAL_CONTENT;
                 builder = builder.header(
                     header::CONTENT_RANGE,
-                    format!("bytes {first}-{last}/{}", artifact.size),
+                    format!("bytes {first}-{last}/{}", size),
                 );
             } else {
                 return Ok(builder
                     .status(StatusCode::RANGE_NOT_SATISFIABLE)
-                    .header(header::CONTENT_RANGE, format!("bytes */{}", artifact.size))
+                    .header(header::CONTENT_RANGE, format!("bytes */{}", size))
                     .body(Body::empty())
                     .unwrap());
             }
@@ -638,5 +719,90 @@ async fn shutdown() {
     #[cfg(not(unix))]
     {
         let _ = tokio::signal::ctrl_c().await;
+    }
+}
+
+#[cfg(test)]
+mod provider_admission_tests {
+    use super::*;
+    fn service(root: PathBuf) -> Arc<Service> {
+        Arc::new(Service {
+            config: Config {
+                root,
+                params_dir: None,
+                fetch_params: false,
+                profile: None,
+                listen: "127.0.0.1:0".parse().unwrap(),
+                token_file: None,
+                provider_root: None,
+            },
+            token: None,
+            work: Arc::new(Semaphore::new(8)),
+            generation: Arc::new(Semaphore::new(1)),
+            downloads: Arc::new(Semaphore::new(8)),
+            uploads: Arc::new(Semaphore::new(2)),
+            provider_reads: Arc::new(Semaphore::new(2)),
+        })
+    }
+    #[tokio::test]
+    async fn provider_and_cache_admission_are_independent() {
+        let root = tempfile::tempdir().unwrap();
+        let state = service(root.path().join("cache"));
+        let cache = state.work.clone().acquire_many_owned(8).await.unwrap();
+        let (_, first) = state.provider_work(|| Ok(())).await.unwrap();
+        let (_, second) = state.provider_work(|| Ok(())).await.unwrap();
+        assert!(
+            !state.config.root.exists(),
+            "provider reads opened a cache store"
+        );
+        assert_eq!(
+            state.provider_work(|| Ok(())).await.err().unwrap().0,
+            StatusCode::TOO_MANY_REQUESTS
+        );
+        drop(cache);
+        state.work(|_, store| store.stats()).await.unwrap();
+        drop((first, second));
+        assert_eq!(state.provider_reads.available_permits(), 2);
+    }
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn cancellation_keeps_capacity_until_blocking_verification_stops() {
+        let root = tempfile::tempdir().unwrap();
+        let state = service(root.path().join("cache"));
+        let (started_tx, started_rx) = std::sync::mpsc::channel();
+        let (release_tx, release_rx) = std::sync::mpsc::channel();
+        let child_state = state.clone();
+        let request = tokio::spawn(async move {
+            child_state
+                .provider_work(move || {
+                    started_tx.send(()).unwrap();
+                    release_rx.recv_timeout(std::time::Duration::from_secs(5))?;
+                    Ok(())
+                })
+                .await
+        });
+        tokio::task::spawn_blocking(move || {
+            started_rx.recv_timeout(std::time::Duration::from_secs(5))
+        })
+        .await
+        .unwrap()
+        .unwrap();
+        request.abort();
+        assert!(request.await.unwrap_err().is_cancelled());
+        assert_eq!(state.provider_reads.available_permits(), 1);
+        let other = state.provider_reads.clone().acquire_owned().await.unwrap();
+        assert_eq!(
+            state.provider_work(|| Ok(())).await.err().unwrap().0,
+            StatusCode::TOO_MANY_REQUESTS
+        );
+        release_tx.send(()).unwrap();
+        let returned = tokio::time::timeout(
+            std::time::Duration::from_secs(5),
+            state.provider_reads.clone().acquire_owned(),
+        )
+        .await
+        .unwrap()
+        .unwrap();
+        drop((other, returned));
+        assert_eq!(state.provider_reads.available_permits(), 2);
     }
 }

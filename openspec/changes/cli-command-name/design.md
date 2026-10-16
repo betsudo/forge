@@ -1,0 +1,3 @@
+# Compatible executable names
+
+Cargo builds both entrypoints with shared source and explicit Clap display name zkir-forge. Nix exposes the old name as a symlink to the primary executable. Portable archives retain regular byte-identical copies after runtime relocation; installer validates inventory and alias equivalence. Legacy-only schema1 releases remain installable and provide the primary launcher through their managed legacy target so rollback needs no metadata rewrite. Check launcher conflicts before active-pointer mutation. Existing evidence remains historical and new executable bytes need fresh qualifications; no old receipt is rewritten. Workers, helper, cache/env names, crate names and asset stems stay stable.

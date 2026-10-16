@@ -140,3 +140,9 @@ the verified portable archive through that Action and retains small evidence and
 large candidate/source artifacts separately. Consult PR22's exact run status for
 that follow-up. No private release asset has been published or authenticated
 release download qualified. The macOS no-Nix deferral remains unchanged.
+
+The installer exposes primary `zkir-forge` and compatibility `midnight-zkir-forge`.
+New release archives contain identical executable bytes for both; old schema1
+legacy-only releases remain installable and keep both installed launchers usable
+on rollback. Existing release archive names and managed installation paths stay
+stable. An unrelated file at either launcher path refuses installation.

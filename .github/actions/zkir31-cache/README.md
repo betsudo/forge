@@ -17,10 +17,11 @@ before using it; preserve compiler/manifests and exact backend compatibility.
 
 For another repository, pin this Action to a reviewed full commit:
 `betsudo/forge/.github/actions/zkir31-cache@FULL_REVIEWED_SHA`.
-Replace that placeholder before use. Access to this private Action and the
-private CLI source/assets must already be provisioned by the repository owner;
-a consumer's ordinary `GITHUB_TOKEN` does not grant access to another private
-repository. The Action changes no credentials, sharing settings or permissions.
+Replace that placeholder before use. The new repository is public. If using a
+private copy or private CLI assets, access must already be provisioned by the
+repository owner; a consumer's ordinary `GITHUB_TOKEN` does not grant access to
+another private repository. The Action changes no credentials, sharing settings
+or permissions.
 
 ## Two phases around the ordinary tests
 
@@ -114,5 +115,6 @@ The PR native installer workflow qualifies the installed portable x86_64 bundle
 in a clean container, then exercises this composite Action on the native runner
 with real JSON3.1 preparation/proofs and restore-only PR write admission. It does
 not claim a trusted remote warm-cache round trip or consumer CI minutes saved.
-The two-week consumer trial, enrolled partner and real transfer-value measurement
-remain separate follow-up work in issue #21's broader pilot plan.
+The owner selected Passport for the next comparison. The two-week trial and real
+transfer-value measurement remain separate follow-up work; see
+[the reporting contract](../../../docs/ci-trial.md) and new-repository issue #2.

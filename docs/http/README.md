@@ -10,7 +10,7 @@ remains proposed wherever this subset does not implement it.
 ```sh
 ./bootstrap.sh -- cargo build --locked --manifest-path workers/zkir3/Cargo.toml --target-dir target
 ./bootstrap.sh -- cargo build --locked
-./bootstrap.sh -- target/debug/midnight-zkir-forge serve
+./bootstrap.sh -- target/debug/zkir-forge serve
 ```
 
 Default listener is `127.0.0.1:8787`; the default cache remains
@@ -85,10 +85,10 @@ storage/backend availability; it does not guarantee all parameter sizes exist.
 
 ```sh
 ./bootstrap.sh --check
-./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge
+./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/zkir-forge
 # Explicit real key generation/proof coverage; verified parameters must exist:
 ./bootstrap.sh -- cargo build --locked --example qualify-http-fixture
-./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/midnight-zkir-forge --real
+./bootstrap.sh -- python3 scripts/check-http.py --binary target/debug/zkir-forge --real
 ```
 
 The fast suite starts a real authenticated process and checks upload/source
@@ -102,9 +102,26 @@ The existing Rust real-backend tests remain the independent uncached controls.
 server for container smoke checks. It skips private-CAS corruption and direct
 SQLite contention; do not point this mutating test at a shared service.
 
-Archives, durable jobs, HTTP provider views, namespaces, GC, TLS, resumable upload,
+Archives, durable jobs, namespaces, GC, TLS, resumable upload,
 public rate policy and full JS provider qualification remain future slices.
 See [container setup](../../container/README.md) and [CI notes](../../container/CI.md).
 
 See [API conventions and Midnight provider terminology](../api-conventions.md) for the
 CLI stdin/stdout boundary, HTTP payload conventions and local/fetch provider roles.
+
+## Verified compiler provider views
+
+An explicit `--provider-root` enables GET/HEAD `/views/{manifest_sha256}/{file}`.
+Publish complete compiler output locally with `publish-view`; the caller must
+supply the independently trusted SHA256 of its original compiler manifest.
+The service validates inventory, pinned metadata and requested bytes before conditional/range reads,
+never generates keys on reads, and preserves authentication before lookup.
+Views are separate from cache exports and snapshots. See the
+[local adapter guide](../providers/local-adapter.md) and
+[metadata guarantee research](../research/compiler-metadata-guarantees.md).
+This initial route supports identity bytes and safe two-component paths.
+
+Provider reads use two dedicated verification/stream permits and do not open the
+cache database or consume cache-work admission. Full publish/reuse validation and
+`zkir-forge verify-view VIEW --manifest-sha256 HASH` detect any corrupted sibling.
+Ordinary reads validate the selected representation, not every sibling file.

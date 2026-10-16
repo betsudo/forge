@@ -75,7 +75,15 @@ else:sys.exit(2)
     prefix = temp/'prefix'
     installed = json.loads(run(runtime,remote/'install-release.py','--version',manifest['tag'],'--prefix',prefix))
     cli = prefix/'bin/midnight-zkir-forge'
-    assert run(cli,'--version').strip() == 'midnight-zkir-forge '+manifest['version']
+    version = run(cli,'--version').strip()
+    assert version in {name+' '+manifest['version'] for name in ('midnight-zkir-forge','zkir-forge')}
+    primary = prefix/'bin/zkir-forge'
+    if primary.exists():
+        assert run(primary,'--version').strip() == version
+        assert json.loads(run(primary,'profile')) == manifest['profiles']['root']
+        cli = primary
+    if any(entry['path']=='bin/zkir-forge' for entry in manifest['files']):
+        assert primary.exists() and version == 'zkir-forge '+manifest['version']
     profiles = []
     selectors=['ledger8-v2','zkir3']+(['zkir31'] if 'v31' in manifest['profiles'] else [])
     for profile in selectors:

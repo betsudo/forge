@@ -92,7 +92,7 @@ cd forge
 ./bootstrap.sh --check
 ./scripts/install-local.sh
 export PATH=&quot;$HOME/.local/bin:$PATH&quot;
-midnight-zkir-forge --version</code>
+zkir-forge --version</code>
 </pre>
 </div>
 <p>Add the PATH entry to your shell profile and agent launcher environment. The installer retains a Nix GC root; rerun it after adopting a new commit. The default store is <code>~/.midnight-zkir-forge</code>. Override it with <code>--cache-dir</code> or <code>MIDNIGHT_ZKIR_FORGE_DIR</code>.</p>
@@ -106,8 +106,8 @@ midnight-zkir-forge --version</code>
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
-<code>midnight-zkir-forge prepare /absolute/path/to/circuit.zkir &gt; artifacts.json
-midnight-zkir-forge stats</code>
+<code>zkir-forge prepare /absolute/path/to/circuit.zkir &gt; artifacts.json
+zkir-forge stats</code>
 </pre>
 </div>
 <p>The JSON result contains <code>bundle_id</code>, <code>derivation_id</code>, <code>artifact_set_id</code>, <code>cache.hit</code>, and <code>export.files</code>. Use the exported directory with a compatible ZK config provider. Keep proof generation in your existing proof provider.</p>
@@ -118,7 +118,7 @@ midnight-zkir-forge stats</code>
 from pathlib import Path
 
 result = subprocess.run(
-    [str(Path.home() / &quot;.local/bin/midnight-zkir-forge&quot;),
+    [str(Path.home() / &quot;.local/bin/zkir-forge&quot;),
      &quot;prepare&quot;, str(Path(&quot;generated/circuit.zkir&quot;).resolve())],
     check=True, capture_output=True, text=True,
 )
@@ -134,8 +134,8 @@ paths = {f[&quot;kind&quot;]: Path(f[&quot;path&quot;])
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
-<code>midnight-zkir-forge qualify
-midnight-zkir-forge --profile zkir3 qualify</code>
+<code>zkir-forge qualify
+zkir-forge --profile zkir3 qualify</code>
 </pre>
 </div>
 </section>
@@ -232,9 +232,9 @@ run only when materialization needs new keys.</p>
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
-<code>midnight-zkir-forge profile
-midnight-zkir-forge --profile zkir3 profile
-midnight-zkir-forge --profile zkir3 prepare /absolute/path/circuit.zkir</code>
+<code>zkir-forge profile
+zkir-forge --profile zkir3 profile
+zkir-forge --profile zkir3 prepare /absolute/path/circuit.zkir</code>
 </pre>
 </div>
 <p>Input format is detected from bytes. <code>--profile</code> asserts the expected backend; a mismatch fails without fallback or format conversion. Derivations include actual parameter content identity and implementation fingerprints.</p>
@@ -247,7 +247,7 @@ midnight-zkir-forge --profile zkir3 prepare /absolute/path/circuit.zkir</code>
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
-<code>midnight-zkir-forge serve --listen 127.0.0.1:8787
+<code>zkir-forge serve --listen 127.0.0.1:8787
 
 curl --fail-with-body \
   -H &quot;Content-Type: application/json&quot; \
@@ -340,8 +340,8 @@ docker load --input result-image
 <p>Move a verified snapshot into a fresh job-local store. Forge checks inventory,
 identities, SQLite metadata and persistent exports before atomic publication.
 Every restored test still runs its proofs, verification and assertions.</p>
-<pre><code>midnight-zkir-forge snapshot --output /tmp/forge-snapshot
-midnight-zkir-forge --cache-dir /tmp/new-forge-job restore /tmp/forge-snapshot
+<pre><code>zkir-forge snapshot --output /tmp/forge-snapshot
+zkir-forge --cache-dir /tmp/new-forge-job restore /tmp/forge-snapshot
 midnight-zkir-forge-ci --help</code></pre>
 <p>Destinations must be absent. Partition CI caches by exact tool, platform,
 profile and actual parameter bytes; report hit deltas from a post-restore baseline.
@@ -357,10 +357,10 @@ Snapshot checksums verify bytes; trusted workflow scopes establish provenance.</
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
-<code>midnight-zkir-forge stats
-midnight-zkir-forge evict BUNDLE_ID --dry-run
-midnight-zkir-forge evict BUNDLE_ID
-midnight-zkir-forge ensure BUNDLE_ID</code>
+<code>zkir-forge stats
+zkir-forge evict BUNDLE_ID --dry-run
+zkir-forge evict BUNDLE_ID
+zkir-forge ensure BUNDLE_ID</code>
 </pre>
 </div>
 <p>

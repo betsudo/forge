@@ -1,0 +1,63 @@
+{
+  "schema": 1,
+  "recorded_date": "2026-10-16",
+  "repository": "https://github.com/betsudo/compact.git",
+  "source_commit": "05a7885f6518e1ca358896aec03cc028a66f8c13",
+  "scope": "read-only static inspection; no Compact edits, tests, builds or Forge integration qualification",
+  "existing_unrelated_status": [
+    "M tools/compact-rust-backend/tests/performance/README.md",
+    "?? tools/compact-rust-backend/tests/performance/historical-path-validation-benchmark.md"
+  ],
+  "inspected_files": [
+    {
+      "path": "compiler/passes.ss",
+      "sha256": "d8fb0ff8ef21262363a7047a248f1a3e2d9ab57920162beb7900079c7d1aaad7",
+      "bytes": 12766
+    },
+    {
+      "path": "compiler/compactc.ss",
+      "sha256": "1c7169f01886ef70472a4dadc8760f9b76c0ef0a692e54d2dbc14d0c14d5cfd0",
+      "bytes": 6214
+    },
+    {
+      "path": "compiler/config-params.ss",
+      "sha256": "0d44e3d6e7dd05e223ccd6d9fa268ef66a210bf96562496887722a219a05e63f",
+      "bytes": 1735
+    },
+    {
+      "path": "compiler/manifest-passes.ss",
+      "sha256": "46cbad33712d15be298fd43629b4ccf6e6dc4132de421deac8704a132c0987ef",
+      "bytes": 3281
+    },
+    {
+      "path": "tools/compact-rust-backend/forge_circuits.py",
+      "sha256": "34a617132b8f15de5b29132c57e3993959e60317248d438bc4c06c9e4e3c5daf",
+      "bytes": 17940
+    },
+    {
+      "path": "tools/compact-rust-backend/compactc-launcher.sh",
+      "sha256": "1a0bc4ef7524ea582174c32b39126c9a3bc73bb2f5c6c6a832a37f08df0a8c98",
+      "bytes": 1781
+    },
+    {
+      "path": "tools/compact-rust-backend/test_forge_harness.py",
+      "sha256": "afa98a90c013742dbe8c76699d2dcef3e3b6ff1dbc334b8fa9566b7a09ee4c82",
+      "bytes": 12573
+    },
+    {
+      "path": "tools/compact-rust-backend/test_forge_cache.py",
+      "sha256": "c1f86ea0a61a88386cba55152cd697c69fdc76e5693b06765c018cd5c680ff8c",
+      "bytes": 7190
+    }
+  ],
+  "observations": {
+    "forge_flag_present": false,
+    "keygen_before_compiler_integrity_manifest": true,
+    "tool_commands": [
+      "zkir compile-many ZKIR_DIR KEY_DIR",
+      "zkir-v3 compile-many ZKIR_DIR KEY_DIR"
+    ],
+    "current_test_adapter_profile": "v2-only; independently pinned older Forge build",
+    "native_worker_route_inferred_from_zkir_v3_name": false
+  }
+}
