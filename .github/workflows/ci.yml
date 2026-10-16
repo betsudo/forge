@@ -11,6 +11,11 @@ on:
         default: false
 permissions:
   contents: read
+# Three isolated proof-stack graphs must fit the hosted runner disk.
+env:
+  CARGO_PROFILE_DEV_DEBUG: "0"
+  CARGO_PROFILE_TEST_DEBUG: "0"
+  CARGO_INCREMENTAL: "0"
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -35,8 +40,8 @@ jobs:
             target
             ~/.cargo/registry
             ~/.cargo/git
-          key: forge-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock', 'workers/zkir3/Cargo.lock', 'flake.lock') }}
-          restore-keys: forge-${{ runner.os }}-${{ runner.arch }}-
+          key: forge-lean-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock', 'workers/zkir3/Cargo.lock', 'workers/zkir31/Cargo.lock', 'flake.lock') }}
+          restore-keys: forge-lean-v1-${{ runner.os }}-${{ runner.arch }}-
       - name: Locked profiles, specs, formatting, unit tests, Clippy, HTTP e2e and docs
         run: ./bootstrap.sh --check
 
@@ -61,8 +66,8 @@ jobs:
             target
             ~/.cargo/registry
             ~/.cargo/git
-          key: forge-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock', 'workers/zkir3/Cargo.lock', 'flake.lock') }}
-          restore-keys: forge-${{ runner.os }}-${{ runner.arch }}-
+          key: forge-lean-v1-${{ runner.os }}-${{ runner.arch }}-${{ hashFiles('Cargo.lock', 'workers/zkir3/Cargo.lock', 'workers/zkir31/Cargo.lock', 'flake.lock') }}
+          restore-keys: forge-lean-v1-${{ runner.os }}-${{ runner.arch }}-
       - name: Build both locked backends
         run: |
           ./bootstrap.sh -- cargo build --locked --manifest-path workers/zkir3/Cargo.toml --target-dir target

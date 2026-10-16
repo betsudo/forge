@@ -642,3 +642,13 @@
   Intel runtime and authenticated release download remain unqualified. The
   clean-Mac task stays unchecked as a deferred publication gate; current local
   work is complete under the revised owner scope. No publication or Compact edits.
+
+## 2026-10-16 — PR #20 hosted runner disk correction
+
+- PR #19 checks passed. PR #20's first run38866220648 exhausted runner disk;
+  its check annotation reports System.IO.IOException, No space left on device.
+  The runner could not retain ordinary job logs. This is not a proof failure.
+- Disable Cargo dev/test debug symbols and incremental compilation in CI only.
+  Use a fresh lean cache partition, including the isolated JSON3.1 lockfile, so
+  restores cannot reintroduce earlier large build trees. Preserve all checks
+  and the separately opt-in genuine-proof job. Compact is unchanged.
