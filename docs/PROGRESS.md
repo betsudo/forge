@@ -954,3 +954,18 @@
   Existing official pins remain fixed; Cloudflare and clean-Mac VM stay deferred.
 - Planning changes only; no new consumer qualification or performance result is
   claimed. The first implementation issue is #14 (bounded keygen timeout).
+
+## 2026-10-17 — bounded adapter keygen timeout (#14/#30)
+
+- Added local --keygen-timeout-seconds, integer1..86400/default180, validated
+  before compiler cleanup and rechecked in private hook config. Each prepare
+  includes lease waiting; profile checks/native off compilation are unchanged.
+- Captured commands own POSIX process groups. Deadline/Python interruption kills
+  CLI plus backend descendants and reaps before refusal. Abrupt hook termination
+  remains a recovery case, not a promised SIGKILL/SIGTERM cleanup guarantee.
+- All15adapter controls pass through Nix, including actual slow worker startup,
+  timeout/no completed marker/no output, terminated late worker and explicit retry;
+  invalid CLI values preserve existing output. OpenSpec/docs build/link checks pass.
+- Independent review found no blocker; narrowed interruption claims and added hook
+  entrypoint/CLI sentinel controls in response. No broader consumer qualification
+  or speedup claim, pin/Compact/shared-installation/cache change or publication.

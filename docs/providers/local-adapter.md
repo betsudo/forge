@@ -25,6 +25,13 @@ Passport contracts. Output copies are private; test proofs and assertions still 
 A failed copy can leave incomplete output, but the wrapper refuses success and
 the compiler does not finish its manifest; retry compilation in owned output.
 
+For independently qualified larger circuits, set `--keygen-timeout-seconds 900`.
+The integer range is 1..86400 seconds, default 180. It bounds each local `prepare`
+(including cache/lease waits), not the entire compilation; native off mode is
+unchanged. A timeout terminates the owned Forge CLI/worker process group and
+refuses compiler success. Retry explicitly after resolving the cause; no fallback
+or completed manifest is fabricated. Profile checks keep their existing deadline.
+
 Publish a complete successful compiler output with its independently pinned hash:
 
 ```sh

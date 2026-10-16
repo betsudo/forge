@@ -17,6 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location('adapter', ROOT/'scripts/compiler-local.py')
 adapter = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(adapter)
+REAL_COMMAND = adapter.command
 
 
 @contextlib.contextmanager
@@ -52,6 +53,59 @@ class LocalAdapter(unittest.TestCase):
     def hook(self, source, config):
         adapter.materialize(config,['compile-many',str(source.parent),str(Path(config['output'])/'keys')])
 
+    def test_timeout_validation_and_propagation(self):
+        for value in [0, -1, 86401, True, 1.5, '30', None]:
+            with self.subTest(value=value), self.assertRaises(ValueError):
+                adapter.keygen_timeout(value)
+        for value in [1, 180, 86400]:
+            self.assertEqual(adapter.keygen_timeout(value), value)
+        with fixture() as (_, source, config, mocked):
+            config['keygen_timeout_seconds'] = 900
+            self.hook(source, config)
+            self.assertEqual(mocked.call_args.kwargs, {'timeout': 900})
+        with fixture() as (_, source, config, mocked):
+            config['keygen_timeout_seconds'] = True
+            with self.assertRaises(ValueError): self.hook(source, config)
+            mocked.assert_not_called()
+
+    def test_timeout_kills_worker_and_allows_explicit_retry(self):
+        with fixture() as (work, source, config, mocked):
+            backend = work/'slow.py'
+            child_done = work/'late-success'
+            # A worker inherits the owned group and attempts a late write.
+            child_ready = work/'worker-ready'
+            worker_code = ("import time,pathlib;pathlib.Path("+repr(str(child_ready))+").write_text('ready');"
+                           "time.sleep(2);pathlib.Path("+repr(str(child_done))+").write_text('late')")
+            backend.write_text("import subprocess,sys,time\nsubprocess.Popen([sys.executable,'-c',"+
+                               repr(worker_code)+"])\ntime.sleep(30)\n")
+            config['keygen_timeout_seconds'] = 1
+            prepared = mocked.return_value
+            mocked.side_effect = lambda args, **kwargs: REAL_COMMAND(
+                [sys.executable, backend], **kwargs)
+            config['completed'] = str(work/'completed')
+            config_file = work/'hook.json'
+            config_file.write_text(json.dumps(config))
+            invocation = ['compiler-local.py', '--keygen-hook', str(config_file),
+                          'compile-many', str(source.parent), str(Path(config['output'])/'keys')]
+            import io
+            stderr = io.StringIO()
+            with patch.object(sys, 'argv', invocation), contextlib.redirect_stderr(stderr):
+                self.assertEqual(adapter.main(), 1)
+            self.assertIn('timed out after 1 seconds', stderr.getvalue())
+            self.assertFalse(Path(config['completed']).exists())
+            self.assertFalse((Path(config['output'])/'compiler/contract-manifest.json').exists())
+            self.assertFalse(source.with_suffix('.bzkir').exists())
+            # Allow more than the worker's delay: a surviving child would publish.
+            time.sleep(1.2)
+            self.assertTrue(child_ready.exists(), 'worker did not actually start')
+            self.assertFalse(child_done.exists(), 'timed-out generation worker survived')
+            mocked.side_effect = None
+            mocked.return_value = prepared
+            with patch.object(sys, 'argv', invocation):
+                self.assertEqual(adapter.main(), 0)
+            self.assertEqual(Path(config['completed']).read_text(), 'completed')
+            self.assertEqual((Path(config['output'])/'keys/proof.prover').read_bytes(), b'pk')
+
     def test_private_materialization_and_empty_batch(self):
         with fixture() as (work, source, config, _):
             self.hook(source,config)
@@ -82,7 +136,7 @@ class LocalAdapter(unittest.TestCase):
     def test_changed_source_fails_without_published_keys(self):
         with fixture() as (_, source, config, mocked):
             result = mocked.return_value
-            def mutate(*_args):
+            def mutate(*_args, **_kwargs):
                 source.write_bytes(b'changed')
                 return result
             mocked.side_effect = mutate
@@ -119,7 +173,7 @@ class LocalAdapter(unittest.TestCase):
             hashes['source'] = second_hash
             adapter.policy.return_value['materialization'].append(dict(
                 descriptor=second['descriptor'], official_artifact_sha256=hashes))
-            mocked.side_effect = lambda args: json.dumps(second) if args[-1] == 'other' else prepared
+            mocked.side_effect = lambda args, **kwargs: json.dumps(second) if args[-1] == 'other' else prepared
             original = adapter.shutil.copyfile
             def swap(a, b):
                 result = original(a, b)
@@ -292,6 +346,12 @@ module.materialize(state['config'],['compile-many',str(source.parent),str(source
             sentinel.write_text('keep')
             invocation = [sys.executable,str(ROOT/'scripts/compiler-local.py'),'--compiler-dir',str(root),
                           '--cache-dir',str(root/'cache'),str(source),str(output)]
+            for value in ['0', '-1', '86401', 'nan', '1.5']:
+                invalid = invocation[:2] + ['--keygen-timeout-seconds',value] + invocation[2:]
+                refused = subprocess.run(invalid, capture_output=True, text=True)
+                self.assertEqual(refused.returncode, 2)
+                self.assertEqual(sentinel.read_text(), 'keep')
+                self.assertFalse((root/'cache').exists())
             self.assertEqual(subprocess.run(invocation,capture_output=True).returncode,7)
             self.assertFalse((root/'cache').exists())
             qualification = root/'qualification.json'
