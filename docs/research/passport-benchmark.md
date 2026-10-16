@@ -53,8 +53,12 @@ four negative controls. Test outcomes and proofs are never cached.
 Three repetitions compare official uncached key generation, cold Forge, warm
 restored Forge, a partial snapshot with only the deposit circuit materialized,
 and unavailable transport. All three output files are compared byte-for-byte
-against freshly generated official compiler-tool outputs. Local gzip snapshot
-creation, extraction and Forge integrity-checked restore are timed. The unavailable
+against freshly generated official compiler-tool outputs. All Forge lanes include real CI-helper key planning against the same exact
+profile/parameter partition. Snapshots declare that partition and verified
+parameter digests; warm/partial lanes use the actual helper restore policy.
+Local gzip snapshot creation, extraction and integrity-checked restore are timed.
+Planning and helper-restore process time remain separate raw fields; the lane
+total includes both. The official uncached baseline invokes no Forge helper. The unavailable
 lane invokes the real CI helper key/restore path for an absent snapshot, requires
 `restored=false` with `reason=cache_miss`, and includes planning and attempted
 restore process time before normal keygen/proofs. Corruption and wrong-profile cases are separate

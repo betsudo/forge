@@ -29,10 +29,14 @@ for filename,digest in manifest['emitted_zkir_sha256'].items():assert sha(a.emit
 assert sorted(p.name for p in (a.emitted/'zkir').glob('*.zkir'))==sorted(manifest['emitted_zkir_sha256'])
 qualified=json.loads((ROOT/'docs/evidence/passport-exact-profile.json').read_text())
 for name in ['compactc.bin','zkir-v3']:assert sha(a.compiler_dir/name)==qualified['tool_sha256']['tools/compiler/'+name],('wrong official compiler tool',name)
+expected_parameters={f"bls_midnight_2p{row['generation']['k']}":row['generation']['parameter_sha256'] for row in qualified['rows']}
+for name,digest in expected_parameters.items():
+ path=a.params_dir/name
+ assert path.is_file() and not path.is_symlink() and sha(path)==digest,('required verified parameter premise',name)
 a.work.mkdir(parents=True)
 atexit.register(lambda:shutil.rmtree(a.work,ignore_errors=True))
 def run(args,cwd=None):
- start=time.monotonic();r=subprocess.run(list(map(str,args)),cwd=cwd,capture_output=True,text=True,timeout=600)
+ start=time.monotonic();r=subprocess.run(list(map(str,args)),cwd=cwd,capture_output=True,text=True,timeout=600,env={**os.environ,'MIDNIGHT_PP':str(a.params_dir)})
  if r.returncode:raise RuntimeError((list(map(str,args)),r.stdout[-2000:],r.stderr[-4000:]))
  return r.stdout,(time.monotonic()-start)*1000
 
@@ -47,12 +51,40 @@ def archive(snapshot,dest):
  with tarfile.open(dest,'w:gz',compresslevel=6) as t:t.add(snapshot,arcname='snapshot')
  return (time.monotonic()-start)*1000
 
-def restore(arc,dest,cache):
+def plan_key(work,out,names):
+ key_path=work/'ci-key.json'
+ command=[sys.executable,ROOT/'scripts/forge-ci.py','--binary',a.binary,'key','--workspace',out,'--params-dir',a.params_dir,'--profile','zkir31','--workload','passport-account/selected2/realproofs','--generation',f'benchmark-{work.name}','--output',key_path]
+ for name in expected_parameters:command+=['--parameter',name]
+ for name in names:command+=['--input',f'zkir/{name}.zkir']
+ raw,ms=run(command)
+ return json.loads(raw),key_path,ms
+
+def helper_restore(cache,snapshot,key_path,planned):
+ assert not cache.exists(),'restore target must be absent'
+ raw,ms=run([sys.executable,ROOT/'scripts/forge-ci.py','--binary',a.binary,'restore','--key',key_path,'--cache-dir',cache,'--snapshot',snapshot,'--max-bytes','1073741824'])
+ result=json.loads(raw)
+ assert result['schema']==1 and 'error' not in result
+ if snapshot.exists():
+  assert result['restored'] is True and result['result']['partition']==planned['partition']
+ else:
+  assert result['restored'] is False and result['reason']=='cache_miss' and result['partition']==planned['partition']
+  assert not cache.exists(),'availability miss must not publish a store'
+ return result,ms
+
+def restore(arc,dest,cache,key_path,planned):
  start=time.monotonic();dest.mkdir()
  # Only this runner's freshly created immutable archive is accepted, not network tar input.
  with tarfile.open(arc,'r:gz') as t:t.extractall(dest,filter='data')
- _,ms=cli(cache,'restore',dest/'snapshot')
- return (time.monotonic()-start)*1000,ms
+ result,process_ms=helper_restore(cache,dest/'snapshot',key_path,planned)
+ return result,(time.monotonic()-start)*1000,process_ms
+
+def save_snapshot(cache,destination,planned):
+ args=['snapshot','--output',destination,'--partition',planned['partition']]
+ for digest in expected_parameters.values():args+=['--parameter-digest',digest]
+ value,ms=cli(cache,*args)
+ assert value['partition']==planned['partition']
+ return value,ms
+
 runtime=a.work/'runtime';runtime.mkdir()
 shutil.copy(a.source/'contract/package.json',runtime);shutil.copy(a.source/'contract/package-lock.json',runtime)
 _,dependency_ms=run(['npm','ci','--ignore-scripts','--no-audit','--no-fund'],runtime)
@@ -79,30 +111,22 @@ for repetition in range(a.repetitions):
   for name in names:
    raw,elapsed=run(['node','make-preimage.mjs',runtime/'contract/index.js',runtime/f'{name}.bin',name],runtime)
    execution.append(json.loads(raw));execution_ms+=elapsed
-  restore_ms=0.;prepare_ms=0.;save_ms=0.;compression_ms=0.;archive_bytes=0;restored_archive_bytes=0;snapshot_bytes=0;seed_ms=0.;hits=[];paths={};availability_attempt=None;helper_key_ms=0.;helper_restore_ms=0.
+  restore_ms=0.;prepare_ms=0.;save_ms=0.;compression_ms=0.;archive_bytes=0;restored_archive_bytes=0;snapshot_bytes=0;seed_ms=0.;hits=[];paths={};availability_attempt=None;planning_ms=0.;helper_restore_ms=0.;restore_result=None;planned=None
+  if lane!='uncached':planned,key_path,planning_ms=plan_key(work,out,names)
   if lane in ['warm-restored','partial-restored']:
    seed=a.work/f'{repetition}-cold' if lane=='warm-restored' else a.work/f'{repetition}-partial-seed'
    if lane=='partial-restored':
     seed_start=time.monotonic()
-    seed.mkdir();cli(seed/'cache','prepare',out/'zkir/deposit_unshielded.zkir','--name','deposit_unshielded');cli(seed/'cache','snapshot','--output',seed/'snapshot');archive(seed/'snapshot',seed/'snapshot.tar.gz')
+    seed.mkdir();cli(seed/'cache','prepare',out/'zkir/deposit_unshielded.zkir','--name','deposit_unshielded');save_snapshot(seed/'cache',seed/'snapshot',planned);archive(seed/'snapshot',seed/'snapshot.tar.gz')
     seed_ms=(time.monotonic()-seed_start)*1000
    restored_archive_bytes=(seed/'snapshot.tar.gz').stat().st_size
-   restore_ms,_=restore(seed/'snapshot.tar.gz',work/'transport',cache)
+   restore_result,restore_ms,helper_restore_ms=restore(seed/'snapshot.tar.gz',work/'transport',cache,key_path,planned)
   if lane=='unavailable':
-   # Exercise the real CI helper's checked transport-miss policy, not a simulated boolean.
-   # Planning and attempted restore are part of the measured lane total.
-   key=work/'ci-key.json';helper=[sys.executable,ROOT/'scripts/forge-ci.py','--binary',a.binary]
-   _,helper_key_ms=run([*helper,'key','--workspace',out,'--params-dir',a.params_dir,
-      '--parameter','bls_midnight_2p9','--parameter','bls_midnight_2p14',
-      '--input','zkir/deposit_unshielded.zkir','--input','zkir/activate_initial_device_with_jubjub.zkir',
-      '--profile','zkir31','--workload','Passport account selected genuine proofs','--generation','benchmark',
-      '--output',key])
-   raw,helper_restore_ms=run([*helper,'restore','--key',key,'--cache-dir',cache,
-      '--snapshot',work/'missing-snapshot','--max-bytes','1073741824'])
-   availability_attempt=json.loads(raw)
-   assert availability_attempt['restored'] is False and availability_attempt['reason']=='cache_miss'
-   assert not cache.exists(),'missing transport must not initialize or populate the store'
-   restore_ms=helper_key_ms+helper_restore_ms
+   # This is an absent local transport, not a simulated network/auth outage.
+   missing=work/'missing-snapshot';assert not missing.exists()
+   restore_result,helper_restore_ms=helper_restore(cache,missing,key_path,planned)
+   availability_attempt=restore_result
+   restore_ms=helper_restore_ms
   if lane!='uncached':before_stats=cli(cache,'stats')[0]['totals']
   if lane=='uncached':
    selected=work/'selected-zkir';selected.mkdir();keys=work/'official-keys';keys.mkdir()
@@ -138,10 +162,10 @@ for repetition in range(a.repetitions):
    assert (proof['proof_count'],proof['verification_count'],proof['negative_controls'])==(1,1,2)
   assert [e['assertions'] for e in execution]==[9,9]
   if lane in ['cold','partial-restored','unavailable']:
-   _,save_ms=cli(cache,'snapshot','--output',work/'snapshot');snapshot_bytes=sum(p.stat().st_size for p in (work/'snapshot').rglob('*') if p.is_file());compression_ms=archive(work/'snapshot',work/'snapshot.tar.gz');archive_bytes=(work/'snapshot.tar.gz').stat().st_size;shutil.rmtree(work/'snapshot')
+   _,save_ms=save_snapshot(cache,work/'snapshot',planned);snapshot_bytes=sum(p.stat().st_size for p in (work/'snapshot').rglob('*') if p.is_file());compression_ms=archive(work/'snapshot',work/'snapshot.tar.gz');archive_bytes=(work/'snapshot.tar.gz').stat().st_size;shutil.rmtree(work/'snapshot')
   wall_ms=(time.monotonic()-start)*1000
   # Partial seed represents a prior job. Its manufacture is excluded, but restore/generation/new save are timed.
-  row={'repetition':repetition,'lane':lane,'emitted_copy_ms':codegen_ms,'execution_ms':execution_ms,'restore_ms':restore_ms,'helper_key_ms':helper_key_ms,'helper_restore_ms':helper_restore_ms,'availability_attempt':availability_attempt,'key_prepare_ms':prepare_ms,'proof_process_ms':proof_process_ms,'snapshot_ms':save_ms,'compression_ms':compression_ms,'archive_bytes':archive_bytes,'restored_archive_bytes':restored_archive_bytes,'snapshot_bytes':snapshot_bytes,'hits':hits,'execution':execution,'proofs':proofs,'total_ms':wall_ms-seed_ms,'prior_job_seed_ms_excluded':seed_ms,'observed_wall_ms':wall_ms,'sampled_peak_job_disk_bytes':disk_peak[0]}
+  row={'repetition':repetition,'lane':lane,'emitted_copy_ms':codegen_ms,'execution_ms':execution_ms,'restore_ms':restore_ms,'planning_ms':planning_ms,'restore_result':restore_result,'partition':None if planned is None else planned['partition'],'helper_restore_ms':helper_restore_ms,'availability_attempt':availability_attempt,'key_prepare_ms':prepare_ms,'proof_process_ms':proof_process_ms,'snapshot_ms':save_ms,'compression_ms':compression_ms,'archive_bytes':archive_bytes,'restored_archive_bytes':restored_archive_bytes,'snapshot_bytes':snapshot_bytes,'hits':hits,'execution':execution,'proofs':proofs,'total_ms':wall_ms-seed_ms,'prior_job_seed_ms_excluded':seed_ms,'observed_wall_ms':wall_ms,'sampled_peak_job_disk_bytes':disk_peak[0]}
   if lane!='uncached':
    row['stats']=cli(cache,'stats')[0]
    row['job_stats_delta']={key:row['stats']['totals'][key]-before_stats[key] for key in ['requests','hits','misses','errors','generation_ms']}

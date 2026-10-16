@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "mode": "release",
+  "command": "CARGO_BUILD_JOBS=2 CARGO_INCREMENTAL=0 CARGO_PROFILE_RELEASE_DEBUG=0 cargo build --locked --release --example prove-did-fixture --target-dir <owned ephemeral target>",
+  "binary_sha256": "15efe51a35a87ef35aad46aa804aade863c22dfb161f2b9ef83e5939258c340c",
+  "binary_bytes": 14134112,
+  "helper_source_sha256": "36b241610884d4ef6f9c97ff165339ce5be10a6d70907e39387cb9f793402ced",
+  "cargo_lock_sha256": "7496b7af5c2fe726ae0faad0554c6e72762bbcd769626b84abaac55c7c39912f",
+  "scratch_target_removed": true,
+  "toolchain": "Nix flake rust stable1.98.1"
+}

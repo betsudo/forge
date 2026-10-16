@@ -70,8 +70,13 @@ controls run outside timed lanes. All byte identities are compared with fresh
 original compiler output, including reproducibility across repetitions.
 
 Transport measurements cover local archive compression/extraction and verified
-Forge restoration. The unavailable lane includes actual CI helper key planning
-and the failed-availability restore attempt in its process and total wall times. GitHub cache lookup, authentication, upload/download latency
+Forge restoration. Every Forge lane includes actual CI helper key planning. Warm and partial
+lanes restore through the helper, checking the exact partition and worker scope;
+saved snapshots carry the planned partition and declared parameter digests. The
+unavailable lane times the helper's actual absent-local-transport `cache_miss`
+result. This is not a simulated network or authentication outage. Raw planning
+and helper restore process timings are retained separately from the complete
+restore/extraction and total wall times. GitHub cache lookup, authentication, upload/download latency
 and bandwidth are not measured; there is no hosted run or upload. Any estimated
 hosted benefit must subtract that additional transport cost from the local
 saving. Negative savings are valid results.

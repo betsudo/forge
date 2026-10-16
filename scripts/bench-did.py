@@ -59,25 +59,39 @@ def archive(snapshot,dest):
  with tarfile.open(dest,'w:gz',compresslevel=6) as t:t.add(snapshot,arcname='snapshot')
  return (time.monotonic()-start)*1000
 
-def restore(arc,dest,cache):
+def plan_key(work,out,names):
+ key_path=work/'ci-key.json'
+ command=[sys.executable,ROOT/'scripts/forge-ci.py','--binary',a.binary,'key','--workspace',out,'--params-dir',a.params_dir,'--profile','ledger8-v2','--workload','did-v0.7.0/all12/deactivate-realproof','--generation',f'benchmark-{work.name}','--output',key_path]
+ for name in expected_parameters:command+=['--parameter',name]
+ for name in names:command+=['--input',f'zkir/{name}.zkir']
+ raw,ms=run(command)
+ return json.loads(raw),key_path,ms
+
+def helper_restore(cache,snapshot,key_path,planned):
+ assert not cache.exists(),'restore target must be absent'
+ raw,ms=run([sys.executable,ROOT/'scripts/forge-ci.py','--binary',a.binary,'restore','--key',key_path,'--cache-dir',cache,'--snapshot',snapshot,'--max-bytes','1073741824'])
+ result=json.loads(raw)
+ assert result['schema']==1 and 'error' not in result
+ if snapshot.exists():
+  assert result['restored'] is True and result['result']['partition']==planned['partition']
+ else:
+  assert result['restored'] is False and result['reason']=='cache_miss' and result['partition']==planned['partition']
+  assert not cache.exists(),'availability miss must not publish a store'
+ return result,ms
+
+def restore(arc,dest,cache,key_path,planned):
  start=time.monotonic();dest.mkdir()
  # Only this runner's freshly created immutable archive is accepted, not network tar input.
  with tarfile.open(arc,'r:gz') as t:t.extractall(dest,filter='data')
- _,ms=cli(cache,'restore',dest/'snapshot')
- return (time.monotonic()-start)*1000,ms
-def unavailable_restore(work,out,cache,names):
- start=time.monotonic()
- key_path=work/'ci-key.json'
- command=[sys.executable,ROOT/'scripts/forge-ci.py','--binary',a.binary,'key','--workspace',out,'--params-dir',a.params_dir,'--parameter','bls_midnight_2p11','--parameter','bls_midnight_2p12','--profile','ledger8-v2','--workload','did-v0.7.0/all12/deactivate-realproof','--generation','unavailable-check','--output',key_path]
- for name in names:command+=['--input',f'zkir/{name}.zkir']
- raw,planning_ms=run(command);planned=json.loads(raw)
- missing=work/'missing-snapshot'
- assert not missing.exists() and not cache.exists()
- raw,attempt_ms=run([sys.executable,ROOT/'scripts/forge-ci.py','--binary',a.binary,'restore','--key',key_path,'--cache-dir',cache,'--snapshot',missing,'--max-bytes','1073741824'])
- result=json.loads(raw)
- assert result['schema']==1 and result['restored'] is False and result['reason']=='cache_miss' and 'error' not in result
- assert result['partition']==planned['partition'] and not cache.exists(),'availability miss must not publish a store'
- return {'restore':result,'key_id':planned['key_id'],'planning_process_ms':planning_ms,'restore_process_ms':attempt_ms},(time.monotonic()-start)*1000
+ result,process_ms=helper_restore(cache,dest/'snapshot',key_path,planned)
+ return result,(time.monotonic()-start)*1000,process_ms
+
+def save_snapshot(cache,destination,planned):
+ args=['snapshot','--output',destination,'--partition',planned['partition']]
+ for digest in expected_parameters.values():args+=['--parameter-digest',digest]
+ value,ms=cli(cache,*args)
+ assert value['partition']==planned['partition']
+ return value,ms
 
 runtime=a.work/'runtime';runtime.mkdir();shutil.copy(ROOT/'benchmarks/did/package.json',runtime);shutil.copy(ROOT/'benchmarks/did/package-lock.json',runtime)
 _,dependency_ms=run(['npm','ci','--ignore-scripts','--no-audit','--no-fund'],runtime)
@@ -110,21 +124,24 @@ for repetition in range(a.repetitions):
   assert {name:sha(out/'zkir'/f'{name}.zkir') for name in actual}==expected_sources,'unexpected compiler-emitted circuit bytes'
   shutil.rmtree(runtime/'contract',ignore_errors=True);shutil.copytree(out/'contract',runtime/'contract')
   result,execution_ms=run(['node','make-preimage.mjs'],runtime);execution=json.loads(result)
-  restore_ms=0.;prepare_ms=0.;save_ms=0.;compression_ms=0.;archive_bytes=0;snapshot_bytes=0;restore_archive_bytes=0;seed_ms=0.;hits=[];paths={};availability_restore=None
+  restore_ms=0.;prepare_ms=0.;save_ms=0.;compression_ms=0.;archive_bytes=0;snapshot_bytes=0;restore_archive_bytes=0;seed_ms=0.;hits=[];paths={};restore_result=None;planning_ms=0.;helper_restore_ms=0.;planned=None
+  if lane!='uncached':planned,key_path,planning_ms=plan_key(work,out,names)
   if lane in ['warm-restored','partial-restored']:
    seed=a.work/f'{repetition}-partial-seed'
    seed_archive=a.work/f'{repetition}-warm-seed.tar.gz' if lane=='warm-restored' else seed/'snapshot.tar.gz'
    if lane=='partial-restored':
     seed_start=time.monotonic()
-    seed.mkdir();cli(seed/'cache','prepare',out/'zkir/deactivate.zkir','--name','deactivate');cli(seed/'cache','snapshot','--output',seed/'snapshot');archive(seed/'snapshot',seed/'snapshot.tar.gz')
+    seed.mkdir();cli(seed/'cache','prepare',out/'zkir/deactivate.zkir','--name','deactivate');save_snapshot(seed/'cache',seed/'snapshot',planned);archive(seed/'snapshot',seed/'snapshot.tar.gz')
     seed_ms=(time.monotonic()-seed_start)*1000
    restore_archive_bytes=seed_archive.stat().st_size
-   restore_ms,_=restore(seed_archive,work/'transport',cache)
+   restore_result,restore_ms,helper_restore_ms=restore(seed_archive,work/'transport',cache,key_path,planned)
    if lane=='warm-restored':seed_archive.unlink()
    else:shutil.rmtree(seed)
   if lane=='unavailable':
-   # Exercise the actual CI helper's optional transport miss before ordinary generation.
-   availability_restore,restore_ms=unavailable_restore(work,out,cache,names)
+   # This is an absent local transport, not a simulated network/auth outage.
+   missing=work/'missing-snapshot';assert not missing.exists()
+   restore_result,helper_restore_ms=helper_restore(cache,missing,key_path,planned)
+   restore_ms=helper_restore_ms
   if lane!='uncached':before_stats=cli(cache,'stats')[0]['totals']
   else:
    _,prepare_ms=run([a.compiler_dir/'zkir','compile-many',out/'zkir',work/'official-keys'])
@@ -147,10 +164,10 @@ for repetition in range(a.repetitions):
   result,proof_process_ms=run([a.prover,out/'zkir/deactivate.zkir',paths['deactivate']['prover'],paths['deactivate']['verifier'],runtime/'preimage.bin',a.params_dir]);proof=json.loads(result)
   assert (execution['assertions'],proof['proofs'],proof['verifications'],proof['negative_controls'])==(5,1,1,2)
   if lane in ['cold','partial-restored','unavailable']:
-   _,save_ms=cli(cache,'snapshot','--output',work/'snapshot');compression_ms=archive(work/'snapshot',work/'snapshot.tar.gz');archive_bytes=(work/'snapshot.tar.gz').stat().st_size;snapshot_bytes=sum(p.stat().st_size for p in (work/'snapshot').rglob('*') if p.is_file())
+   _,save_ms=save_snapshot(cache,work/'snapshot',planned);compression_ms=archive(work/'snapshot',work/'snapshot.tar.gz');archive_bytes=(work/'snapshot.tar.gz').stat().st_size;snapshot_bytes=sum(p.stat().st_size for p in (work/'snapshot').rglob('*') if p.is_file())
   wall_ms=(time.monotonic()-start)*1000
   # Partial seed represents a prior job. Its manufacture is excluded, but restore/generation/new save are timed.
-  row={'repetition':repetition,'lane':lane,'availability_restore':availability_restore,'codegen_ms':codegen_ms,'execution_ms':execution_ms,'restore_ms':restore_ms,'key_prepare_ms':prepare_ms,'proof_process_ms':proof_process_ms,'snapshot_ms':save_ms,'compression_ms':compression_ms,'archive_bytes':archive_bytes,'restored_archive_bytes':restore_archive_bytes,'snapshot_bytes':snapshot_bytes,'hits':hits,'execution':execution,'proof':proof,'total_ms':wall_ms-seed_ms,'prior_job_seed_ms_excluded':seed_ms,'observed_wall_ms':wall_ms,'sampled_peak_job_disk_bytes':disk_peak[0]}
+  row={'repetition':repetition,'lane':lane,'ci_planning_process_ms':planning_ms,'ci_restore_process_ms':helper_restore_ms,'restore_result':restore_result,'ci_partition':planned['partition'] if planned else None,'ci_key_id':planned['key_id'] if planned else None,'codegen_ms':codegen_ms,'execution_ms':execution_ms,'restore_ms':restore_ms,'key_prepare_ms':prepare_ms,'proof_process_ms':proof_process_ms,'snapshot_ms':save_ms,'compression_ms':compression_ms,'archive_bytes':archive_bytes,'restored_archive_bytes':restore_archive_bytes,'snapshot_bytes':snapshot_bytes,'hits':hits,'execution':execution,'proof':proof,'total_ms':wall_ms-seed_ms,'prior_job_seed_ms_excluded':seed_ms,'observed_wall_ms':wall_ms,'sampled_peak_job_disk_bytes':disk_peak[0]}
   if lane!='uncached':
    row['stats']=cli(cache,'stats')[0]
    row['job_stats_delta']={key:row['stats']['totals'][key]-before_stats[key] for key in ['requests','hits','misses','errors','generation_ms']}
