@@ -21,7 +21,11 @@ pub struct ArtifactDescriptor {
     pub keygen_recipe: Option<String>,
     pub record: Record,
 }
-fn serialization(v3: bool) -> Serialization {
+fn serialization(format: Option<&str>) -> Serialization {
+    let v3 = matches!(
+        format,
+        Some(crate::zkir3::FORMAT) | Some(crate::zkir31::FORMAT)
+    );
     let ir = if v3 {
         "ir-source[v3-generic]"
     } else {
@@ -30,7 +34,12 @@ fn serialization(v3: bool) -> Serialization {
     Serialization {
         binary_ir: ir.into(),
         prover_key: format!("prover-key[v7]({ir})"),
-        verifier_key: "verifier-key[v6]".into(),
+        verifier_key: if format == Some(crate::zkir31::FORMAT) {
+            "verifier-key[v7]"
+        } else {
+            "verifier-key[v6]"
+        }
+        .into(),
     }
 }
 impl ArtifactDescriptor {
@@ -55,8 +64,7 @@ impl ArtifactDescriptor {
                 .context(crate::error::Kind::IntegrityError)?
                 .clone(),
             materialized,
-            serialization: materialized
-                .then(|| serialization(record.format.as_deref() == Some(crate::zkir3::FORMAT))),
+            serialization: materialized.then(|| serialization(record.format.as_deref())),
             keygen_recipe: materialized.then(|| KEYGEN_RECIPE.into()),
             record,
         };
@@ -66,7 +74,12 @@ impl ArtifactDescriptor {
     pub fn validate(&self) -> Result<()> {
         let kind = crate::error::Kind::IntegrityError;
         crate::snapshot::record_valid(&self.record).context(kind)?;
-        let v3 = self.record.format.as_deref() == Some(crate::zkir3::FORMAT);
+        let worker = match self.record.format.as_deref() {
+            Some(crate::zkir3::FORMAT) => Some(&crate::zkir3::SPEC),
+            Some(crate::zkir31::FORMAT) => Some(&crate::zkir31::SPEC),
+            _ => None,
+        };
+        let v3 = worker.is_some();
         ensure!(
             self.schema == 1 && self.record.generation_ms.is_none(),
             kind
@@ -86,13 +99,19 @@ impl ArtifactDescriptor {
             kind
         );
         ensure!(self.input_version["major"] == if v3 { 3 } else { 2 }, kind);
-        ensure!(!v3 || self.input_version["minor"] == 0, kind);
+        ensure!(
+            worker.is_none_or(|w| self.input_version["minor"] == w.json_minor),
+            kind
+        );
         ensure!(
             self.materialized == self.record.artifact_set_id.is_some(),
             kind
         );
         ensure!(
-            self.serialization == self.materialized.then(|| serialization(v3)),
+            self.serialization
+                == self
+                    .materialized
+                    .then(|| serialization(self.record.format.as_deref())),
             kind
         );
         ensure!(

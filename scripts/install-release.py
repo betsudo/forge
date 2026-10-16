@@ -18,6 +18,7 @@ import time
 
 REPOSITORY = 'input-output-hk/midnight-zkir-forge'
 COMMANDS = ('midnight-zkir-forge', 'midnight-zkir-forge-zkir3-worker', 'midnight-zkir-forge-ci')
+WORKER31 = 'midnight-zkir-forge-zkir31-worker'
 MAX_DOWNLOAD = 1024 ** 3
 MAX_UNPACKED = 2 * 1024 ** 3
 
@@ -122,19 +123,21 @@ def checksum(data, name):
 def inventory(root, manifest):
     require(set(manifest) == {'schema', 'tag', 'version', 'source_commit', 'target', 'minimum', 'profiles', 'files'}, 'invalid manifest fields')
     require(manifest['schema'] == 1 and re.fullmatch('[0-9a-f]{40}', manifest['source_commit']), 'invalid manifest provenance')
-    require(set(manifest['profiles']) == {'root', 'v3'}, 'invalid profile manifest')
+    require(set(manifest['profiles']) in ({'root', 'v3'}, {'root','v3','v31'}), 'invalid profile manifest')
+    require('midnight-zkir-v3.1-json' not in manifest['profiles']['root'].get('formats', []) or 'v31' in manifest['profiles'], 'advertised worker missing')
+    payload_commands = COMMANDS + ((WORKER31,) if 'v31' in manifest['profiles'] else ())
     declared = {}
     for entry in manifest['files']:
         require(set(entry) == {'path', 'bytes', 'sha256', 'executable'}, 'invalid inventory entry')
         path = PurePosixPath(entry['path'])
         require(not path.is_absolute() and path.parts and all(p not in ('.', '..') for p in path.parts) and '\\' not in str(path), 'unsafe inventory path')
         require(str(path) == entry['path'] and entry['path'] not in declared, 'duplicate/noncanonical inventory')
-        allowed = str(path) in {*('bin/' + name for name in COMMANDS), 'share/midnight-zkir-forge/forge-ci.py'}
+        allowed = str(path) in {*('bin/' + name for name in payload_commands), 'share/midnight-zkir-forge/forge-ci.py'}
         allowed |= len(path.parts) >= 2 and path.parts[0] in ('LICENSES', 'lib')
         require(allowed and type(entry['bytes']) is int and entry['bytes'] >= 0 and type(entry['executable']) is bool, 'unexpected payload')
         require(re.fullmatch('[0-9a-f]{64}', entry['sha256']), 'invalid file hash')
         declared[str(path)] = entry
-    require(all('bin/' + name in declared for name in COMMANDS), 'incomplete CLI/worker/helper bundle')
+    require(all('bin/' + name in declared for name in payload_commands), 'incomplete CLI/worker/helper bundle')
     require('share/midnight-zkir-forge/forge-ci.py' in declared and any(p.startswith('LICENSES/') for p in declared), 'missing helper/licensing')
     allowed_dirs = set()
     for name in declared:
@@ -197,9 +200,10 @@ def extract_tar(expanded, destination, expected_root):
     return destination / expected_root
 
 
-def smoke(root, manifest):
-    env = dict(os.environ)
+def smoke(root, manifest, environment=None):
+    env = dict(os.environ if environment is None else environment)
     env.pop('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER', None)
+    env.pop('MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER', None)
     def run(*args, structured=True):
         result = subprocess.run(list(map(str, args)), capture_output=True, text=True, env=env, timeout=30)
         require(result.returncode == 0, 'staged executable failed; active release unchanged')
@@ -210,6 +214,10 @@ def smoke(root, manifest):
     require(run(cli, '--profile', 'zkir3', 'profile') == manifest['profiles']['v3'], 'default worker discovery/profile mismatch')
     env['MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER'] = str(root / 'bin/midnight-zkir-forge-zkir3-worker')
     require(run(cli, '--profile', 'zkir3', 'profile') == manifest['profiles']['v3'], 'explicit worker profile mismatch')
+    if 'v31' in manifest['profiles']:
+        require(run(cli, '--profile', 'zkir31', 'profile') == manifest['profiles']['v31'], 'default3.1 worker profile mismatch')
+        env['MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER'] = str(root / 'bin' / WORKER31)
+        require(run(cli, '--profile', 'zkir31', 'profile') == manifest['profiles']['v31'], 'explicit3.1 worker profile mismatch')
     run(root / 'bin/midnight-zkir-forge-ci', '--help', structured=False)
 
 

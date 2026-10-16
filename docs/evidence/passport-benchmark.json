@@ -1,0 +1,3718 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "recorded_at_utc": "2026-10-16T05:17:30.571651+00:00",
+  "consumer": {
+    "commit": "0d7bb0bc834f2d45d9fe2d84c4d022a30d648423"
+  },
+  "selected_key_circuits": [
+    "deposit_unshielded",
+    "activate_initial_device_with_jubjub"
+  ],
+  "proof_circuits": [
+    "deposit_unshielded",
+    "activate_initial_device_with_jubjub"
+  ],
+  "complete_circuit_roster": [
+    "activate_initial_device_with_jubjub",
+    "activate_initial_device_with_k256",
+    "activate_initial_device_with_p256",
+    "add_device_with_jubjub",
+    "add_device_with_k256",
+    "add_device_with_p256",
+    "append_inbox_with_jubjub",
+    "append_inbox_with_k256",
+    "append_inbox_with_p256",
+    "deposit_shielded",
+    "deposit_unshielded",
+    "issue_grant_with_jubjub",
+    "issue_grant_with_k256",
+    "issue_grant_with_p256",
+    "publish_recovery_session_with_jubjub",
+    "publish_recovery_session_with_k256",
+    "publish_recovery_session_with_p256",
+    "recover_cancel_with_jubjub",
+    "recover_cancel_with_k256",
+    "recover_cancel_with_p256",
+    "recover_finalise",
+    "recover_submit",
+    "remove_device_with_jubjub",
+    "remove_device_with_k256",
+    "remove_device_with_p256",
+    "revoke_all_grants_with_jubjub",
+    "revoke_all_grants_with_k256",
+    "revoke_all_grants_with_p256",
+    "revoke_grant_with_jubjub",
+    "revoke_grant_with_k256",
+    "revoke_grant_with_p256",
+    "rotate_enc_key_with_jubjub",
+    "rotate_enc_key_with_k256",
+    "rotate_enc_key_with_p256",
+    "withdraw_shielded_to_contract_with_grant_jubjub",
+    "withdraw_shielded_to_contract_with_grant_k256",
+    "withdraw_shielded_to_contract_with_grant_p256",
+    "withdraw_shielded_to_contract_with_jubjub",
+    "withdraw_shielded_to_contract_with_k256",
+    "withdraw_shielded_to_contract_with_p256",
+    "withdraw_shielded_with_grant_jubjub",
+    "withdraw_shielded_with_grant_k256",
+    "withdraw_shielded_with_grant_p256",
+    "withdraw_shielded_with_jubjub",
+    "withdraw_shielded_with_k256",
+    "withdraw_shielded_with_p256",
+    "withdraw_unshielded_with_grant_jubjub",
+    "withdraw_unshielded_with_grant_k256",
+    "withdraw_unshielded_with_grant_p256",
+    "withdraw_unshielded_with_jubjub",
+    "withdraw_unshielded_with_k256",
+    "withdraw_unshielded_with_p256"
+  ],
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64",
+    "cpu_count": 12,
+    "performance_isolation": "shared developer host; concurrent qualification work; not isolated CI capacity"
+  },
+  "scope": "local selected-workload proof/key benchmark; not full Passport CI or localnet transaction submission",
+  "dependency_setup_ms": 5826.389833993744,
+  "dependency_lock_sha256": "a57a8056dfa3989a6fb237f0ff071b172f4864082173ba9c4274c09eac9bee51",
+  "dependency_lock_premise": "npm ci uses exact unchanged pinned consumer package-lock.json; no minimal dependency re-resolution",
+  "tool_hashes": {
+    "compactc.bin": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+    "zkir-v3": "2e5febcbe905451cb549991f96eb91b94dfa7bc1a5deb7a41ee017964d532fb4",
+    "midnight-zkir-forge": "98bd18c1da5a3e82e87cba327ca8c4f69d645412bb29dc14a96395704440a191",
+    "midnight-zkir-forge-zkir31-worker": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff"
+  },
+  "profile": {
+    "binary_ir_tag": "ir-source[v3-generic]",
+    "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+    "format": "midnight-zkir-v3.1-json",
+    "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+    "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+    "protocol": 1,
+    "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914",
+    "worker": {
+      "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+      "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+      "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+      "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+    }
+  },
+  "identities": {
+    "deposit_unshielded": {
+      "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+      "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9",
+      "binary_ir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+    },
+    "activate_initial_device_with_jubjub": {
+      "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+      "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e",
+      "binary_ir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+    }
+  },
+  "descriptors": {
+    "deposit_unshielded": {
+      "input_format": "midnight-zkir-v3.1-json",
+      "input_version": {
+        "major": 3,
+        "minor": 1
+      },
+      "keygen_recipe": "library-keygen/default-options/no-rng",
+      "materialized": true,
+      "record": {
+        "artifact_set_id": "617555f16f47722b90ddec0860f013ad24d4f0daeb6836078bd240ab02cb5ba1",
+        "artifacts": [
+          {
+            "digest": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+            "kind": "binary_ir",
+            "size": 1654
+          },
+          {
+            "digest": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+            "kind": "prover",
+            "size": 446790
+          },
+          {
+            "digest": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9",
+            "kind": "verifier",
+            "size": 1353
+          }
+        ],
+        "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+        "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+        "derivation_id": "85670c41885f67c7afa9bd4eb8b00ba50b9288100511c7dc766a3c45e76c75e3",
+        "format": "midnight-zkir-v3.1-json",
+        "generation_ms": null,
+        "k": 9,
+        "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+        "name": "deposit_unshielded",
+        "parameter_digest": "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+        "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+        "schema": 1,
+        "source": {
+          "digest": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d",
+          "kind": "source",
+          "size": 4975
+        },
+        "worker": {
+          "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+          "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+        }
+      },
+      "schema": 1,
+      "serialization": {
+        "binary_ir": "ir-source[v3-generic]",
+        "prover_key": "prover-key[v7](ir-source[v3-generic])",
+        "verifier_key": "verifier-key[v7]"
+      }
+    },
+    "activate_initial_device_with_jubjub": {
+      "input_format": "midnight-zkir-v3.1-json",
+      "input_version": {
+        "major": 3,
+        "minor": 1
+      },
+      "keygen_recipe": "library-keygen/default-options/no-rng",
+      "materialized": true,
+      "record": {
+        "artifact_set_id": "22dd35c824a4fb6bdc846928c995c62bf78f185c37ebb4f118e85ab5b1d5dc5c",
+        "artifacts": [
+          {
+            "digest": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+            "kind": "binary_ir",
+            "size": 1993
+          },
+          {
+            "digest": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+            "kind": "prover",
+            "size": 24648297
+          },
+          {
+            "digest": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e",
+            "kind": "verifier",
+            "size": 2313
+          }
+        ],
+        "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+        "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+        "derivation_id": "56572ed4f20003f145788bed04f063a13014ebc725a6b9fef4a8c2723c49b0ba",
+        "format": "midnight-zkir-v3.1-json",
+        "generation_ms": null,
+        "k": 14,
+        "ledger_revision": "9a8777c4d035fc7f38ae286bcf5f8656668efd9f",
+        "name": "activate_initial_device_with_jubjub",
+        "parameter_digest": "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244",
+        "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+        "schema": 1,
+        "source": {
+          "digest": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b",
+          "kind": "source",
+          "size": 6789
+        },
+        "worker": {
+          "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+          "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+          "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+          "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+        }
+      },
+      "schema": 1,
+      "serialization": {
+        "binary_ir": "ir-source[v3-generic]",
+        "prover_key": "prover-key[v7](ir-source[v3-generic])",
+        "verifier_key": "verifier-key[v7]"
+      }
+    }
+  },
+  "negative_controls": {
+    "corrupt_consumer_prover": "integrity_error; fallback refused",
+    "wrong_profile": "profile_format_mismatch; fallback refused",
+    "changed_exact_source": "miss; same math is not exact source identity"
+  },
+  "rows": [
+    {
+      "repetition": 0,
+      "lane": "uncached",
+      "emitted_copy_ms": 23.610208998434246,
+      "execution_ms": 383.45208298414946,
+      "restore_ms": 0.0,
+      "planning_ms": 0.0,
+      "restore_result": null,
+      "partition": null,
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 2373.8720000255853,
+      "proof_process_ms": 3061.747418018058,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 0,
+      "hits": [],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 138.936875,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 18.196292
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 2376.019291,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 21.060125
+        }
+      ],
+      "total_ms": 5871.53404095443,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 5871.53404095443,
+      "sampled_peak_job_disk_bytes": 57001635
+    },
+    {
+      "repetition": 0,
+      "lane": "cold",
+      "emitted_copy_ms": 17.290916992351413,
+      "execution_ms": 378.3148750080727,
+      "restore_ms": 0.0,
+      "planning_ms": 219.31808296358213,
+      "restore_result": null,
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 4397.033290995751,
+      "proof_process_ms": 4014.895708009135,
+      "snapshot_ms": 465.8925419789739,
+      "compression_ms": 321.55249995412305,
+      "archive_bytes": 12689432,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 212.523083,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 19.299667
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 3267.298083,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 17.308125
+        }
+      ],
+      "total_ms": 9906.177000026219,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 9906.177000026219,
+      "sampled_peak_job_disk_bytes": 118151277,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:09.327Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 3611.766209,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 2602.269667,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:05.571Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 499.272875,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 208.22845800000002,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 2810.498125,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 4111.039084
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 2810.498125
+      }
+    },
+    {
+      "repetition": 0,
+      "lane": "warm-restored",
+      "emitted_copy_ms": 14.835832989774644,
+      "execution_ms": 349.0032510017045,
+      "restore_ms": 588.1532909697853,
+      "planning_ms": 160.74891696916893,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 50280843,
+          "cache_dir": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/cache",
+          "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+          "producer": {
+            "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "c41b1bd6d850c2eae95f8f4fafd64cf6cba0b3d1b69d54159bd796973289e24e",
+          "summary": {
+            "bundles": 2,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+              "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 2
+          }
+        }
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 509.26274998346344,
+      "availability_attempt": null,
+      "key_prepare_ms": 1118.456249940209,
+      "proof_process_ms": 1899.9933330342174,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 12689432,
+      "snapshot_bytes": 0,
+      "hits": [
+        true,
+        true
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 65.4665,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.100333000000001
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1345.510083,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.919875000000001
+        }
+      ],
+      "total_ms": 4198.916207998991,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 4198.916207998991,
+      "sampled_peak_job_disk_bytes": 132445378,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 1993,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 24648297,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 2313,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 6789,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:16.442Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 757.249167,
+            "estimated_generation_avoided_ms": 2602.269667,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:15.577Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 177.061792,
+            "estimated_generation_avoided_ms": 208.228458,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-warm-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:09.327Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 3611.766209,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 2602.269667,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:05.571Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 499.272875,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 208.22845800000002,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 2810.498125,
+          "generation_ms": 2810.498125,
+          "hit_rate": 0.5,
+          "hits": 2,
+          "misses": 2,
+          "requests": 4,
+          "total_request_ms": 5045.350043
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 2,
+        "misses": 0,
+        "errors": 0,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "repetition": 0,
+      "lane": "partial-restored",
+      "emitted_copy_ms": 17.265500035136938,
+      "execution_ms": 337.0538340532221,
+      "restore_ms": 322.4801250034943,
+      "planning_ms": 156.4380420022644,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 954794,
+          "cache_dir": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/cache",
+          "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+          "producer": {
+            "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "1686752ea2dbef78229997b997312f5477eae77d215de712c1afce02013d18ff",
+          "summary": {
+            "bundles": 1,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 1
+          }
+        }
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 315.4464580002241,
+      "availability_attempt": null,
+      "key_prepare_ms": 2995.214458031114,
+      "proof_process_ms": 1871.4614569908008,
+      "snapshot_ms": 359.63620798429474,
+      "compression_ms": 298.81079198094085,
+      "archive_bytes": 12689545,
+      "restored_archive_bytes": 322031,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        true,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 66.3965,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.063792
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1318.4499999999998,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.977125000000001
+        }
+      ],
+      "total_ms": 6432.201416988391,
+      "prior_job_seed_ms_excluded": 653.8865829934366,
+      "observed_wall_ms": 7086.087999981828,
+      "sampled_peak_job_disk_bytes": 120680130,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:22.905Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2629.352458,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1763.062667,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:20.158Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 174.168375,
+            "estimated_generation_avoided_ms": 148.993,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:19.398Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 383.48679200000004,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 148.993,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 148.993,
+          "generation_ms": 1912.0556669999999,
+          "hit_rate": 0.3333333333333333,
+          "hits": 1,
+          "misses": 2,
+          "requests": 3,
+          "total_request_ms": 3187.0076249999997
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 1,
+        "misses": 1,
+        "errors": 0,
+        "generation_ms": 1763.062667
+      }
+    },
+    {
+      "repetition": 0,
+      "lane": "unavailable",
+      "emitted_copy_ms": 16.834667010698467,
+      "execution_ms": 343.0396249750629,
+      "restore_ms": 159.33662501629442,
+      "planning_ms": 159.5324999652803,
+      "restore_result": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82"
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 159.33662501629442,
+      "availability_attempt": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82"
+      },
+      "key_prepare_ms": 3240.794666984584,
+      "proof_process_ms": 1872.5080419681035,
+      "snapshot_ms": 371.5274160495028,
+      "compression_ms": 299.36608305433765,
+      "archive_bytes": 12689464,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 67.11645800000001,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.577542000000001
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1323.305083,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.833541
+        }
+      ],
+      "total_ms": 6536.574375000782,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6536.574375000782,
+      "sampled_peak_job_disk_bytes": 118675986,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:29.442Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2631.146,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1766.802959,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:26.692Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 399.809083,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 156.346542,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/0-unavailable/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 1923.149501,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3030.9550830000003
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 1923.149501
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "uncached",
+      "emitted_copy_ms": 16.763624968007207,
+      "execution_ms": 325.0043330481276,
+      "restore_ms": 0.0,
+      "planning_ms": 0.0,
+      "restore_result": null,
+      "partition": null,
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 1636.8373750010505,
+      "proof_process_ms": 1878.096375032328,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 0,
+      "hits": [],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 65.125333,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.185832999999999
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1318.334208,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.336875
+        }
+      ],
+      "total_ms": 3881.4816660014912,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 3881.4816660014912,
+      "sampled_peak_job_disk_bytes": 57001635
+    },
+    {
+      "repetition": 1,
+      "lane": "cold",
+      "emitted_copy_ms": 17.363958992064,
+      "execution_ms": 343.8293329672888,
+      "restore_ms": 0.0,
+      "planning_ms": 161.47133300546557,
+      "restore_result": null,
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 3242.6719579380006,
+      "proof_process_ms": 1926.3356249430217,
+      "snapshot_ms": 363.9710830175318,
+      "compression_ms": 293.60479197930545,
+      "archive_bytes": 12689444,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 66.061667,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.588709
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1373.445709,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.902292
+        }
+      ],
+      "total_ms": 6422.843875014223,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6422.843875014223,
+      "sampled_peak_job_disk_bytes": 119725274,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:39.719Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2622.480542,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1758.3902500000002,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:36.976Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 403.53391700000003,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 156.3525,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 1914.7427500000001,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3026.014459
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 1914.7427500000001
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "warm-restored",
+      "emitted_copy_ms": 14.684791036415845,
+      "execution_ms": 334.68529203673825,
+      "restore_ms": 609.8669589846395,
+      "planning_ms": 162.90033399127424,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 50280843,
+          "cache_dir": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/cache",
+          "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+          "producer": {
+            "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "556c387456bccfac746b3f4a7f44f5b0308ac8c04da24c0d31257af43e3d6205",
+          "summary": {
+            "bundles": 2,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+              "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 2
+          }
+        }
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 532.4792500468902,
+      "availability_attempt": null,
+      "key_prepare_ms": 1141.9800840085372,
+      "proof_process_ms": 2000.0029590446502,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 12689444,
+      "snapshot_bytes": 0,
+      "hits": [
+        true,
+        true
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 67.220458,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 13.429958000000001
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1439.147541,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.537125000000001
+        }
+      ],
+      "total_ms": 4337.62929198565,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 4337.62929198565,
+      "sampled_peak_job_disk_bytes": 132445378,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 1993,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 24648297,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 2313,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 6789,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:44.640Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 766.635791,
+            "estimated_generation_avoided_ms": 1758.3902500000002,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:43.759Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 182.91225,
+            "estimated_generation_avoided_ms": 156.3525,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-warm-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:39.719Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2622.480542,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1758.3902500000002,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:36.976Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 403.53391700000003,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 156.3525,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 1914.7427500000001,
+          "generation_ms": 1914.7427500000001,
+          "hit_rate": 0.5,
+          "hits": 2,
+          "misses": 2,
+          "requests": 4,
+          "total_request_ms": 3975.5625
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 2,
+        "misses": 0,
+        "errors": 0,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "partial-restored",
+      "emitted_copy_ms": 17.86716701462865,
+      "execution_ms": 682.5145000475459,
+      "restore_ms": 327.47041701804847,
+      "planning_ms": 193.16062500001863,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 954794,
+          "cache_dir": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/cache",
+          "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+          "producer": {
+            "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "0807eabb8ded500521290a4b23afbb3007375166912ba9295bc716152f8fa758",
+          "summary": {
+            "bundles": 1,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 1
+          }
+        }
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 320.4460840206593,
+      "availability_attempt": null,
+      "key_prepare_ms": 3016.0872080014087,
+      "proof_process_ms": 1852.4255840457045,
+      "snapshot_ms": 362.0497499941848,
+      "compression_ms": 287.4465000350028,
+      "archive_bytes": 12689532,
+      "restored_archive_bytes": 322017,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        true,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 66.75387500000001,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.972292
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1302.124542,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.045292
+        }
+      ],
+      "total_ms": 6812.148417055141,
+      "prior_job_seed_ms_excluded": 682.66158294864,
+      "observed_wall_ms": 7494.810000003781,
+      "sampled_peak_job_disk_bytes": 120680154,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:51.651Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2639.319041,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1769.35775,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:48.891Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 178.946959,
+            "estimated_generation_avoided_ms": 153.048292,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:48.107Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 389.191917,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 153.048292,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 153.048292,
+          "generation_ms": 1922.4060419999998,
+          "hit_rate": 0.3333333333333333,
+          "hits": 1,
+          "misses": 2,
+          "requests": 3,
+          "total_request_ms": 3207.457917
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 1,
+        "misses": 1,
+        "errors": 0,
+        "generation_ms": 1769.35775
+      }
+    },
+    {
+      "repetition": 1,
+      "lane": "unavailable",
+      "emitted_copy_ms": 15.69508301327005,
+      "execution_ms": 329.0613340213895,
+      "restore_ms": 157.0542090339586,
+      "planning_ms": 157.67741698073223,
+      "restore_result": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82"
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 157.0542090339586,
+      "availability_attempt": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82"
+      },
+      "key_prepare_ms": 3176.9077089847997,
+      "proof_process_ms": 1887.4542079865932,
+      "snapshot_ms": 364.7129579912871,
+      "compression_ms": 301.563500019256,
+      "archive_bytes": 12689439,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 66.938917,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.486
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1334.066083,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.907250000000001
+        }
+      ],
+      "total_ms": 6468.782000010833,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6468.782000010833,
+      "sampled_peak_job_disk_bytes": 116577218,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:16:58.074Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2574.011125,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1713.164042,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:16:55.382Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 400.871584,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 155.81675,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/1-unavailable/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 1868.980792,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 2974.882709
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 1868.980792
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "uncached",
+      "emitted_copy_ms": 16.365959018003196,
+      "execution_ms": 352.0718330400996,
+      "restore_ms": 0.0,
+      "planning_ms": 0.0,
+      "restore_result": null,
+      "partition": null,
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 1621.5639589936472,
+      "proof_process_ms": 1920.2559989644215,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 0,
+      "hits": [],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 64.99941600000001,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.491833000000002
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1365.4015,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.876083
+        }
+      ],
+      "total_ms": 3934.3448749859817,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 3934.3448749859817,
+      "sampled_peak_job_disk_bytes": 57001635
+    },
+    {
+      "repetition": 2,
+      "lane": "cold",
+      "emitted_copy_ms": 14.957416977267712,
+      "execution_ms": 342.23216597456485,
+      "restore_ms": 0.0,
+      "planning_ms": 158.30875001847744,
+      "restore_result": null,
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 0.0,
+      "availability_attempt": null,
+      "key_prepare_ms": 3267.4467919860035,
+      "proof_process_ms": 1917.4367499654181,
+      "snapshot_ms": 385.71574998786673,
+      "compression_ms": 319.28533397149295,
+      "archive_bytes": 12689434,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 65.771333,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.738875
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1357.464917,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.991458
+        }
+      ],
+      "total_ms": 6498.93154198071,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6498.93154198071,
+      "sampled_peak_job_disk_bytes": 119200626,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:17:08.439Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2650.871,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1745.820375,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:17:05.668Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 402.818583,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 153.064541,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 1898.884916,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3053.6895830000003
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 1898.884916
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "warm-restored",
+      "emitted_copy_ms": 17.48479198431596,
+      "execution_ms": 436.62941601360217,
+      "restore_ms": 632.9452500212938,
+      "planning_ms": 171.95629101479426,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 50280843,
+          "cache_dir": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/cache",
+          "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+          "producer": {
+            "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "48a136450dc368042aa4d2a650528df096da2e2e52b9a0c926e7d47e02e34f8e",
+          "summary": {
+            "bundles": 2,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd",
+              "fc253016885ec830e97808c9ec920bb5cab5c21af590380a6cb5eb0538e2b244"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 2
+          }
+        }
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 538.6810419731773,
+      "availability_attempt": null,
+      "key_prepare_ms": 1112.3732089763507,
+      "proof_process_ms": 1926.9885829999112,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0,
+      "archive_bytes": 0,
+      "restored_archive_bytes": 12689434,
+      "snapshot_bytes": 0,
+      "hits": [
+        true,
+        true
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 65.147458,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.755041
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1371.611625,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.462542
+        }
+      ],
+      "total_ms": 4371.398749994114,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 4371.398749994114,
+      "sampled_peak_job_disk_bytes": 132445378,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 1993,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 24648297,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 2313,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 6789,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 0,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:17:13.533Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 741.664791,
+            "estimated_generation_avoided_ms": 1745.820375,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:17:12.681Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 182.338417,
+            "estimated_generation_avoided_ms": 153.064541,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-warm-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T05:17:08.439Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2650.871,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1745.820375,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:17:05.668Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 402.818583,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 153.064541,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-cold/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 1898.884916,
+          "generation_ms": 1898.884916,
+          "hit_rate": 0.5,
+          "hits": 2,
+          "misses": 2,
+          "requests": 4,
+          "total_request_ms": 3977.692791
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 2,
+        "misses": 0,
+        "errors": 0,
+        "generation_ms": 0.0
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "partial-restored",
+      "emitted_copy_ms": 18.45287502510473,
+      "execution_ms": 358.75637497520074,
+      "restore_ms": 337.46154099935666,
+      "planning_ms": 165.47520901076496,
+      "restore_result": {
+        "schema": 1,
+        "restored": true,
+        "result": {
+          "bytes": 954794,
+          "cache_dir": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/cache",
+          "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+          "producer": {
+            "build_fingerprint": "bd1a54e776b8af58fb6ed682489b82d265aca4175040bd90c4acafa6db843e9f",
+            "ledger_revision": "b5d3e965a18e4cac17fac4f38446fc55c524439a",
+            "profile": "ledger8-8.1.3/zkir-2.1.1/transient-2.1.1/base-1.0.2/serialize-1.1.1/proofs-0.7.1/circuits-6.1.0/stdlib-1.1.0/curves-0.2.0/tagged-v1/forge-recipe-v1",
+            "worker": null,
+            "worker31": {
+              "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+              "executable_sha256": "7b83ceab3a1acb61f7e2c30a875941faec37a875227f995450f4fc3bb3fd89ff",
+              "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+              "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914"
+            }
+          },
+          "schema": 1,
+          "snapshot_id": "d3d127c04d7702a48c073bdecb7b3ca7a917271aaa1d33c2a2433a36d1e2b126",
+          "summary": {
+            "bundles": 1,
+            "formats": [
+              "midnight-zkir-v3.1-json"
+            ],
+            "has_v3": false,
+            "has_v31": true,
+            "parameter_digests": [
+              "b9009f1098bcefffec3c461ab3a5e3a17f7e5599f0f08c70fcdc55a89227bcbd"
+            ],
+            "profiles": [
+              "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1"
+            ],
+            "ready": 1
+          }
+        }
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 328.5117920022458,
+      "availability_attempt": null,
+      "key_prepare_ms": 3078.5677499952726,
+      "proof_process_ms": 2102.8395000030287,
+      "snapshot_ms": 369.76695799967274,
+      "compression_ms": 304.0633329655975,
+      "archive_bytes": 12689506,
+      "restored_archive_bytes": 322022,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        true,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 70.249375,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.828291
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1456.9722920000002,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.20125
+        }
+      ],
+      "total_ms": 6810.667083016597,
+      "prior_job_seed_ms_excluded": 694.3339169956744,
+      "observed_wall_ms": 7505.001000012271,
+      "sampled_peak_job_disk_bytes": 119106118,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 1654,
+            "hits": 1,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 446790,
+            "hits": 1,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 1353,
+            "hits": 1,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 4975,
+            "hits": 1,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 2,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:17:20.200Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2695.370291,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1816.813958,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:17:17.381Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 181.67945799999998,
+            "estimated_generation_avoided_ms": 161.209291,
+            "generation_ms": 0.0,
+            "operation": "ensure",
+            "outcome": "hit",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          },
+          {
+            "at": "2026-10-16T05:17:16.582Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 402.784625,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 161.209291,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-partial-restored/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 161.209291,
+          "generation_ms": 1978.0232489999999,
+          "hit_rate": 0.3333333333333333,
+          "hits": 1,
+          "misses": 2,
+          "requests": 3,
+          "total_request_ms": 3279.834374
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 1,
+        "misses": 1,
+        "errors": 0,
+        "generation_ms": 1816.8139579999997
+      }
+    },
+    {
+      "repetition": 2,
+      "lane": "unavailable",
+      "emitted_copy_ms": 21.03087498107925,
+      "execution_ms": 353.4932089969516,
+      "restore_ms": 164.7035420173779,
+      "planning_ms": 166.5015000035055,
+      "restore_result": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82"
+      },
+      "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82",
+      "helper_restore_ms": 164.7035420173779,
+      "availability_attempt": {
+        "schema": 1,
+        "restored": false,
+        "reason": "cache_miss",
+        "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82"
+      },
+      "key_prepare_ms": 3330.1342909689993,
+      "proof_process_ms": 1930.8598749921657,
+      "snapshot_ms": 361.6047090035863,
+      "compression_ms": 301.6306250356138,
+      "archive_bytes": 12689418,
+      "restored_archive_bytes": 0,
+      "snapshot_bytes": 50280843,
+      "hits": [
+        false,
+        false
+      ],
+      "execution": [
+        {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        }
+      ],
+      "proofs": [
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 71.424042,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.879959
+        },
+        {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1363.015625,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.187833
+        }
+      ],
+      "total_ms": 6707.387708011083,
+      "prior_job_seed_ms_excluded": 0.0,
+      "observed_wall_ms": 6707.387708011083,
+      "sampled_peak_job_disk_bytes": 118675957,
+      "stats": {
+        "estimate_basis": "last measured generation for this exact derivation; timings include parameter verification, locking, integrity checks and export, but exclude final transaction commit and process overhead; not a test-pass cache",
+        "files": [
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 1993,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 24648297,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 2313,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          {
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "bytes": 6789,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir",
+            "requests": 1,
+            "sha256": "aa57039b114151e1889e8ae86afcc3aa2ca0e5929275bcc75061b28088eb868b"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1654,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "bzkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 446790,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "prover",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 1353,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "verifier",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          {
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "bytes": 4975,
+            "errors": 0,
+            "hit_bytes": 0,
+            "hits": 0,
+            "kind": "zkir",
+            "misses": 1,
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/deposit_unshielded.zkir",
+            "requests": 1,
+            "sha256": "e1384ddb55763bd0a3226bbad3337b83a4e076087f212dbe0281e6db671dce1d"
+          }
+        ],
+        "recent_requests": [
+          {
+            "at": "2026-10-16T05:17:27.102Z",
+            "bundle_id": "1b0f80c17c5a1e57c37291537ba0090acdac93e0427cb1d070a75355bdc3a8be",
+            "elapsed_ms": 2715.1115409999998,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 1831.884375,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/activate_initial_device_with_jubjub.zkir"
+          },
+          {
+            "at": "2026-10-16T05:17:24.265Z",
+            "bundle_id": "a8b3732abcd30d95445a2cd6b150e1c945afa07b6ae09f48faaaacb8dc14931e",
+            "elapsed_ms": 398.47666599999997,
+            "estimated_generation_avoided_ms": 0.0,
+            "generation_ms": 156.02712499999998,
+            "operation": "ensure",
+            "outcome": "miss",
+            "requested_path": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/passport/benchmark-final-c40/2-unavailable/emitted/zkir/deposit_unshielded.zkir"
+          }
+        ],
+        "schema": 1,
+        "storage": {
+          "cas_bytes": 25114164,
+          "export_bytes": 25122496,
+          "sqlite_main_bytes": 36864,
+          "sqlite_wal_bytes": 0,
+          "staging_bytes": 0
+        },
+        "totals": {
+          "errors": 0,
+          "estimated_generation_avoided_ms": 0.0,
+          "generation_ms": 1987.9115000000002,
+          "hit_rate": 0.0,
+          "hits": 0,
+          "misses": 2,
+          "requests": 2,
+          "total_request_ms": 3113.588207
+        }
+      },
+      "job_stats_delta": {
+        "requests": 2,
+        "hits": 0,
+        "misses": 2,
+        "errors": 0,
+        "generation_ms": 1987.9115000000002
+      }
+    }
+  ],
+  "median_total_ms": {
+    "uncached": 3934.3448749859817,
+    "cold": 6498.93154198071,
+    "warm-restored": 4337.62929198565,
+    "partial-restored": 6810.667083016597,
+    "unavailable": 6536.574375000782
+  },
+  "warm_saving_ms": -403.2844169996679,
+  "uncached_keygen": "one official zkir-v3 compile-many invocation for the exact two selected circuits; full52-circuit keygen is outside scope",
+  "separate_codegen_receipt": {
+    "path": "docs/evidence/passport-codegen.json",
+    "sha256": "f06a4d56bacfb913869b65747ae8665e21dbc76af97108871dc7522376b3b2f8"
+  },
+  "harness_sha256": "8c5d061d128fd1a13400c1a774cbd611a450612bf4a537b1d8b5d594d4ff944e",
+  "codegen_scope": "Full account codegen is separately measured; lane totals include copied current compiler output, actual key preparation, runtime execution, proofs, verification and local transport. No complete CI total modeled.",
+  "transport": "local archive compression/extraction and validated Forge restore; no hosted cache upload/download latency",
+  "owned_work_cleanup": "All measured stores, snapshots, preimages, node_modules and proof copies removed after evidence capture"
+}

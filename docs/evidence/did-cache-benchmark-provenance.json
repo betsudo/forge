@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "candidate": {
+    "source_commit": "c40e45b0647ad9caf754a2d5d78340d37046434d",
+    "binary": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/native-runtime/midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin/bin/midnight-zkir-forge",
+    "worker31": "/Users/ysh/github/input-output-hk/midnight-zkir-forge/.local/qualification/native-runtime/midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin/bin/midnight-zkir-forge-zkir31-worker",
+    "archive_sha256": "19ef84ec14deb93a9729b97f5bf7747807a03c1327d33349ecdd40a87eea8e37",
+    "same_verified_payload_as_installer": true
+  },
+  "benchmark_runner_source_commit": "c40e45b0647ad9caf754a2d5d78340d37046434d",
+  "receipt_sha256": "840b9e5791b17394e7026a1c059ff5bcb3ff98a75416b8ea6d7dc06e651803eb",
+  "receipt": "did-cache-benchmark.json",
+  "rows": 15,
+  "genuine_proofs": 15,
+  "positive_verifications": 15,
+  "proof_negative_controls": 30,
+  "application_assertions": 75,
+  "all12_circuit_artifacts_match_official_compiler": true,
+  "observed_concurrent_load": "external trust-registry official zkir compile-many on shared host; untouched; installer process suite briefly overlapped early runs",
+  "scope": "local artifact-stage measurements, ordered lanes, three repetitions, shared host, filesystem caches not flushed; no hosted GitHub transport/wholeCI performance claim",
+  "independent_review": {
+    "reviewer": "independent agent linux_runtime_review",
+    "result": "no blocker",
+    "verified": [
+      "15rows3repetitions5lanes",
+      "equal real proof/verification/assertion/negative-control counts",
+      "official compiler artifact identity",
+      "snapshot partition and all12/partial1 readiness",
+      "actual helper unavailable cache_miss",
+      "timing seed arithmetic",
+      "candidate manifest executable hash/profile",
+      "owned scratch removed"
+    ],
+    "limitations": "shared host, no hosted network transport, no clean Mac qualification"
+  }
+}

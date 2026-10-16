@@ -451,3 +451,15 @@ separate opt-in private component with exact qualified identity, verified respon
 and mandatory uncached proving coverage; no fuzzy similarity reuse is allowed.
 Keep Compact unchanged, retain current backend pins, and deliver signed local
 commits without publication, deployment or hosted CI dispatch.
+
+
+## Owner amendment — finish installer and consumer benchmarks (2026-10-16)
+
+Owner authorized finishing issues #11/#13 autonomously with real macOS/Linux
+qualification and DIDv0.7.0/Passport benchmarks, keeping Compact unchanged and
+publishing nothing. Passport's official Compact0.35.0 emits JSON3.1, so this
+increment adds a separately pinned official3.1 worker rather than weakening or
+upgrading existing2/3.0 profiles. New worker profile/format/serialization and
+actual parameters require independent qualification; generic ledger9 transaction
+support remains deferred. Clean owned temporary workspaces/resources after
+retaining reproducible harnesses and receipts. No global cache/container prune.

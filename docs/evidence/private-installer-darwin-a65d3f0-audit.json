@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "source_commit": "a65d3f00b4eb061a4e46c8769bd866e0767f7d02",
+  "artifacts": {
+    "SHA256SUMS": {
+      "bytes": 351,
+      "sha256": "d942b4163d0085bc280ef6ab4a98683a34da092190af94eaf89c1dc0dc9e25aa"
+    },
+    "install-release.py": {
+      "bytes": 17746,
+      "sha256": "ebb7ecdb863457ea89ed4db54984c4cc1e66ca68edf65042d86fc4c301fdd79d"
+    },
+    "midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin-runtime-sources.tar.gz": {
+      "bytes": 61870295,
+      "sha256": "068d6739b82011015ef323b69d467592db55df0292f47b177939a2dfd2a61923"
+    },
+    "midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin.tar.gz": {
+      "bytes": 26368165,
+      "sha256": "928ff3665bde047d04d3250fcb665bdcab9a5a3e9781e7ab0ec1c54cdcdb313a"
+    }
+  },
+  "installed_receipt": "private-installer-darwin-a65d3f0-three-profile.json",
+  "inventoried_files": 777,
+  "native_cargo_package_notice_identities": 422,
+  "recovery_harness_source_commit": "4006a29906b2aa5c47bd154e92b8dcf28b468e58",
+  "recovery_harness_sha256": "d0275de18762dd8ed58255a9da765ade00bbf344deb66e9832587d110268ffa9",
+  "independent_review": {
+    "result": "no blocker",
+    "verified": [
+      "signed source and archive receipt",
+      "all777 inventory file digests",
+      "422 Cargo notice identities",
+      "exact libiconv source and notices",
+      "locked Nixpkgs and Forge source companion",
+      "all3 genuine proof/reproducibility/recovery controls",
+      "11 consumer kit checksums and explicit parameter harness",
+      "cleanMac gate remains pending"
+    ]
+  },
+  "consumer_kit_receipt": "private-installer-macos-consumer-kit.json",
+  "benchmark_provenance": "historical c40e45b payload only; main CLI differs, both workers identical; no a65 timing claim",
+  "limits": [
+    "restricted existing-host macOS26.2 ARM64 only",
+    "actual Nix-free macOS host/VM unavailable",
+    "fake GitHub transport only; no authenticated release download",
+    "Intel runtime unqualified",
+    "not publication authorization"
+  ]
+}

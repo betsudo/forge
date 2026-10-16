@@ -35,3 +35,7 @@ tempfile = "3"
 opt-level = 2
 [profile.test.package."*"]
 opt-level = 2
+
+[[example]]
+name = "prove-did-fixture"
+path = "benchmarks/did/prove.rs"

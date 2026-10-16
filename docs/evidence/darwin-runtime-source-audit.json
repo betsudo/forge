@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "scope": "Darwin source collector and exact source output mapping component test; final binary/source companions must be produced again from the clean committed producer",
+  "source_commit_for_locked_inputs_and_source_bundle": "1d94d73abf0733793bf7f134437ed5e8881333c9",
+  "asset_bytes": 61688145,
+  "asset_sha256": "e1c2d4176cc263163a94f4d1e2a0712ac5cdf50d0b35e5c866713304dcfd6c7f",
+  "manifest": {
+    "schema": 1,
+    "companion_asset": "forge-darwin-preview-runtime-sources.tar.gz",
+    "companion_sha256": "e1c2d4176cc263163a94f4d1e2a0712ac5cdf50d0b35e5c866713304dcfd6c7f",
+    "packages": {
+      "libiconv": {
+        "license": [
+          {
+            "deprecated": false,
+            "free": true,
+            "fullName": "BSD 2-clause \"Simplified\" License",
+            "licenseType": "simple",
+            "redistributable": true,
+            "shortName": "bsd2",
+            "spdxId": "BSD-2-Clause",
+            "url": "https://spdx.org/licenses/BSD-2-Clause.html"
+          },
+          {
+            "deprecated": false,
+            "free": true,
+            "fullName": "BSD 3-clause \"New\" or \"Revised\" License",
+            "licenseType": "simple",
+            "redistributable": true,
+            "shortName": "bsd3",
+            "spdxId": "BSD-3-Clause",
+            "url": "https://spdx.org/licenses/BSD-3-Clause.html"
+          },
+          {
+            "deprecated": false,
+            "free": true,
+            "fullName": "Apple Public Source License 1.0",
+            "licenseType": "simple",
+            "redistributable": true,
+            "shortName": "apple-psl10",
+            "spdxId": "APSL-1.0",
+            "url": "https://spdx.org/licenses/APSL-1.0.html"
+          }
+        ],
+        "name": "libiconv-115.100.1",
+        "outputs": [
+          "/nix/store/jspv3c5l2zx4kiwzhq0zgxcwp34cqifz-libiconv-115.100.1",
+          "/nix/store/6d65n1i4y5qxy2j3av4dqm9kya98lr5g-libiconv-115.100.1-dev"
+        ],
+        "patches": [
+          "/nix/store/xk2kl6xaj4dp0rdnk6p32nrwhkxmi7vp-source/pkgs/os-specific/darwin/by-name/li/libiconv/patches/0001-Support-static-module-loading.patch",
+          "/nix/store/xk2kl6xaj4dp0rdnk6p32nrwhkxmi7vp-source/pkgs/os-specific/darwin/by-name/li/libiconv/patches/0002-Fix-ISO-2022-out-of-bounds-write-with-encoded-charac.patch"
+        ],
+        "source": "/nix/store/5hg1rqb0j8gzlm2f0rln19b1jl1syyks-source",
+        "runtime_libraries": [
+          "libiconv.2.dylib",
+          "libcharset.1.dylib"
+        ],
+        "source_tree_nar_hash": "sha256-iPPdwts6kALf2lGnYnXfMTuBa2lYrDt7rySiUmraJqs=",
+        "source_asset_path": "upstream/libiconv-115.100.1-source.tar.gz",
+        "source_sha256": "60d6b75fe17522d7789a9776482ff6c4988429ce42e90890abc89cb1234de025",
+        "license_files": [
+          "LICENSES/darwin-runtime/libiconv-libiconv.txt",
+          "LICENSES/darwin-runtime/APSL-1.0.txt",
+          "LICENSES/darwin-runtime/SOURCES.json",
+          "LICENSES/darwin-runtime/libiconv-copyright-notices.txt"
+        ]
+      }
+    },
+    "requirement": "publish the source companion and SHA256SUMS beside every corresponding binary"
+  },
+  "collector_sha256": "aa7a0187c0908fa7f847f7d6577ee7448bec3b1ec6635f42c1be98db3ee2bfcd",
+  "intel_input_source_evaluation": {
+    "name": "libiconv-113",
+    "source": "/nix/store/2sbzj9021lgb1gfpm70shp8d04hg7cy5-source"
+  },
+  "cleanup": "throwaway companion/archive workspace removed after retaining this receipt and notice preview",
+  "post_test_change": "README clarification only: directory source archives are generated from unchanged fixed source contents"
+}

@@ -1,6 +1,6 @@
 # DID and Passport CI cache research
 
-Research: 2026-10-16, read-only GitHub APIs and private downloaded source archives
+Initial research: 2026-10-16, read-only GitHub APIs and private downloaded source archives
 under Forge `.local/ci-consumers`. No existing consumer checkout or Compact source
 changed. No hosted run, cache upload, dependency install or deployment initiated.
 Proposals: [consumer cache contract](../../openspec/changes/ci-consumer-cache/design.md).
@@ -40,7 +40,7 @@ The Passport exact-head run listing returned Scan only. Its inspected top-level
 workflows cover Pages and scanning; no proof-bearing contract CI benchmark exists
 there to compare yet. These observations do not characterize future workflows.
 
-## Safe local probe and blockers
+## Initial probe before consumer qualification
 
 The installed official Compact0.31.1 emitted DID JSON ZKIR in an isolated output
 with `--skip-zk` in **0.4505s** (one observation, no repeated benchmark): 12 files,
@@ -48,11 +48,12 @@ JSON version2.0. Example `deactivate.zkir` SHA256
 `0104892364fe7c0fe55247099ba0ea138f2eccbad6478524aafc73f3b078e7b6`.
 Compiler self-report: ledger-8.0.2, runtime0.16.0. This demonstrates that codegen
 can be cheap for this source; it does not measure keygen or support general
-claims. No adapter or proof suite was run. Exact Forge binary/key compatibility
+claims. At that initial research stage no adapter or proof suite had run. Exact Forge binary/key compatibility
 with this compiler's tool output has not been independently qualified, so a
 cold/warm Forge benchmark would currently be misleading. Public parameters exist
 locally but required actual per-circuit k/digests still need discovery/verification.
-Compact0.35.0 is absent locally; no substitute compiler was used for Passport.
+At that initial stage Compact0.35.0 was absent locally; no substitute compiler
+was used. The later exact qualification below supersedes this availability gap.
 Managed keys and node_modules are absent in downloaded sources. Remote dependency
 installation, compiler acquisition and proof infrastructure provisioning remain
 explicit preflight steps; this research did not silently skip or simulate them.
@@ -118,8 +119,39 @@ CORS for browser clients. Keep `zkConfigProvider` (ZKIR and keys) separate from
    wrong profile, changed circuit, concurrent private consumers and trusted-save
    refusal on PR/failure. Cache hit rate alone cannot establish CI time savings.
 
-Current result: codegen-only feasibility observed; **end-to-end CI improvement is
-unmeasured**. Consumer integration and GitHub publication remain follow-up work.
+## Local consumer qualification follow-up — 2026-10-16
+
+The later authorized local work acquired exact official tools into owned scratch,
+installed dependencies from the consumers' existing locks, and qualified actual
+consumer outputs and proof preimages. Compact and other existing checkouts remain
+unchanged. The initial missing-compiler/unqualified-backend observations above
+are historical, not current blockers.
+
+- [DID v0.7.0 benchmark](did-benchmark.md): all 12 circuit keysets matched fresh
+  official output; 15 genuine proofs/positive verifications, 30 proof negative
+  controls and 75 application assertions remained executing. Median local total
+  was **6.857s uncached versus 2.492s warm restored**, saving **4.366s (63.7%)**.
+- [Passport account benchmark](passport-benchmark.md): exact Compact 0.35.0 emits
+  JSON3.1, requiring the new isolated official `zkir31` backend rather than the
+  existing JSON3.0 profile. All 52 codegen outputs were hash-checked across three
+  full runs (median 304.043s). The selected two actual account circuits retained
+  **30 genuine proofs/positive verifications, 60 negative controls and 270 state
+  assertions**. Median artifact/proof total was **3.934s uncached versus 4.338s
+  warm restored**: warm restoration was **0.403s slower (10.3%)**.
+
+Both experiments include actual CI-helper planning, verified partition-scoped
+snapshot restoration and local compression costs. Cold, partial and absent-local-
+transport lanes preserve normal generation and proofs. Corrupt bytes and wrong
+profiles remain refusal cases. Measurements used optimized paired local candidate
+binaries on a shared macOS ARM64 developer host; the external trust-registry
+compiler remained active. They are not isolated-capacity or hosted-CI results.
+
+The DID saving is a local budget for added GitHub transport overhead, not a
+promised CI reduction. The selected Passport workload does not currently justify
+cache transport purely for speed. Full Passport key generation, full consumer
+localnets and hosted GitHub cache network/authentication/upload/download timing
+remain unmeasured. The optional Action/provider-view proposal remains deferred;
+these completed CLI measurements do not claim those interfaces are implemented.
 
 Restore prefixes may relax workload identity only inside the exact compatibility
 partition. Proof Relay stores, request bodies and witness-containing material are

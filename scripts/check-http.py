@@ -7,7 +7,8 @@ parser.add_argument('--binary', type=pathlib.Path, default=ROOT/'target/debug/mi
 parser.add_argument('--url', help='Test an existing isolated server (do not use a shared production store)')
 parser.add_argument('--token-file', type=pathlib.Path)
 parser.add_argument('--real', action='store_true')
-parser.add_argument('--v2-proof-helper', type=pathlib.Path, default=ROOT/'target/debug/examples/qualify-http-fixture')
+parser.add_argument('--include-zkir31', action='store_true')
+parser.add_argument('--v2-proof-helper', type=pathlib.Path)
 args = parser.parse_args()
 binary = args.binary.resolve()
 def free_port():
@@ -53,7 +54,7 @@ with tempfile.TemporaryDirectory(prefix='forge-http-e2e-') as directory:
         assert request('/v1/profiles',auth=False)[0]==401
         assert request('/v1/profiles',headers={'Authorization':'Bearer incorrect'})[0]==401
         assert value('/health/ready')['status']=='ready'
-        assert len(value('/v1/profiles')['profiles'])==2
+        assert {p['selector'] for p in value('/v1/profiles')['profiles']}=={'ledger8-v2','zkir3','zkir31'}
         assert '/v1/bundles' in value('/openapi.json')['paths']
         source=(ROOT/'fixtures/assert.zkir').read_bytes()
         path='/v1/bundles?name=http-assert&profile=ledger8-v2'
@@ -125,7 +126,9 @@ with tempfile.TemporaryDirectory(prefix='forge-http-e2e-') as directory:
             assert request(link)[2]==source
         proof_receipts=[]
         if args.real:
-            for selector,fixture in [('ledger8-v2','assert.zkir'),('zkir3','assert-v3.zkir')]:
+            selected=[('ledger8-v2','assert.zkir'),('zkir3','assert-v3.zkir')]
+            if args.include_zkir31:selected.append(('zkir31','assert-v31.zkir'))
+            for selector,fixture in selected:
                 raw=(ROOT/'fixtures'/fixture).read_bytes()
                 record=value('/v1/bundles?name=proof&profile='+selector,'POST',raw)
                 materialize='/v1/bundles/'+record['bundle_id']+'/materializations?profile='+selector
@@ -140,14 +143,16 @@ with tempfile.TemporaryDirectory(prefix='forge-http-e2e-') as directory:
                     kind=artifact['kind'];ext={'binary_ir':'bzkir','prover':'prover','verifier':'verifier'}[kind]
                     folder='zkir' if kind=='binary_ir' else 'keys';(exported/folder/('proof.'+ext)).write_bytes(raw)
                     inventory.append({'kind':kind,'digest':artifact['sha256'],'size':len(raw)})
-                (exported/'manifest.json').write_text(json.dumps({'profile':warm['profile'],'artifacts':inventory}))
-                if selector=='zkir3':
-                    worker=pathlib.Path(os.environ.get('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER',binary.parent/'midnight-zkir-forge-zkir3-worker'))
+                (exported/'manifest.json').write_text(json.dumps(warm['descriptor']['record']))
+                if selector in ('zkir3','zkir31'):
+                    variable='MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER' if selector=='zkir31' else 'MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER'
+                    name='midnight-zkir-forge-zkir31-worker' if selector=='zkir31' else 'midnight-zkir-forge-zkir3-worker'
+                    worker=pathlib.Path(os.environ.get(variable,binary.parent/name))
                     proof=json.loads(run(worker,'qualify-export','--output',exported,'--circuit-name','proof').stdout)
                     assert all(proof[k] for k in ('valid_proof_verified','invalid_statement_rejected','corrupt_proof_rejected','used_exported_artifacts'))
                     proof_receipts.append({'profile':selector,'downloaded_warm_artifacts_prove_and_reject_invalid_controls':True})
                 else:
-                    proof=json.loads(run(args.v2_proof_helper.resolve(),exported).stdout)
+                    proof=json.loads((run(args.v2_proof_helper.resolve(),exported) if args.v2_proof_helper else run(binary,'qualify-export',exported)).stdout)
                     assert all(proof[k] for k in ('valid_proof_verified','invalid_statement_rejected','corrupt_proof_rejected'))
                     proof_receipts.append({'profile':selector,'downloaded_warm_artifacts_prove_and_reject_invalid_controls':True})
         stats=value('/v1/stats');assert 'requested_path' not in json.dumps(stats)

@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-16",
+  "status": "deferred_by_owner",
+  "reason": "Owner requested skipping the clean Nix-free macOS VM qualification for now.",
+  "guest_booted": false,
+  "guest_tests_run": false,
+  "nix_free_macos_qualified": false,
+  "processes_confirmed_stopped": [
+    20012,
+    20072,
+    20638
+  ],
+  "removed_owned_paths": [
+    ".local/qualification/macos-vm/tart-home",
+    ".local/qualification/macos-vm/resume-checkpoint",
+    ".local/qualification/macos-vm/python-3.14.8-macos.pkg"
+  ],
+  "free_bytes_before": 125862465536,
+  "free_bytes_after": 129093070848,
+  "retained": "Logs, orchestration scripts, checksummed consumer kit, final candidate assets and existing qualification receipts.",
+  "limits": "Restricted-host macOS evidence does not establish Nix-free portability. No authenticated release-download or Intel runtime qualification."
+}

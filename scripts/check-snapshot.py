@@ -2,7 +2,7 @@
 """Isolated real-process snapshot/restore and local CI helper e2e. --real proves fixtures."""
 import argparse,concurrent.futures,hashlib,json,os,pathlib,shutil,signal,sqlite3,subprocess,sys,tempfile,time
 ROOT=pathlib.Path(__file__).resolve().parent.parent
-p=argparse.ArgumentParser(description=__doc__);p.add_argument('--binary',type=pathlib.Path,default=ROOT/'target/debug/midnight-zkir-forge');p.add_argument('--real',action='store_true');p.add_argument('--params-dir',type=pathlib.Path,default=pathlib.Path(os.environ.get('MIDNIGHT_PP',str(pathlib.Path.home()/'.cache/midnight/zk-params'))));a=p.parse_args();binary=a.binary.resolve()
+p=argparse.ArgumentParser(description=__doc__);p.add_argument('--binary',type=pathlib.Path,default=ROOT/'target/debug/midnight-zkir-forge');p.add_argument('--real',action='store_true');p.add_argument('--include-zkir31',action='store_true');p.add_argument('--params-dir',type=pathlib.Path,default=pathlib.Path(os.environ.get('MIDNIGHT_PP',str(pathlib.Path.home()/'.cache/midnight/zk-params'))));a=p.parse_args();binary=a.binary.resolve()
 def cmd(*args,ok=True,env=None):
  r=subprocess.run(list(map(str,args)),text=True,capture_output=True,env=env,timeout=120)
  value=json.loads(r.stdout)
@@ -109,7 +109,9 @@ with tempfile.TemporaryDirectory(prefix='forge-snapshot-e2e-') as d:
  (workspace/'circuit.zkir').write_bytes((ROOT/'fixtures/assert.zkir').read_bytes());(fake/'bls_midnight_2p4').write_text('changed');helper('report','--key',key,'--cache-dir',ci_store,'--baseline',baseline,ok=False)
  proofs=[]
  if a.real:
-  for selector,fixture in [('ledger8-v2','assert.zkir'),('zkir3','assert-v3.zkir')]:
+  selected=[('ledger8-v2','assert.zkir'),('zkir3','assert-v3.zkir')]
+  if a.include_zkir31:selected.append(('zkir31','assert-v31.zkir'))
+  for selector,fixture in selected:
    key=temp/(selector+'-key.json');store=temp/(selector+'-store');base=temp/(selector+'-baseline.json')
    (workspace/'circuit.zkir').write_bytes((ROOT/'fixtures'/fixture).read_bytes())
    planned=helper('key','--workspace',workspace,'--params-dir',a.params_dir,'--parameter','bls_midnight_2p4','--input','circuit.zkir','--profile',selector,'--workload','actual assert proof controls','--generation','3-1','--output',key)
@@ -119,6 +121,13 @@ with tempfile.TemporaryDirectory(prefix='forge-snapshot-e2e-') as d:
    over=helper('prepare-save',*args,'--snapshot',temp/(selector+'-over'),'--max-bytes','1',env=trusted);assert over['reason']=='over_budget' and not (temp/(selector+'-over')).exists()
    snapshot=temp/(selector+'-seed');saved=helper('prepare-save',*args,'--snapshot',snapshot,'--max-bytes','10485760',env=trusted);assert saved['publish']
    target=temp/(selector+'-restored');helper('restore','--key',key,'--cache-dir',target,'--snapshot',snapshot,'--max-bytes','10485760','--expected-id',saved['snapshot']['snapshot_id'])
+   if selector=='zkir31':
+    changed_worker=temp/'changed-worker31';shutil.copytree(snapshot,changed_worker)
+    manifest=json.loads((changed_worker/'snapshot.json').read_text());manifest['producer']['worker31']['executable_sha256']='0'*64
+    (changed_worker/'snapshot.json').write_text(json.dumps(manifest))
+    rejected=temp/'changed-worker31-target'
+    helper('restore','--key',key,'--cache-dir',rejected,'--snapshot',changed_worker,'--max-bytes','10485760',ok=False)
+    assert not rejected.exists()
    # Cross-table records must pin one output set for every derivation recipe.
    contradictory=temp/(selector+'-contradictory');shutil.copytree(snapshot,contradictory)
    with sqlite3.connect(contradictory/'index.sqlite3') as db:
@@ -139,9 +148,11 @@ with tempfile.TemporaryDirectory(prefix='forge-snapshot-e2e-') as d:
    warm=cli(target,'--profile',selector,'--params-dir',a.params_dir,'prepare',workspace/'circuit.zkir','--name','proof')
    assert warm['cache']['hit'] and warm['artifact_set_id']==cold['artifact_set_id']
    assert pathlib.Path(warm['export']['base']).is_relative_to(target)
-   if selector=='ledger8-v2':proof=cmd(ROOT/'target/debug/examples/qualify-http-fixture',warm['export']['base'])
+   if selector=='ledger8-v2':proof=cmd(binary,'--params-dir',a.params_dir,'qualify-export',warm['export']['base'])
    else:
-    worker=pathlib.Path(os.environ.get('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER',str(binary.parent/'midnight-zkir-forge-zkir3-worker')))
+    variable='MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER' if selector=='zkir31' else 'MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER'
+    name='midnight-zkir-forge-zkir31-worker' if selector=='zkir31' else 'midnight-zkir-forge-zkir3-worker'
+    worker=pathlib.Path(os.environ.get(variable,str(binary.parent/name)))
     proof=cmd(worker,'qualify-export','--output',warm['export']['base'],'--circuit-name','proof')
    assert all(proof[n] for n in ('valid_proof_verified','invalid_statement_rejected','corrupt_proof_rejected'))
    delta=helper('report','--key',key,'--cache-dir',target,'--baseline',inherited)['delta'];assert delta['hits']==1 and delta['misses']==0

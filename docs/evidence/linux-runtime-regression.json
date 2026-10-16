@@ -1,0 +1,94 @@
+{
+  "schema": 1,
+  "date": "2026-10-16",
+  "scope": "Linux ARM64 regression controls on signed08228c9 baseline ELF outputs; final three-profile installer/recovery qualification is separate",
+  "baseline_code_source_commit": "08228c9106238aa16983015e9b74a72a2b7a7948",
+  "tested_script_sha256": {
+    "scripts/linux-runtime.py": "4e4cee90af9b50f0beeb78a55d8d5886c6b7ae164f199d525f8f319996615b1c",
+    "scripts/linux-runtime-sources.py": "aa7a0187c0908fa7f847f7d6577ee7448bec3b1ec6635f42c1be98db3ee2bfcd",
+    "scripts/check-linux-runtime.py": "69450f6e7a23f5308269780f98c52d7c7cb64a41116bbb9c6419e6119c0d7349"
+  },
+  "runtime": {
+    "schema": 1,
+    "mode": "runtime",
+    "controls": [
+      {
+        "command": "midnight-zkir-forge",
+        "ordinary_startup": true,
+        "empty_and_nonempty_loader_override_variables_refused": [
+          "LD_PRELOAD",
+          "LD_LIBRARY_PATH",
+          "LD_AUDIT",
+          "LD_DEBUG",
+          "LD_BIND_NOW",
+          "LD_FORGE_REGRESSION_UNKNOWN",
+          "GLIBC_TUNABLES"
+        ]
+      },
+      {
+        "command": "midnight-zkir-forge-zkir3-worker",
+        "ordinary_startup": true,
+        "empty_and_nonempty_loader_override_variables_refused": [
+          "LD_PRELOAD",
+          "LD_LIBRARY_PATH",
+          "LD_AUDIT",
+          "LD_DEBUG",
+          "LD_BIND_NOW",
+          "LD_FORGE_REGRESSION_UNKNOWN",
+          "GLIBC_TUNABLES"
+        ]
+      }
+    ],
+    "no_nix_store": true,
+    "no_build_checkout": true,
+    "kernel": "7.0.14-linuxkit",
+    "architecture": "aarch64",
+    "pre_python_loader_trace": {
+      "exit_status": 0,
+      "forge_version_not_executed": true
+    },
+    "boundary": "trusted consumer Python starts before launcher checks; not adversarial environment isolation"
+  },
+  "source_origins": {
+    "schema": 1,
+    "mode": "sources",
+    "flake_reference": "git+file:///source?rev=08228c9106238aa16983015e9b74a72a2b7a7948",
+    "system": "aarch64-linux",
+    "exact_original_outputs_accepted": true,
+    "same_package_name_alternate_store_refused": true,
+    "matching_alternate_digest_did_not_bypass_output_check": true,
+    "dotted_path_to_alternate_store_refused": true,
+    "symlink_to_alternate_store_refused": true,
+    "symlink_to_exact_original_output_resolved": true,
+    "changed_original_source_digest_refused": true,
+    "alternate_source_path": "/nix/store/jp8avbmpfcdnm0axwrzyk072nmq9cr0d-glibc-2.42-67/lib/libc.so.6",
+    "evaluated_outputs": {
+      "gcc": [
+        "/nix/store/j42vsm6399bgls7f19zjrarnhrmz7p36-gcc-15.3.0",
+        "/nix/store/lrlpssd275xk7gkd8pckj18k5d52v8lv-gcc-15.3.0-man",
+        "/nix/store/0fjrz2phhfnh29xwmv8dqrwbbnvkw51v-gcc-15.3.0-info",
+        "/nix/store/6dfx62681yijibaha2pqdwlinhxld4vl-gcc-15.3.0-lib",
+        "/nix/store/80s79pkq7s6phd3j1vh46if2dnapv3y6-gcc-15.3.0-libgcc",
+        "/nix/store/5p7zy8r8dnkql9rfcwxxmm3yi7wrpksr-gcc-15.3.0-checksum"
+      ],
+      "glibc": [
+        "/nix/store/cjcj20n6xa0hs5cd0adwx47g058c6z72-glibc-2.42-67",
+        "/nix/store/zs6l93qw5hxazyng02srs9jf5r93b8dp-glibc-2.42-67-bin",
+        "/nix/store/r7qf82zlzc2dly3nrdran1qxgzjj7626-glibc-2.42-67-dev",
+        "/nix/store/7nq1qs1dx020wz6hnb29qgwy213b7dl4-glibc-2.42-67-static",
+        "/nix/store/z45gj64p2ci4q08sipa38w7p60y588i6-glibc-2.42-67-getent",
+        "/nix/store/42x4874m91p1s4p6miyk0j9jjc9an8bw-glibc-2.42-67-debug"
+      ],
+      "openssl": [
+        "/nix/store/vwy8b146hgb0jvwwwx96jxpqrx1m85ba-openssl-3.6.3-bin",
+        "/nix/store/vw5dhasy6pr324siqf19bhgy5l2fn40d-openssl-3.6.3-dev",
+        "/nix/store/vp7pp0d1bdcamifnxvvn1j4h0asmlb5s-openssl-3.6.3",
+        "/nix/store/a7pffxvcj1f9c2j66y2xbyprkk798p4a-openssl-3.6.3-man",
+        "/nix/store/gwswv4rkdz1470xhkchh43sihpdp45sy-openssl-3.6.3-doc",
+        "/nix/store/k1klyf5i52pm97qx9dg8y21yf36ahd5c-openssl-3.6.3-debug"
+      ]
+    },
+    "scope": "real Nix evaluation and original source reads; stops before source archive generation"
+  },
+  "cleanup": "throwaway regenerated runtime probes removed after collecting results; builder/runtime containers and Nix volume retained for final candidate"
+}

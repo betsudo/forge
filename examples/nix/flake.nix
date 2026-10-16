@@ -1,7 +1,7 @@
 {
   description = "Pinned private Forge package for a consumer dev shell";
   # Reviewed local commit; remote use requires its later authorized publication.
-  inputs.forge.url = "git+ssh://git@github.com/input-output-hk/midnight-zkir-forge?rev=f3801e08f1e3af0f1a2c7b3e0e6a5c7070fa4d3a";
+  inputs.forge.url = "git+ssh://git@github.com/input-output-hk/midnight-zkir-forge?rev=6c6490d25ff83366ee09ba5056f4c4638bc1ad85";
   inputs.nixpkgs.follows = "forge/nixpkgs";
   inputs.nixpkgs-intel.follows = "forge/nixpkgs-intel";
   outputs = { self, forge, nixpkgs, nixpkgs-intel }:

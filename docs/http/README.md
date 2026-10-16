@@ -32,7 +32,11 @@ POST requires `Content-Type: application/json` even when the body is empty.
 The following example assumes the default loopback server without a token.
 Use the exact consumer profile. The v3 selector supports only official ledger
 `3a7ae0361d03e6eed4fc91e31f6600f334f605d5`, JSON3.0 and
-`ir-source[v3-generic]`; JSON3.1 and other v3 graphs are not interchangeable.
+`ir-source[v3-generic]`. JSON3.1 uses the distinct `zkir31` selector, official
+ZKIR `e82d81d25aabcc5f5092e2bd559083487f577914` with ledger
+`9a8777c4d035fc7f38ae286bcf5f8656668efd9f` and verifier-key[v7].
+These profiles are not interchangeable; inspect `/v1/profiles` on the actual server.
+Ledger9 transaction/network support remains deferred.
 
 ```sh
 curl --fail-with-body -H 'Content-Type: application/json' \

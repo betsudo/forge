@@ -458,3 +458,211 @@
 - GitHub milestone includes issues1–18. No push, release/tag/upload, hosted dispatch,
   deployment, Compact/other-checkout edits or shared CLI reinstallation. Installed
   shared Nix CLI remains0.2.0; this increment delivers source and local candidate.
+
+
+## 2026-10-16 — issues #11/#13 exact consumer integration in progress
+
+- Added isolated Compact0.35.0 JSON3.1 worker pinned to official ZKIR e82d81d2
+  and ledger9a8777c4; existing v2/JSON3.0 pins and identity transcripts are unchanged.
+  ZKIR source and ledger revisions are separately represented. Verifier serialization
+  is v7 only for the new profile. Ledger9 transactions/network remain deferred.
+- Parent concurrent requests join one generation; strict descriptor premises reject
+  swapped source/ledger revisions and minors. Local three-profile snapshot/helper
+  controls prove restored warm exports, reject invalid/corrupt proofs, preserve
+  evicted identities and reject a changed worker31 provenance. Local three-profile
+  recovery controls pass; final installed-candidate receipts remain pending.
+- Exact DID/Passport compiler artifact and genuine application preimage qualification
+  receipts are in docs/evidence/did-* and passport-*. All52 Passport codegen outputs
+  match across three full runs. These are compatibility measurements; final paired
+  release-binary transport-inclusive benchmarks remain pending.
+- Independent parent identity/concurrency review found and resolved the separate
+  repository revision issue. No further blocking finding in the reviewed Rust paths.
+  No Compact/other checkout edits, publication or shared CLI replacement.
+
+
+## 2026-10-16 — portable producer and benchmark qualification follow-up
+
+- Linux relocation bundles the exact ELF loader/library closure, verifies its bytes
+  before execution and refuses inherited loader overrides after trusted Python
+  startup. Runtime-source attribution checks canonical exact Nix output paths and
+  source digests; alternate-store, dotted-path and symlink controls pass.
+- Common source collector supplies full upstream runtime sources, locked Nixpkgs
+  recipes/patches and exact Forge source bundle. macOS uses Apple's libiconv BSD/APSL
+  notices; it is not attributed as GNU LGPL libiconv. Component receipts are
+  docs/evidence/linux-runtime-regression.json and darwin-runtime-source-audit.json.
+- Cargo collector authenticates registry archives, exact Git revisions and pinned
+  missing-license supplements; preserves Rust standard-library notices. Independent
+  review fixes distinguish actual license files from attribution-only NOTICE and
+  include nested notices for Git-root packages. Eight offline refusal/coverage
+  controls pass. Final per-candidate notice inventories remain producer output.
+- Producer freezes committed packaging helpers before its Nix build. Installer
+  e2e covers optional-worker inventory refusal, upgrade and legacy rollback. HTTP
+  downloaded artifacts prove and reject invalid/corrupt proofs for all three profiles.
+- Benchmark runners now invoke the actual helper for unavailable snapshots and
+  include its elapsed time. Passport explicitly pairs generation/proof workers.
+  Independent benchmark review found no other blocking timing/control issue.
+  Final optimized-binary runs and clean-host installed receipts remain pending.
+
+## 2026-10-16 — final native candidate and disk cleanup
+
+- Signed source c40e45b produced the three-profile macOS ARM64 bundle. External
+  Python installed it through fake GitHub transport with Nix and checkout reads
+  denied. All three genuine proof/negative controls and installed recovery suites
+  pass: docs/evidence/private-installer-darwin-three-profile.json. This remains
+  restricted-host evidence; the actual Nix-free macOS host/VM is unavailable.
+- Full local bootstrap passed, including both isolated workers and fast process
+  suites: docs/evidence/qualification-full-check-c40e45b.json. Public k4 parameters
+  in the prepared clean-Mac consumer kit match all three qualification receipts.
+- No obsolete worktrees exist for this session. Removed completed compilation
+  caches and three superseded native bundles (about 2.2 GiB); retained current
+  candidate, binaries, consumer kit, benchmark inputs and all evidence. No shared
+  Nix/Docker pruning or other checkout changes. Final Linux qualification and
+  sequential transport-inclusive benchmark runs remain in progress.
+
+- Linux producer smoke exposed Nix's `LD_FOR_BUILD` build-tool variable matching
+  the deliberate strict runtime `LD_*` guard. Producer now removes only that
+  build-only variable from its explicit smoke environment; ordinary installer
+  behavior and actual loader-override refusals are unchanged. Independent narrow
+  review found no blocker; fake-GitHub installer failure/recovery suite passes.
+  Cached Linux producer will qualify this fix after the benchmark window.
+
+## 2026-10-16 — final DID benchmark
+
+- Optimized portable c40e45b candidate completed three repetitions of all five
+  exact DID v0.7.0 lanes. All12 circuit artifact triples match the official tool;
+  every lane ran fresh deactivate execution, five assertions, genuine proof,
+  verification and two negative controls. Independent evidence review found
+  no blocker in identity, counts, partition policy or timing arithmetic.
+- Median total seconds: uncached6.857, cold9.325, warm-restored2.492,
+  partial-restored10.247, unavailable11.585. Warm local saving4.366s; negative
+  results in other lanes are retained. Source receipts/raw repetitions and
+  candidate provenance are docs/evidence/did-cache-benchmark*.json.
+- Timings include local compression/restore/helper work, exclude declared prior-job
+  seed manufacture, and disclose external shared-host compiler load. They exclude
+  actual GitHub network latency and do not establish whole-CI savings.
+
+## 2026-10-16 — final Passport benchmark and consumer pin
+
+- All15 selected Passport lanes passed:30fresh genuine proofs,30verifications,
+  60negative controls and270application assertions. Exact official artifacts,
+  paired-worker identity, helper partitions/restore/miss and timing arithmetic
+  passed independent review. Raw/audit receipts: docs/evidence/passport-benchmark*.json.
+- Median seconds: uncached3.934, cold6.499, warm4.338, partial6.811, unavailable6.537.
+  Warm is0.403s slower; preserve that negative result. Full52-circuit codegen and
+  hosted network transport remain separate. Shared-host load is disclosed.
+- Consumer flake example now pins reviewed local6c6490d with JSON3.1 support and
+  the Intel correction. All four shell derivations evaluate through a local Git
+  override; pin is not remotely fetchable until separately authorized publication.
+  docs/evidence/consumer-example-pin.json distinguishes evaluation from runtime.
+
+## 2026-10-16 — clean Linux recovery parameter isolation
+
+- Actual unprivileged Nix-free Linux recovery exposed a harness omission: direct
+  JSON3 worker proof checks did not receive the explicit parameter directory.
+  Developer-host checks had valid ambient parameters, but did not prove this
+  isolation premise. The worker calls now receive --params-dir explicitly.
+- Independent narrow review found no blocker. The actual installed9359068 Linux
+  candidate passed all three recovery profiles with no MIDNIGHT_PP, no mounts,
+  no Nix/build checkout, uid1000 and network disabled. Separate fresh-parameter
+  HTTPS proof/negative controls also passed all three profiles. Final receipts
+  and archive/source/notices audit are undergoing independent review.
+- Candidate source and the external recovery-harness SHA are recorded separately;
+  this test-only fix changes no runtime payload, key identity or cache behavior.
+
+## 2026-10-16 — final Linux ARM64 qualification
+
+- Candidate source9359068 passed unprivileged installed three-profile proof and
+  recovery controls in actual Nix-free Debian12/Python3.11.2, native ARM64 with
+  recorded Linux7.0.14-linuxkit kernel, no mounted checkout and no network.
+  Explicit parameter isolation passes without MIDNIGHT_PP. Separate fresh HTTPS
+  acquisition/proof/negative controls pass for each of the three profiles.
+- Independent review verified archive/checksums and782payload files,415native
+  Cargo package notices, runtime/source correspondence and all-launcher corruption
+  and loader-override refusals. Receipts: private-installer-linux-three-profile.json
+  and private-installer-linux-runtime-audit.json. No Intel/universal Linux claim.
+- Linux final assets and raw receipts are retained. Cleanup of exact owned
+  containers/volume is authorized after evidence copying; no global pruning.
+  macOS final build remains active and actual clean-Mac qualification is pending.
+
+- Post-review Linux cleanup removed only the three session-owned containers and
+  session-owned Nix volume, retaining all final assets and raw receipts. Disk free
+  increased14to20GiB; reused images and unrelated resources were untouched.
+  Exact cleanup inventory/digests are retained in the runtime audit receipt.
+
+## 2026-10-16 — final macOS candidate and clean-host handoff
+
+- The9359068 macOS compile succeeded, but packaging correctly refused after a
+  concurrent evidence commit changed HEAD. Retried packaging from clean signed
+  a65d3f0 using the completed cached build, keeping HEAD fixed until completion.
+- Latest relocated macOS26.2 ARM64 bundle passed installation and all3 genuine
+  proof/negative/reproducibility/recovery profiles with external Python, verified
+  temporary parameters outside checkout, and Nix/checkout reads denied. Final
+  receipt and independent audit: private-installer-darwin-a65d3f0-*.json. Review
+  verified777payload files,422Cargo notice identities and exact source companion.
+- Historical c40 benchmark receipts remain immutable and explicitly attributed to
+  that payload. New main CLI bytes differ; both workers are identical. No latest
+  payload timing claim is inferred from those measurements.
+- Refreshed the11-file clean-Mac consumer kit with a65 assets and the explicit-
+  parameter recovery harness; all checksums verify. Kit receipt records actual
+  minimum macOS26.2 and strict --require-nix-free --recovery command. A real Nix-
+  free Mac/VM is unavailable, so #11 and the overall goal remain open.
+- Removed the completed478MiB debug target and empty failed packaging directory;
+  preserved all final assets, c40 benchmark payload, exact inputs and evidence.
+  Linux-owned resources were already cleaned; no shared Nix/Docker pruning.
+
+## 2026-10-16 — clean-Mac VM staging resumed
+
+- Owner freed space; host capacity became69–75GiB free after initially still
+  reporting16GiB. Confirmed native Apple hypervisor support. The last actual
+  Nix-free Mac gate can now be attempted using a temporary local VM.
+- Started pinned vanilla Tahoe image download into a session-owned Tart home,
+  with automatic pruning disabled and a10GiB free-space floor. Official Tart
+  2.41.1 is hash-pinned and packaged through Nix; existing Forge/Nix pins remain
+  unchanged. No global VM tool/profile or host credential configuration changed.
+- Staged official PSF Python3.14.8 for the guest, verifying SHA and trusted Apple
+  installer signature; not installed on host. Independent VM-plan review found
+  no blocker. Record real guest Nix/Cargo/rustc absence, OS/mounts/Gatekeeper facts
+  and launch argv without host-directory sharing before running frozen a65 assets.
+- Preflight: docs/evidence/private-installer-macos-vm-preflight.json. Download is
+  active; no actual guest qualification result exists yet. Run network-denied
+  real proof/recovery and separate fresh HTTPS controls after boot, retain/review
+  receipts, then remove only the owned VM/cache. #11 remains open.
+
+## 2026-10-16 — clean-Mac qualification deferred by owner
+
+- Owner requested skipping this VM step for now and explicitly documenting what
+  was not tested. Stopped the queued continuation before interrupting the owned
+  download; confirmed both processes and the controller terminated. No guest
+  boot, installation, proof/recovery or fresh HTTPS tests ran.
+- Removed only the owned Tart home, checkpoint/interrupted cache and staged
+  Python package. Kept final candidates, consumer kit, scripts/logs and existing
+  evidence. Receipt: private-installer-macos-deferred.json.
+- Linux ARM64 clean Nix-free qualification and macOS ARM64 restricted-host
+  qualification remain valid with their original scopes. Actual Nix-free macOS,
+  Intel runtime and authenticated release download remain unqualified. The
+  clean-Mac task stays unchecked as a deferred publication gate; current local
+  work is complete under the revised owner scope. No publication or Compact edits.
+
+## 2026-10-16 — PR #20 hosted runner disk correction
+
+- PR #19 checks passed. PR #20's first run38866220648 exhausted runner disk;
+  its check annotation reports System.IO.IOException, No space left on device.
+  The runner could not retain ordinary job logs. This is not a proof failure.
+- Disable Cargo dev/test debug symbols and incremental compilation in CI only.
+  Use a fresh lean cache partition, including the isolated JSON3.1 lockfile, so
+  restores cannot reintroduce earlier large build trees. Preserve all checks
+  and the separately opt-in genuine-proof job. Compact is unchanged.
+
+## 2026-10-16 — CI correction passed and product feedback recorded
+
+- Signed d90377b passed hosted run38867598283, including all ordinary checks and
+  cache save. The owner account then merged PR19 and updated PR20 with main;
+  merge head d3ab2e8 has an identical file tree and passed run38869892304 in2m.
+  No merge was performed by this CI-fix session. Genuine-proof hosted job remains
+  explicitly opt-in; existing local proof evidence keeps its original scope.
+- Product feedback is assessed in docs/research/ci-pilot-review.md: prioritize
+  actual x86_64 Linux portable-runtime qualification, a thin JSON3.1 Action and
+  enrolled-consumer hosted cache-transfer measurements. Preserve legacy profiles;
+  park relay/hosting/provider service expansion. A two-week trial has not started
+  and no design partner has been claimed. Linked Claude audit is sign-in gated;
+  detailed findings await accessible text. Compact remains unchanged.

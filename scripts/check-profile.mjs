@@ -38,3 +38,13 @@ assert.equal(/^version = "([^"]+)"/m.exec(readFileSync('workers/zkir3/Cargo.toml
 assert.equal(JSON.parse(readFileSync('docs/http/openapi.json','utf8')).info.version,product);
 assert.ok(readFileSync('compose.yaml','utf8').includes('midnight-zkir-forge:'+product));
 console.log('Calendar product versions: OK');
+
+const modern=readFileSync('workers/zkir31/Cargo.lock','utf8').split('[[package]]').slice(1).map(block=>({name:/^name = "([^"]+)"/m.exec(block)?.[1],version:/^version = "([^"]+)"/m.exec(block)?.[1],source:/^source = "([^"]+)"/m.exec(block)?.[1]}));
+const v31={'midnight-zkir':'3.1.0-rc.1','midnight-transient-crypto':'3.0.0','midnight-base-crypto':'1.1.0','midnight-serialize':'1.2.0','midnight-proofs':'0.8.2','midnight-circuits':'7.2.4','midnight-curves':'0.3.1','midnight-zk-stdlib':'2.3.5'};
+for(const [name,version] of Object.entries(v31)){
+ const matches=modern.filter(x=>x.name===name);assert.equal(matches.length,1,name);assert.equal(matches[0].version,version,name);
+ if(name==='midnight-zkir')assert.equal(matches[0].source,'git+https://github.com/midnightntwrk/midnight-zkir?rev=e82d81d25aabcc5f5092e2bd559083487f577914#e82d81d25aabcc5f5092e2bd559083487f577914');
+ else if(git.has(name))assert.equal(matches[0].source,'git+https://github.com/midnightntwrk/midnight-ledger?rev=9a8777c4d035fc7f38ae286bcf5f8656668efd9f#9a8777c4d035fc7f38ae286bcf5f8656668efd9f');
+}
+assert.equal(modern.find(x=>x.name==='midnight-zkir-forge-zkir31-worker').version,product);
+console.log('Isolated Compact0.35 JSON3.1 profile: OK');

@@ -211,3 +211,18 @@ This is not a Midnight graph upgrade or a universal runtime claim. Apply the sam
 selection in the consumer example and evaluate all package/worker/shell outputs.
 A future upstream Intel support change requires an explicit policy/pin amendment;
 never hide evaluation failure behind an advertised unsupported output.
+
+
+## Linux production and current profile set — issue #11
+
+Bundle Nix-built ELF payloads with their complete inventoried loader/library
+closure; Python launchers verify payload/runtime hashes and invoke the bundled
+loader with an explicit relative library path/cache disabled. Default worker
+routing points to matched sibling launchers without overriding an explicit caller
+choice. Validate in an actual no-Nix Linux runtime, including runtime tamper refusal.
+Pair main CLI, CI helper,3.0 and newly qualified3.1 workers; preserve legacy bundle
+installation compatibility, but never confuse optional historical absence with a
+complete current-profile producer. Accompany redistribution notices with exact
+runtime corresponding-source archives and locked build recipes/patches where
+required. Clean-host and authenticated-download evidence remain distinct; do not
+publish to manufacture a test release under the current no-publication instruction.

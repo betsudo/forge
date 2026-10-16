@@ -129,6 +129,7 @@ pub async fn serve(config: Config) -> Result<Value> {
     std::io::Write::write_all(&mut probe, b"ready")?;
     probe.as_file().sync_all()?;
     zkir3::call("profile", &[], None, false, None, None)?;
+    crate::zkir31::call("profile", &[], None, false, None, None)?;
     let listener = tokio::net::TcpListener::bind(config.listen).await?;
     eprintln!("Forge HTTP listening on {}", listener.local_addr()?);
     let state = Arc::new(Service {
@@ -228,6 +229,7 @@ fn selected(
         None => None,
         Some("ledger8-v2") => Some(ProfileSelector::Ledger8V2),
         Some("zkir3") => Some(ProfileSelector::Zkir3),
+        Some("zkir31") => Some(ProfileSelector::Zkir31),
         _ => return Err(bad("unknown_profile")),
     };
     if requested.is_some() && configured.is_some() && requested != configured {
@@ -359,8 +361,16 @@ async fn materialize(
         .await
 }
 async fn profiles(State(state): State<Shared>) -> std::result::Result<Json<Value>, ApiError> {
-    state.work(|_,_| { let (v3,_)=zkir3::call("profile",&[],None,false,None,None)?; Ok(Json(json!({"schema":1,"profiles":[{"selector":"ledger8-v2","profile":backend::PROFILE,"source_revision":backend::LEDGER_REV,"format":"midnight-zkir-v2-json"},{"selector":"zkir3","profile":v3["profile"],"source_revision":v3["source_revision"],"format":v3["format"],"json_versions":["3.0"]}]}))) }).await
+    state.work(|_,_| {
+      let mut profiles = vec![json!({"selector":"ledger8-v2","profile":backend::PROFILE,"source_revision":backend::LEDGER_REV,"format":"midnight-zkir-v2-json"})];
+      for (selector,spec) in [("zkir3",&zkir3::SPEC),("zkir31",&crate::zkir31::SPEC)] {
+        spec.call("profile",&[],None,false,None,None)?;
+        profiles.push(json!({"selector":selector,"profile":spec.profile,"source_revision":spec.revision,"ledger_revision":spec.ledger_revision,"format":spec.format,"json_versions":[format!("3.{}",spec.json_minor)]}));
+      }
+      Ok(Json(json!({"schema":1,"profiles":profiles})))
+    }).await
 }
+
 fn redact_paths(value: &mut Value) {
     match value {
         Value::Object(map) => {
@@ -391,6 +401,7 @@ async fn ready(State(state): State<Shared>) -> std::result::Result<Json<Value>, 
         .work(|_, store| {
             store.db.query_row("SELECT 1", [], |r| r.get::<_, u8>(0))?;
             zkir3::call("profile", &[], None, false, None, None)?;
+            crate::zkir31::call("profile", &[], None, false, None, None)?;
             let probe = tempfile::NamedTempFile::new_in(store.root.join("staging"))?;
             probe.as_file().sync_all()?;
             Ok(Json(

@@ -11,6 +11,7 @@ Nix-owned toolchain. Default store: `~/.midnight-zkir-forge`.
 | --- | --- | --- |
 | `ledger8-v2` | 2.0 | Ledger8 8.1.3, ZKIR 2.1.1, commit `b5d3e965…` |
 | `zkir3` | 3.0 | Consumer-pinned ZKIR 3.0.0-rc.1, commit `3a7ae036…`, `ir-source[v3-generic]` |
+| `zkir31` | 3.1 | Compact 0.35.0 ZKIR 3.1.0-rc.1, ZKIR commit `e82d81d2…`, ledger commit `9a8777c4…` |
 
 Input format is detected from exact bytes; `--profile` asserts the expected
 backend and rejects mismatches. Use `profile` for the default v2 descriptor and
@@ -22,8 +23,12 @@ The v3 source is pinned to
 [3a7ae0361d03e6eed4fc91e31f6600f334f605d5](https://github.com/midnightntwrk/midnight-ledger/tree/3a7ae0361d03e6eed4fc91e31f6600f334f605d5),
 matching the inspected local Compact v3 tool configuration. It is **not** the
 same binary format as the v3 RC bundled with ledger8 8.1.3, despite the same
-crate version label. It also does not support JSON 3.1 or the newer split
-ZKIR default dependency graph. Check a consumer's exact pin and serialization;
+crate version label. JSON 3.1 uses the separately pinned `zkir31` worker with
+`verifier-key[v7]`; the older profiles retain `verifier-key[v6]`. The new profile
+is qualified against two exact Passport account circuits; full benchmark results
+and installation qualification are tracked separately in `docs/research/passport-benchmark.md`.
+The shared installed CLI may predate this source: inspect its `profile` before use.
+Check a consumer's exact pin and serialization;
 no ledger9 transaction/network qualification is implied.
 
 ```sh

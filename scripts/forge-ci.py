@@ -120,7 +120,9 @@ def restore(args):
 
 def _scope(manifest,planned,expected_profile):
     require(manifest['producer']['build_fingerprint']==planned['tool']['root']['build_fingerprint'],'snapshot producer does not match key')
-    if planned['selector']=='zkir3':require(manifest['producer']['worker']==planned['tool']['selected']['worker'],'snapshot worker does not match key')
+    if planned['selector'] in ('zkir3','zkir31'):
+        field='worker31' if planned['selector']=='zkir31' else 'worker'
+        require(manifest['producer'].get(field)==planned['tool']['selected']['worker'],'snapshot worker does not match key')
     require(manifest['partition']==planned['partition'],'snapshot partition does not match key')
     # Scope comes from Forge's validated summary, not this unsigned declaration.
     # The snapshot command receipt is verified below at preparation time.
@@ -151,7 +153,7 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--binary',type=Path,default=Path.home()/'.local/bin/midnight-zkir-forge')
     subs=parser.add_subparsers(dest='command',required=True)
-    p=subs.add_parser('key');p.add_argument('--workspace',type=Path,required=True);p.add_argument('--params-dir',type=Path,required=True);p.add_argument('--parameter',action='append',required=True);p.add_argument('--input',action='append',required=True);p.add_argument('--profile',choices=['ledger8-v2','zkir3'],required=True);p.add_argument('--workload',required=True);p.add_argument('--generation',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--github-output',type=Path)
+    p=subs.add_parser('key');p.add_argument('--workspace',type=Path,required=True);p.add_argument('--params-dir',type=Path,required=True);p.add_argument('--parameter',action='append',required=True);p.add_argument('--input',action='append',required=True);p.add_argument('--profile',choices=['ledger8-v2','zkir3','zkir31'],required=True);p.add_argument('--workload',required=True);p.add_argument('--generation',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--github-output',type=Path)
     for name in ('baseline','report','restore','prepare-save'):
         p=subs.add_parser(name);p.add_argument('--key',type=Path,required=True);p.add_argument('--cache-dir',type=Path,required=True)
         if name in ('report','prepare-save'):p.add_argument('--baseline',type=Path,required=True)

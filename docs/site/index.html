@@ -224,10 +224,11 @@ run only when materialization needs new keys.</p>
 <code>3a7ae036…</code>
 </td>
 </tr>
+<tr><td><code>zkir31</code></td><td>3.1</td><td>Compact 0.35.0 · ZKIR 3.1.0-rc.1<br><code>e82d81d2…</code> / ledger <code>9a8777c4…</code></td></tr>
 </tbody>
 </table>
 </div>
-<p>The v3 worker is separately compiled and locked. It matches the specific consumer pin below, not every backend with the same crate version. JSON 3.1, the newer split ZKIR graph and ledger9 transaction support are outside this qualification.</p>
+<p>The v3 workers are separately compiled and locked. Each matches an exact consumer backend. JSON 3.1 uses <code>zkir31</code> with ZKIR <code>e82d81d2…</code>, ledger <code>9a8777c4…</code> and verifier-key[v7]; the older profiles retain verifier-key[v6]. Inspect the installed CLI’s <code>profile</code> before use. Ledger9 transaction/network support remains deferred.</p>
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>

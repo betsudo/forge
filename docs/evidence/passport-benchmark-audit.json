@@ -1,0 +1,121 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "raw_receipt": {
+    "path": "docs/evidence/passport-benchmark.json",
+    "sha256": "7b5366cff59a972c601917f0df706fdfc77dbdf911ed4d2d8c65d30f83dadde8",
+    "unchanged_copy_of_measured_output": true
+  },
+  "build": {
+    "source_commit": "c40e45b0647ad9caf754a2d5d78340d37046434d",
+    "source_gpg_signature_verified": true,
+    "source_dco_and_ai_trailers_verified": true,
+    "mode": "Nix optimized release, locally relocated macOS ARM64 candidate payload",
+    "candidate_archive_sha256": "19ef84ec14deb93a9729b97f5bf7747807a03c1327d33349ecdd40a87eea8e37",
+    "candidate_target": "aarch64-apple-darwin",
+    "candidate_manifest_sha256": "7048006fad859caed755ff6987237d1e806543184bddf815c525b150bfea6293",
+    "binary_hashes_match_candidate_inventory": true,
+    "ci_helper_sha256": "321e29e5e59d4454bbfaf4e1ca9122f07d08a0eb9a2b08692c55a26ad3b4e9b4",
+    "same_helper_bytes_as_candidate": true,
+    "harness_sha256": "8c5d061d128fd1a13400c1a774cbd611a450612bf4a537b1d8b5d594d4ff944e",
+    "later_producer_only_fix": "6c649; measured Rust payload remains c40e45b"
+  },
+  "counts": {
+    "proofs": 30,
+    "verifications": 30,
+    "negative_controls": 60,
+    "state_transcript_assertions": 270
+  },
+  "coverage": {
+    "repetitions": 3,
+    "lanes": [
+      "uncached",
+      "cold",
+      "warm-restored",
+      "partial-restored",
+      "unavailable"
+    ],
+    "selected_circuits": [
+      "deposit_unshielded",
+      "activate_initial_device_with_jubjub"
+    ],
+    "all_52_codegen_hashes_verified": true,
+    "warm_generation_ms_delta": 0,
+    "partial_hits": [
+      true,
+      false
+    ],
+    "availability_miss": "actual CI helper checked absent local snapshot; not a network or authentication outage",
+    "partition": "fce19b3db301eb182740a271748f95c7e31a2833890f0e1e39de72c172537a82"
+  },
+  "measurement_conditions": {
+    "host": "shared developer macOS ARM64 host",
+    "uncontrolled_external_workload": "existing trust-registry Compact compilation remained active and untouched",
+    "owned_overlapping_benchmarks": "none; root/Linux held heavy qualification during Passport timing",
+    "codegen": "earlier3repeats under shared build load, not isolatedCI",
+    "scope": "Selected2-circuit artifact/proof workload; full52-key generation, localnet, hostedCI/network transport excluded"
+  },
+  "median_phase_ms": {
+    "uncached": {
+      "planning_ms": 0.0,
+      "restore_ms": 0.0,
+      "key_prepare_ms": 1636.8373750010505,
+      "proof_process_ms": 1920.2559989644215,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0
+    },
+    "cold": {
+      "planning_ms": 161.47133300546557,
+      "restore_ms": 0.0,
+      "key_prepare_ms": 3267.4467919860035,
+      "proof_process_ms": 1926.3356249430217,
+      "snapshot_ms": 385.71574998786673,
+      "compression_ms": 319.28533397149295
+    },
+    "warm-restored": {
+      "planning_ms": 162.90033399127424,
+      "restore_ms": 609.8669589846395,
+      "key_prepare_ms": 1118.456249940209,
+      "proof_process_ms": 1926.9885829999112,
+      "snapshot_ms": 0.0,
+      "compression_ms": 0.0
+    },
+    "partial-restored": {
+      "planning_ms": 165.47520901076496,
+      "restore_ms": 327.47041701804847,
+      "key_prepare_ms": 3016.0872080014087,
+      "proof_process_ms": 1871.4614569908008,
+      "snapshot_ms": 362.0497499941848,
+      "compression_ms": 298.81079198094085
+    },
+    "unavailable": {
+      "planning_ms": 159.5324999652803,
+      "restore_ms": 159.33662501629442,
+      "key_prepare_ms": 3240.794666984584,
+      "proof_process_ms": 1887.4542079865932,
+      "snapshot_ms": 364.7129579912871,
+      "compression_ms": 301.563500019256
+    }
+  },
+  "net_warm_saving_ms": -403.2844169996679,
+  "net_warm_saving_percent": -10.2503575516141,
+  "conclusion": "No net saving for this selected workload: warm restored is slower after real local transport/helper overhead. This is not a full Passport CI forecast.",
+  "cleanup": {
+    "measured_stores_snapshots_preimages_dependencies_removed": true,
+    "only_current_tools_retained_until_root_final_acceptance": true
+  },
+  "independent_review": {
+    "reviewer": "linux_runtime_review agent",
+    "reported_by": "root after independent receipt audit",
+    "status": "no blockers",
+    "scope": [
+      "15 rows and proof/assertion counts",
+      "official artifact hashes",
+      "actual helper partition and cache hit accounting",
+      "paired worker identity",
+      "partial seed timing arithmetic",
+      "harness/codegen hashes",
+      "owned cleanup"
+    ]
+  }
+}

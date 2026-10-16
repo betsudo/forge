@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parent.parent
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--binary', type=Path, required=True)
 parser.add_argument('--real', action='store_true')
+parser.add_argument('--include-zkir31', action='store_true')
 parser.add_argument('--params-dir', type=Path, default=Path(os.environ.get(
     'MIDNIGHT_PP', str(Path.home() / '.cache/midnight/zk-params'))))
 args = parser.parse_args()
@@ -59,7 +60,9 @@ with tempfile.TemporaryDirectory(prefix='forge-recovery-') as directory:
 
     profiles = []
     if args.real:
-        for selector, fixture in [('ledger8-v2', 'assert.zkir'), ('zkir3', 'assert-v3.zkir')]:
+        selected=[('ledger8-v2','assert.zkir'),('zkir3','assert-v3.zkir')]
+        if args.include_zkir31:selected.append(('zkir31','assert-v31.zkir'))
+        for selector, fixture in selected:
             store = temp / selector
             bundle = cli(store, '--profile', selector, 'import', ROOT / 'fixtures' / fixture,
                          '--name', 'proof')['bundle_id']
@@ -141,11 +144,12 @@ with tempfile.TemporaryDirectory(prefix='forge-recovery-') as directory:
             rebuilt = cli(store, *ensure)
             assert rebuilt['cache']['hit'] and rebuilt['artifact_set_id'] == identity
             if selector == 'ledger8-v2':
-                proof = invoke([ROOT / 'target/debug/examples/qualify-http-fixture', export])
+                proof = invoke([binary, '--params-dir', args.params_dir, 'qualify-export', export])
             else:
-                worker = Path(os.environ.get('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER',
-                                             str(binary.parent / 'midnight-zkir-forge-zkir3-worker')))
-                proof = invoke([worker, 'qualify-export', '--output', export, '--circuit-name', 'proof'])
+                variable='MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER' if selector=='zkir31' else 'MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER'
+                name='midnight-zkir-forge-zkir31-worker' if selector=='zkir31' else 'midnight-zkir-forge-zkir3-worker'
+                worker = Path(os.environ.get(variable,str(binary.parent/name)))
+                proof = invoke([worker, '--params-dir', args.params_dir, 'qualify-export', '--output', export, '--circuit-name', 'proof'])
             assert all(proof[name] for name in (
                 'valid_proof_verified', 'invalid_statement_rejected', 'corrupt_proof_rejected'))
             profiles.append({'profile': selector, 'accounting_failure_rollback': True,
