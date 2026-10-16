@@ -478,3 +478,27 @@
 - Independent parent identity/concurrency review found and resolved the separate
   repository revision issue. No further blocking finding in the reviewed Rust paths.
   No Compact/other checkout edits, publication or shared CLI replacement.
+
+
+## 2026-10-16 — portable producer and benchmark qualification follow-up
+
+- Linux relocation bundles the exact ELF loader/library closure, verifies its bytes
+  before execution and refuses inherited loader overrides after trusted Python
+  startup. Runtime-source attribution checks canonical exact Nix output paths and
+  source digests; alternate-store, dotted-path and symlink controls pass.
+- Common source collector supplies full upstream runtime sources, locked Nixpkgs
+  recipes/patches and exact Forge source bundle. macOS uses Apple's libiconv BSD/APSL
+  notices; it is not attributed as GNU LGPL libiconv. Component receipts are
+  docs/evidence/linux-runtime-regression.json and darwin-runtime-source-audit.json.
+- Cargo collector authenticates registry archives, exact Git revisions and pinned
+  missing-license supplements; preserves Rust standard-library notices. Independent
+  review fixes distinguish actual license files from attribution-only NOTICE and
+  include nested notices for Git-root packages. Eight offline refusal/coverage
+  controls pass. Final per-candidate notice inventories remain producer output.
+- Producer freezes committed packaging helpers before its Nix build. Installer
+  e2e covers optional-worker inventory refusal, upgrade and legacy rollback. HTTP
+  downloaded artifacts prove and reject invalid/corrupt proofs for all three profiles.
+- Benchmark runners now invoke the actual helper for unavailable snapshots and
+  include its elapsed time. Passport explicitly pairs generation/proof workers.
+  Independent benchmark review found no other blocking timing/control issue.
+  Final optimized-binary runs and clean-host installed receipts remain pending.

@@ -647,7 +647,7 @@
         },
         "requestBody": {
           "required": true,
-          "description": "Exact ZKIR JSON bytes; maximum 16777216 bytes. Not an archive, manifest or server-local path. JSON3.0 only for the exact v3 pin.",
+          "description": "Exact ZKIR JSON bytes; maximum 16777216 bytes. Not an archive, manifest or server-local path. JSON3.0 and JSON3.1 route to their separately pinned workers; no format conversion.",
           "content": {
             "application/json": {
               "schema": {
@@ -1800,7 +1800,8 @@
           "input_format": {
             "enum": [
               "midnight-zkir-v2-json",
-              "midnight-zkir-v3-json"
+              "midnight-zkir-v3-json",
+              "midnight-zkir-v3.1-json"
             ]
           },
           "input_version": {
@@ -1888,7 +1889,8 @@
               "format": {
                 "enum": [
                   "midnight-zkir-v2-json",
-                  "midnight-zkir-v3-json"
+                  "midnight-zkir-v3-json",
+              "midnight-zkir-v3.1-json"
                 ]
               },
               "worker": {

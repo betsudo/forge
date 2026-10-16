@@ -54,7 +54,7 @@
           inherit version;
           src = pkgs.lib.fileset.toSource {
             root = ./.;
-            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ./workers/zkir31 ./benchmarks ./scripts/forge-ci.py ];
+            fileset = pkgs.lib.fileset.unions [ ./Cargo.toml ./Cargo.lock ./build.rs ./flake.lock ./src ./tests ./examples ./fixtures ./docs/http/openapi.json ./workers/zkir3 ./workers/zkir31 ./benchmarks/did/prove.rs ./scripts/forge-ci.py ];
           };
           cargoLock = {
             lockFile = ./Cargo.lock;

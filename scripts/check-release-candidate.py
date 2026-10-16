@@ -22,13 +22,15 @@ parser.add_argument('--directory', type=Path, required=True)
 parser.add_argument('--runtime-python', type=Path, default=Path(sys.executable))
 parser.add_argument('--params-dir', type=Path, default=Path.home()/'.cache/midnight/zk-params')
 parser.add_argument('--deny-nix', action='store_true')
+parser.add_argument('--recovery', action='store_true')
 args = parser.parse_args()
-archives = list(args.directory.glob('midnight-zkir-forge-*.tar.gz'))
+archives = [p for p in args.directory.glob('midnight-zkir-forge-*.tar.gz') if not p.name.endswith('-runtime-sources.tar.gz')]
 assert len(archives) == 1, 'one native candidate required'
 archive = archives[0].resolve()
 with tarfile.open(archive, 'r:gz') as tar:
-    manifests = [entry for entry in tar if entry.name.endswith('/manifest.json')]
-    assert len(manifests) == 1 and manifests[0].size < 1024**2
+    expected_manifest=archive.name.removesuffix('.tar.gz')+'/manifest.json'
+    manifests = [entry for entry in tar if entry.name == expected_manifest]
+    assert len(manifests) == 1 and manifests[0].isfile() and manifests[0].size < 1024**2
     manifest = json.load(tar.extractfile(manifests[0]))
 with tempfile.TemporaryDirectory(prefix='forge-native-install-') as directory:
     temp = Path(directory).resolve()
@@ -55,7 +57,7 @@ else:sys.exit(2)
 '''.replace('COMMIT', repr(manifest['source_commit'])).replace('ASSETS', repr([archive.name,'SHA256SUMS'])))
     gh.chmod(0o755)
     env = dict(os.environ, PATH=os.pathsep.join([str(tools),str(runtime.parent),'/opt/homebrew/bin','/usr/bin','/bin']))
-    env.pop('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER', None)
+    for variable in ('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER','MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER'):env.pop(variable,None)
     sandbox = []
     if args.deny_nix:
         policy = temp/'runtime.sb'
@@ -64,7 +66,7 @@ else:sys.exit(2)
         sandbox = ['/usr/bin/sandbox-exec','-f',str(policy)]
     def run(*command):
         result = subprocess.run([*sandbox,*map(str,command)],cwd=temp,env=env,
-                                capture_output=True,text=True,timeout=180)
+                                capture_output=True,text=True,timeout=600)
         assert result.returncode == 0, (result.stdout,result.stderr)
         return result.stdout
     prefix = temp/'prefix'
@@ -72,11 +74,20 @@ else:sys.exit(2)
     cli = prefix/'bin/midnight-zkir-forge'
     assert run(cli,'--version').strip() == 'midnight-zkir-forge '+manifest['version']
     profiles = []
-    for profile in ['ledger8-v2','zkir3']:
+    selectors=['ledger8-v2','zkir3']+(['zkir31'] if 'v31' in manifest['profiles'] else [])
+    for profile in selectors:
         result = json.loads(run(cli,'--cache-dir',temp/('cache-'+profile),'--params-dir',args.params_dir,'--profile',profile,'qualify'))
         profiles.append({'profile':profile,'qualification':result})
     run(prefix/'bin/midnight-zkir-forge-ci','--help')
+    recovery=None
+    if args.recovery:
+        checks=temp/'checks';(checks/'scripts').mkdir(parents=True)
+        shutil.copyfile(ROOT/'scripts/check-recovery.py',checks/'scripts/check-recovery.py')
+        shutil.copytree(ROOT/'fixtures',checks/'fixtures')
+        command=[runtime,checks/'scripts/check-recovery.py','--binary',cli,'--params-dir',args.params_dir,'--real']
+        if 'v31' in manifest['profiles']:command.append('--include-zkir31')
+        recovery=json.loads(run(*command))
     print(json.dumps({'schema':1,'candidate_sha256':hashlib.file_digest(archive.open('rb'),'sha256').hexdigest(),
                       'source_commit':manifest['source_commit'],'version':manifest['version'],
                       'target':manifest['target'],'fake_gh_install':True,'runtime_python_uses_nix':str(runtime).startswith('/nix/'),'runtime_denies_nix_and_checkout':args.deny_nix,
-                      'profiles':profiles,'scope':'real relocated native bundle and isolated prefix; Python origin reported separately; not a clean-host, Linux or real GitHub download qualification'}))
+                      'profiles':profiles,'recovery':recovery,'scope':'real relocated native bundle and isolated prefix; Python origin reported separately; not a clean-host, Linux or real GitHub download qualification'}))

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "APSL-1.0.txt": {
+    "source": "https://raw.githubusercontent.com/spdx/license-list-data/31ba1a50e5397e00a304dbadc76531740e89ee48/text/APSL-1.0.txt",
+    "sha256": "54702bc17c8ac3601637577c8f92e5992be79110df72c7ff6fe20d75d4df2745",
+    "purpose": "complete APSL1.0 text referenced by Apple libiconv/libcharset source headers; keep per-file original notices too"
+  }
+}
