@@ -64,6 +64,10 @@ def main():
         qualified = json.loads(qualification.read_text())
         assert qualified['status'] == 'passed'
         qualification_hash = sha(qualification)
+        # Owned stand-in for a prior killed hook: sibling staging must never enter compiler output.
+        orphan = work/'.forge-keygen-orphan'
+        orphan.mkdir(mode=0o700)
+        (orphan/'incomplete-private-key').write_bytes(b'orphan fixture')
         cache = work / 'adapter-cache'
         provider_root = work / 'views'
         provider_root.mkdir()
@@ -139,6 +143,8 @@ def main():
                     assert published['view_id'] == manifest_hash
                     assert published['reused'] is (label != 'off')
                     assert inventory(provider_root / manifest_hash) == current
+                    audit=json.loads(run([binary,'verify-view',provider_root/manifest_hash,'--manifest-sha256',manifest_hash],env=environment))
+                    assert audit['verified'] is True and audit['view_id']==manifest_hash
                     prepared = json.loads(run([binary, '--profile', 'zkir31', '--cache-dir',
                         work / ('bare-cache-' + label), '--params-dir', params, 'prepare',
                         bundle / 'zkir/increment.zkir', '--name', 'increment'], env=environment))
@@ -212,7 +218,8 @@ def main():
                 adapter_controls = ['corrupt-private-export-refused-no-final-manifest',
                     'restored-private-export-retry-preserves-original-bundle',
                     'wrong-receipt-preflight-preserves-existing-output',
-                    'modified-source-unqualified-zkir-refused-no-final-manifest']
+                    'modified-source-unqualified-zkir-refused-no-final-manifest',
+                    'orphan-sibling-staging-preserves-real-compiler-inventory']
                 route = '/views/' + manifest_hash + '/keys/increment.prover'
                 status, headers, body = request(route)
                 original = (provider_root / manifest_hash / 'keys/increment.prover').read_bytes()
@@ -232,7 +239,9 @@ def main():
                     for method, conditional in [('HEAD', {}), ('GET', {'If-None-Match': headers['ETag']}),
                                                 ('GET', {'Range': 'bytes=0-7'})]:
                         assert request(route, method, conditional)[0] == 409, 'corruption bypassed verification'
-                    assert request('/views/' + manifest_hash + '/compiler/contract-manifest.json')[0] == 409
+                    assert request('/views/' + manifest_hash + '/compiler/contract-manifest.json')[0] == 200
+                    audit = subprocess.run([str(binary), 'verify-view', str(provider_root/manifest_hash), '--manifest-sha256', manifest_hash], capture_output=True, env=environment)
+                    assert audit.returncode != 0, 'full audit accepted corrupt sibling'
                 finally:
                     corrupt_file.write_bytes(original)
                 assert request(route)[0] == 200
@@ -241,7 +250,7 @@ def main():
                     'api_controls': ['authenticated-read', 'head', 'conditional', 'range',
                         'authentication-before-missing-lookup', 'undeclared-file', 'read-only-route',
                         'corrupt-head', 'corrupt-conditional', 'corrupt-range',
-                        'corrupt-sibling-refuses-manifest', 'restored-bytes-recover'],
+                        'corrupt-sibling-preserves-unrelated-read-full-audit-refuses', 'restored-bytes-recover'],
                     'harness_sha256': {str(path.relative_to(ROOT)): sha(path) for path in [
                         Path(__file__).resolve(), ROOT / 'scripts/compiler-local.py', PROJECT / 'check.mjs']},
                     'scope': 'native macOS ARM64 minimal Compact0.35 JSON3.1 fixture; real CLI, local compiler wrapper, '

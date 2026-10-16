@@ -30,3 +30,8 @@ uses retrieved bytes. Tests cover malformed trees, metadata/runtime conflict,
 corruption even on HEAD/304/range, missing files, unauthorized reads, staged
 publication, same-ID collision and mutation after publication. Full provider
 behavior need not imply any particular circuit compiler/backend compatibility.
+
+PR12 read/recovery amendment: see `provider-read-recovery`. Ordinary reads verify
+pinned metadata/inventory and requested-file bytes, while full audits and all
+publication/reuse paths verify every file. A corrupt unrequested file can leave
+unrelated reads valid; dedicated read permits isolate cache admission.

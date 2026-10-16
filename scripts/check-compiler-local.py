@@ -9,6 +9,7 @@ from pathlib import Path
 import subprocess
 import sys
 import tempfile
+import time
 import unittest
 from unittest.mock import patch
 
@@ -222,6 +223,50 @@ class LocalAdapter(unittest.TestCase):
             self.assertFalse((Path(config['output'])/'compiler/contract-manifest.json').exists())
             self.hook(source,config)
             self.assertEqual((Path(config['output'])/'keys/proof.prover').read_bytes(),b'pk')
+
+    def test_killed_staging_stays_outside_output_and_retry_succeeds(self):
+        with fixture() as (work, source, config, mocked):
+            state = work/'child-state.json'
+            ready = work/'staging-ready'
+            state.write_text(json.dumps(dict(config=config,qualification=adapter.policy(None),
+                prepared=mocked.return_value,ready=str(ready),source=str(source))))
+            child_code = """
+import importlib.util,json,sys,time
+from pathlib import Path
+spec=importlib.util.spec_from_file_location('child_adapter',sys.argv[1])
+module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
+state=json.loads(Path(sys.argv[2]).read_text())
+module.policy=lambda args:state['qualification']
+module.command=lambda *args,**kwargs:state['prepared']
+def pause(a,b):
+    Path(state['ready']).write_text('staged')
+    time.sleep(30)
+module.os.replace=pause
+source=Path(state['source'])
+module.materialize(state['config'],['compile-many',str(source.parent),str(source.parent.parent/'keys')])
+"""
+            child=subprocess.Popen([sys.executable,'-c',child_code,str(ROOT/'scripts/compiler-local.py'),str(state)],
+                                   stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            try:
+                deadline=time.monotonic()+5
+                while not ready.exists() and child.poll() is None and time.monotonic()<deadline:
+                    time.sleep(.01)
+                self.assertTrue(ready.exists(),'child did not reach staged publication')
+                child.kill()
+                child.communicate(timeout=5)
+            finally:
+                if child.poll() is None:
+                    child.kill();child.communicate(timeout=5)
+            output=Path(config['output'])
+            self.assertEqual(list(output.glob('.forge-keygen-*')),[])
+            orphan=list(output.parent.glob('.forge-keygen-*'))
+            self.assertEqual(len(orphan),1)
+            self.assertEqual(orphan[0].stat().st_mode & 0o777,0o700)
+            self.assertFalse(source.with_suffix('.bzkir').exists())
+            self.hook(source,config)
+            self.assertEqual((output/'keys/proof.prover').read_bytes(),b'pk')
+            self.assertEqual(list(output.glob('.forge-keygen-*')),[])
+            self.assertEqual(list(output.parent.glob('.forge-keygen-*')),orphan)
 
     def test_duplicate_metadata_and_unsupported_paths(self):
         with tempfile.TemporaryDirectory() as directory:

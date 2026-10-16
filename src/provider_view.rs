@@ -266,22 +266,26 @@ fn verified_copy<W: Write>(root: &Path, path: &str, entry: &Entry, output: &mut 
     );
     Ok(())
 }
-/// Validate every declared byte before returning any requested representation.
+/// Verify pinned metadata/tree and the requested representation, without hashing siblings.
 pub fn read(root: &Path, id: &str, path: &str) -> Result<(File, String, u64)> {
     let entries = entries(root, id).context(crate::error::Kind::IntegrityError)?;
     let requested = entries.get(path).context(crate::error::Kind::NotFound)?;
     let mut output = tempfile::tempfile()?;
-    for (name, entry) in &entries {
-        if name == path {
-            verified_copy(root, name, entry, &mut output)
-                .context(crate::error::Kind::IntegrityError)?;
-        } else {
-            verified_copy(root, name, entry, &mut std::io::sink())
-                .context(crate::error::Kind::IntegrityError)?;
-        }
-    }
+    verified_copy(root, path, requested, &mut output)
+        .context(crate::error::Kind::IntegrityError)?;
     output.seek(SeekFrom::Start(0))?;
     Ok((output, requested.hash.clone(), requested.size))
+}
+/// Full integrity audit; never writes a reusable verification marker.
+pub fn verify(root: &Path, id: &str) -> Result<Value> {
+    let entries = entries(root, id).context(crate::error::Kind::IntegrityError)?;
+    let mut total = 0u64;
+    for (name, entry) in &entries {
+        verified_copy(root, name, entry, &mut std::io::sink())
+            .context(crate::error::Kind::IntegrityError)?;
+        total += entry.size;
+    }
+    Ok(json!({"schema":1,"view_id":id,"files":entries.len(),"bytes":total,"verified":true}))
 }
 pub fn publish(input: &Path, id: &str, root: &Path) -> Result<Value> {
     crate::domain::validate_id(id)?;
@@ -293,7 +297,7 @@ pub fn publish(input: &Path, id: &str, root: &Path) -> Result<Value> {
     let manifest = entries(input, id)?;
     let target = root.join(id);
     if fs::symlink_metadata(&target).is_ok() {
-        read(&target, id, MANIFEST)?;
+        verify(&target, id)?;
         return Ok(json!({"schema":1,"view_id":id,"path":target,"reused":true}));
     }
     let stage = tempfile::Builder::new()
@@ -311,7 +315,7 @@ pub fn publish(input: &Path, id: &str, root: &Path) -> Result<Value> {
     }
     // Re-inventory catches added/removed entries during publication; verify staging too.
     entries(input, id)?;
-    read(stage.path(), id, MANIFEST)?;
+    verify(stage.path(), id)?;
     for item in fs::read_dir(stage.path())? {
         let p = item?.path();
         if p.is_dir() {
@@ -321,7 +325,7 @@ pub fn publish(input: &Path, id: &str, root: &Path) -> Result<Value> {
     File::open(stage.path())?.sync_all()?;
     if let Err(error) = crate::filesystem::publish_directory(stage.path(), &target) {
         if target.exists() {
-            read(&target, id, MANIFEST)?;
+            verify(&target, id)?;
             return Ok(json!({"schema":1,"view_id":id,"path":target,"reused":true}));
         }
         return Err(error);

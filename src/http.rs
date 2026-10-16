@@ -50,8 +50,10 @@ struct Service {
     generation: Arc<Semaphore>,
     downloads: Arc<Semaphore>,
     uploads: Arc<Semaphore>,
+    provider_reads: Arc<Semaphore>,
 }
 type Shared = Arc<Service>;
+#[derive(Debug)]
 struct ApiError(StatusCode, &'static str);
 impl IntoResponse for ApiError {
     fn into_response(self) -> Response {
@@ -84,6 +86,26 @@ fn classify(error: anyhow::Error) -> ApiError {
     )
 }
 impl Service {
+    // The permit lives in the blocking task, then follows its verified response.
+    // Dropping a cancelled HTTP future must not free capacity while hashing runs.
+    async fn provider_work<T, F>(
+        self: &Arc<Self>,
+        task: F,
+    ) -> std::result::Result<(T, OwnedSemaphorePermit), ApiError>
+    where
+        T: Send + 'static,
+        F: FnOnce() -> Result<T> + Send + 'static,
+    {
+        let permit = self
+            .provider_reads
+            .clone()
+            .try_acquire_owned()
+            .map_err(|_| ApiError(StatusCode::TOO_MANY_REQUESTS, "provider_reads_busy"))?;
+        tokio::task::spawn_blocking(move || Ok((task()?, permit)))
+            .await
+            .map_err(|_| ApiError(StatusCode::INTERNAL_SERVER_ERROR, "worker_failed"))?
+            .map_err(classify)
+    }
     async fn work<T, F>(self: &Arc<Self>, task: F) -> std::result::Result<T, ApiError>
     where
         T: Send + 'static,
@@ -150,6 +172,7 @@ pub async fn serve(config: Config) -> Result<Value> {
         generation: Arc::new(Semaphore::new(1)),
         downloads: Arc::new(Semaphore::new(8)),
         uploads: Arc::new(Semaphore::new(2)),
+        provider_reads: Arc::new(Semaphore::new(2)),
     });
     let app = Router::new()
         .route(
@@ -596,11 +619,6 @@ async fn provider_file(
         .provider_root
         .clone()
         .ok_or(ApiError(StatusCode::NOT_FOUND, "not_found"))?;
-    let permit = state
-        .downloads
-        .clone()
-        .try_acquire_owned()
-        .map_err(|_| ApiError(StatusCode::TOO_MANY_REQUESTS, "downloads_busy"))?;
     let content_type = if path.ends_with(".json") || path.ends_with(".zkir") {
         "application/json"
     } else if path.ends_with(".js") {
@@ -608,8 +626,8 @@ async fn provider_file(
     } else {
         "application/octet-stream"
     };
-    let (file, digest, size) = state
-        .work(move |_, _| {
+    let ((file, digest, size), permit) = state
+        .provider_work(move || {
             let view = root.join(&id);
             if !view.exists() {
                 return Err(anyhow::anyhow!(crate::error::Kind::NotFound));
@@ -701,5 +719,90 @@ async fn shutdown() {
     #[cfg(not(unix))]
     {
         let _ = tokio::signal::ctrl_c().await;
+    }
+}
+
+#[cfg(test)]
+mod provider_admission_tests {
+    use super::*;
+    fn service(root: PathBuf) -> Arc<Service> {
+        Arc::new(Service {
+            config: Config {
+                root,
+                params_dir: None,
+                fetch_params: false,
+                profile: None,
+                listen: "127.0.0.1:0".parse().unwrap(),
+                token_file: None,
+                provider_root: None,
+            },
+            token: None,
+            work: Arc::new(Semaphore::new(8)),
+            generation: Arc::new(Semaphore::new(1)),
+            downloads: Arc::new(Semaphore::new(8)),
+            uploads: Arc::new(Semaphore::new(2)),
+            provider_reads: Arc::new(Semaphore::new(2)),
+        })
+    }
+    #[tokio::test]
+    async fn provider_and_cache_admission_are_independent() {
+        let root = tempfile::tempdir().unwrap();
+        let state = service(root.path().join("cache"));
+        let cache = state.work.clone().acquire_many_owned(8).await.unwrap();
+        let (_, first) = state.provider_work(|| Ok(())).await.unwrap();
+        let (_, second) = state.provider_work(|| Ok(())).await.unwrap();
+        assert!(
+            !state.config.root.exists(),
+            "provider reads opened a cache store"
+        );
+        assert_eq!(
+            state.provider_work(|| Ok(())).await.err().unwrap().0,
+            StatusCode::TOO_MANY_REQUESTS
+        );
+        drop(cache);
+        state.work(|_, store| store.stats()).await.unwrap();
+        drop((first, second));
+        assert_eq!(state.provider_reads.available_permits(), 2);
+    }
+    #[tokio::test(flavor = "multi_thread", worker_threads = 2)]
+    async fn cancellation_keeps_capacity_until_blocking_verification_stops() {
+        let root = tempfile::tempdir().unwrap();
+        let state = service(root.path().join("cache"));
+        let (started_tx, started_rx) = std::sync::mpsc::channel();
+        let (release_tx, release_rx) = std::sync::mpsc::channel();
+        let child_state = state.clone();
+        let request = tokio::spawn(async move {
+            child_state
+                .provider_work(move || {
+                    started_tx.send(()).unwrap();
+                    release_rx.recv_timeout(std::time::Duration::from_secs(5))?;
+                    Ok(())
+                })
+                .await
+        });
+        tokio::task::spawn_blocking(move || {
+            started_rx.recv_timeout(std::time::Duration::from_secs(5))
+        })
+        .await
+        .unwrap()
+        .unwrap();
+        request.abort();
+        assert!(request.await.unwrap_err().is_cancelled());
+        assert_eq!(state.provider_reads.available_permits(), 1);
+        let other = state.provider_reads.clone().acquire_owned().await.unwrap();
+        assert_eq!(
+            state.provider_work(|| Ok(())).await.err().unwrap().0,
+            StatusCode::TOO_MANY_REQUESTS
+        );
+        release_tx.send(()).unwrap();
+        let returned = tokio::time::timeout(
+            std::time::Duration::from_secs(5),
+            state.provider_reads.clone().acquire_owned(),
+        )
+        .await
+        .unwrap()
+        .unwrap();
+        drop((other, returned));
+        assert_eq!(state.provider_reads.available_permits(), 2);
     }
 }

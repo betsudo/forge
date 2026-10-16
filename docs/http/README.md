@@ -114,9 +114,14 @@ CLI stdin/stdout boundary, HTTP payload conventions and local/fetch provider rol
 An explicit `--provider-root` enables GET/HEAD `/views/{manifest_sha256}/{file}`.
 Publish complete compiler output locally with `publish-view`; the caller must
 supply the independently trusted SHA256 of its original compiler manifest.
-The service validates all inventory and metadata before conditional/range reads,
+The service validates inventory, pinned metadata and requested bytes before conditional/range reads,
 never generates keys on reads, and preserves authentication before lookup.
 Views are separate from cache exports and snapshots. See the
 [local adapter guide](../providers/local-adapter.md) and
 [metadata guarantee research](../research/compiler-metadata-guarantees.md).
 This initial route supports identity bytes and safe two-component paths.
+
+Provider reads use two dedicated verification/stream permits and do not open the
+cache database or consume cache-work admission. Full publish/reuse validation and
+`zkir-forge verify-view VIEW --manifest-sha256 HASH` detect any corrupted sibling.
+Ordinary reads validate the selected representation, not every sibling file.

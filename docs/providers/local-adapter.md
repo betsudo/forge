@@ -47,10 +47,29 @@ for trust boundaries, inventory bounds and exact source evidence. HTTP serves
 identity bytes; gzip test-fixture qualification does not establish compressed
 Forge HTTP support. Cloudflare and browser/TLS delivery remain deferred.
 
-Every view request currently verifies the whole bundle and copies the requested
-file to a temporary descriptor. This favors simple corruption detection over read
-throughput; measure large bundles before using this endpoint in CI. Authentication
-and admission limits apply, but this is not a public multi-tenant service.
+Each read verifies the independently pinned manifest and compiler metadata, the
+bounded exact tree inventory, and the complete requested file before returning
+GET/HEAD/304/range responses. It does not hash unrelated artifacts. Corrupt
+unrequested bytes can therefore leave an unrelated read valid; publication,
+existing-view reuse and explicit full audits still reject any corrupt file:
+
+```sh
+zkir-forge verify-view /absolute/views/MANIFEST_SHA256 \
+  --manifest-sha256 TRUSTED_MANIFEST_SHA256
+```
+
+No persistent verified marker is trusted. The requested file is copied into an
+anonymous verified snapshot to avoid verify/reopen races, including for ranges.
+A dedicated two-permit pool bounds provider verification/streaming independently
+of cache work; two maximum-size files can consume up to2GiB temporary space.
+This remains a single-owner service; large-file throughput needs measurement.
+
+Compiler staging uses private sibling directories outside output on the same
+filesystem. A killed hook may leave a private `.forge-keygen-*` sibling, but it
+cannot enter the compiler manifest or block a subsequent view. Remove only owned,
+inactive leftovers; no automatic wildcard cleanup runs. For old wrapper leftovers
+inside output, retry in a fresh owned output directory. Existing mountpoint output
+whose parent is on another filesystem is refused before compiler cleanup.
 
 For maintainers, reproduce the bounded real qualification locally (requires the
 exact official native macOS ARM64 compiler, verified parameters and pinned npm

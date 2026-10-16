@@ -28,3 +28,8 @@ Qualify off/cold/warm real compiler output, identical original compiler-manifest
 bytes and genuine SDK proof controls. Negative tests exercise wrong policy/tool/
 parameters, missing sources/symlink outputs, corrupt cache exports and interruption.
 Do not claim Linux or full Passport coverage from a native developer-host fixture.
+
+PR12 recovery amendment: private staging is a sibling of compiler output on the
+same filesystem. Killed-hook leftovers stay outside the final manifest inventory;
+no arbitrary prefix cleanup is performed. Cross-device output mountpoints refuse
+at preflight, and the hook rechecks the staging device before copying.

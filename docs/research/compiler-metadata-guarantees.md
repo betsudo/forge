@@ -38,8 +38,8 @@ roster; and requires compiler-commit equality when supplied by either document.
 4. Configure each SDK provider with that trusted `expectedManifestHash`, retain
    default integrity checking, and execute proofs, verification and assertions
    on cold and warm runs. Use a fresh provider for a new manifest identity.
-5. On HTTP reads verify the complete view before HEAD, conditional or range
-   handling; stream a verified private descriptor rather than reopening the path.
+5. On HTTP reads verify pinned manifest/metadata, bounded inventory and the
+   complete requested file before HEAD, conditional or range handling; stream a verified private descriptor rather than reopening the path.
    Authentication precedes lookup when configured. GET never generates keys.
 
 Preseeding compiler output before compilation fails because compilation removes
@@ -84,3 +84,10 @@ remain unqualified/deferred. Explicit provider roots are outside cache snapshots
 Final local API/adapter evidence: [native off/cold/warm receipt](../evidence/provider-view-adapter-local.json).
 It records complete output identities, actual SDK proof controls, cache statistics
 and corruption/refusal/recovery checks. Scope remains the exact native fixture.
+
+PR12 review refinement: reads no longer hash unrelated sibling artifacts. Full
+publication/reuse and `verify-view` audit all bytes. Thus a corrupt sibling can
+leave a manifest or other-file read valid, while requested-file corruption still
+refuses before serving. This is an explicit contract change, not a cached verified
+marker or a producer-authenticity claim. Provider IO has independent bounded
+admission; compiler staging is private and outside its final output tree.

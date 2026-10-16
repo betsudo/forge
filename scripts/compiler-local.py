@@ -138,9 +138,10 @@ def materialize(config, argv):
         require(sha(source) == source_hash, 'source changed during preparation')
     # Stage ALL private output copies before any publication. Per-file replacement
     # is atomic; compiler failure prevents a new completed manifest on errors.
-    keys_dir.mkdir(exist_ok=True)
-    with tempfile.TemporaryDirectory(prefix='.forge-keygen-', dir=output) as directory:
+    with tempfile.TemporaryDirectory(prefix='.forge-keygen-', dir=output.parent) as directory:
         staging = Path(directory)
+        require(staging.stat().st_dev == output.stat().st_dev, 'staging/output filesystem mismatch')
+        keys_dir.mkdir(exist_ok=True)
         staged = []
         for i, (exported, target, expected) in enumerate(plans):
             p = staging/str(i)
@@ -188,6 +189,8 @@ def main():
         if args.mode == 'off':
             return subprocess.run(invocation, env=environment).returncode
         args.binary = args.binary.absolute() if args.binary else None  # retain matched sibling worker links
+        if output.exists():
+            require(output.stat().st_dev == output.parent.stat().st_dev, 'output mountpoint cannot use sibling staging')
         policy(args)  # preflight before the compiler deletes/recreates output
         for protected in [args.compiler_dir, args.params_dir, args.qualification.resolve(), args.binary.resolve(),
                           (args.binary.parent/'midnight-zkir-forge-zkir31-worker').resolve()]:

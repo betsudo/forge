@@ -908,3 +908,31 @@
   Action/reporter, OpenSpec/docs/actionlint and commit/PR policy checks passed.
 - Shared installation and default store were not modified. PR12 will receive signed
   commits and exact-head CI checks. Compact remains unchanged; no merge/deployment.
+
+## 2026-10-17 — PR12 review fixes (#4/#6)
+
+- Provider reads now validate fresh pinned manifest/metadata and exact bounded
+  inventory, then hash/copy only the requested representation. Unrelated corrupt
+  bytes no longer block unrelated reads. Full `verify-view`, staging/publication,
+  existing-target reuse and concurrent-winner reuse still audit every byte; no
+  persistent verified marker exists. Requested HEAD/304/range checks remain strict.
+- Dedicated two-permit provider verification/stream admission avoids opening the
+  cache store or using cache-work permits. Cancellation retains a blocking task's
+  permit until it stops, then the response owns it through streaming. Two1GiB
+  snapshots bound provider spool use; ranges still verify the whole requested file.
+- Explicit publish cache roots now work without HOME; verify-view requires no cache
+  root. Compiler staging is private and outside its final output, with same-device
+  checks before copying and mountpoint preflight before compiler cleanup. SIGKILL
+  may leave owned private sibling staging, but retry cannot include it in manifests.
+  Old inside-output leftovers require a fresh owned output, not wildcard deletion.
+- Independent identity/concurrency review passed, including all full-publication
+  paths and cancellation ownership. Rust tests include13provider-view cases and
+  2admission/cancellation cases;13adapter cases include a killed child after staging,
+  exact private permissions, no inside-output stage and successful retry. Local
+  Rust/Clippy/format, CLI/HTTP/recovery/snapshot, OpenSpec/docs/actionlint checks pass.
+- Updated real SDK harness to preserve unrelated reads on sibling corruption while
+  explicit full audit refuses, and to compile/prove with a leftover sibling stage.
+  Fresh qualification and exact-head hosted results are recorded in PR12 after run.
+- Created follow-ups in2026.10.0: #13duplicate Cargo binary compilation,
+  #14configurable keygen timeout, #15broader exact consumer qualification. No
+  automatic unqualified-circuit fallback, Compact edits, cloud work or merge.

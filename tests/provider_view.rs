@@ -52,14 +52,16 @@ fn preserves_original_bytes_and_reuses_only_verified_views() {
     );
     fs::write(root.path().join(&id).join("keys/test.verifier"), [4]).unwrap();
     assert!(provider_view::publish(source.path(), &id, root.path()).is_err());
+    assert!(provider_view::verify(&root.path().join(&id), &id).is_err());
     assert!(
         provider_view::read(
             &root.path().join(&id),
             &id,
             "compiler/contract-manifest.json"
         )
-        .is_err()
+        .is_ok()
     );
+    assert!(provider_view::read(&root.path().join(&id), &id, "keys/test.verifier").is_err());
 }
 #[test]
 fn fails_on_incomplete_extra_and_changed_files() {
@@ -214,4 +216,44 @@ fn commit_metadata_is_optional_but_paired() {
         value["compiler-commit"] = "one-sided".into()
     });
     assert!(provider_view::publish(source.path(), &id, root.path()).is_err());
+}
+
+#[test]
+fn explicit_cache_publish_and_full_audit_work_without_home() {
+    let (source, id) = fixture();
+    let root = tempfile::tempdir().unwrap();
+    let cli = env!("CARGO_BIN_EXE_zkir-forge");
+    let published = std::process::Command::new(cli)
+        .env_remove("HOME")
+        .arg("--cache-dir")
+        .arg(root.path().join("cache"))
+        .arg("publish-view")
+        .arg(source.path())
+        .arg("--manifest-sha256")
+        .arg(&id)
+        .arg("--provider-root")
+        .arg(root.path().join("views"))
+        .output()
+        .unwrap();
+    assert!(
+        published.status.success(),
+        "{}",
+        String::from_utf8_lossy(&published.stderr)
+    );
+    let target = root.path().join("views").join(&id);
+    let audit = || {
+        std::process::Command::new(cli)
+            .env_remove("HOME")
+            .arg("verify-view")
+            .arg(&target)
+            .arg("--manifest-sha256")
+            .arg(&id)
+            .output()
+            .unwrap()
+    };
+    assert!(audit().status.success());
+    fs::write(target.join("keys/test.prover"), [9]).unwrap();
+    assert!(provider_view::read(&target, &id, "contract/index.js").is_ok());
+    assert!(!audit().status.success());
+    assert!(provider_view::read(&target, &id, "keys/test.prover").is_err());
 }

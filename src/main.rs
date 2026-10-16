@@ -81,6 +81,12 @@ enum Command {
         #[arg(long)]
         provider_root: PathBuf,
     },
+    /// Audit every declared compiler-view file without modifying it.
+    VerifyView {
+        input: PathBuf,
+        #[arg(long)]
+        manifest_sha256: String,
+    },
     /// Publish a consistent verified directory snapshot of an existing store.
     Snapshot {
         #[arg(long)]
@@ -207,11 +213,19 @@ async fn run(cli: Cli) -> Result<Value> {
     {
         midnight_zkir_forge::provider_view::separate_roots(
             provider_root,
-            &cli.cache_dir
-                .clone()
-                .unwrap_or(application::default_cache_dir()?),
+            &match &cli.cache_dir {
+                Some(path) => path.clone(),
+                None => application::default_cache_dir()?,
+            },
         )?;
         return midnight_zkir_forge::provider_view::publish(input, manifest_sha256, provider_root);
+    }
+    if let Command::VerifyView {
+        input,
+        manifest_sha256,
+    } = &cli.command
+    {
+        return midnight_zkir_forge::provider_view::verify(input, manifest_sha256);
     }
     let root = match cli.cache_dir {
         Some(path) => path,
@@ -318,6 +332,7 @@ async fn run(cli: Cli) -> Result<Value> {
         | Command::QualifyExport { .. }
         | Command::Profile
         | Command::PublishView { .. }
+        | Command::VerifyView { .. }
         | Command::Serve { .. }
         | Command::Snapshot { .. }
         | Command::Restore { .. } => unreachable!(),
