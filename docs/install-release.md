@@ -89,13 +89,13 @@ For a locally built actual native candidate (no GitHub publication):
 
 ```sh
 ./bootstrap.sh -- python3 scripts/check-release-candidate.py \
-  --directory .local/release-candidate-2026.10.0 \
-  --runtime-python /opt/homebrew/bin/python3 --deny-nix
+  --directory /path/to/native-candidate \
+  --runtime-python /opt/homebrew/bin/python3 --deny-nix --recovery
 ```
 
 The macOS restricted-runtime experiment copies the candidate/installer to private
 scratch, uses fake gh only for the local download boundary, denies `/nix` and the
-checkout to the installer and installed commands, and runs both genuine backend
+checkout to the installer and installed commands, and runs every advertised profile's genuine proof and recovery
 qualifications. Choose an installed Python 3.11+ outside Nix. This does not replace
 an actual clean no-Nix host, Linux execution, or authenticated GitHub download test.
 Omit `--deny-nix` only when deliberately recording an ordinary native candidate
@@ -106,3 +106,21 @@ and Linux retain the original package set. The example follows both inputs and
 selects by system. All four derivations evaluate; Intel runtime is unqualified.
 Upstream identifies 26.05 as the final Intel macOS Nixpkgs release, so continued
 future support needs an explicit reviewed strategy rather than a floating pin.
+
+## Current local qualification
+
+The final Linux ARM64 candidate from signed source `9359068` passed installation,
+all three profiles' genuine proof/negative controls and recovery as an unprivileged
+user in Nix-free Debian12/Python3.11.2 with no checkout mounts or network. Separate
+fresh HTTPS parameter retrieval passed for each profile. Independent review
+verified payload hashes, runtime source correspondence and original dependency
+notices. See [installed receipt](evidence/private-installer-linux-three-profile.json)
+and [runtime/source audit](evidence/private-installer-linux-runtime-audit.json).
+The test used local fake GitHub transport; authenticated release downloading is
+not qualified. Native Intel and actual Nix-free macOS remain unqualified.
+
+On a real clean consumer host, use external Python and absolute verified parameter
+paths with `check-release-candidate.py --require-nix-free --recovery`. That
+precondition refuses a machine with a Nix store or Nix executable. A sandbox on a
+Nix-equipped developer Mac is recorded separately and cannot satisfy this gate.
+No binary release has been published.

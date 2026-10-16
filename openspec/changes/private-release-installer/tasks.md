@@ -27,9 +27,17 @@ Final local candidate receipt: docs/evidence/milestone-2026.10.0-local.json.
 - [x] Extend installer/profile inventory to the independently pinned JSON3.1 worker.
 - [x] Exercise optional-worker upgrades and legacy rollback without dangling stable links.
 - [ ] Produce final three-profile candidates from a clean signed source commit.
-- [ ] Run actual installed CLI proof and recovery controls on clean Nix-free Linux.
+- [x] Run actual installed CLI proof and recovery controls on clean Nix-free Linux ARM64 (Debian12 userland, recorded kernel); Intel remains unqualified.
 - [ ] Run actual installed CLI proof and recovery controls on a clean Nix-free macOS host/VM.
 - [ ] Record final independent review and qualification evidence; no publication.
 
 A macOS sandbox denying Nix/checkout reads is useful evidence, but does not
 complete the real Nix-free macOS environment requirement.
+
+Final Linux9359068 evidence: `docs/evidence/private-installer-linux-three-profile.json`
+and `private-installer-linux-runtime-audit.json`. Independent review verified
+782 payload files,415 native Cargo package notices, exact runtime source companion,
+all3 installed proof/recovery profiles as UID1000 without Nix/checkout/mounts/network
+or MIDNIGHT_PP, and separate fresh HTTPS retrieval per profile. The external
+recovery harness fix is signed in4006a29 and its actual digest is recorded.
+This completes Linux ARM64 local qualification, not macOS or Intel qualification.

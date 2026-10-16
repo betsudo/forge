@@ -568,3 +568,23 @@
   and archive/source/notices audit are undergoing independent review.
 - Candidate source and the external recovery-harness SHA are recorded separately;
   this test-only fix changes no runtime payload, key identity or cache behavior.
+
+## 2026-10-16 — final Linux ARM64 qualification
+
+- Candidate source9359068 passed unprivileged installed three-profile proof and
+  recovery controls in actual Nix-free Debian12/Python3.11.2, native ARM64 with
+  recorded Linux7.0.14-linuxkit kernel, no mounted checkout and no network.
+  Explicit parameter isolation passes without MIDNIGHT_PP. Separate fresh HTTPS
+  acquisition/proof/negative controls pass for each of the three profiles.
+- Independent review verified archive/checksums and782payload files,415native
+  Cargo package notices, runtime/source correspondence and all-launcher corruption
+  and loader-override refusals. Receipts: private-installer-linux-three-profile.json
+  and private-installer-linux-runtime-audit.json. No Intel/universal Linux claim.
+- Linux final assets and raw receipts are retained. Cleanup of exact owned
+  containers/volume is authorized after evidence copying; no global pruning.
+  macOS final build remains active and actual clean-Mac qualification is pending.
+
+- Post-review Linux cleanup removed only the three session-owned containers and
+  session-owned Nix volume, retaining all final assets and raw receipts. Disk free
+  increased14to20GiB; reused images and unrelated resources were untouched.
+  Exact cleanup inventory/digests are retained in the runtime audit receipt.
