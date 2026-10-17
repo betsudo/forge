@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "benchmark_receipt_sha256": "7ccc68dbb86298598e120958c8988b117e6da3edbec8c9a5338fa8db023473dc",
+  "supporting_harness_sha256": {
+    "scripts/bench-passport.py": "8c5d061d128fd1a13400c1a774cbd611a450612bf4a537b1d8b5d594d4ff944e",
+    "scripts/forge-ci.py": "8052fbf1c10020a3e7c3f4b9549d5534b951b13081664fc76922a3df57c768ca",
+    "benchmarks/passport/make-preimage.mjs": "25e355b3ff4bd7dfee396e1e72a74b323add197c9f0cfcdf0db3d93f42adee0b"
+  },
+  "consumer_lock_sha256": "a57a8056dfa3989a6fb237f0ff071b172f4864082173ba9c4274c09eac9bee51",
+  "measurement": {
+    "repetitions": 3,
+    "lanes": 5,
+    "proofs": 30,
+    "verifications": 30,
+    "negative_controls": 60,
+    "assertions": 270
+  },
+  "scope": "Same observed selected-workload run; companion provenance only. Full52codegen/keygen,modernSDKproviderqualification andhostedtransfer excluded by original receipt."
+}

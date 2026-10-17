@@ -23,9 +23,10 @@ From the Forge checkout, with Nix flakes enabled:
 export PATH="$HOME/.local/bin:$PATH"
 zkir-forge profile
 zkir-forge --profile zkir3 profile
+zkir-forge --profile zkir31 profile
 ```
 
-The installer supplies the CLI, isolated v3 worker and CI helper, with a Nix GC
+The installer supplies the CLI, isolated v3/JSON3.1 workers and CI helper, with a Nix GC
 root. Configure the PATH in the consumer's agent/test launcher if it does not
 inherit the shell environment, or invoke `$HOME/.local/bin/zkir-forge`
 explicitly. No service process is needed for local integration. Reinstall after
@@ -44,9 +45,12 @@ any executable fingerprint allowlist. Compare against current `profile` output:
 - `zkir3`: official ledger revision
   `3a7ae0361d03e6eed4fc91e31f6600f334f605d5`; JSON 3.0,
   binary tag `ir-source[v3-generic]`.
+- `zkir31`: separately pinned official ZKIR
+  `e82d81d25aabcc5f5092e2bd559083487f577914`, ledger
+  `9a8777c4d035fc7f38ae286bcf5f8656668efd9f`; JSON3.1, verifier-key[v7].
 
-These profiles are not interchangeable with other v3 RCs, JSON 3.1, newer split
-ZKIR graphs or ledger9 transaction support. Use [README.md](README.md) for current
+These exact profiles are not interchangeable with one another or other v3 RCs,
+newer split ZKIR graphs or ledger9 transaction support. Use [README.md](README.md) for current
 qualified scope. Preserve existing consumer compatibility checks; an allowlist
 update needs qualification against that consumer. Retain its uncached tool when
 compatibility is unsupported or unqualified. Do not modify Compact merely because
@@ -96,7 +100,15 @@ retrieves artifacts, whereas `ProofProvider` generates proofs. Keep the existing
 proof provider and all actual proof generation, verification, assertions, fixture
 checks and negative controls running on both hits and misses. Never cache test
 outcomes or treat `cache.hit` as proof success. Forge's current HTTP object URLs
-are not a drop-in `FetchZkConfigProvider` layout endpoint.
+under `/v1` are not a drop-in `FetchZkConfigProvider` layout endpoint. Modern
+SDKs require complete compiler integrity/runtime metadata; bare Forge exports
+are insufficient. Use the explicit [compiler adapter/provider views guide](docs/providers/local-adapter.md)
+for independently pinned complete `/views` publication. Full-view size limits
+apply; a qualified smaller fixture does not qualify a whole consumer bundle.
+For the exact full-account JSON3.1 cohort, read the
+[Passport setup and receipt-renewal guide](docs/providers/passport-local.md).
+It covers all 52 artifact sets and two actual application proof paths on native
+macOS ARM64; full-account HTTP and Linux remain separate qualification gates.
 
 ## Validate and measure the consumer integration
 

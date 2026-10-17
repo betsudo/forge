@@ -936,3 +936,157 @@
 - Created follow-ups in2026.10.0: #13duplicate Cargo binary compilation,
   #14configurable keygen timeout, #15broader exact consumer qualification. No
   automatic unqualified-circuit fallback, Compact edits, cloud work or merge.
+
+## 2026-10-17 — next local milestone defined (#30)
+
+- PR12 merged as 7273d75a329fef65d7b22d6bc0b543e60d5bfbfd. Its final
+  review found no blockers; additional admission/range follow-ups are #28/#29.
+- Created 2026.10.1 — Qualified local key reuse, milestone2 and tracking issue30.
+  Ordered #14 timeout, #15 exact selected Passport qualification, #6/#7 local
+  integration/recovery, #28 bounded provider admission, #29 measured range cost
+  and #13 duplicate CLI build removal. These issues moved into the new milestone.
+- Charter: docs/planning/2026.10.1-local-reuse.md. Completion requires fresh
+  genuine proof/control evidence and independent identity/concurrency review;
+  partial local evidence cannot close Linux or hosted qualification gates.
+- Autonomous work is local and finite, with OpenSpec, Nix, issue-linked signed
+  DCO commits and isolated stores. No scheduled supervision, push, PR publication,
+  merge, release, deployment, shared-installation/cache change or Compact edits.
+  Existing official pins remain fixed; Cloudflare and clean-Mac VM stay deferred.
+- Planning changes only; no new consumer qualification or performance result is
+  claimed. The first implementation issue is #14 (bounded keygen timeout).
+
+## 2026-10-17 — bounded adapter keygen timeout (#14/#30)
+
+- Added local --keygen-timeout-seconds, integer1..86400/default180, validated
+  before compiler cleanup and rechecked in private hook config. Each prepare
+  includes lease waiting; profile checks/native off compilation are unchanged.
+- Captured commands own POSIX process groups. Deadline/Python interruption kills
+  CLI plus backend descendants and reaps before refusal. Abrupt hook termination
+  remains a recovery case, not a promised SIGKILL/SIGTERM cleanup guarantee.
+- All15adapter controls pass through Nix, including actual slow worker startup,
+  timeout/no completed marker/no output, terminated late worker and explicit retry;
+  invalid CLI values preserve existing output. OpenSpec/docs build/link checks pass.
+- Independent review found no blocker; narrowed interruption claims and added hook
+  entrypoint/CLI sentinel controls in response. No broader consumer qualification
+  or speedup claim, pin/Compact/shared-installation/cache change or publication.
+
+## 2026-10-17 — lightweight Cargo compatibility launcher (#13/#30)
+
+- Replaced full primary-source inclusion with a std-only Unix sibling exec.
+  Resolves real executable location, refuses missing/self-referential primaries,
+  never searches PATH and preserves OS args/environment/stdio/signals/status.
+  Nix shared symlinks and portable identical-byte aliases are unchanged.
+- Two dual-name/isolated-install controls passed: profiles/store/help/version,
+  missing primary/PATH decoy, hardlink recursion, symlink/unrelated cwd, Unicode/
+  space arguments, inherited environment and nonzero status. Independent review
+  found no blocker. Both Cargo bins must be installed together; documented.
+- Same-host sequential warm debug rebuild/link: full alias56,539,752bytes/3.223s,
+  launcher684,232bytes/0.839s. This is not a clean/release build benchmark. Receipt:
+  docs/evidence/cli-alias-build-local.json. Exact package/worker/installer checks
+  remain part of the milestone qualification; no new Linux runtime claim yet.
+
+## 2026-10-17 — bounded provider SDK bursts (#28/#30)
+
+- Retained two active verification/stream permits; added eight waiting slots and
+  ten-second timeout. Overflow/expiry returns existing429provider_reads_busy and
+  Retry-After:1. No cache DB/work admission coupling, keygen or persistent marker.
+- Deterministic unit controls cover three-artifact admission, queue overflow, wait
+  timeout/cancellation, active cancellation ownership and restored capacity. All
+  four pass, plus13provider-view tests and root Clippy. Independent ownership/
+  concurrency review found no blocker. SDK harness now fetches3artifacts via
+  Promise.all; exact-package real SDK proof qualification remains a separate gate.
+- HTTP/OpenAPI/provider limits match implementation. Installer fixtures, OpenSpec
+  and documentation checks pass. No platform/hosted readiness claim or publication.
+
+## 2026-10-17 — fresh package and range-cost evidence (#13/#28/#29/#30)
+
+- Fresh Nix package xywbgzg14vn44qpqdlxk7v7bd36vbwa9 built with existing pins.
+  Full bootstrap check passes. Installed killed-writer CLI acceptance and real
+  recovery across ledger8-v2/zkir3/zkir31 pass, plus real installed snapshot and
+  downloaded-artifact HTTP proof controls. No shared installation was changed.
+- Exact minimal compiler/provider qualification passes19genuine proof lanes
+  (4baseline+3adapter lanes of5),38negative proof controls,12API control groups
+  and5adapter controls. SDK requests binary IR/prover/verifier via Promise.all;
+  genuine executions/proofs remain. Independent evidence/hash review passes.
+- Actual24,648,297-byte Passport activation prover key:8ranges return one file's
+  bytes while producing197,186,376logical snapshot bytes; reader peak1file
+  sequential/2concurrent. Three-repetition loopback medians165/917/378ms for
+  full/sequential/two-concurrent modes on a shared warm host. Not physical device
+  counters or hosted throughput. Keep full-file verification; no trusted marker.
+- A private reduced-export carrier retains all circuit bodies/pure exports and
+  compiler-produced complete carrier metadata. Its2ZKIR+6artifact hashes match
+  unchanged-account qualification; fresh2SDK proofs/2verifications/4negative
+  controls/18assertions include exact worker/SDK/generator provenance. This does
+  not qualify full52-account HTTP. Original full output exceeds4GiB serving
+  budget; limits stay unchanged. Full local Node adapter qualification continues.
+- Evidence: provider-api-burst-local.json, provider-range-cost-local.json,
+  passport-range-fixture{-proofs}-local.json and installed-cli-*-2026.10.1.json.
+  Range guide documents scopes and reproducibility. Compact/pins/other checkouts,
+  shared CLI/default store, Cloudflare and publication remain unchanged.
+
+## 2026-10-17 — local handoff routing and qualification scope (#6/#30)
+
+- Repository skill now lists the exact JSON3.1 profile and distinguishes bare
+  exports from complete compiler provider views/limits. Global skill, vault home
+  and consumer starter prompt point to betsudo/forge and preserve original-proof
+  requirements. Both skill frontmatters pass the official skill validator using
+  temporary pinned-Nix PyYAML; product/dependency pins are unchanged.
+- Read-only shared CLI check reports0.2.0. It was not reinstalled; current tested
+  candidate has a separate workspace-local Nix GC root. Personal handoff marks
+  full52consumer qualification in progress, not delivered from selected2proofs.
+- Full local bootstrap, fresh package and smaller-provider evidence are retained.
+  The52official output pairs are complete; independent Forge artifact matching
+  continues. Removed completed-session owned build intermediates after preserving
+  the tested range reader/alias artifact; no shared artifact store was deleted.
+
+## 2026-10-17 — selected-workload result retained (#7/#30)
+
+- Re-ran the existing exact selected2Passport benchmark with the current fresh
+  Nix CLI/worker.15lanes (5x3),30actual proofs/30verifications,60negative
+  controls and270assertions pass. Changed exact source produces a new derivation,
+  corrupt CAS and wrong profile refuse without availability fallback.
+- Warm local archive restore median5365.489ms versus4154.748ms uncached: saving
+  -1210.741ms (~29.1%slower). Preserve this negative result. The copied current
+  emitted codegen, selected2standalone keygen, transport planning/restore/save and
+  proof scope are explicit; full52keygen/compiler/modern provider and hostedCI
+  are not inferred. Concurrent developer-host load is disclosed.
+- Independent receipt review recomputed every median/total, checked all correctness
+  counts/tool/harness/referenced-codegen hashes and found no blocker. Companion
+  provenance pins CI helper/preimage generator. All owned stores/snapshots/runtime
+  dependency/preimage copies were cleaned after capture. Full52local adapter
+  qualification remains a separate ongoing gate. No push or Compact changes.
+
+## 2026-10-17 — full local Passport qualification complete (#15/#6/#7/#30)
+
+- All 52 independent official/Forge artifact sets match for unchanged Passport
+  account 0d7bb0bc; exact source closure, compiler, JSON3.1 worker, eight parameter
+  models, SDK lock and harness hashes are retained. Trusted policy raw SHA-256:
+  `4e94e57bf7467a5db580600be3e660691752f363123a1aab2fe8ea92abacc602`.
+- Full cold and warm compiler outputs preserve all 213 original files, including
+  manifest `433e83a1…` and runtime metadata. Cold52miss/0hit/0error; warm adds
+  52hits/0miss/0error and zero measured generation. Node provider remains pinned
+  to the same original compiler manifest. No pruning or synthetic metadata.
+- Native/cold/warm and five positive recovery groups pass16actual proofs,
+  16verifications,32negative controls and144state/trace assertions across two
+  selected application circuits. Corrupt CAS/export refusals, explicit repair,
+  missing-export reconstruction, eviction/regeneration and concurrent callers
+  preserve actual identity. Wrong profile/policy refuse before compiler cleanup.
+- One shared-host observation: cold compile1619.463s, warm650.756s (~59.8%less);
+  proof-test harness3.002s/2.883s and whole lanes1628.216s/659.432s. Native/off
+  ~1379s uses a lower-precision process-start/manifest-mtime proxy, not a precise
+  monotonic benchmark. Per-file bytes/counters and keygen/request timings remain
+  separate. Earlier selected-two archive saving stays negative; no hosted claim.
+- Independent final evidence review verified hashes, complete inventory, counts,
+  resource boundaries and actual scratch cleanup; no blocker in the stated native
+  scope. Full baseline, independent/adapter stores, cold/warm outputs and private
+  proof/preimage copies are removed. The tested Nix root and small source/tools/
+  receipts remain. No obsolete worktrees; shared CLI/default cache unchanged.
+- Setup/renewal: docs/providers/passport-local.md. Acceptance and exact deferred
+  gates: docs/milestones/2026.10.1.md. General/site/repository/global-skill and
+  Midnight-vault handoff updated. Site build/link/API checks pass. Complete
+  provider publication refuses the actual12.18GBbundle under the unchanged4GiB
+  limit, with no visible partial view; #31 tracks the actionable large-view gate.
+- Local #30 scope is complete. Broader #6/#7/#13 Linux gates, clean Nix-free Mac,
+  full-account Fetch/HTTP, hosted CI study, Ledger9 transactions and Cloudflare
+  stay open. No Compact/other-checkout/pin edits, shared install, push, PR, merge,
+  workflow dispatch, release or deployment occurred.

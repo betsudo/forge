@@ -1,0 +1,46 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "consumer_commit": "0d7bb0bc834f2d45d9fe2d84c4d022a30d648423",
+  "source_transform": "In an owned private copy only, remove export from unselected impure circuits; preserve all bodies and pure exports. Original checkout/source closure remains unchanged.",
+  "sources": {
+    "contract/contracts/account-p256.compact": {
+      "original_sha256": "50aca789d611fab99292725a64a8231e0a6509ca726fdb1e23babf96e0ad9fd4",
+      "fixture_sha256": "55b0ad02b4a4f73b62d2b0fdb175b3464d9a68b45cb10b0dfc61091f1c39441c"
+    },
+    "contract/contracts/account.compact": {
+      "original_sha256": "ef1e3d6eb873e91e205c12e07f33cda744d228470dd43a4794cb3784447fd6ae",
+      "fixture_sha256": "c377f99f57fb725af2eac557e64a1cee0a5a4e98a405f0513b9f232eea8b54e2"
+    },
+    "contract/contracts/control.compact": {
+      "original_sha256": "2f092f1f7955256a542f1bfea5622854b5128b038fefea16e52c4718ebd05bcb",
+      "fixture_sha256": "11ae3c52c99acfe4605b6cb0ddf5664cf498c24225bed02c7f3daaa51bfe328e"
+    },
+    "contract/contracts/faucet.compact": {
+      "original_sha256": "1834ad2a49235cc405390f22fdd3e9480bfe66ebf88817947e4250d400b95f71",
+      "fixture_sha256": "58f0172579eb11e7c3222c624d599f7236db8d5feee066958126e5c35234b9c9"
+    },
+    "contract/contracts/probe-block-time.compact": {
+      "original_sha256": "038de93603102884036dea055aaa0d3ead165c49981be497b72b844c1c0c55f0",
+      "fixture_sha256": "27f68cf7b1827fad6e75aa517171557ed47ceb4cf35ae53bc7d0ba5b3773d304"
+    },
+    "contract/contracts/probe-grant-caller.compact": {
+      "original_sha256": "e3c9a6d8429817992e80f9623c4211e6907139552601649395563fa4a8555ed1",
+      "fixture_sha256": "f5484ea542313bf16c594a11a5b4fb5eecbcc2f75b65f7139adb6c2f576d75c0"
+    },
+    "contract/contracts/probe-p256.compact": {
+      "original_sha256": "e42427fa90b3a40f7d45ce81b39dfcdbfeba078b7bb472ca79bd76cec9c6ba3e",
+      "fixture_sha256": "192cc1e7a9a70ffe3a3badb444a7b270f4c2c76c2b2679f7872b3d4f3ab843c8"
+    },
+    "contract/contracts/webauthn.compact": {
+      "original_sha256": "04e84a53c6ffd2701a7f07820ef6becf2ffee06e05de9ca9dfd9e2b33ce7dedb",
+      "fixture_sha256": "04e84a53c6ffd2701a7f07820ef6becf2ffee06e05de9ca9dfd9e2b33ce7dedb"
+    }
+  },
+  "selected_circuit_bytes_match_unchanged_account": true,
+  "selected_official_binary_ir_and_keys_match_previous_independent_qualification": true,
+  "compiler_manifest_sha256": "116db2fc254487b819919721d705366c08dfc0b1cbbdf3ac30d521beda6ba9b1",
+  "compiler_sha256": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+  "harness_sha256": "6b923ff1b160e3d4b3e6b7cfd83239c8ae96e3894a7ecfdaf5373821e6c6768e",
+  "scope": "Reduced-export compiler-generated benchmark carrier only; original complete metadata retained. This does not qualify the full-account compiler adapter or full-account HTTP serving."
+}

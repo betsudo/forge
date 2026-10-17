@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "package": "/nix/store/xywbgzg14vn44qpqdlxk7v7bd36vbwa9-midnight-zkir-forge-2026.10.0",
+  "cli_sha256": "5780bfe4b0b27ffbcffff980f6f7a14e874e3624714742824fc9cd4c882c3cc0",
+  "worker_sha256": {
+    "midnight-zkir-forge-zkir3-worker": "0a6c255cb2a04429f731beab8ae8882a3d5f4400173a43eb2249ac4062a9ee90",
+    "midnight-zkir-forge-zkir31-worker": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58"
+  },
+  "harness_sha256": {
+    "scripts/check-cli.py": "d87732443d7257e6362eddd463074e5bf9c25dc983b8b2a850d9c6ec478c0f8a",
+    "scripts/check-recovery.py": "d0275de18762dd8ed58255a9da765ade00bbf344deb66e9832587d110268ffa9",
+    "scripts/check-snapshot.py": "7b8ca324a17fad48fdc9814879460583c01960f89dfa220c7630db207cc8abf3",
+    "scripts/check-http.py": "ea040df11c158d431789e44a25aa64d73e65413e277ad7aa07024a4c267f6805"
+  },
+  "results": {
+    "installed-cli-recovery-2026.10.1.json": {
+      "receipt_sha256": "eeff7908440fe3d22a3e1cee38a885728417f85071e565a1adf1c6758a48873d",
+      "passed": true
+    },
+    "installed-cli-snapshot-2026.10.1.json": {
+      "receipt_sha256": "6d8af2aa07053e7a86659ee61dc3c15031ba2533aaf5a72845e85defb11257f2",
+      "passed": true
+    },
+    "installed-cli-http-2026.10.1.json": {
+      "receipt_sha256": "78296f46dd50bd787064ac068737a6c72202d16ffddf6840e3e3796d048c1859",
+      "passed": true
+    }
+  },
+  "full_bootstrap_check": {
+    "exit_status": 0,
+    "local_log_sha256": "b5dc9501228ed1fddefb8a828a289489f4709577b7659935bc3338296d492616",
+    "scope": "Full bootstrap suite plus separately passing added qualification-helper syntax checks; no hostedCI."
+  },
+  "scope": "Fresh native macOS ARM64 Nix package in private stores; no clean Nix-free macOS/Linux runtime claim or shared installation change."
+}

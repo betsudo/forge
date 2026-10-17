@@ -12,6 +12,7 @@ from pathlib import Path
 import re
 import shlex
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -48,12 +49,38 @@ def safe_path(path):
     return path.resolve()
 
 
-def command(args, **kwargs):
+def keygen_timeout(value):
+    require(type(value) is int and 1 <= value <= 86400,
+            'keygen timeout must be an integer from 1 to 86400 seconds')
+    return value
+
+
+def timeout_argument(value):
+    try:
+        return keygen_timeout(int(value))
+    except (ValueError, TypeError) as error:
+        raise argparse.ArgumentTypeError(str(error)) from error
+
+
+def command(args, *, timeout=180):
     environment = dict(os.environ)
     for key in ['MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER','MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER']:
         environment.pop(key, None)
-    return subprocess.run(list(map(str, args)), check=True, capture_output=True,
-                          text=True, timeout=180, env=environment, **kwargs).stdout
+    # Own a session so a timeout stops the backend worker as well as the CLI.
+    with subprocess.Popen(list(map(str, args)), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                          text=True, env=environment, start_new_session=True) as process:
+        try:
+            stdout, stderr = process.communicate(timeout=timeout)
+        except BaseException:
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            process.communicate()
+            raise
+        if process.returncode:
+            raise subprocess.CalledProcessError(process.returncode, args, stdout, stderr)
+        return stdout
 
 
 def policy(args):
@@ -90,6 +117,7 @@ def policy(args):
 
 def materialize(config, argv):
     require(len(argv) == 3 and argv[0] == 'compile-many', 'unsupported cached keygen operation')
+    timeout = keygen_timeout(config.get('keygen_timeout_seconds', 180))
     compiler = Path(config['compiler_dir'])
     args = argparse.Namespace(compiler_dir=compiler, binary=Path(config['binary']), params_dir=Path(config['params_dir']),
         qualification=Path(config['qualification']), qualification_sha256=config['qualification_sha256'])
@@ -117,7 +145,7 @@ def materialize(config, argv):
         require(len(qualified) == 1, 'current circuit bytes not independently qualified; use off or qualify first')
         row = qualified[0]
         prepared = json.loads(command([args.binary, '--profile','zkir31','--cache-dir',config['cache_dir'],
-            '--params-dir',args.params_dir,'prepare',source,'--name',name]))
+            '--params-dir',args.params_dir,'prepare',source,'--name',name], timeout=timeout))
         descriptor = prepared['descriptor']
         require(descriptor == row['descriptor'], 'generation descriptor differs from qualification')
         inventory = prepared['export']['files']
@@ -173,6 +201,8 @@ def main():
         parser.add_argument('--qualification-sha256')
         parser.add_argument('--params-dir', type=Path)
         parser.add_argument('--cache-dir', type=Path)
+        parser.add_argument('--keygen-timeout-seconds', type=timeout_argument, default=180,
+                            help='per-prepare local deadline, 1..86400 seconds (default: 180)')
         parser.add_argument('source', type=Path)
         parser.add_argument('output', type=Path)
         args = parser.parse_args()
@@ -207,7 +237,7 @@ def main():
             config.write_text(json.dumps(dict(compiler_dir=str(args.compiler_dir), binary=str(args.binary),
                 params_dir=str(args.params_dir), qualification=str(args.qualification.resolve()),
                 qualification_sha256=args.qualification_sha256, output=str(output), cache_dir=str(cache),
-                completed=str(root/'completed'))))
+                completed=str(root/'completed'), keygen_timeout_seconds=args.keygen_timeout_seconds)))
             shim = root/'zkir-v3'
             shim.write_text('#!/bin/sh\nexec '+shlex.join([sys.executable,str(Path(__file__).resolve()),'--keygen-hook',str(config)])+' "$@"\n')
             shim.chmod(0o700)

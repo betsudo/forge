@@ -20,10 +20,20 @@ output separate from source, qualification, tools, parameters and cache. The
 compiler owns and may clear its output directory. Unknown circuits, changed tools,
 parameters, descriptors or artifacts refuse local mode; use explicit off mode
 or obtain a new reviewed qualification. Never edit an old receipt to bless a new
-executable. Qualification currently covers the minimal fixture, not arbitrary
-Passport contracts. Output copies are private; test proofs and assertions still run.
+executable. Qualification covers the minimal fixture and the separately pinned
+[Passport account cohort](passport-local.md), with all 52 intercepted artifact sets
+and two selected application proof paths. It does not authorize arbitrary Passport
+contracts or full-account HTTP serving. Output copies are private; test proofs and
+assertions still run.
 A failed copy can leave incomplete output, but the wrapper refuses success and
 the compiler does not finish its manifest; retry compilation in owned output.
+
+For independently qualified larger circuits, set `--keygen-timeout-seconds 900`.
+The integer range is 1..86400 seconds, default 180. It bounds each local `prepare`
+(including cache/lease waits), not the entire compilation; native off mode is
+unchanged. A timeout terminates the owned Forge CLI/worker process group and
+refuses compiler success. Retry explicitly after resolving the cause; no fallback
+or completed manifest is fabricated. Profile checks keep their existing deadline.
 
 Publish a complete successful compiler output with its independently pinned hash:
 
@@ -62,7 +72,19 @@ No persistent verified marker is trusted. The requested file is copied into an
 anonymous verified snapshot to avoid verify/reopen races, including for ranges.
 A dedicated two-permit pool bounds provider verification/streaming independently
 of cache work; two maximum-size files can consume up to2GiB temporary space.
-This remains a single-owner service; large-file throughput needs measurement.
+A normal parallel three-artifact SDK fetch can wait for capacity: at most eight
+requests wait, for at most ten seconds each. Overflow/expiry returns
+`429 provider_reads_busy` with `Retry-After: 1`; a slow active stream may therefore
+require explicit consumer retry. Cancellation returns waiting capacity and never
+releases active blocking verification early. This remains a single-owner service;
+large-file throughput is workload-specific. The local range baseline uses an
+actual24,648,297-byte prover key: eight resumed requests return one file's bytes
+but create197,186,376logical snapshot bytes. The directly measured reader peak is
+one file sequentially and two files with two concurrent reads. Every HEAD,304 or
+range still verifies/spools the entire selected file before responding. Prefer
+one full GET or a small number of resume requests over many tiny chunks; do not
+disable byte verification to reduce this cost. See the
+[range cost baseline](range-cost.md).
 
 Compiler staging uses private sibling directories outside output on the same
 filesystem. A killed hook may leave a private `.forge-keygen-*` sibling, but it

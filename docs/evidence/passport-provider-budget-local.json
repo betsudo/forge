@@ -1,0 +1,16 @@
+{
+  "returncode": 1,
+  "result": {
+    "error": {
+      "availability_fallback": false,
+      "code": "internal_error",
+      "message": "internal_error",
+      "retryable": false
+    },
+    "schema": 1
+  },
+  "diagnostic": "provider total limit",
+  "observed_bytes": 12184494042,
+  "largest_file_bytes": 495024744,
+  "publication_not_visible": true
+}

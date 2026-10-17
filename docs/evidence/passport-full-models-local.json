@@ -1,0 +1,327 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "consumer_commit": "0d7bb0bc834f2d45d9fe2d84c4d022a30d648423",
+  "source_closure": {
+    "revision": "0d7bb0bc834f2d45d9fe2d84c4d022a30d648423",
+    "files": {
+      "contract/contracts/account-p256.compact": {
+        "sha256": "50aca789d611fab99292725a64a8231e0a6509ca726fdb1e23babf96e0ad9fd4",
+        "git_blob": "be3787a627c12eecb6c5d7045b2dfb0b1d852840",
+        "bytes": 19918
+      },
+      "contract/contracts/account.compact": {
+        "sha256": "ef1e3d6eb873e91e205c12e07f33cda744d228470dd43a4794cb3784447fd6ae",
+        "git_blob": "0512d5a6652e9a2cf4d3e3c93ea83a321bce1ddb",
+        "bytes": 130095
+      },
+      "contract/contracts/control.compact": {
+        "sha256": "2f092f1f7955256a542f1bfea5622854b5128b038fefea16e52c4718ebd05bcb",
+        "git_blob": "ad0fbcb96853c6c3d7fafc0e890962bccc5b743b",
+        "bytes": 2193
+      },
+      "contract/contracts/faucet.compact": {
+        "sha256": "1834ad2a49235cc405390f22fdd3e9480bfe66ebf88817947e4250d400b95f71",
+        "git_blob": "57b555b5e97d930b996eeed35f3678fffc775e13",
+        "bytes": 2031
+      },
+      "contract/contracts/probe-block-time.compact": {
+        "sha256": "038de93603102884036dea055aaa0d3ead165c49981be497b72b844c1c0c55f0",
+        "git_blob": "8a7847357ec816569ac9fb1a5bc60c7b145eeb68",
+        "bytes": 1338
+      },
+      "contract/contracts/probe-grant-caller.compact": {
+        "sha256": "e3c9a6d8429817992e80f9623c4211e6907139552601649395563fa4a8555ed1",
+        "git_blob": "794e606b7d4183c8e51b328e67b83e8f594821f3",
+        "bytes": 2154
+      },
+      "contract/contracts/probe-p256.compact": {
+        "sha256": "e42427fa90b3a40f7d45ce81b39dfcdbfeba078b7bb472ca79bd76cec9c6ba3e",
+        "git_blob": "0efee7bd366d0f0a8b3d7803bd4a04968aec127e",
+        "bytes": 948
+      },
+      "contract/contracts/webauthn.compact": {
+        "sha256": "04e84a53c6ffd2701a7f07820ef6becf2ffee06e05de9ca9dfd9e2b33ce7dedb",
+        "git_blob": "543fe518f4c58f7e045f39ef9c5e1d2828c59eed",
+        "bytes": 4778
+      }
+    }
+  },
+  "compiler_sha256": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+  "official_zkir_sha256": "2e5febcbe905451cb549991f96eb91b94dfa7bc1a5deb7a41ee017964d532fb4",
+  "all52_emitted_hashes_match": true,
+  "models": [
+    {
+      "circuit": "activate_initial_device_with_jubjub",
+      "k": 14,
+      "rows": 13447
+    },
+    {
+      "circuit": "activate_initial_device_with_k256",
+      "k": 14,
+      "rows": 14129
+    },
+    {
+      "circuit": "activate_initial_device_with_p256",
+      "k": 14,
+      "rows": 15342
+    },
+    {
+      "circuit": "add_device_with_jubjub",
+      "k": 15,
+      "rows": 26819
+    },
+    {
+      "circuit": "add_device_with_k256",
+      "k": 17,
+      "rows": 61809
+    },
+    {
+      "circuit": "add_device_with_p256",
+      "k": 18,
+      "rows": 129887
+    },
+    {
+      "circuit": "append_inbox_with_jubjub",
+      "k": 16,
+      "rows": 32838
+    },
+    {
+      "circuit": "append_inbox_with_k256",
+      "k": 17,
+      "rows": 67836
+    },
+    {
+      "circuit": "append_inbox_with_p256",
+      "k": 18,
+      "rows": 135914
+    },
+    {
+      "circuit": "deposit_shielded",
+      "k": 13,
+      "rows": 6506
+    },
+    {
+      "circuit": "deposit_unshielded",
+      "k": 9,
+      "rows": 331
+    },
+    {
+      "circuit": "issue_grant_with_jubjub",
+      "k": 16,
+      "rows": 59968
+    },
+    {
+      "circuit": "issue_grant_with_k256",
+      "k": 17,
+      "rows": 94960
+    },
+    {
+      "circuit": "issue_grant_with_p256",
+      "k": 18,
+      "rows": 163038
+    },
+    {
+      "circuit": "publish_recovery_session_with_jubjub",
+      "k": 16,
+      "rows": 36491
+    },
+    {
+      "circuit": "publish_recovery_session_with_k256",
+      "k": 17,
+      "rows": 72217
+    },
+    {
+      "circuit": "publish_recovery_session_with_p256",
+      "k": 18,
+      "rows": 140296
+    },
+    {
+      "circuit": "recover_cancel_with_jubjub",
+      "k": 15,
+      "rows": 27029
+    },
+    {
+      "circuit": "recover_cancel_with_k256",
+      "k": 17,
+      "rows": 62383
+    },
+    {
+      "circuit": "recover_cancel_with_p256",
+      "k": 18,
+      "rows": 130460
+    },
+    {
+      "circuit": "recover_finalise",
+      "k": 12,
+      "rows": 2365
+    },
+    {
+      "circuit": "recover_submit",
+      "k": 15,
+      "rows": 30436
+    },
+    {
+      "circuit": "remove_device_with_jubjub",
+      "k": 16,
+      "rows": 32776
+    },
+    {
+      "circuit": "remove_device_with_k256",
+      "k": 17,
+      "rows": 68314
+    },
+    {
+      "circuit": "remove_device_with_p256",
+      "k": 18,
+      "rows": 138266
+    },
+    {
+      "circuit": "revoke_all_grants_with_jubjub",
+      "k": 15,
+      "rows": 26692
+    },
+    {
+      "circuit": "revoke_all_grants_with_k256",
+      "k": 17,
+      "rows": 61682
+    },
+    {
+      "circuit": "revoke_all_grants_with_p256",
+      "k": 18,
+      "rows": 129759
+    },
+    {
+      "circuit": "revoke_grant_with_jubjub",
+      "k": 15,
+      "rows": 26922
+    },
+    {
+      "circuit": "revoke_grant_with_k256",
+      "k": 17,
+      "rows": 61912
+    },
+    {
+      "circuit": "revoke_grant_with_p256",
+      "k": 18,
+      "rows": 129990
+    },
+    {
+      "circuit": "rotate_enc_key_with_jubjub",
+      "k": 15,
+      "rows": 26764
+    },
+    {
+      "circuit": "rotate_enc_key_with_k256",
+      "k": 17,
+      "rows": 61754
+    },
+    {
+      "circuit": "rotate_enc_key_with_p256",
+      "k": 18,
+      "rows": 129832
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_grant_jubjub",
+      "k": 17,
+      "rows": 75617
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_grant_k256",
+      "k": 17,
+      "rows": 110083
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_grant_p256",
+      "k": 18,
+      "rows": 180080
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_jubjub",
+      "k": 16,
+      "rows": 55792
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_k256",
+      "k": 17,
+      "rows": 88939
+    },
+    {
+      "circuit": "withdraw_shielded_to_contract_with_p256",
+      "k": 18,
+      "rows": 157018
+    },
+    {
+      "circuit": "withdraw_shielded_with_grant_jubjub",
+      "k": 17,
+      "rows": 69914
+    },
+    {
+      "circuit": "withdraw_shielded_with_grant_k256",
+      "k": 17,
+      "rows": 104380
+    },
+    {
+      "circuit": "withdraw_shielded_with_grant_p256",
+      "k": 18,
+      "rows": 174377
+    },
+    {
+      "circuit": "withdraw_shielded_with_jubjub",
+      "k": 16,
+      "rows": 50089
+    },
+    {
+      "circuit": "withdraw_shielded_with_k256",
+      "k": 17,
+      "rows": 83236
+    },
+    {
+      "circuit": "withdraw_shielded_with_p256",
+      "k": 18,
+      "rows": 151315
+    },
+    {
+      "circuit": "withdraw_unshielded_with_grant_jubjub",
+      "k": 16,
+      "rows": 42406
+    },
+    {
+      "circuit": "withdraw_unshielded_with_grant_k256",
+      "k": 17,
+      "rows": 76862
+    },
+    {
+      "circuit": "withdraw_unshielded_with_grant_p256",
+      "k": 18,
+      "rows": 146859
+    },
+    {
+      "circuit": "withdraw_unshielded_with_jubjub",
+      "k": 15,
+      "rows": 28920
+    },
+    {
+      "circuit": "withdraw_unshielded_with_k256",
+      "k": 17,
+      "rows": 63907
+    },
+    {
+      "circuit": "withdraw_unshielded_with_p256",
+      "k": 18,
+      "rows": 131986
+    }
+  ],
+  "k_counts": {
+    "14": 3,
+    "15": 7,
+    "17": 17,
+    "18": 15,
+    "16": 7,
+    "13": 1,
+    "9": 1,
+    "12": 1
+  },
+  "official_model_log_sha256": "028626812e49236b526726c97f6b7fb82d482987bce2f7d36bb2459b0f8cb5bb",
+  "scope": "Exact unchanged full Passport codegen and official mock circuit models; no full keygen, application proof or adapter qualification claim."
+}

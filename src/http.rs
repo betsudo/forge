@@ -25,7 +25,7 @@ use std::{
     net::SocketAddr,
     path::PathBuf,
     sync::Arc,
-    time::Instant,
+    time::{Duration, Instant},
 };
 use tokio::{
     io::{AsyncRead, AsyncReadExt, ReadBuf},
@@ -51,6 +51,7 @@ struct Service {
     downloads: Arc<Semaphore>,
     uploads: Arc<Semaphore>,
     provider_reads: Arc<Semaphore>,
+    provider_waiters: Arc<Semaphore>,
 }
 type Shared = Arc<Service>;
 #[derive(Debug)]
@@ -86,6 +87,27 @@ fn classify(error: anyhow::Error) -> ApiError {
     )
 }
 impl Service {
+    async fn provider_permit(
+        &self,
+        wait: Duration,
+    ) -> std::result::Result<OwnedSemaphorePermit, ApiError> {
+        let busy = || ApiError(StatusCode::TOO_MANY_REQUESTS, "provider_reads_busy");
+        if let Ok(permit) = self.provider_reads.clone().try_acquire_owned() {
+            return Ok(permit);
+        }
+        // Bound pending work as well as expensive verification and stream IO.
+        let waiting = self
+            .provider_waiters
+            .clone()
+            .try_acquire_owned()
+            .map_err(|_| busy())?;
+        let permit = tokio::time::timeout(wait, self.provider_reads.clone().acquire_owned())
+            .await
+            .map_err(|_| busy())?
+            .map_err(|_| busy())?;
+        drop(waiting);
+        Ok(permit)
+    }
     // The permit lives in the blocking task, then follows its verified response.
     // Dropping a cancelled HTTP future must not free capacity while hashing runs.
     async fn provider_work<T, F>(
@@ -96,11 +118,7 @@ impl Service {
         T: Send + 'static,
         F: FnOnce() -> Result<T> + Send + 'static,
     {
-        let permit = self
-            .provider_reads
-            .clone()
-            .try_acquire_owned()
-            .map_err(|_| ApiError(StatusCode::TOO_MANY_REQUESTS, "provider_reads_busy"))?;
+        let permit = self.provider_permit(Duration::from_secs(10)).await?;
         tokio::task::spawn_blocking(move || Ok((task()?, permit)))
             .await
             .map_err(|_| ApiError(StatusCode::INTERNAL_SERVER_ERROR, "worker_failed"))?
@@ -173,6 +191,7 @@ pub async fn serve(config: Config) -> Result<Value> {
         downloads: Arc::new(Semaphore::new(8)),
         uploads: Arc::new(Semaphore::new(2)),
         provider_reads: Arc::new(Semaphore::new(2)),
+        provider_waiters: Arc::new(Semaphore::new(8)),
     });
     let app = Router::new()
         .route(
@@ -742,7 +761,77 @@ mod provider_admission_tests {
             downloads: Arc::new(Semaphore::new(8)),
             uploads: Arc::new(Semaphore::new(2)),
             provider_reads: Arc::new(Semaphore::new(2)),
+            provider_waiters: Arc::new(Semaphore::new(8)),
         })
+    }
+    async fn poll_waiter(
+        future: std::pin::Pin<
+            &mut impl std::future::Future<Output = std::result::Result<OwnedSemaphorePermit, ApiError>>,
+        >,
+    ) {
+        let mut future = future;
+        std::future::poll_fn(|cx| {
+            assert!(future.as_mut().poll(cx).is_pending());
+            std::task::Poll::Ready(())
+        })
+        .await;
+    }
+    #[tokio::test]
+    async fn three_artifact_burst_waits_and_waiting_cancellation_recovers() {
+        let root = tempfile::tempdir().unwrap();
+        let state = service(root.path().join("unused-cache"));
+        let first = state.provider_permit(Duration::ZERO).await.unwrap();
+        let second = state.provider_permit(Duration::ZERO).await.unwrap();
+        let mut third = Box::pin(state.provider_permit(Duration::from_secs(5)));
+        poll_waiter(third.as_mut()).await;
+        assert_eq!(state.provider_waiters.available_permits(), 7);
+        drop(first);
+        let third = third.await.unwrap();
+        assert_eq!(state.provider_waiters.available_permits(), 8);
+        let mut cancelled = Box::pin(state.provider_permit(Duration::from_secs(5)));
+        poll_waiter(cancelled.as_mut()).await;
+        drop(cancelled);
+        assert_eq!(state.provider_waiters.available_permits(), 8);
+        drop((second, third));
+        assert_eq!(state.provider_reads.available_permits(), 2);
+        assert!(!state.config.root.exists());
+    }
+    #[tokio::test]
+    async fn finite_queue_overflow_timeout_and_retry_after() {
+        let root = tempfile::tempdir().unwrap();
+        let state = service(root.path().join("unused-cache"));
+        let active = state
+            .provider_reads
+            .clone()
+            .acquire_many_owned(2)
+            .await
+            .unwrap();
+        let mut waiting = Vec::new();
+        for _ in 0..8 {
+            let mut future = Box::pin(state.provider_permit(Duration::from_secs(5)));
+            poll_waiter(future.as_mut()).await;
+            waiting.push(future);
+        }
+        assert_eq!(state.provider_waiters.available_permits(), 0);
+        let response = state
+            .provider_permit(Duration::ZERO)
+            .await
+            .err()
+            .unwrap()
+            .into_response();
+        assert_eq!(response.status(), StatusCode::TOO_MANY_REQUESTS);
+        assert_eq!(response.headers()[header::RETRY_AFTER], "1");
+        drop(waiting);
+        assert_eq!(state.provider_waiters.available_permits(), 8);
+        assert_eq!(
+            state.provider_permit(Duration::ZERO).await.err().unwrap().1,
+            "provider_reads_busy"
+        );
+        assert_eq!(state.provider_waiters.available_permits(), 8);
+        drop(active);
+        let (_, permit) = state.provider_work(|| Ok(())).await.unwrap();
+        drop(permit);
+        assert_eq!(state.provider_reads.available_permits(), 2);
     }
     #[tokio::test]
     async fn provider_and_cache_admission_are_independent() {
@@ -756,7 +845,7 @@ mod provider_admission_tests {
             "provider reads opened a cache store"
         );
         assert_eq!(
-            state.provider_work(|| Ok(())).await.err().unwrap().0,
+            state.provider_permit(Duration::ZERO).await.err().unwrap().0,
             StatusCode::TOO_MANY_REQUESTS
         );
         drop(cache);
@@ -791,7 +880,7 @@ mod provider_admission_tests {
         assert_eq!(state.provider_reads.available_permits(), 1);
         let other = state.provider_reads.clone().acquire_owned().await.unwrap();
         assert_eq!(
-            state.provider_work(|| Ok(())).await.err().unwrap().0,
+            state.provider_permit(Duration::ZERO).await.err().unwrap().0,
             StatusCode::TOO_MANY_REQUESTS
         );
         release_tx.send(()).unwrap();

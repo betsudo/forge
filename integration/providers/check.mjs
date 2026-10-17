@@ -73,7 +73,8 @@ try {
     , ...(api ? [['forge-api', new FetchZkConfigProvider(api, apiOptions)]] : [])
   ]) {
     assert.equal(await provider.getArtifactRuntimeVersion(), '0.20.0');
-    const ir = await provider.getZKIR(name), prover = await provider.getProverKey(name), verifier = await provider.getVerifierKey(name);
+    const [ir, prover, verifier] = await Promise.all([
+      provider.getZKIR(name), provider.getProverKey(name), provider.getVerifierKey(name)]);
     const data = {bzkir:ir, prover, verifier};
     for (const [extension, bytes] of Object.entries(data)) {
       const relative = extension==='bzkir'?`zkir/${name}.bzkir`:`keys/${name}.${extension}`;

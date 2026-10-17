@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "host": "macOS-26.2-arm64-arm-64bit-Mach-O",
+  "profile": "debug; same warm dependency cache; sequential incremental rebuild/link, not clean or release build",
+  "baseline_commit": "7273d75",
+  "rows": [
+    {
+      "variant": "full-source-compatibility",
+      "wall_seconds": 3.2225081670330837,
+      "executable_bytes": 56539752,
+      "source_sha256": "0c1b70e87c2e09737c7acdb08e70ed4c24eaab7734228df8d74c33e34e75e4d7",
+      "cargo_output": "   Compiling midnight-zkir-forge v2026.10.0 (/Users/ysh/github/betsudo/forge)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.13s\n"
+    },
+    {
+      "variant": "sibling-launcher",
+      "wall_seconds": 0.8393786249798723,
+      "executable_bytes": 684232,
+      "source_sha256": "717f64b8a3a24621f1495a0b826b3175a03b2e17078a61b84653c7f1e777a94c",
+      "cargo_output": "   Compiling midnight-zkir-forge v2026.10.0 (/Users/ysh/github/betsudo/forge)\n    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.77s\n"
+    }
+  ]
+}

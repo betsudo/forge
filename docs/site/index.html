@@ -155,11 +155,15 @@ JSON <code>.zkir</code> and produces binary ZKIR <code>.bzkir</code>, a prover k
 and <code>zkir/&lt;circuit&gt;.bzkir</code>, plus the source and integrity manifest.
 The local provider uses a filesystem base directory; the fetch provider uses an HTTP base URL.
 Match the consumer’s exact backend and serialization before using either.</p>
-<div class="note"><strong>HTTP integration boundary.</strong> Forge currently returns
-content-addressed object URLs. Its HTTP API does not serve the circuit-name layout
-expected by <code>FetchZkConfigProvider</code>. An adapter must download and verify the
-artifacts into that layout, or serve a verified export directory separately. Browser
-CORS and full Midnight.js provider qualification remain future scope.</div>
+<div class="note"><strong>Provider integrity boundary.</strong> Modern Midnight.js
+providers require the complete compiler output, including its original integrity
+manifest and runtime metadata. Bare Forge exports and <code>/v1</code> object URLs
+are insufficient. The opt-in <code>publish-view</code> command preserves a complete,
+successful compiler output under <code>/views/MANIFEST_SHA256</code>, with an
+independently pinned manifest hash. Exact compiler/provider fixtures have real
+Node and Fetch proof qualification; this does not qualify every consumer. A view
+is limited to 4 GiB total and 1 GiB per file. Browser CORS and hosted TLS remain
+deferred.</div>
 <p>Terminology reviewed against the official
 <a href="https://docs.midnight.network/guides/deploy-and-operate">provider guide</a>,
 <a href="https://docs.midnight.network/api-reference/midnight-js">Midnight.js reference</a>
@@ -243,7 +247,7 @@ zkir-forge --profile zkir3 prepare /absolute/path/circuit.zkir</code>
 <section id="http" data-title="An artifact API for one host.">
 <p class="eyebrow">DOCUMENTATION / 04</p>
 <h2>An artifact API for one host.</h2>
-<p>The initial HTTP transport shares the local cache application. It registers one raw ZKIR circuit per bundle, materializes synchronously, and serves immutable verified objects. It is an initial service slice; durable jobs, multi-circuit archive uploads, aliases and provider views remain future scope.</p>
+<p>The HTTP transport registers one raw ZKIR circuit per bundle, materializes synchronously, and serves immutable verified objects. An optional provider root serves explicitly published complete compiler views. Durable jobs, multi-circuit archive uploads and mutable aliases remain future scope.</p>
 <div class="code-wrap">
 <button class="copy" type="button" aria-label="Copy command">Copy</button>
 <pre>
@@ -297,6 +301,10 @@ curl --fail-with-body \
 <code>GET /v1/objects/{digest}</code>
 </td>
 <td>Verified immutable bytes; HEAD, ETag and Range</td>
+</tr>
+<tr>
+<td><code>GET /views/{manifestHash}/{path}</code></td>
+<td>Opt-in compiler provider layout; independently pinned metadata and verified requested-file bytes</td>
 </tr>
 <tr>
 <td>
@@ -374,6 +382,11 @@ zkir-forge ensure BUNDLE_ID</code>
 </div>
 <p>Hits recheck bytes. Eviction keeps source, small identity manifests and persistent copied exports. Regeneration must reproduce the pinned actual artifact identity or fail explicitly. Removing derived CAS data does not remove independent exports.</p>
 <p>Local writers serialize through SQLite. The first service retains one generation at a time. An HTTP admission limit bounds waiting requests; this is not distributed scheduling.</p>
+<p>Provider reads use a separate limit: two active verification/streaming operations,
+up to eight waiting requests and a ten-second admission timeout. Overflow or expiry
+returns <code>429 provider_reads_busy</code> with <code>Retry-After: 1</code>. Every
+range, HEAD or conditional request verifies and spools the whole selected file;
+prefer a full download or a few resumes over many small ranges.</p>
 </section>
 <section id="development" data-title="Build against a written contract.">
 <p class="eyebrow">DOCUMENTATION / 07</p>
