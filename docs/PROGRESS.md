@@ -1131,3 +1131,27 @@
   prepared locally. Native Linux, portable consumer execution and #5/#6/#7 full
   acceptance remain pending. No push/dispatch, Compact/other-checkout edit,
   dependency upgrade, shared installation or default-cache mutation occurred.
+
+## 2026-10-17 — strict local pilot instrumentation (#9)
+
+- Added bounded subprocess stage capture and terminal GitHub job collection over
+  the existing reporter; no new cache engine or proof-result cache. Captures bind
+  plan/run/attempt/job/clock and raw log hashes. Proof output must belong to its
+  captured proof stage; transport attempts must belong to their captured stage.
+- Complete expected/observed job rosters retain failed, cancelled, skipped,
+  missing and auxiliary jobs. Unplanned jobs, retry selection, raw proof count
+  mismatch, overlapping/oversized stage spans, wrong frozen payload/restore
+  identity and missing transfer references prevent any savings comparison.
+- Changed unavailable reporting to the documented original official generation
+  path with cache:null; no invented Forge misses. Actual compressed payload
+  bytes, all transport attempts and terminal whole-job timing remain required.
+  Quarantined candidate upload is distinct from later reusable promotion.
+-11 collection/capture tests and5 reporter tests pass, with additional table-driven
+  refusals. These are explicitly synthetic orchestration/API fixtures, not proofs
+  or hosted performance results. Cancellation, detached inherited pipes and
+  TERM-ignoring same-group workers are bounded; failed receipts remain visible.
+- Independent review found and confirmed fixes for evidence replay, payload/
+  restore binding, pipe shutdown, lingering workers and omitted upload references.
+  Exact native Linux consumer execution, actual GitHub transport instrumentation,
+  seed production and the reviewed frozen hosted pilot remain open. No publish,
+  workflow dispatch, consumer checkout edit, reusable promotion or trial started.
