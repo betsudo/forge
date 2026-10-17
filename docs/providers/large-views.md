@@ -62,3 +62,21 @@ conditional/range handling. Response payload bytes exclude HTTP headers/TLS;
 measurement clones responses and is not a latency benchmark. Native Linux and
 hosted CI require their own receipts. See [Passport local setup](passport-local.md)
 and the latest progress entry for actual execution status.
+
+The [native macOS ARM64 receipt](../evidence/passport-full-provider-local.json)
+records a complete 213-file, 12,184,494,074-byte view under an explicit 16 GiB
+budget. All files passed the final audit. Two selected application circuits ran
+through both Node and Fetch providers, then Node again after exact-byte repair:
+6 fresh proofs, 6 verifications, 12 negative proof controls and 54 assertions.
+Interruption left no published partial view; retry succeeded. Damaged HTTP
+artifacts refused HEAD/range/conditional requests, and damaged compiler output
+failed the SDK integrity check before owner repair.
+
+Publication took 91.72 seconds on the shared developer host; selected Fetch
+requests transferred 25,140,103 identity payload bytes. Neither number is a
+hosted transport benchmark. The largest file was 495,024,744 bytes, bounding two
+simultaneous snapshots for this bundle at 990,049,488 bytes. The unchanged global
+bound remains 2 GiB. The [reference provenance](../evidence/passport-full-provider-reference.json)
+pins the fresh original manifest independently. Its source map differs from the
+historical run because the compiler records the output path; artifact entries
+match. Historical manifests and receipts were not rewritten.

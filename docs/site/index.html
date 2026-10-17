@@ -162,7 +162,10 @@ are insufficient. The opt-in <code>publish-view</code> command preserves a compl
 successful compiler output under <code>/views/MANIFEST_SHA256</code>, with an
 independently pinned manifest hash. Exact compiler/provider fixtures have real
 Node and Fetch proof qualification; this does not qualify every consumer. A view
-is limited to 4 GiB total and 1 GiB per file. Browser CORS and hosted TLS remain
+defaults to 4 GiB total; an explicit operator budget can allow up to 64 GiB,
+with the fixed 1 GiB per-file limit unchanged. The complete Passport view has
+native macOS ARM64 qualification with selected application proofs. Linux consumer
+qualification remains pending. Browser CORS and hosted TLS remain
 deferred.</div>
 <p>Terminology reviewed against the official
 <a href="https://docs.midnight.network/guides/deploy-and-operate">provider guide</a>,

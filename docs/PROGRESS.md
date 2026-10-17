@@ -1105,10 +1105,24 @@
   ignored in the ordinary suite), including 16 provider tests and bounded HTTP
   admission/cancellation. Clippy all-targets passes. Independent identity/
   concurrency review found and confirmed the metadata-classification fix.
-- Added the full Passport provider harness and explicit budget/storage guide.
-  Actual full-manifest Fetch/proof/interruption evidence is still in progress;
-  native Linux/hosted CI and clean-host installation are not inferred. Compact,
+- Full Passport provider qualification passed on native macOS ARM64: all213files
+  /12,184,494,074 bytes audited; 6 fresh selected-circuit proofs, 6 verifications,
+  12 negative controls and54 assertions. Interrupted publication/retry, damaged
+  HTTP HEAD/range/conditional refusal and final compiler-output integrity refusal
+  followed by exact owner repair all passed. Complete view publication took
+  91.72s; selected Fetch requests transferred25,140,103 identity payload bytes.
+  These are shared-host observations, not hosted CI savings.
+- Evidence: docs/evidence/passport-full-provider-local.json, raw SHA256
+  cc42597a00fd6a21f350b8f702f3b2dd88e60b486c5fcd4eaa2a2caaf4b50e39.
+  Fresh original manifest b05834d… differs from the historical manifest only in
+  the output-path source map; all artifact entries match. Independent review
+  checked receipt arithmetic, current tool/harness digests, source closure and
+  original manifests. Historical evidence remains intact.
+- Native Linux/hosted CI and clean-host installation are not inferred. Compact,
   official pins, shared installation/default cache and other checkouts unchanged.
+  Repo/global skill and Midnight vault handoff refreshed. The harness removed
+  its owned provider/staging/private HTTP/SDK copies; the separately owned 12GB
+  baseline was removed after independent receipt review. No worktrees created.
 
 ## 2026-10-17 — native Linux consumer harness prepared (#5/#6/#7)
 

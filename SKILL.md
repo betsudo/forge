@@ -108,7 +108,11 @@ apply; a qualified smaller fixture does not qualify a whole consumer bundle.
 For the exact full-account JSON3.1 cohort, read the
 [Passport setup and receipt-renewal guide](docs/providers/passport-local.md).
 It covers all 52 artifact sets and two actual application proof paths on native
-macOS ARM64; full-account HTTP and Linux remain separate qualification gates.
+macOS ARM64. The complete 213-file HTTP view also has native macOS qualification
+with selected application proofs; see the [large-view guide](docs/providers/large-views.md)
+and its exact receipt. Native Linux consumer qualification remains pending;
+the [Linux harness](docs/providers/passport-linux.md) and manual workflow are
+prepared locally. Do not infer hosted CI savings from these local receipts.
 
 ## Validate and measure the consumer integration
 
