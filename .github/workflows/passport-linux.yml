@@ -1,0 +1,81 @@
+name: Native Linux Passport qualification (manual)
+on:
+  workflow_dispatch:
+    inputs:
+      compiler_url:
+        description: Official Compact 0.35.0 Linux x86_64 archive HTTPS URL
+        required: true
+        type: string
+      compiler_sha256:
+        description: Independently verified archive SHA-256 (not a downloaded sidecar)
+        required: true
+        type: string
+      compiler_subdir:
+        description: Directory inside archive containing compactc.bin, zkir-v3 and zkir
+        default: '.'
+        type: string
+      params_base_url:
+        description: HTTPS directory of public parameters (checked against committed digests)
+        required: true
+        type: string
+permissions:
+  contents: read
+concurrency:
+  group: passport-native-linux-qualification
+  cancel-in-progress: false
+jobs:
+  passport:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Reclaim unused SDKs on this disposable runner
+        run: sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc
+      - uses: cachix/install-nix-action@3c6342b75005b9cc7c7d4069c3e9179247c89012 # v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            max-jobs = 2
+            cores = 2
+      - name: Build candidate for the checked-out commit
+        run: |
+          mkdir -p .local/passport-linux-inputs
+          ./bootstrap.sh -- nix build .#default --out-link .local/passport-linux-candidate
+      - name: Download and pin inputs without executing them
+        env:
+          COMPILER_URL: ${{ inputs.compiler_url }}
+          COMPILER_SHA256: ${{ inputs.compiler_sha256 }}
+          COMPILER_SUBDIR: ${{ inputs.compiler_subdir }}
+          PARAMS_BASE_URL: ${{ inputs.params_base_url }}
+        run: |
+          [[ "$COMPILER_URL" == https://* ]]
+          curl --fail --location --proto '=https' --proto-redir '=https' --max-filesize 536870912 --max-time 600 "$COMPILER_URL" --output .local/passport-linux-inputs/compiler.tar.gz
+          ./.local/passport-linux-candidate/bin/zkir-forge --version
+          ./bootstrap.sh -- python3 scripts/stage-passport-linux.py --compiler-archive .local/passport-linux-inputs/compiler.tar.gz --compiler-sha256 "$COMPILER_SHA256" --compiler-subdir "$COMPILER_SUBDIR" --params-base-url "$PARAMS_BASE_URL" --binary "$PWD/.local/passport-linux-candidate/bin/zkir-forge" --output .local/passport-linux-staged > .local/passport-linux-inputs/staged.json
+      - name: Native artifact parity, cold/warm compiler and actual SDK recovery proofs
+        run: |
+          ./bootstrap.sh -- python3 - <<'PY'
+          import json, pathlib, subprocess
+          root = pathlib.Path.cwd()
+          staged = json.loads((root/'.local/passport-linux-inputs/staged.json').read_text())
+          subprocess.run(['python3','scripts/qualify-passport-linux.py',
+              '--binary',str(root/'.local/passport-linux-candidate/bin/zkir-forge'),
+              '--compiler-dir',staged['compiler_dir'],'--params-dir',str(root/'.local/passport-linux-staged/params'),
+              '--source',str(root/'.local/passport-linux-staged/source'),'--cohort',staged['cohort'],
+              '--cohort-sha256',staged['cohort_sha256'],'--work',str(root/'.local/passport-linux-work'),
+              '--output',str(root/'.local/passport-linux-inputs/passport-linux.json')],check=True)
+          PY
+      - name: Retain receipts and failure logs (no keys, preimages or proof requests)
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: passport-native-linux-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            .local/passport-linux-inputs/*.json
+            .local/passport-linux-staged/cohort.json
+            .local/passport-linux-work/*.json
+            .local/passport-linux-work/*.log
+          include-hidden-files: true
+          retention-days: 14

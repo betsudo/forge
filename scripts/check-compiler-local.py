@@ -5,7 +5,9 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import os
 from pathlib import Path
+import signal
 import subprocess
 import sys
 import tempfile
@@ -50,6 +52,36 @@ def fixture():
 
 
 class LocalAdapter(unittest.TestCase):
+    def test_supervisor_termination_cleans_nested_prepare_group(self):
+        with tempfile.TemporaryDirectory() as directory:
+            work = Path(directory)
+            ready, late, pidfile = work/'ready', work/'late', work/'backend-pid'
+            worker = "import pathlib,time;pathlib.Path("+repr(str(ready))+").write_text('ready');time.sleep(2);pathlib.Path("+repr(str(late))+").write_text('bad')"
+            backend = work/'backend.py'
+            backend.write_text('import subprocess,sys,time,os,pathlib\npathlib.Path('+repr(str(pidfile))+').write_text(str(os.getpid()))\nsubprocess.Popen([sys.executable,"-c",'+repr(worker)+'])\ntime.sleep(30)\n')
+            supervisor = work/'supervisor.py'
+            supervisor.write_text('import importlib.util,signal,sys\ns=importlib.util.spec_from_file_location("adapter",'+
+                repr(str(ROOT/'scripts/compiler-local.py'))+');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)\n'+
+                'signal.signal(signal.SIGTERM,m.interrupted)\nm.command([sys.executable,'+repr(str(backend))+'],timeout=30)\n')
+            process = subprocess.Popen([sys.executable,supervisor],stdout=subprocess.PIPE,stderr=subprocess.PIPE,start_new_session=True)
+            try:
+                deadline = time.monotonic()+5
+                while not ready.exists() and time.monotonic() < deadline: time.sleep(.01)
+                self.assertTrue(ready.exists())
+                # Model the outer qualifier's graceful group shutdown; the
+                # backend has its own session, owned by adapter.command().
+                os.killpg(process.pid,signal.SIGTERM)
+                process.communicate(timeout=5)
+                self.assertNotEqual(process.returncode,0)
+                time.sleep(2.1)
+                self.assertFalse(late.exists(),'nested generation survived supervisor termination')
+            finally:
+                if process.poll() is None: process.kill();process.communicate(timeout=1)
+                if pidfile.exists():
+                    try: os.killpg(int(pidfile.read_text()),signal.SIGKILL)
+                    except ProcessLookupError: pass
+                    except PermissionError: pass
+
     def hook(self, source, config):
         adapter.materialize(config,['compile-many',str(source.parent),str(Path(config['output'])/'keys')])
 

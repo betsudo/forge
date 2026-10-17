@@ -1109,3 +1109,25 @@
   Actual full-manifest Fetch/proof/interruption evidence is still in progress;
   native Linux/hosted CI and clean-host installation are not inferred. Compact,
   official pins, shared installation/default cache and other checkouts unchanged.
+
+## 2026-10-17 — native Linux consumer harness prepared (#5/#6/#7)
+
+- Added digest-checked staging for the unchanged pinned Passport source closure,
+  official owner-pinned Linux compiler archive and eight public parameter models.
+  The native-only runner records actual tool/helper/worker bytes, creates its own
+  monotonic official baseline and reuses full52 artifact/compiler-output parity,
+  cold/warm key reuse and genuine selected SDK recovery proofs.
+- Added final compiler-output integrity refusal and explicit exact repair to the
+  shared qualification path. Historical Mac evidence/anchors remain unchanged.
+  Result and policy paths must be distinct/absent before work. Successful owned
+  lane copies are cleaned; failures keep private scratch/logs for diagnosis.
+- Fixed nested-session cancellation: custom SIGTERM interruption reaches the
+  hook's prepare-group cleanup before outer compiler termination.16 adapter
+  tests and7 Linux orchestration tests pass, including altered tools/source/
+  parameters, stale scratch/policy collision and no-success-on-failed-baseline.
+  Tests are synthetic process/preflight controls, not native consumer receipts.
+- Independent review confirmed cancellation/receipt fixes. A manual-only native
+  GitHub runner workflow retains cohort provenance and failure logs; it is only
+  prepared locally. Native Linux, portable consumer execution and #5/#6/#7 full
+  acceptance remain pending. No push/dispatch, Compact/other-checkout edit,
+  dependency upgrade, shared installation or default-cache mutation occurred.
