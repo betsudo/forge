@@ -103,10 +103,13 @@ def summarize(plan, rows, plan_sha256):
         require(type(row['transport_unavailable']) is bool, 'transport availability boolean required')
         require(row['transport_unavailable'] == (lane == 'unavailable'), 'unavailable lane mismatch')
         stats = row['cache']
-        if lane == 'uncached':
+        if lane in ('uncached', 'unavailable'):
             require(stats is None and row['download_bytes'] == row['upload_bytes'] == 0,
-                    'uncached control must not use Forge transport')
-            require(timing['download_ms'] == timing['upload_ms'] == 0, 'uncached transport time must be zero')
+                    'official control/fallback must not use Forge cache or transfer keys')
+            if lane == 'uncached':
+                require(timing['download_ms'] == timing['upload_ms'] == 0, 'uncached transport time must be zero')
+            else:
+                require(timing['upload_ms'] == 0, 'unavailable transport cannot upload')
         else:
             require(isinstance(stats, dict), 'job-local cache deltas required')
             for key in ('requests', 'hits', 'misses', 'errors'):

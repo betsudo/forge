@@ -11,7 +11,54 @@ use std::{
 const MANIFEST: &str = "compiler/contract-manifest.json";
 const MAX_JSON: u64 = 4 * 1024 * 1024;
 const MAX_FILE: u64 = 1024 * 1024 * 1024;
-const MAX_TOTAL: u64 = 4 * MAX_FILE;
+pub const DEFAULT_MAX_VIEW_BYTES: u64 = 4 * MAX_FILE;
+pub const MAX_VIEW_BYTES: u64 = 64 * MAX_FILE;
+const STORAGE_RESERVE: u64 = 64 * 1024 * 1024;
+#[derive(Clone, Copy)]
+pub struct Limits {
+    max_bytes: u64,
+}
+impl Limits {
+    pub fn new(max_bytes: u64) -> Result<Self> {
+        crate::require!(
+            (1..=MAX_VIEW_BYTES).contains(&max_bytes),
+            crate::error::Kind::ProviderLimit,
+            "--provider-max-view-bytes must be 1..={MAX_VIEW_BYTES}"
+        );
+        Ok(Self { max_bytes })
+    }
+}
+impl Default for Limits {
+    fn default() -> Self {
+        Self {
+            max_bytes: DEFAULT_MAX_VIEW_BYTES,
+        }
+    }
+}
+fn budget(total: u64, limits: Limits) -> Result<()> {
+    crate::require!(
+        total <= limits.max_bytes,
+        crate::error::Kind::ProviderLimit,
+        "provider requires {total} bytes, configured limit {}; explicitly set --provider-max-view-bytes (maximum {MAX_VIEW_BYTES})",
+        limits.max_bytes
+    );
+    Ok(())
+}
+fn headroom(required: u64, available: u64) -> Result<()> {
+    crate::require!(
+        available >= required + STORAGE_RESERVE,
+        crate::error::Kind::ProviderStorageUnavailable,
+        "provider copy requires {required} bytes plus {STORAGE_RESERVE} reserve; available {available}"
+    );
+    Ok(())
+}
+fn metadata_error(error: anyhow::Error) -> anyhow::Error {
+    if error.downcast_ref::<crate::error::Kind>() == Some(&crate::error::Kind::ProviderLimit) {
+        error
+    } else {
+        error.context(crate::error::Kind::IntegrityError)
+    }
+}
 const MAX_FILES: usize = 4096;
 #[derive(Clone)]
 struct Entry {
@@ -104,7 +151,7 @@ fn inventory(root: &Path, prefix: &str, files: &mut BTreeSet<String>) -> Result<
     }
     Ok(())
 }
-fn entries(root: &Path, id: &str) -> Result<BTreeMap<String, Entry>> {
+fn entries(root: &Path, id: &str, limits: Limits) -> Result<BTreeMap<String, Entry>> {
     crate::domain::validate_id(id)?;
     let raw = bytes(root, MANIFEST, MAX_JSON)?;
     ensure!(
@@ -138,6 +185,7 @@ fn entries(root: &Path, id: &str) -> Result<BTreeMap<String, Entry>> {
         },
     );
     let mut total = raw.len() as u64;
+    budget(total, limits)?;
     for (dir, value) in map {
         if metadata.contains(&dir.as_str()) || dir == "compiler-commit" {
             continue;
@@ -160,9 +208,13 @@ fn entries(root: &Path, id: &str) -> Result<BTreeMap<String, Entry>> {
                 "unsupported manifest entry"
             );
             let size = item["size"].as_u64().context("manifest size required")?;
-            ensure!(size <= MAX_FILE, "provider file limit");
+            crate::require!(
+                size <= MAX_FILE,
+                crate::error::Kind::ProviderLimit,
+                "provider file {dir}/{name} requires {size} bytes; maximum {MAX_FILE}"
+            );
             total = total.checked_add(size).context("size overflow")?;
-            ensure!(total <= MAX_TOTAL, "provider total limit");
+            budget(total, limits)?;
             let hash = item["hash"].as_str().context("manifest hash required")?;
             crate::domain::validate_id(hash)?;
             result.insert(
@@ -268,7 +320,15 @@ fn verified_copy<W: Write>(root: &Path, path: &str, entry: &Entry, output: &mut 
 }
 /// Verify pinned metadata/tree and the requested representation, without hashing siblings.
 pub fn read(root: &Path, id: &str, path: &str) -> Result<(File, String, u64)> {
-    let entries = entries(root, id).context(crate::error::Kind::IntegrityError)?;
+    read_with_limits(root, id, path, Limits::default())
+}
+pub fn read_with_limits(
+    root: &Path,
+    id: &str,
+    path: &str,
+    limits: Limits,
+) -> Result<(File, String, u64)> {
+    let entries = entries(root, id, limits).map_err(metadata_error)?;
     let requested = entries.get(path).context(crate::error::Kind::NotFound)?;
     let mut output = tempfile::tempfile()?;
     verified_copy(root, path, requested, &mut output)
@@ -278,7 +338,10 @@ pub fn read(root: &Path, id: &str, path: &str) -> Result<(File, String, u64)> {
 }
 /// Full integrity audit; never writes a reusable verification marker.
 pub fn verify(root: &Path, id: &str) -> Result<Value> {
-    let entries = entries(root, id).context(crate::error::Kind::IntegrityError)?;
+    verify_with_limits(root, id, Limits::default())
+}
+pub fn verify_with_limits(root: &Path, id: &str, limits: Limits) -> Result<Value> {
+    let entries = entries(root, id, limits).map_err(metadata_error)?;
     let mut total = 0u64;
     for (name, entry) in &entries {
         verified_copy(root, name, entry, &mut std::io::sink())
@@ -288,18 +351,25 @@ pub fn verify(root: &Path, id: &str) -> Result<Value> {
     Ok(json!({"schema":1,"view_id":id,"files":entries.len(),"bytes":total,"verified":true}))
 }
 pub fn publish(input: &Path, id: &str, root: &Path) -> Result<Value> {
+    publish_with_limits(input, id, root, Limits::default())
+}
+pub fn publish_with_limits(input: &Path, id: &str, root: &Path, limits: Limits) -> Result<Value> {
     crate::domain::validate_id(id)?;
+    let manifest = entries(input, id, limits).map_err(metadata_error)?;
     fs::create_dir_all(root)?;
     ensure!(
         !fs::symlink_metadata(root)?.file_type().is_symlink(),
         "provider root symlink"
     );
-    let manifest = entries(input, id)?;
     let target = root.join(id);
     if fs::symlink_metadata(&target).is_ok() {
-        verify(&target, id)?;
+        verify_with_limits(&target, id, limits)?;
         return Ok(json!({"schema":1,"view_id":id,"path":target,"reused":true}));
     }
+    let total = manifest.values().map(|entry| entry.size).sum();
+    let available = crate::filesystem::available_space(root)
+        .context(crate::error::Kind::ProviderStorageUnavailable)?;
+    headroom(total, available)?;
     let stage = tempfile::Builder::new()
         .prefix(".provider-stage-")
         .tempdir_in(root)?;
@@ -314,8 +384,8 @@ pub fn publish(input: &Path, id: &str, root: &Path) -> Result<Value> {
         output.sync_all()?;
     }
     // Re-inventory catches added/removed entries during publication; verify staging too.
-    entries(input, id)?;
-    verify(stage.path(), id)?;
+    entries(input, id, limits).map_err(metadata_error)?;
+    verify_with_limits(stage.path(), id, limits)?;
     for item in fs::read_dir(stage.path())? {
         let p = item?.path();
         if p.is_dir() {
@@ -325,7 +395,7 @@ pub fn publish(input: &Path, id: &str, root: &Path) -> Result<Value> {
     File::open(stage.path())?.sync_all()?;
     if let Err(error) = crate::filesystem::publish_directory(stage.path(), &target) {
         if target.exists() {
-            verify(&target, id)?;
+            verify_with_limits(&target, id, limits)?;
             return Ok(json!({"schema":1,"view_id":id,"path":target,"reused":true}));
         }
         return Err(error);
@@ -371,4 +441,27 @@ pub fn separate_roots(provider: &Path, cache: &Path) -> Result<()> {
         "provider root and cache root must be separate non-nested directories"
     );
     Ok(())
+}
+
+#[cfg(test)]
+mod budget_tests {
+    use super::*;
+    #[test]
+    fn finite_limits_and_headroom_are_nonfallback() {
+        for limit in [0, MAX_VIEW_BYTES + 1] {
+            let error = Limits::new(limit).err().unwrap();
+            assert_eq!(
+                crate::error::classify(&error),
+                crate::error::Kind::ProviderLimit
+            );
+            assert!(!crate::error::classify(&error).availability_fallback());
+        }
+        assert!(headroom(100, 100 + STORAGE_RESERVE).is_ok());
+        let error = headroom(100, 99 + STORAGE_RESERVE).unwrap_err();
+        assert_eq!(
+            crate::error::classify(&error),
+            crate::error::Kind::ProviderStorageUnavailable
+        );
+        assert!(!crate::error::classify(&error).availability_fallback());
+    }
 }

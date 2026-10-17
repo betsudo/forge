@@ -109,3 +109,14 @@ qualification, then off/cold/warm compiler and actual provider-view tests. The
 receipt is written only after all controls pass and scratch cleanup completes.
 Review it before pinning its hash in a consumer; generating a receipt alone does
 not establish an independent trusted publisher.
+
+### Supervised cancellation during local qualification
+
+The wrapper handles SIGTERM with a dedicated interruption exception so blocked
+pipe polling cannot swallow the signal as an ordinary EINTR retry. Its prepare
+helper stops its owned CLI/worker group before returning. A supervising qualifier
+sends TERM to the surrounding compiler/hook group, waits for that cleanup and
+uses KILL only after the finite grace period. The nested-session late-write test
+checks that a generation worker cannot publish after supervisor cancellation.
+Native Linux setup and remaining execution gates are in
+[Passport Linux qualification](passport-linux.md).

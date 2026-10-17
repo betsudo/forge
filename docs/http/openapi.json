@@ -1684,6 +1684,12 @@
                 "description": "Retry after one second"
               }
             }
+          },
+          "400": {
+            "description": "Invalid path/id"
+          },
+          "500": {
+            "description": "Serving configuration refuses provider view budget (provider_limit); no availability fallback or automatic retry"
           }
         },
         "description": "Two active verification/streams, at most eight waiting reads and ten seconds admission wait. Requested bytes are fully verified before any response."
@@ -1743,6 +1749,12 @@
                 "description": "Retry after one second"
               }
             }
+          },
+          "400": {
+            "description": "Invalid path/id"
+          },
+          "500": {
+            "description": "Serving configuration refuses provider view budget (provider_limit); no availability fallback or automatic retry"
           }
         },
         "description": "Two active verification/streams, at most eight waiting reads and ten seconds admission wait. Requested bytes are fully verified before any response."

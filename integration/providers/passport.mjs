@@ -13,12 +13,19 @@ const bundle = path.resolve(bundleArg), work = path.resolve(workArg);
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const anchor = hash(await fs.readFile(path.join(bundle,'compiler/contract-manifest.json')));
 const providers = [['local',new NodeZkConfigProvider(bundle,{expectedManifestHash:anchor})]];
+const transfers=[];
 if (process.env.FORGE_PROVIDER_VIEW_URL) {
   const token = process.env.FORGE_PROVIDER_VIEW_TOKEN;
   assert.ok(token);
   providers.push(['fetch',new FetchZkConfigProvider(process.env.FORGE_PROVIDER_VIEW_URL,{
-    expectedManifestHash:anchor,fetchFunc:(url,init)=>fetch(url,{...init,
-      headers:{...init.headers,Authorization:`Bearer ${token}`}})})]);
+    expectedManifestHash:anchor,fetchFunc:async(url,init)=>{
+      const response=await fetch(url,{...init,headers:{...init.headers,Authorization:`Bearer ${token}`}});
+      // Count actual identity response payload bytes. Clone measurement adds
+      // buffering overhead; this harness is correctness/cost evidence, not latency.
+      const bytes=await response.clone().arrayBuffer();
+      transfers.push({path:new URL(url).pathname,status:response.status,bytes:bytes.byteLength});
+      return response;
+    }})]);
 }
 const lanes=[];
 for (const [lane,provider] of providers) {
@@ -53,7 +60,9 @@ for (const [lane,provider] of providers) {
       proof_controls:proof.proof_controls});
   }
 }
-console.log(JSON.stringify({manifest_sha256:anchor,lanes,provenance:{
+console.log(JSON.stringify({manifest_sha256:anchor,lanes,
+  provider_transfer:{unit:'HTTP identity response payload bytes; excludes headers/TLS',
+    total_bytes:transfers.reduce((sum,row)=>sum+row.bytes,0),responses:transfers},provenance:{
   node:process.version,worker_sha256:hash(await fs.readFile(worker)),
   sdk_package_lock_sha256:hash(await fs.readFile(new URL('./package-lock.json',import.meta.url))),
   proof_harness_sha256:hash(await fs.readFile(new URL(import.meta.url))),

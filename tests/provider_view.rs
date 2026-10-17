@@ -32,6 +32,63 @@ fn fixture() -> (tempfile::TempDir, String) {
     (dir, id)
 }
 #[test]
+fn aggregate_budget_counts_metadata_and_is_explicit_at_every_entrypoint() {
+    use midnight_zkir_forge::error::{Kind, classify};
+    let (source, id) = fixture();
+    let total = provider_view::verify(source.path(), &id).unwrap()["bytes"]
+        .as_u64()
+        .unwrap();
+    let root = tempfile::tempdir().unwrap();
+    let small = provider_view::Limits::new(total - 1).unwrap();
+    for error in [
+        provider_view::publish_with_limits(source.path(), &id, root.path(), small).unwrap_err(),
+        provider_view::verify_with_limits(source.path(), &id, small).unwrap_err(),
+        provider_view::read_with_limits(source.path(), &id, "keys/test.prover", small).unwrap_err(),
+    ] {
+        assert_eq!(classify(&error), Kind::ProviderLimit);
+        assert!(!classify(&error).availability_fallback());
+        assert!(format!("{error:#}").contains("--provider-max-view-bytes"));
+    }
+    assert_eq!(fs::read_dir(root.path()).unwrap().count(), 0);
+    let exact = provider_view::Limits::new(total).unwrap();
+    provider_view::publish_with_limits(source.path(), &id, root.path(), exact).unwrap();
+    assert!(provider_view::verify_with_limits(&root.path().join(&id), &id, exact).is_ok());
+    assert!(provider_view::publish_with_limits(source.path(), &id, root.path(), small).is_err());
+    assert!(provider_view::verify(&root.path().join(&id), &id).is_ok());
+}
+#[test]
+fn opt_in_never_relaxes_per_file_cap_or_publishes_failed_copies() {
+    use midnight_zkir_forge::error::{Kind, classify};
+    let (source, _) = fixture();
+    let manifest_path = source.path().join("compiler/contract-manifest.json");
+    let mut manifest: serde_json::Value =
+        serde_json::from_slice(&fs::read(&manifest_path).unwrap()).unwrap();
+    let original = fs::read(&manifest_path).unwrap();
+    manifest["keys"]["test.prover"]["size"] = json!(1024u64.pow(3) + 1);
+    let raw = serde_json::to_vec(&manifest).unwrap();
+    fs::write(&manifest_path, &raw).unwrap();
+    let id = hex::encode(Sha256::digest(&raw));
+    let root = tempfile::tempdir().unwrap();
+    let error = provider_view::publish_with_limits(
+        source.path(),
+        &id,
+        root.path(),
+        provider_view::Limits::new(provider_view::MAX_VIEW_BYTES).unwrap(),
+    )
+    .unwrap_err();
+    assert_eq!(classify(&error), Kind::ProviderLimit);
+    assert_eq!(fs::read_dir(root.path()).unwrap().count(), 0);
+    fs::write(&manifest_path, &original).unwrap();
+    let id = hex::encode(Sha256::digest(&original));
+    // Fails after other files have been staged; retry leaves no partial identity.
+    fs::write(source.path().join("zkir/test.bzkir"), [9]).unwrap();
+    assert!(provider_view::publish(source.path(), &id, root.path()).is_err());
+    assert_eq!(fs::read_dir(root.path()).unwrap().count(), 0);
+    fs::write(source.path().join("zkir/test.bzkir"), [1]).unwrap();
+    provider_view::publish(source.path(), &id, root.path()).unwrap();
+    assert_eq!(fs::read_dir(root.path()).unwrap().count(), 1);
+}
+#[test]
 fn preserves_original_bytes_and_reuses_only_verified_views() {
     let (source, id) = fixture();
     let root = tempfile::tempdir().unwrap();
@@ -133,6 +190,21 @@ fn repin(source: &std::path::Path, edit: impl FnOnce(&mut serde_json::Value)) ->
     let id = hex::encode(Sha256::digest(&raw));
     fs::write(path, raw).unwrap();
     id
+}
+#[test]
+fn malformed_manifest_hash_is_integrity_error_not_input_error() {
+    use midnight_zkir_forge::error::{Kind, classify};
+    let (source, _) = fixture();
+    let id = repin(source.path(), |m| {
+        m["keys"]["test.prover"]["hash"] = json!("bad")
+    });
+    for error in [
+        provider_view::verify(source.path(), &id).unwrap_err(),
+        provider_view::read(source.path(), &id, "keys/test.prover").unwrap_err(),
+    ] {
+        assert_eq!(classify(&error), Kind::IntegrityError);
+        assert!(!classify(&error).availability_fallback());
+    }
 }
 #[test]
 fn refuses_metadata_mismatch_nested_manifest_and_limits() {

@@ -1,0 +1,290 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "scope": "Native macOS ARM64 full213-file Passport HTTP view; selected2 application circuits through both Node/Fetch; no Linux/hostedCI claim",
+  "manifest_sha256": "b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842",
+  "files": 213,
+  "persistent_bytes": 12184494074,
+  "largest_file_bytes": 495024744,
+  "configured_max_view_bytes": 17179869184,
+  "default_max_view_bytes": 4294967296,
+  "max_temporary_snapshot_bytes": 2147483648,
+  "largest_actual_two_snapshot_bound_bytes": 990049488,
+  "destination_free_before_publish": 30554005504,
+  "publication_wall_ms": 91722.83554199385,
+  "interruption": {
+    "staged_bytes_observed": 70722748,
+    "target_absent_after_kill": true,
+    "owned_leftovers_explicitly_removed": 1
+  },
+  "controls": [
+    "default-budget-refuses-already-published-large-view-auth-first",
+    "actual-parallel-full-view-Fetch-and-Node-proofs",
+    "corruption-refuses-before-HEAD-range-304",
+    "exact-byte-restoration-retry"
+  ],
+  "provider_checks": {
+    "manifest_sha256": "b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842",
+    "lanes": [
+      {
+        "lane": "local",
+        "circuit": "deposit_unshielded",
+        "execution": {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        "artifact_sha256": {
+          "bzkir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+          "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+          "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 66.265083,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 15.136416
+        }
+      },
+      {
+        "lane": "local",
+        "circuit": "activate_initial_device_with_jubjub",
+        "execution": {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        },
+        "artifact_sha256": {
+          "bzkir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+          "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+          "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1350.3319999999999,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.367708
+        }
+      },
+      {
+        "lane": "fetch",
+        "circuit": "deposit_unshielded",
+        "execution": {
+          "circuit": "deposit_unshielded",
+          "assertions": 9,
+          "preimageBytes": 240,
+          "privateWitnessCalls": 0,
+          "publicOps": 34,
+          "privateOutputs": 0
+        },
+        "artifact_sha256": {
+          "bzkir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+          "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+          "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 3845,
+          "proof_count": 1,
+          "proof_ms": 60.688125,
+          "public_inputs": 141,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 12.789750000000002
+        }
+      },
+      {
+        "lane": "fetch",
+        "circuit": "activate_initial_device_with_jubjub",
+        "execution": {
+          "circuit": "activate_initial_device_with_jubjub",
+          "assertions": 9,
+          "preimageBytes": 524,
+          "privateWitnessCalls": 0,
+          "publicOps": 40,
+          "privateOutputs": 0
+        },
+        "artifact_sha256": {
+          "bzkir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+          "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+          "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+        },
+        "proof_controls": {
+          "corrupt_proof_rejected": true,
+          "invalid_statement_rejected": true,
+          "negative_controls": 2,
+          "proof_bytes": 5765,
+          "proof_count": 1,
+          "proof_ms": 1341.211709,
+          "public_inputs": 143,
+          "valid_proof_verified": true,
+          "verification_count": 1,
+          "verify_ms": 14.722083
+        }
+      }
+    ],
+    "provider_transfer": {
+      "unit": "HTTP identity response payload bytes; excludes headers/TLS",
+      "total_bytes": 25140103,
+      "responses": [
+        {
+          "path": "/views/b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842/compiler/contract-manifest.json",
+          "status": 200,
+          "bytes": 37703
+        },
+        {
+          "path": "/views/b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842/zkir/deposit_unshielded.bzkir",
+          "status": 200,
+          "bytes": 1654
+        },
+        {
+          "path": "/views/b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842/keys/deposit_unshielded.prover",
+          "status": 200,
+          "bytes": 446790
+        },
+        {
+          "path": "/views/b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842/keys/deposit_unshielded.verifier",
+          "status": 200,
+          "bytes": 1353
+        },
+        {
+          "path": "/views/b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842/zkir/activate_initial_device_with_jubjub.bzkir",
+          "status": 200,
+          "bytes": 1993
+        },
+        {
+          "path": "/views/b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842/keys/activate_initial_device_with_jubjub.verifier",
+          "status": 200,
+          "bytes": 2313
+        },
+        {
+          "path": "/views/b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842/keys/activate_initial_device_with_jubjub.prover",
+          "status": 200,
+          "bytes": 24648297
+        }
+      ]
+    },
+    "provenance": {
+      "node": "v24.18.1",
+      "worker_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+      "sdk_package_lock_sha256": "3fd7470d047080db1ec2ad067fc008628596962d46f5d8b4bcfd1e36719cb69d",
+      "proof_harness_sha256": "15df61237cbe22526d9cc7e46a3e48e0eb8edd99aec5dc9ada16be0af02b86cc",
+      "preimage_generator_sha256": "25e355b3ff4bd7dfee396e1e72a74b323add197c9f0cfcdf0db3d93f42adee0b"
+    }
+  },
+  "consumer_recovery": {
+    "control": "final-compiler-output-integrity-refusal-exact-owner-repair",
+    "provider_checks": {
+      "manifest_sha256": "b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842",
+      "lanes": [
+        {
+          "lane": "local",
+          "circuit": "deposit_unshielded",
+          "execution": {
+            "circuit": "deposit_unshielded",
+            "assertions": 9,
+            "preimageBytes": 240,
+            "privateWitnessCalls": 0,
+            "publicOps": 34,
+            "privateOutputs": 0
+          },
+          "artifact_sha256": {
+            "bzkir": "b64d5d0243053a4b383493835a3a2412e09c89248d351076c5097f528eb7e2f8",
+            "prover": "d8409e37efa3f142a8c9fb44a7a4c25397312317f9cf28f1243c1bba887f56a3",
+            "verifier": "bb4421a5909564377d15f0756299bef99740089b842e8d9796ad2d3d75831de9"
+          },
+          "proof_controls": {
+            "corrupt_proof_rejected": true,
+            "invalid_statement_rejected": true,
+            "negative_controls": 2,
+            "proof_bytes": 3845,
+            "proof_count": 1,
+            "proof_ms": 71.493875,
+            "public_inputs": 141,
+            "valid_proof_verified": true,
+            "verification_count": 1,
+            "verify_ms": 12.733082999999999
+          }
+        },
+        {
+          "lane": "local",
+          "circuit": "activate_initial_device_with_jubjub",
+          "execution": {
+            "circuit": "activate_initial_device_with_jubjub",
+            "assertions": 9,
+            "preimageBytes": 524,
+            "privateWitnessCalls": 0,
+            "publicOps": 40,
+            "privateOutputs": 0
+          },
+          "artifact_sha256": {
+            "bzkir": "18a73910ac9c1db1ae52a8c48abcbd891838d75206c5da48eb1338fd0db622ce",
+            "prover": "6b9571e641ff826dd381550d14e3c445f28efad59890c1cd8a50b27a9517995a",
+            "verifier": "b33fa139d34231f6ba1144a4ac3e947b35e679e8e91d31b554d7ff916932931e"
+          },
+          "proof_controls": {
+            "corrupt_proof_rejected": true,
+            "invalid_statement_rejected": true,
+            "negative_controls": 2,
+            "proof_bytes": 5765,
+            "proof_count": 1,
+            "proof_ms": 1670.807167,
+            "public_inputs": 143,
+            "valid_proof_verified": true,
+            "verification_count": 1,
+            "verify_ms": 14.560375
+          }
+        }
+      ],
+      "provider_transfer": {
+        "unit": "HTTP identity response payload bytes; excludes headers/TLS",
+        "total_bytes": 0,
+        "responses": []
+      },
+      "provenance": {
+        "node": "v24.18.1",
+        "worker_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+        "sdk_package_lock_sha256": "3fd7470d047080db1ec2ad067fc008628596962d46f5d8b4bcfd1e36719cb69d",
+        "proof_harness_sha256": "15df61237cbe22526d9cc7e46a3e48e0eb8edd99aec5dc9ada16be0af02b86cc",
+        "preimage_generator_sha256": "25e355b3ff4bd7dfee396e1e72a74b323add197c9f0cfcdf0db3d93f42adee0b"
+      }
+    }
+  },
+  "full_audit": {
+    "bytes": 12184494074,
+    "files": 213,
+    "schema": 1,
+    "verified": true,
+    "view_id": "b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842"
+  },
+  "tools": {
+    "forge": "de869a95b107508a2531ee6cd829ea6e153675712dbc41b8fe5fa31e201724c1",
+    "worker": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+    "zkir3_worker": "0a6c255cb2a04429f731beab8ae8882a3d5f4400173a43eb2249ac4062a9ee90"
+  },
+  "harness_sha256": {
+    "scripts/qualify-passport-provider.py": "d908f9ab4b3a0bc1c4464505f9c06663c5db79181b3e72353f75fda5eab914fe",
+    "integration/providers/passport.mjs": "15df61237cbe22526d9cc7e46a3e48e0eb8edd99aec5dc9ada16be0af02b86cc"
+  },
+  "cleanup": "owned provider view, abandoned stages, private HTTP cache/token/logs and SDK proof/preimage copies removed"
+}

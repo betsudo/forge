@@ -1090,3 +1090,133 @@
   full-account Fetch/HTTP, hosted CI study, Ledger9 transactions and Cloudflare
   stay open. No Compact/other-checkout/pin edits, shared install, push, PR, merge,
   workflow dispatch, release or deployment occurred.
+
+## 2026-10-17 — bounded large provider views (#31)
+
+- Retain the 4 GiB aggregate default; publish/verify/serve now accept an explicit
+  integer-byte budget bounded at 64 GiB. Original manifest and every declared file
+  count; fixed 1 GiB/file, metadata/file-count limits and two active HTTP snapshots
+  remain unchanged. Typed provider_limit is nonfallback and actionable on stderr.
+- Destination fstatvfs preflight requires declared copy bytes plus 64 MiB reserve.
+  provider_storage_unavailable is a hard refusal; the check is not a reservation.
+  Existing views still receive a full audit, and publication remains synced,
+  atomic and no-replace. Malformed compiler metadata retains integrity_error.
+- 36 ordinary Rust tests pass (7 parameter-dependent controls remain explicitly
+  ignored in the ordinary suite), including 16 provider tests and bounded HTTP
+  admission/cancellation. Clippy all-targets passes. Independent identity/
+  concurrency review found and confirmed the metadata-classification fix.
+- Full Passport provider qualification passed on native macOS ARM64: all213files
+  /12,184,494,074 bytes audited; 6 fresh selected-circuit proofs, 6 verifications,
+  12 negative controls and54 assertions. Interrupted publication/retry, damaged
+  HTTP HEAD/range/conditional refusal and final compiler-output integrity refusal
+  followed by exact owner repair all passed. Complete view publication took
+  91.72s; selected Fetch requests transferred25,140,103 identity payload bytes.
+  These are shared-host observations, not hosted CI savings.
+- Evidence: docs/evidence/passport-full-provider-local.json, raw SHA256
+  cc42597a00fd6a21f350b8f702f3b2dd88e60b486c5fcd4eaa2a2caaf4b50e39.
+  Fresh original manifest b05834d… differs from the historical manifest only in
+  the output-path source map; all artifact entries match. Independent review
+  checked receipt arithmetic, current tool/harness digests, source closure and
+  original manifests. Historical evidence remains intact.
+- Native Linux/hosted CI and clean-host installation are not inferred. Compact,
+  official pins, shared installation/default cache and other checkouts unchanged.
+  Repo/global skill and Midnight vault handoff refreshed. The harness removed
+  its owned provider/staging/private HTTP/SDK copies; the separately owned 12GB
+  baseline was removed after independent receipt review. No worktrees created.
+
+## 2026-10-17 — native Linux consumer harness prepared (#5/#6/#7)
+
+- Added digest-checked staging for the unchanged pinned Passport source closure,
+  official owner-pinned Linux compiler archive and eight public parameter models.
+  The native-only runner records actual tool/helper/worker bytes, creates its own
+  monotonic official baseline and reuses full52 artifact/compiler-output parity,
+  cold/warm key reuse and genuine selected SDK recovery proofs.
+- Added final compiler-output integrity refusal and explicit exact repair to the
+  shared qualification path. Historical Mac evidence/anchors remain unchanged.
+  Result and policy paths must be distinct/absent before work. Successful owned
+  lane copies are cleaned; failures keep private scratch/logs for diagnosis.
+- Fixed nested-session cancellation: custom SIGTERM interruption reaches the
+  hook's prepare-group cleanup before outer compiler termination.16 adapter
+  tests and7 Linux orchestration tests pass, including altered tools/source/
+  parameters, stale scratch/policy collision and no-success-on-failed-baseline.
+  Tests are synthetic process/preflight controls, not native consumer receipts.
+- Independent review confirmed cancellation/receipt fixes. A manual-only native
+  GitHub runner workflow retains cohort provenance and failure logs; it is only
+  prepared locally. Native Linux, portable consumer execution and #5/#6/#7 full
+  acceptance remain pending. No push/dispatch, Compact/other-checkout edit,
+  dependency upgrade, shared installation or default-cache mutation occurred.
+
+## 2026-10-17 — strict local pilot instrumentation (#9)
+
+- Added bounded subprocess stage capture and terminal GitHub job collection over
+  the existing reporter; no new cache engine or proof-result cache. Captures bind
+  plan/run/attempt/job/clock and raw log hashes. Proof output must belong to its
+  captured proof stage; transport attempts must belong to their captured stage.
+- Complete expected/observed job rosters retain failed, cancelled, skipped,
+  missing and auxiliary jobs. Unplanned jobs, retry selection, raw proof count
+  mismatch, overlapping/oversized stage spans, wrong frozen payload/restore
+  identity and missing transfer references prevent any savings comparison.
+- Changed unavailable reporting to the documented original official generation
+  path with cache:null; no invented Forge misses. Actual compressed payload
+  bytes, all transport attempts and terminal whole-job timing remain required.
+  Quarantined candidate upload is distinct from later reusable promotion.
+- 11 collection/capture tests and5 reporter tests pass, with additional table-driven
+  refusals. These are explicitly synthetic orchestration/API fixtures, not proofs
+  or hosted performance results. Cancellation, detached inherited pipes and
+  TERM-ignoring same-group workers are bounded; failed receipts remain visible.
+- Independent review found and confirmed fixes for evidence replay, payload/
+  restore binding, pipe shutdown, lingering workers and omitted upload references.
+  Exact native Linux consumer execution, actual GitHub transport instrumentation,
+  seed production and the reviewed frozen hosted pilot remain open. No publish,
+  workflow dispatch, consumer checkout edit, reusable promotion or trial started.
+
+## 2026-10-17 — bounded pilot payload preparation (#9)
+
+- Added scripts/ci-payload.py around existing Forge snapshot verification. Packs
+  deterministic gzip/USTAR files and required directories; records exact compressed
+  bytes/hash and snapshot/partition identity. This is local archive evidence, not
+  actual transfer or reusable publication. Existing outputs are never replaced.
+- Restore pins compressed size/hash before extraction, bounds expanded bytes and
+  entry count, rejects traversal/links/devices/duplicate and PAX/GNU/sparse headers
+  before extension processing, then delegates semantic verification/no-replace
+  store publication to the existing CLI. Output parent aliases are canonicalized.
+- 7 local tests pass, including a fresh JSON3.1 fixture proof after a verified
+  payload roundtrip and warm identity-preserving hit. Valid proof verifies and
+  invalid-statement/corrupt-proof controls reject. Raw local receipt:
+  docs/evidence/ci-payload-local.json. This fixture does not qualify Passport,
+  native Linux or hosted CI. Fast default checks skip the explicit real proof.
+- Independent review found and confirmed fixes for tar extension pre-processing
+  and symlink-parent source overlap. Temporary operation directories are removed
+  after success/handled failure; abrupt kill may leave owned staging, documented
+  for explicit cleanup. No shared cache/installation, Compact or other checkout
+  changed. No push/dispatch/network transfer occurred. Actual measured GitHub
+  transport, seed generation, native Linux qualification and frozen hosted pilot
+  remain pending.
+
+## 2026-10-18 — PR33 review fixes (#31/#9)
+
+- Restore validates directly into the final absent store instead of allocating
+  an intermediate verification store. Pack verifies the source once, removes
+  that private store before compression and hashes the exact streamed payload
+  against the validated manifest. Peak expanded copies drop from three to two
+  (including the caller-owned source for pack), plus compressed bytes/overhead.
+- Restore receipts now include manifest_sha256 from the exact bytes parsed and
+  verified by Rust. Packing requires that binding, a bounded iterative typed
+  inventory (100001entries/depth16) and streamed size/hash checks. Regression
+  tests cover changed manifest binding, bytes, file-to-directory mutation,
+  count/depth bounds and single verification-copy lifetime.
+- Provider read-time provider_limit is HTTP500 as a server policy refusal, with
+  retry/fallback both false; invalid input remains400. CLI input behavior is
+  unchanged. OpenAPI, guides, compatibility table and future full harness agree.
+- Payload failures include OS errno/strerror or verifier exit status plus2048
+  characters of stderr. Publisher docs require one publisher per provider root;
+  headroom remains a preflight rather than a reservation. Existing crafted
+  PAX/GNU/sparse-header tests guard the pinned Python parser behavior.
+- 7 Rust library tests,16provider tests, Clippy all-targets,10payload tests
+  including a fresh restored-key JSON3.1 fixture proof and both negative controls,
+  snapshot e2e, docs/OpenSpec checks pass locally. Fresh receipt:
+  docs/evidence/pr33-review-payload-local.json. Historical full Passport evidence
+  remains unchanged; no new full52/native Linux/hosted saving is claimed.
+- Independent review found and confirmed fixes for manifest ABA binding, entry
+  type mutation and bounded enumeration. Compact, official pins and shared
+  installation/cache remain unchanged. No manual dispatch, merge or release.
