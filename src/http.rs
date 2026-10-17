@@ -42,6 +42,7 @@ pub struct Config {
     pub listen: SocketAddr,
     pub token_file: Option<PathBuf>,
     pub provider_root: Option<PathBuf>,
+    pub provider_limits: crate::provider_view::Limits,
 }
 struct Service {
     config: Config,
@@ -645,13 +646,14 @@ async fn provider_file(
     } else {
         "application/octet-stream"
     };
+    let limits = state.config.provider_limits;
     let ((file, digest, size), permit) = state
         .provider_work(move || {
             let view = root.join(&id);
             if !view.exists() {
                 return Err(anyhow::anyhow!(crate::error::Kind::NotFound));
             }
-            crate::provider_view::read(&view, &id, &path)
+            crate::provider_view::read_with_limits(&view, &id, &path, limits)
         })
         .await?;
     file_response(file, size, &digest, content_type, headers, method, permit)
@@ -754,6 +756,7 @@ mod provider_admission_tests {
                 listen: "127.0.0.1:0".parse().unwrap(),
                 token_file: None,
                 provider_root: None,
+                provider_limits: crate::provider_view::Limits::default(),
             },
             token: None,
             work: Arc::new(Semaphore::new(8)),

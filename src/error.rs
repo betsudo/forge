@@ -17,6 +17,8 @@ pub enum Kind {
     Unauthorized,
     Busy,
     InternalError,
+    ProviderLimit,
+    ProviderStorageUnavailable,
     SnapshotDestinationExists,
     SnapshotProfileMismatch,
     SnapshotPartitionMismatch,
@@ -42,6 +44,8 @@ impl Kind {
             Self::Unauthorized => "unauthorized",
             Self::Busy => "busy",
             Self::InternalError => "internal_error",
+            Self::ProviderLimit => "provider_limit",
+            Self::ProviderStorageUnavailable => "provider_storage_unavailable",
             Self::SnapshotDestinationExists => "snapshot_destination_exists",
             Self::SnapshotProfileMismatch => "snapshot_profile_mismatch",
             Self::SnapshotPartitionMismatch => "snapshot_partition_mismatch",
@@ -67,7 +71,9 @@ impl Kind {
             Self::UnsupportedZkirVersion
             | Self::InvalidInput
             | Self::SnapshotUnsafePath
-            | Self::SnapshotLimit => 400,
+            | Self::SnapshotLimit
+            | Self::ProviderLimit => 400,
+            Self::ProviderStorageUnavailable => 507,
             Self::NotFound | Self::ArtifactsUnavailable => 404,
             Self::Unauthorized => 401,
             Self::Busy | Self::SnapshotBusy => 429,

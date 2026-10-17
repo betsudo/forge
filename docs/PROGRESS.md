@@ -1090,3 +1090,22 @@
   full-account Fetch/HTTP, hosted CI study, Ledger9 transactions and Cloudflare
   stay open. No Compact/other-checkout/pin edits, shared install, push, PR, merge,
   workflow dispatch, release or deployment occurred.
+
+## 2026-10-17 — bounded large provider views (#31)
+
+- Retain the 4 GiB aggregate default; publish/verify/serve now accept an explicit
+  integer-byte budget bounded at 64 GiB. Original manifest and every declared file
+  count; fixed 1 GiB/file, metadata/file-count limits and two active HTTP snapshots
+  remain unchanged. Typed provider_limit is nonfallback and actionable on stderr.
+- Destination fstatvfs preflight requires declared copy bytes plus 64 MiB reserve.
+  provider_storage_unavailable is a hard refusal; the check is not a reservation.
+  Existing views still receive a full audit, and publication remains synced,
+  atomic and no-replace. Malformed compiler metadata retains integrity_error.
+- 36 ordinary Rust tests pass (7 parameter-dependent controls remain explicitly
+  ignored in the ordinary suite), including 16 provider tests and bounded HTTP
+  admission/cancellation. Clippy all-targets passes. Independent identity/
+  concurrency review found and confirmed the metadata-classification fix.
+- Added the full Passport provider harness and explicit budget/storage guide.
+  Actual full-manifest Fetch/proof/interruption evidence is still in progress;
+  native Linux/hosted CI and clean-host installation are not inferred. Compact,
+  official pins, shared installation/default cache and other checkouts unchanged.

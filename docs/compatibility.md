@@ -75,6 +75,8 @@ without source material, paths, tokens or upstream exception text.
 | not_found, artifacts_unavailable | 404 | Permitted by consumer policy. |
 | unauthorized | 401 | Never. |
 | busy and HTTP admission subcodes | 429 | Retryable, with Retry-After. |
+| provider_limit | 400 | Never; explicit provider storage policy. |
+| provider_storage_unavailable | 507 (domain mapping; publication is CLI-only) | Never; free destination space before explicit retry. |
 | internal_error | 500 | Refuse; insufficient evidence for availability fallback. |
 
 Unknown errors fail closed. A transport connectivity failure may use the consumer's

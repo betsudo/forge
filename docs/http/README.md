@@ -132,3 +132,9 @@ returns `429 provider_reads_busy` with `Retry-After: 1`. This admits the ordinar
 SDK burst for a circuit's binary IR, prover and verifier without increasing active
 snapshot memory/disk limits. Waiting cancellation returns its slot; active
 verification retains capacity until the blocking task stops and streaming ends.
+
+Complete views default to 4 GiB aggregate, with an explicit finite
+`--provider-max-view-bytes` opt-in up to 64 GiB at publication, audit and serving.
+The per-file cap stays 1 GiB. See [storage budgets and failure recovery](../providers/large-views.md)
+for typed `provider_limit`/`provider_storage_unavailable` errors, destination-space
+preflight and full Passport qualification scope.
