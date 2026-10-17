@@ -136,7 +136,7 @@ def main():
     try:
         endpoint = url+'/views/'+args.manifest_sha256+'/compiler/contract-manifest.json'
         request(endpoint,401,auth=False)
-        error = json.loads(request(endpoint,400))['error']
+        error = json.loads(request(endpoint,500))['error']
         assert error['code'] == 'provider_limit' and not error['availability_fallback']
         controls.append('default-budget-refuses-already-published-large-view-auth-first')
     finally: stop(process,log)

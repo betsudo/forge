@@ -17,3 +17,10 @@ bound file count, compressed and expanded bytes; refuse traversal, duplicate,
 link, device, extension-header and unexpected members; restore only via the existing Forge
 snapshot verifier into an absent target. On failure no target may be published.
 Temporary directories belong solely to this operation and are cleaned.
+
+Restore SHALL validate directly into the final absent store without a second
+verification store. Packing SHALL remove its verification store before compression
+and hash streamed bytes against the exact raw manifest consumed by the verifier
+(as recorded in its restore receipt), retaining file/directory types and bounded
+inventory enumeration. Failures SHALL include
+OS errno/strerror or bounded Forge exit/stderr diagnostics where available.

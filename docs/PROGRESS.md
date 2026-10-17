@@ -1192,3 +1192,31 @@
   changed. No push/dispatch/network transfer occurred. Actual measured GitHub
   transport, seed generation, native Linux qualification and frozen hosted pilot
   remain pending.
+
+## 2026-10-18 — PR33 review fixes (#31/#9)
+
+- Restore validates directly into the final absent store instead of allocating
+  an intermediate verification store. Pack verifies the source once, removes
+  that private store before compression and hashes the exact streamed payload
+  against the validated manifest. Peak expanded copies drop from three to two
+  (including the caller-owned source for pack), plus compressed bytes/overhead.
+- Restore receipts now include manifest_sha256 from the exact bytes parsed and
+  verified by Rust. Packing requires that binding, a bounded iterative typed
+  inventory (100001entries/depth16) and streamed size/hash checks. Regression
+  tests cover changed manifest binding, bytes, file-to-directory mutation,
+  count/depth bounds and single verification-copy lifetime.
+- Provider read-time provider_limit is HTTP500 as a server policy refusal, with
+  retry/fallback both false; invalid input remains400. CLI input behavior is
+  unchanged. OpenAPI, guides, compatibility table and future full harness agree.
+- Payload failures include OS errno/strerror or verifier exit status plus2048
+  characters of stderr. Publisher docs require one publisher per provider root;
+  headroom remains a preflight rather than a reservation. Existing crafted
+  PAX/GNU/sparse-header tests guard the pinned Python parser behavior.
+- 7 Rust library tests,16provider tests, Clippy all-targets,10payload tests
+  including a fresh restored-key JSON3.1 fixture proof and both negative controls,
+  snapshot e2e, docs/OpenSpec checks pass locally. Fresh receipt:
+  docs/evidence/pr33-review-payload-local.json. Historical full Passport evidence
+  remains unchanged; no new full52/native Linux/hosted saving is claimed.
+- Independent review found and confirmed fixes for manifest ABA binding, entry
+  type mutation and bounded enumeration. Compact, official pins and shared
+  installation/cache remain unchanged. No manual dispatch, merge or release.

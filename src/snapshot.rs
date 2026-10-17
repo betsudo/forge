@@ -1002,6 +1002,6 @@ pub fn restore(
     crate::filesystem::publish_directory(staging.path(), &target)
         .context(crate::error::Kind::SnapshotPublishFailed)?;
     Ok(
-        json!({"schema":1,"snapshot_id":manifest.snapshot_id,"cache_dir":target,"partition":manifest.partition,"bytes":total,"summary":summary,"producer":manifest.producer}),
+        json!({"schema":1,"snapshot_id":manifest.snapshot_id,"manifest_sha256":hex::encode(Sha256::digest(&bytes)),"cache_dir":target,"partition":manifest.partition,"bytes":total,"summary":summary,"producer":manifest.producer}),
     )
 }

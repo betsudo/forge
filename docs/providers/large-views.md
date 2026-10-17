@@ -31,13 +31,15 @@ Do not copy the placeholder digest literally. Pin the exact compiler manifest
 independently and pass it to the official SDK's `expectedManifestHash` option.
 The CLI emits `provider_limit` on a configured/per-file budget refusal; stderr
 identifies required/configured bytes and the option. HTTP returns the same code
-with status 400. Neither path authorizes availability fallback. Serving an
+with status 500 on reads: the serving budget is a server configuration failure.
+Invalid request paths/IDs remain 400. Neither path authorizes availability fallback. Serving an
 already published large view also requires the explicit serving budget.
 
 Before a new copy, Forge checks destination filesystem space for the full
 declared size plus 64 MiB reserve. Insufficient headroom produces
 `provider_storage_unavailable` (HTTP mapping 507), without availability fallback
-or automatic retry. This check cannot reserve space against another process.
+or automatic retry. Use one publisher per provider root. This check cannot
+reserve space against another process.
 Later copy/disk failures still cannot publish partial content. Reuse performs a
 complete audit of the existing view and does not allocate another full copy.
 

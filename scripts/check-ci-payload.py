@@ -15,6 +15,8 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest.mock import patch
+from types import SimpleNamespace
 
 ROOT = Path(__file__).resolve().parent.parent
 spec = importlib.util.spec_from_file_location('payload', ROOT/'scripts/ci-payload.py')
@@ -76,6 +78,74 @@ class Payload(unittest.TestCase):
         self.restore(self.payload, ok=False)
         self.pack(ok=False)
         self.clean()
+
+    def test_only_one_verification_copy_and_streamed_mutation_refusal(self):
+        args = SimpleNamespace(command='pack', binary=BINARY, profile='ledger8-v2',
+            snapshot_id=self.flags[self.flags.index('--snapshot-id')+1], partition=self.partition,
+            max_compressed_bytes=1048576, max_expanded_bytes=1048576,
+            output=self.payload, snapshot=self.snapshot)
+        original_pack = module.pack
+        def checked_pack(source, target, *limits):
+            self.assertFalse((target.parent/'verified').exists())
+            self.assertFalse((target.parent/'snapshot').exists())
+            return original_pack(source, target, *limits)
+        with patch.object(module, 'restore', wraps=module.restore) as verified, \
+             patch.object(module, 'pack', side_effect=checked_pack):
+            result = module.execute(args)
+        self.assertEqual(verified.call_count, 1)
+        args = SimpleNamespace(**vars(args))
+        args.command, args.output = 'restore', self.root/'restored'
+        args.payload, args.payload_sha256, args.payload_bytes = self.payload, result['payload_sha256'], result['actual_bytes']
+        with patch.object(module, 'restore', wraps=module.restore) as verified:
+            module.execute(args)
+        self.assertEqual(verified.call_count, 1)
+        self.assertEqual(verified.call_args.args[2].resolve(), args.output.resolve())
+        actual_restore = module.restore
+        def wrong_verified_manifest(*values):
+            result = actual_restore(*values)
+            result['result']['manifest_sha256'] = '0'*64
+            return result
+        args.command, args.output = 'pack', self.root/'mutated.tgz'
+        with patch.object(module, 'restore', side_effect=wrong_verified_manifest), \
+             self.assertRaisesRegex(ValueError, 'verified manifest differs'):
+            module.execute(args)
+        sqlite = (self.snapshot/'index.sqlite3').read_bytes()
+        for kind in ('bytes', 'directory'):
+            def mutate(source, target, *limits):
+                path = source/'index.sqlite3'
+                if kind == 'bytes': path.write_bytes(b'changed after verification')
+                else: path.unlink();path.mkdir()
+                return original_pack(source, target, *limits)
+            with patch.object(module, 'pack', side_effect=mutate), self.assertRaisesRegex(ValueError, 'changed'):
+                module.execute(args)
+            self.assertFalse(args.output.exists())
+            path = self.snapshot/'index.sqlite3'
+            if path.is_dir(): path.rmdir()
+            path.write_bytes(sqlite)
+        self.clean()
+
+    def test_bounded_verifier_and_os_diagnostics(self):
+        args = SimpleNamespace(binary=BINARY, profile='ledger8-v2', snapshot_id='a'*64,
+                               partition=self.partition, max_expanded_bytes=1048576)
+        failed = subprocess.CompletedProcess([], 23, '', 'x'*4096+' diagnostic-tail')
+        with patch.object(module.subprocess, 'run', return_value=failed), \
+             self.assertRaises(ValueError) as caught:
+            module.restore(args, self.snapshot, self.root/'absent')
+        self.assertIn('exit 23', str(caught.exception))
+        self.assertIn('diagnostic-tail', str(caught.exception))
+        self.assertLess(len(str(caught.exception)), 2200)
+        result = cli(*self.common, 'pack', *self.flags, '--binary', self.root/'missing-binary',
+                     '--snapshot', self.snapshot, '--output', self.payload, ok=False)
+        self.assertEqual(result['error']['errno'], 2)
+        self.assertTrue(result['error']['strerror'])
+
+    def test_inventory_count_and_depth_are_bounded(self):
+        with patch.object(module, 'MAX_FILES', 2), self.assertRaisesRegex(ValueError, 'inventory limit'):
+            module.inventory(self.snapshot)
+        deep = self.root/'deep'
+        (deep/('/'.join(['d']*17))).mkdir(parents=True)
+        with self.assertRaisesRegex(ValueError, 'inventory limit'):
+            module.inventory(deep)
 
     @unittest.skipUnless(options.real, 'explicit verified-parameter real proof run')
     def test_json31_restored_keys_generate_fresh_proof(self):

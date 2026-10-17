@@ -27,3 +27,7 @@ fetch the selected circuit artifacts concurrently using the official SDK and run
 fresh application proofs, verification, assertions and negative controls. Record
 persistent, temporary and transferred byte costs separately. Do not generalize
 native Mac evidence to native Linux or hosted CI.
+
+A valid provider read refused by the server budget SHALL return HTTP500
+provider_limit without fallback/retry; invalid request input remains400. Storage
+preflight is not a reservation; operators SHALL serialize publishers per root.

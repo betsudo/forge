@@ -53,6 +53,22 @@ def absent(path):
     require(not os.path.lexists(path), 'output already exists')
 
 
+def inventory(source):
+    entries, pending = {}, [source]
+    while pending:
+        with os.scandir(pending.pop()) as children:
+            for child in children:
+                relative = Path(child.path).relative_to(source).as_posix()
+                require(len(entries) < MAX_FILES and len(Path(relative).parts) <= 16,
+                        'snapshot inventory limit exceeded')
+                require(not child.is_symlink() and (child.is_dir() or child.is_file()),
+                        'nonregular snapshot entry')
+                entries[relative] = child.is_dir()
+                if child.is_dir():
+                    pending.append(Path(child.path))
+    return entries
+
+
 class Bounded:
     def __init__(self, stream, maximum):
         self.stream, self.maximum, self.count = stream, maximum, 0
@@ -75,10 +91,14 @@ class Bounded:
         return self.stream.flush()
 
 
-def pack(source, target, compressed, expanded):
+def pack(source, target, compressed, expanded, expected=None, expected_inventory=None):
     require(source.is_dir() and not source.is_symlink(), 'snapshot directory required')
     files, total = [], 0
-    for path in source.rglob('*'):
+    observed = inventory(source)
+    if expected_inventory is not None:
+        require(observed == expected_inventory, 'snapshot inventory changed')
+    for relative in observed:
+        path = source/relative
         require(not path.is_symlink(), 'snapshot symlink refused')
         require(path.is_dir() or path.is_file(), 'nonregular snapshot entry')
         relative = path.relative_to(source).as_posix()
@@ -94,16 +114,35 @@ def pack(source, target, compressed, expanded):
                     require(not path.is_symlink(), 'snapshot entry changed to symlink')
                     info = tarfile.TarInfo(relative)
                     if path.is_dir():
+                        require(expected is None or relative not in expected, 'snapshot file type changed')
                         info.type, info.mode = tarfile.DIRTYPE, 0o700
                         archive.addfile(info)
                     else:
                         regular(path)
                         info.size, info.mode, info.mtime = path.stat().st_size, 0o600, 0
                         with path.open('rb') as stream:
-                            archive.addfile(info, stream)
+                            if expected is None:
+                                archive.addfile(info, stream)
+                            else:
+                                require(relative in expected and info.size == expected[relative]['bytes'],
+                                        'snapshot changed during packing')
+                                hashed = HashingReader(stream)
+                                archive.addfile(info, hashed)
+                                require(hashed.digest.hexdigest() == expected[relative]['sha256'],
+                                        'snapshot changed during packing')
         output.flush()
         os.fsync(output.fileno())
     return total
+
+
+class HashingReader:
+    def __init__(self, stream):
+        self.stream, self.digest = stream, hashlib.sha256()
+
+    def read(self, size=-1):
+        data = self.stream.read(size)
+        self.digest.update(data)
+        return data
 
 
 def unpack(payload, destination, expanded):
@@ -140,7 +179,10 @@ def restore(args, snapshot, target):
                'restore', str(snapshot), '--expected-id', args.snapshot_id,
                '--partition', args.partition, '--max-bytes', str(args.max_expanded_bytes)]
     result = subprocess.run(command, capture_output=True, text=True, timeout=600)
-    require(result.returncode == 0, 'Forge snapshot verification refused')
+    if result.returncode:
+        # Bound diagnostics; JSON encoding escapes terminal control characters.
+        raise ValueError(f'Forge snapshot verification refused (exit {result.returncode}): '
+                         + result.stderr[-2048:])
     value = json.loads(result.stdout)
     require(value['snapshot_id'] == args.snapshot_id, 'unexpected restored identity')
     return {'schema': 1, 'restored': True, 'result': value}
@@ -162,7 +204,28 @@ def execute(args):
             require(not work.is_relative_to(source) and not output.is_relative_to(source),
                     'payload output must be outside snapshot')
             payload = work/'payload.tgz'
-            pack(source, payload, args.max_compressed_bytes, args.max_expanded_bytes)
+            regular(source/'snapshot.json')
+            with (source/'snapshot.json').open('rb') as stream:
+                manifest_bytes = stream.read(16*1024**2+1)
+            require(len(manifest_bytes) <= 16*1024**2, 'snapshot metadata limit')
+            original_inventory = inventory(source)
+            # Validate semantics once, then release the verification store before
+            # compression. Hash the exact bytes consumed by tar against that
+            # validated manifest, so source mutation cannot bypass verification.
+            verification = restore(args, source, work/'verified')
+            require(verification['result'].get('manifest_sha256') == hashlib.sha256(manifest_bytes).hexdigest(),
+                    'verified manifest differs; use current Forge snapshot verifier')
+            require(digest(source/'snapshot.json') == hashlib.sha256(manifest_bytes).hexdigest(),
+                    'snapshot manifest changed')
+            shutil.rmtree(work/'verified')
+            entries = json.loads(manifest_bytes)['files']
+            expected = {entry['path']: entry for entry in entries}
+            expected['snapshot.json'] = {'bytes': len(manifest_bytes),
+                                         'sha256': hashlib.sha256(manifest_bytes).hexdigest()}
+            require(inventory(source) == original_inventory,
+                    'snapshot inventory changed')
+            expanded = pack(source, payload, args.max_compressed_bytes, args.max_expanded_bytes,
+                            expected, original_inventory)
         else:
             require(re.fullmatch('[0-9a-f]{64}', args.payload_sha256), 'payload digest required')
             require(0 < args.payload_bytes <= args.max_compressed_bytes, 'payload size exceeds budget')
@@ -177,8 +240,8 @@ def execute(args):
                     target.write(chunk)
                     remaining -= len(chunk)
             require(remaining == 0 and digest(payload) == args.payload_sha256, 'compressed digest mismatch')
-        expanded = unpack(payload, work/'snapshot', args.max_expanded_bytes)
-        verified = restore(args, work/'snapshot', work/'verified')
+        if args.command == 'restore':
+            expanded = unpack(payload, work/'snapshot', args.max_expanded_bytes)
         value = {'schema': 1, 'kind': 'forge-ci-payload/v1', 'snapshot_sha256': args.snapshot_id,
                  'partition': args.partition, 'payload_sha256': digest(payload),
                  'actual_bytes': payload.stat().st_size, 'expanded_bytes': expanded,
@@ -191,6 +254,7 @@ def execute(args):
             # a potentially raced target using Python's platform-dependent rename.
             verified = restore(args, work/'snapshot', output)
             value['restore'] = verified
+            shutil.rmtree(work/'snapshot')
         return value
 
 
@@ -221,5 +285,7 @@ if __name__ == '__main__':
     except (ValueError, OSError, KeyError, TypeError, tarfile.TarError, EOFError,
             subprocess.SubprocessError) as error:
         print(json.dumps({'schema': 1, 'error': {'code': 'ci_payload_refused',
-                          'message': str(error) if isinstance(error, ValueError) else type(error).__name__}}))
+                          'message': str(error) if isinstance(error, ValueError) else type(error).__name__,
+                          **({'errno': error.errno, 'strerror': error.strerror}
+                             if isinstance(error, OSError) else {})}}))
         sys.exit(1)

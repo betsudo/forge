@@ -245,9 +245,15 @@ digests. Output publication never replaces an existing path. Private staging is
 cleaned on handled failure; an abrupt process kill can leave its owned
 `.forge-payload-*` directory for explicit inspection/removal after it stops.
 
-Preparation performs a private verification restore; final restore validates
-again before publishing the requested store. Allow space for the compressed
-payload, extracted snapshot and verification store (plus final store for restore).
+Packing validates the original snapshot through a private restore, removes that
+verification store, then hashes the exact bytes streamed into the archive against
+the exact manifest consumed by verification (`restore.result.manifest_sha256`).
+This requires the current Forge verifier. It does not extract another full snapshot. Restore
+extracts once and validates directly into the final absent store; it does not
+create an intermediate verification store. Peak expanded data is two snapshot
+copies in either mode (including the caller-owned original while packing), plus
+compressed payload copies and filesystem overhead. Allow corresponding headroom;
+this is not a guarantee that a full Passport payload fits a standard runner.
 The original snapshot is read-only and must remain stopped/owned during packing.
 No automatic deletion, network upload, reusable cache promotion or GitHub
 credential use occurs. Capturing the tool's stdout does not create the transport
