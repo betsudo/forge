@@ -1160,7 +1160,7 @@
   path with cache:null; no invented Forge misses. Actual compressed payload
   bytes, all transport attempts and terminal whole-job timing remain required.
   Quarantined candidate upload is distinct from later reusable promotion.
--11 collection/capture tests and5 reporter tests pass, with additional table-driven
+- 11 collection/capture tests and5 reporter tests pass, with additional table-driven
   refusals. These are explicitly synthetic orchestration/API fixtures, not proofs
   or hosted performance results. Cancellation, detached inherited pipes and
   TERM-ignoring same-group workers are bounded; failed receipts remain visible.
@@ -1169,3 +1169,26 @@
   Exact native Linux consumer execution, actual GitHub transport instrumentation,
   seed production and the reviewed frozen hosted pilot remain open. No publish,
   workflow dispatch, consumer checkout edit, reusable promotion or trial started.
+
+## 2026-10-17 — bounded pilot payload preparation (#9)
+
+- Added scripts/ci-payload.py around existing Forge snapshot verification. Packs
+  deterministic gzip/USTAR files and required directories; records exact compressed
+  bytes/hash and snapshot/partition identity. This is local archive evidence, not
+  actual transfer or reusable publication. Existing outputs are never replaced.
+- Restore pins compressed size/hash before extraction, bounds expanded bytes and
+  entry count, rejects traversal/links/devices/duplicate and PAX/GNU/sparse headers
+  before extension processing, then delegates semantic verification/no-replace
+  store publication to the existing CLI. Output parent aliases are canonicalized.
+- 7 local tests pass, including a fresh JSON3.1 fixture proof after a verified
+  payload roundtrip and warm identity-preserving hit. Valid proof verifies and
+  invalid-statement/corrupt-proof controls reject. Raw local receipt:
+  docs/evidence/ci-payload-local.json. This fixture does not qualify Passport,
+  native Linux or hosted CI. Fast default checks skip the explicit real proof.
+- Independent review found and confirmed fixes for tar extension pre-processing
+  and symlink-parent source overlap. Temporary operation directories are removed
+  after success/handled failure; abrupt kill may leave owned staging, documented
+  for explicit cleanup. No shared cache/installation, Compact or other checkout
+  changed. No push/dispatch/network transfer occurred. Actual measured GitHub
+  transport, seed generation, native Linux qualification and frozen hosted pilot
+  remain pending.

@@ -17,3 +17,10 @@ reporter. An unavailable transport uses official generation with cache:null;
 integrity/identity/auth failures never qualify as availability fallback.
 No hosted trial is started. Reusable cache promotion requires terminal success;
 candidate uploads alone do not establish successful reusable publication.
+
+A separate local payload tool wraps existing verified Forge snapshots in a
+reproducible gzip/tar stream. It does not implement a second cache, archive-based
+trust model or GitHub client. Explicit compressed/expanded limits and pinned
+payload hash precede extraction; existing Forge restore remains the authority
+for snapshot identity, profile, partition and payload bytes. Network measurement
+must count this exact envelope separately; archive size alone is not transfer.

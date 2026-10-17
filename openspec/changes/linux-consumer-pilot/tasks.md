@@ -13,3 +13,4 @@
 Native Linux is deliberately pending on the available ARM64 Mac. The manual
 GitHub runner workflow is prepared locally, not pushed/dispatched. Synthetic
 preflight/process tests are not consumer proof or performance evidence.
+- [x] Add deterministic bounded snapshot payload preparation/restore and local failure tests.

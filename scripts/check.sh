@@ -25,6 +25,7 @@ python3 -m py_compile scripts/qualify-passport-local.py scripts/measure-provider
 node --check integration/providers/passport.mjs
 python3 scripts/check-ci-trial.py
 python3 scripts/check-ci-collection.py
+python3 scripts/check-ci-payload.py
 python3 scripts/check-passport-linux.py
 python3 -m py_compile scripts/stage-passport-linux.py
 python3 -m py_compile scripts/qualify-passport-provider.py

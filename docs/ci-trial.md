@@ -214,6 +214,52 @@ authorized hosted execution remain open.
 
 ## Report without changing the raw inputs
 
+### Prepare an exact payload locally
+
+`scripts/ci-payload.py` provides the bounded compressed envelope for future
+transport instrumentation. It accepts an existing Forge snapshot, not arbitrary
+key directories. Pin the snapshot identity and partition independently:
+
+```sh
+./bootstrap.sh -- python3 scripts/ci-payload.py pack \
+  --binary /absolute/zkir-forge --profile zkir31 \
+  --snapshot /absolute/owned-snapshot --snapshot-id SNAPSHOT_SHA256 \
+  --partition PARTITION_SHA256 --max-compressed-bytes 268435456 \
+  --max-expanded-bytes 1073741824 --output /absolute/new-payload.tgz
+```
+
+The JSON result records exact compressed `actual_bytes`/`payload_sha256`, expanded
+bytes and snapshot identity. The deterministic gzip/tar envelope retains regular
+files and required directories, normalizes archive timestamps/modes/owners, and
+refuses links, special files and extension headers. Both byte budgets are explicit
+and at most64GiB. The independent100001-entry envelope cap includes directories;
+a snapshot at the CLI file-count ceiling may therefore exceed this stricter cap.
+These are local archive sizes, not network transfer measurements.
+
+For downloaded payload bytes, use `restore` with the independently frozen
+`--payload-sha256`, `--payload-bytes`, `--snapshot-id`, `--partition`, both budgets,
+`--payload /absolute/download.tgz` and `--output /absolute/absent-private-store`.
+The compressed size/hash are checked before extraction. Existing Forge snapshot
+validation governs identity, producer/profile, database consistency and file
+digests. Output publication never replaces an existing path. Private staging is
+cleaned on handled failure; an abrupt process kill can leave its owned
+`.forge-payload-*` directory for explicit inspection/removal after it stops.
+
+Preparation performs a private verification restore; final restore validates
+again before publishing the requested store. Allow space for the compressed
+payload, extracted snapshot and verification store (plus final store for restore).
+The original snapshot is read-only and must remain stopped/owned during packing.
+No automatic deletion, network upload, reusable cache promotion or GitHub
+credential use occurs. Capturing the tool's stdout does not create the transport
+attempt envelope expected by the collector. Seed generation, actual transfer
+instrumentation and the reviewed native Linux pilot remain separate open work.
+
+Fast tests exercise real CLI snapshots and hostile archives without keygen.
+`scripts/check-ci-payload.py --real` additionally generates JSON3.1 fixture keys,
+packs/restores them, requires a warm identity-preserving hit, and generates a
+fresh proof with valid verification and invalid-statement/corrupt-proof controls.
+It requires verified parameters and the pinned JSON3.1 worker environment.
+
 ```sh
 ./bootstrap.sh -- python3 scripts/report-ci-trial.py \
   --plan /path/to/frozen-plan.json \
