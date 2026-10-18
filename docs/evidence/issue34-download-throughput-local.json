@@ -1,0 +1,52 @@
+{
+  "architecture": "aarch64",
+  "chunk_bytes": 262144,
+  "host": "macos",
+  "samples": [
+    {
+      "bytes": 1073741824,
+      "frames": 262144,
+      "milliseconds": 2159.576125,
+      "path": "legacy_tokio_fs",
+      "round": 0
+    },
+    {
+      "bytes": 1073741824,
+      "frames": 4096,
+      "milliseconds": 152.170584,
+      "path": "bounded_producer",
+      "round": 0
+    },
+    {
+      "bytes": 1073741824,
+      "frames": 4096,
+      "milliseconds": 148.518167,
+      "path": "bounded_producer",
+      "round": 1
+    },
+    {
+      "bytes": 1073741824,
+      "frames": 262144,
+      "milliseconds": 2077.751875,
+      "path": "legacy_tokio_fs",
+      "round": 1
+    },
+    {
+      "bytes": 1073741824,
+      "frames": 262144,
+      "milliseconds": 2027.089292,
+      "path": "legacy_tokio_fs",
+      "round": 2
+    },
+    {
+      "bytes": 1073741824,
+      "frames": 4096,
+      "milliseconds": 169.573958,
+      "path": "bounded_producer",
+      "round": 2
+    }
+  ],
+  "schema": 1,
+  "scope": "local warm regular-file response-body drain; three alternating rounds; no hashing, network, TLS or remote throughput claim; temporary 1GiB file removed",
+  "harness_sha256": "d1bcdcbc85b7312ddf6619ff1c0b5447a971025decc541bc666a8cf6fd818160"
+}

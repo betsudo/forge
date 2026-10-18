@@ -37,6 +37,15 @@ with tempfile.TemporaryDirectory(prefix='forge-http-e2e-') as directory:
         return result
     try:
         if not args.url:
+            for invalid in ('0', '3601'):
+                invalid_cache = temporary/('invalid-timeout-'+invalid)
+                refused_timeout = subprocess.run([str(binary), '--cache-dir', str(invalid_cache), 'serve', '--download-timeout-seconds', invalid], capture_output=True, text=True, timeout=10)
+                assert refused_timeout.returncode != 0 and 'download-timeout-seconds' in refused_timeout.stderr
+                assert not invalid_cache.exists(), 'invalid timeout mutated storage'
+            invalid_cache = temporary/'invalid-rate'
+            refused_rate = subprocess.run([str(binary), '--cache-dir', str(invalid_cache), 'serve', '--download-min-bytes-per-second', '0'], capture_output=True, text=True, timeout=10)
+            assert refused_rate.returncode != 0 and 'download-min-bytes-per-second' in refused_rate.stderr
+            assert not invalid_cache.exists(), 'invalid rate mutated storage'
             refused=subprocess.run([str(binary),'serve','--listen','0.0.0.0:0'],capture_output=True,text=True,timeout=10)
             assert refused.returncode != 0 and 'token' in refused.stderr
             log=(temporary/'server.log').open('w+')

@@ -64,6 +64,34 @@ bounds, not a strict CPU/memory sandbox or a complete idle-connection policy.
 A disconnected request may finish admitted generation safely. SIGINT/SIGTERM
 wait for admitted work; forced termination retains existing transaction recovery.
 
+Both **ordinary CAS downloads** (`/v1/objects/{digest}`, circuit source/artifact
+URLs) and **provider-view downloads** use the same finite total producer/body-
+consumption deadline after verification and range selection. This is a deliberate
+user-visible limit for existing CAS consumers as well as provider views.
+
+The lifetime in seconds is `min(3600, base + ceil(response_bytes / minimum_rate))`.
+`serve --download-timeout-seconds N` sets the base (default 300, allowed 1..3600);
+`--download-min-bytes-per-second N` sets the size allowance rate (default 1048576,
+positive integer). A default full 1GiB response gets 1324 seconds, rather than a
+fixed 300; a range uses its selected length. For slower links, reduce the rate:
+
+```sh
+zkir-forge serve --download-timeout-seconds 300 --download-min-bytes-per-second 262144
+```
+
+This is a total deadline, capped at one hour, with no guarantee for arbitrarily
+slow links. Progress does not reset it: stalled, unpolled and trickling bodies
+expire independently of further reads, including a queued final tail. An
+unfinished response errors/truncates; the client must retry explicitly. Expiry
+logs only response bytes and effective seconds. Each range still fully verifies
+and spools the requested file; see [range costs](../providers/range-cost.md).
+Bytes already handed to HTTP/kernel/client buffers are outside this deadline.
+Hashing, disk I/O and key generation are not bounded by these options. In-flight
+blocking reads retain their file/admission permit until actual completion.
+Provider downloads retain their separate two-spool/2GiB bound; ordinary artifact
+downloads retain eight permits. The producer uses a one-slot 256KiB chunk channel,
+without another spool or unchecked reopen. This is not a connection-count limit.
+
 Objects are hash-verified before streaming or returning304, using the same
 opened descriptor under the store transaction. GET/HEAD provide strong digest
 ETags, exact lengths, private immutable caching and `Accept-Ranges: bytes`.

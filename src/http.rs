@@ -21,15 +21,18 @@ use serde_json::{Value, json};
 use sha2::{Digest, Sha256};
 use std::{
     fs::File,
-    io::{Read, Seek, SeekFrom},
+    io::{self, Read, Seek, SeekFrom},
     net::SocketAddr,
     path::PathBuf,
-    sync::Arc,
+    sync::{
+        Arc,
+        atomic::{AtomicBool, Ordering},
+    },
     time::{Duration, Instant},
 };
 use tokio::{
-    io::{AsyncRead, AsyncReadExt, ReadBuf},
-    sync::{OwnedSemaphorePermit, Semaphore},
+    io::{AsyncRead, ReadBuf},
+    sync::{OwnedSemaphorePermit, Semaphore, mpsc, oneshot},
 };
 use tokio_util::io::ReaderStream;
 
@@ -43,6 +46,8 @@ pub struct Config {
     pub token_file: Option<PathBuf>,
     pub provider_root: Option<PathBuf>,
     pub provider_limits: crate::provider_view::Limits,
+    pub download_timeout: Duration,
+    pub download_min_bytes_per_second: u64,
 }
 struct Service {
     config: Config,
@@ -155,6 +160,15 @@ impl Service {
 }
 
 pub async fn serve(config: Config) -> Result<Value> {
+    // Library callers bypass clap validation.
+    ensure!(
+        config.download_min_bytes_per_second > 0,
+        "download minimum bytes per second must be positive"
+    );
+    ensure!(
+        (Duration::from_secs(1)..=Duration::from_secs(3600)).contains(&config.download_timeout),
+        "download timeout must be 1..3600 seconds"
+    );
     let token = if let Some(path) = &config.token_file {
         let mut bytes = Vec::new();
         File::open(path)?.take(4097).read_to_end(&mut bytes)?;
@@ -497,17 +511,143 @@ async fn object(
 ) -> std::result::Result<Response, ApiError> {
     download(state, digest, headers, method).await
 }
-struct HeldReader {
-    file: tokio::io::Take<tokio::fs::File>,
-    _permit: OwnedSemaphorePermit,
+const DOWNLOAD_CHUNK: usize = 256 * 1024;
+fn download_lifetime(base: Duration, min_bytes_per_second: u64, length: u64) -> Duration {
+    base.saturating_add(Duration::from_secs(length.div_ceil(min_bytes_per_second)))
+        .min(Duration::from_secs(3600))
 }
-impl AsyncRead for HeldReader {
+struct DownloadReader {
+    receiver: mpsc::Receiver<io::Result<Vec<u8>>>,
+    chunk: Vec<u8>,
+    position: usize,
+    expired: Arc<AtomicBool>,
+    remaining: u64,
+    finished: Option<oneshot::Sender<()>>,
+}
+impl AsyncRead for DownloadReader {
     fn poll_read(
         mut self: std::pin::Pin<&mut Self>,
         cx: &mut std::task::Context<'_>,
         buf: &mut ReadBuf<'_>,
     ) -> std::task::Poll<std::io::Result<()>> {
-        std::pin::Pin::new(&mut self.file).poll_read(cx, buf)
+        if self.remaining == 0 {
+            return std::task::Poll::Ready(Ok(()));
+        }
+        if self.expired.load(Ordering::Acquire) {
+            return std::task::Poll::Ready(Err(io::Error::new(
+                io::ErrorKind::TimedOut,
+                "download deadline exceeded",
+            )));
+        }
+        if buf.remaining() == 0 {
+            return std::task::Poll::Ready(Ok(()));
+        }
+        loop {
+            if self.position < self.chunk.len() {
+                let n = buf.remaining().min(self.chunk.len() - self.position);
+                buf.put_slice(&self.chunk[self.position..self.position + n]);
+                self.position += n;
+                self.remaining -= n as u64;
+                if self.remaining == 0
+                    && let Some(done) = self.finished.take()
+                {
+                    let _ = done.send(());
+                }
+                return std::task::Poll::Ready(Ok(()));
+            }
+            match self.receiver.poll_recv(cx) {
+                std::task::Poll::Ready(Some(Ok(chunk))) => {
+                    self.chunk = chunk;
+                    self.position = 0;
+                }
+                std::task::Poll::Ready(Some(Err(error))) => {
+                    return std::task::Poll::Ready(Err(error));
+                }
+                std::task::Poll::Ready(None) => {
+                    return std::task::Poll::Ready(Err(io::Error::new(
+                        io::ErrorKind::UnexpectedEof,
+                        "download producer ended before declared length",
+                    )));
+                }
+                std::task::Poll::Pending => return std::task::Poll::Pending,
+            }
+        }
+    }
+}
+fn download_reader<R: Read + Send + 'static>(
+    file: R,
+    length: u64,
+    permit: OwnedSemaphorePermit,
+    lifetime: Duration,
+) -> DownloadReader {
+    let (sender, receiver) = mpsc::channel(1);
+    let (finished, consumed) = oneshot::channel();
+    let mut finished = Some(finished);
+    if length == 0 {
+        let _ = finished.take().unwrap().send(());
+    }
+    let expired = Arc::new(AtomicBool::new(false));
+    let flag = expired.clone();
+    tokio::spawn(async move {
+        let closed = sender.clone();
+        let produce = async move {
+            let mut held = (file, permit);
+            let mut left = length;
+            while left > 0 {
+                let read = tokio::task::spawn_blocking(move || {
+                    let mut chunk = vec![0; left.min(DOWNLOAD_CHUNK as u64) as usize];
+                    let count = held.0.read(&mut chunk)?;
+                    if count == 0 {
+                        return Err(io::Error::new(
+                            io::ErrorKind::UnexpectedEof,
+                            "verified file truncated",
+                        ));
+                    }
+                    chunk.truncate(count);
+                    Ok((held, chunk))
+                })
+                .await;
+                let (next, chunk) = match read {
+                    Ok(Ok(value)) => value,
+                    Ok(Err(error)) => {
+                        let _ = sender.send(Err(error)).await;
+                        return;
+                    }
+                    Err(_) => {
+                        let _ = sender
+                            .send(Err(io::Error::other("download worker failed")))
+                            .await;
+                        return;
+                    }
+                };
+                held = next;
+                left -= chunk.len() as u64;
+                if sender.send(Ok(chunk)).await.is_err() {
+                    return;
+                }
+            }
+            // A queued tail (including an entire small response) is not yet a
+            // consumed body. Keep the deadline/lease until it is consumed.
+            let _ = consumed.await;
+            drop(held);
+        };
+        tokio::select! {
+            _ = closed.closed() => {},
+            result = tokio::time::timeout(lifetime, produce) => {
+                if result.is_err() {
+                    flag.store(true, Ordering::Release);
+                    eprintln!("Forge HTTP download expired: response_bytes={length}, deadline_seconds={}", lifetime.as_secs());
+                }
+            }
+        }
+    });
+    DownloadReader {
+        receiver,
+        chunk: Vec::new(),
+        position: 0,
+        expired,
+        remaining: length,
+        finished,
     }
 }
 fn range(value: &str, size: u64) -> Option<(u64, u64)> {
@@ -631,7 +771,11 @@ async fn download(
         },
         headers,
         method,
-        stream_permit,
+        (
+            stream_permit,
+            state.config.download_timeout,
+            state.config.download_min_bytes_per_second,
+        ),
     )
 }
 async fn provider_file(
@@ -664,7 +808,19 @@ async fn provider_file(
         })
         .await
         .map_err(provider_read_error)?;
-    file_response(file, size, &digest, content_type, headers, method, permit)
+    file_response(
+        file,
+        size,
+        &digest,
+        content_type,
+        headers,
+        method,
+        (
+            permit,
+            state.config.download_timeout,
+            state.config.download_min_bytes_per_second,
+        ),
+    )
 }
 fn file_response(
     mut file: File,
@@ -673,7 +829,7 @@ fn file_response(
     content_type: &str,
     headers: HeaderMap,
     method: Method,
-    stream_permit: OwnedSemaphorePermit,
+    stream: (OwnedSemaphorePermit, Duration, u64),
 ) -> std::result::Result<Response, ApiError> {
     let etag = format!("\"{}\"", digest);
     let mut builder = Response::builder()
@@ -729,11 +885,13 @@ fn file_response(
     } else {
         file.seek(SeekFrom::Start(start))
             .map_err(|_| ApiError(StatusCode::INTERNAL_SERVER_ERROR, "read_failed"))?;
-        let reader = HeldReader {
-            file: tokio::fs::File::from_std(file).take(length),
-            _permit: stream_permit,
-        };
-        Body::from_stream(ReaderStream::new(reader))
+        let reader = download_reader(
+            file,
+            length,
+            stream.0,
+            download_lifetime(stream.1, stream.2, length),
+        );
+        Body::from_stream(ReaderStream::with_capacity(reader, DOWNLOAD_CHUNK))
     };
     Ok(builder.body(body).unwrap())
 }
@@ -754,6 +912,312 @@ async fn shutdown() {
 #[cfg(test)]
 mod provider_admission_tests {
     use super::*;
+    use std::sync::atomic::AtomicUsize;
+    use tokio::io::AsyncReadExt;
+
+    struct CountedRead {
+        file: File,
+        reads: Arc<AtomicUsize>,
+    }
+    impl Read for CountedRead {
+        fn read(&mut self, bytes: &mut [u8]) -> io::Result<usize> {
+            let n = self.file.read(bytes)?;
+            self.reads.fetch_add(1, Ordering::Release);
+            Ok(n)
+        }
+    }
+    fn stream_file() -> File {
+        use std::io::Write;
+        let mut file = tempfile::tempfile().unwrap();
+        file.write_all(&vec![7; 1024 * 1024]).unwrap();
+        file.seek(SeekFrom::Start(0)).unwrap();
+        file
+    }
+    async fn wait_reads(count: &AtomicUsize, expected: usize) {
+        let limit = std::time::Instant::now() + Duration::from_secs(5);
+        while count.load(Ordering::Acquire) < expected {
+            assert!(std::time::Instant::now() < limit, "read barrier timed out");
+            tokio::task::yield_now().await;
+        }
+        // Let the producer finish sending/parking without advancing virtual time.
+        for _ in 0..8 {
+            tokio::task::yield_now().await;
+        }
+    }
+    #[tokio::test]
+    #[ignore = "explicit 1GiB local throughput observation; not a timing gate"]
+    async fn measure_download_reader_throughput() {
+        use axum::body::HttpBody;
+        use std::io::Write;
+        let length = 1024 * 1024 * 1024;
+        let mut file = tempfile::tempfile().unwrap();
+        let block = vec![0x5a; 1024 * 1024];
+        for _ in 0..1024 {
+            file.write_all(&block).unwrap();
+        }
+        file.sync_all().unwrap();
+        let permits = Arc::new(Semaphore::new(1));
+        let mut samples = Vec::new();
+        for round in 0..3 {
+            for offset in 0..2 {
+                let bounded = (round + offset) % 2 == 1;
+                file.seek(SeekFrom::Start(0)).unwrap();
+                let handle = file.try_clone().unwrap();
+                let start = Instant::now();
+                let mut body = if bounded {
+                    Body::from_stream(ReaderStream::with_capacity(
+                        download_reader(
+                            handle,
+                            length,
+                            permits.clone().acquire_owned().await.unwrap(),
+                            Duration::from_secs(3600),
+                        ),
+                        DOWNLOAD_CHUNK,
+                    ))
+                } else {
+                    // Pre-#34 adapter: Tokio file/take and default ReaderStream capacity.
+                    Body::from_stream(ReaderStream::new(
+                        tokio::fs::File::from_std(handle).take(length),
+                    ))
+                };
+                let mut bytes = 0;
+                let mut frames = 0;
+                while let Some(frame) =
+                    std::future::poll_fn(|cx| std::pin::Pin::new(&mut body).poll_frame(cx)).await
+                {
+                    let data = frame.unwrap().into_data().unwrap();
+                    bytes += data.len() as u64;
+                    frames += 1;
+                }
+                assert_eq!(bytes, length);
+                samples.push(json!({"path":if bounded {"bounded_producer"} else {"legacy_tokio_fs"},"round":round,"bytes":bytes,"frames":frames,"milliseconds":start.elapsed().as_secs_f64()*1000.0}));
+            }
+        }
+        println!(
+            "FORGE_DOWNLOAD_BENCHMARK={}",
+            json!({"schema":1,"host":std::env::consts::OS,"architecture":std::env::consts::ARCH,"chunk_bytes":DOWNLOAD_CHUNK,"samples":samples,"scope":"local warm regular-file response-body drain; three alternating rounds; no hashing, network, TLS or remote throughput claim; temporary 1GiB file removed"})
+        );
+    }
+    #[test]
+    fn sized_deadline_rounds_up_and_caps_without_overflow() {
+        let base = Duration::from_secs(300);
+        let rate = 1024 * 1024;
+        assert_eq!(download_lifetime(base, rate, 0).as_secs(), 300);
+        assert_eq!(download_lifetime(base, rate, 1).as_secs(), 301);
+        assert_eq!(
+            download_lifetime(base, rate, 1024 * 1024 * 1024).as_secs(),
+            1324
+        );
+        assert_eq!(download_lifetime(base, 1, u64::MAX).as_secs(), 3600);
+        assert_eq!(
+            download_lifetime(Duration::from_secs(3600), rate, 1).as_secs(),
+            3600
+        );
+    }
+    #[tokio::test]
+    async fn premature_channel_close_is_not_clean_eof() {
+        let (sender, receiver) = mpsc::channel(1);
+        drop(sender);
+        let mut reader = DownloadReader {
+            receiver,
+            chunk: Vec::new(),
+            position: 0,
+            expired: Arc::new(AtomicBool::new(false)),
+            remaining: 1,
+            finished: None,
+        };
+        assert_eq!(
+            reader.read(&mut [0; 1]).await.unwrap_err().kind(),
+            io::ErrorKind::UnexpectedEof
+        );
+    }
+    #[tokio::test(start_paused = true)]
+    async fn scaled_deadline_allows_slow_consumption_past_base() {
+        let permits = Arc::new(Semaphore::new(1));
+        let count = Arc::new(AtomicUsize::new(0));
+        // Same 1324-second budget as a 1GiB response at the default 1MiB/s rate.
+        let mut reader = download_reader(
+            CountedRead {
+                file: stream_file(),
+                reads: count.clone(),
+            },
+            1024 * 1024,
+            permits.clone().acquire_owned().await.unwrap(),
+            download_lifetime(Duration::from_secs(300), 1024, 1024 * 1024),
+        );
+        let mut bytes = vec![0; DOWNLOAD_CHUNK];
+        for chunk in 0..4 {
+            wait_reads(&count, chunk + 1).await;
+            tokio::time::advance(Duration::from_secs(200)).await;
+            reader.read_exact(&mut bytes).await.unwrap();
+            assert!(bytes.iter().all(|b| *b == 7));
+        }
+        let _returned = permits.acquire_owned().await.unwrap();
+        tokio::time::advance(Duration::from_secs(2000)).await;
+        assert_eq!(reader.read(&mut [0; 1]).await.unwrap(), 0);
+    }
+    #[tokio::test]
+    async fn library_validation_precedes_storage() {
+        let temp = tempfile::tempdir().unwrap();
+        let root = temp.path().join("absent");
+        let mut state = service(root.clone());
+        Arc::get_mut(&mut state)
+            .unwrap()
+            .config
+            .download_min_bytes_per_second = 0;
+        let config = Arc::try_unwrap(state).ok().unwrap().config;
+        assert!(
+            serve(config)
+                .await
+                .unwrap_err()
+                .to_string()
+                .contains("positive")
+        );
+        assert!(!root.exists());
+    }
+    #[tokio::test(start_paused = true)]
+    async fn two_unpolled_bodies_expire_and_fresh_reader_recovers() {
+        let permits = Arc::new(Semaphore::new(2));
+        let mut readers = Vec::new();
+        for _ in 0..2 {
+            let count = Arc::new(AtomicUsize::new(0));
+            let reader = download_reader(
+                CountedRead {
+                    file: stream_file(),
+                    reads: count.clone(),
+                },
+                1024 * 1024,
+                permits.clone().acquire_owned().await.unwrap(),
+                Duration::from_secs(10),
+            );
+            wait_reads(&count, 2).await;
+            readers.push(reader);
+        }
+        assert_eq!(permits.available_permits(), 0);
+        tokio::time::advance(Duration::from_secs(11)).await;
+        let both = permits.clone().acquire_many_owned(2).await.unwrap();
+        for reader in &mut readers {
+            assert_eq!(
+                reader.read(&mut [0; 1]).await.unwrap_err().kind(),
+                io::ErrorKind::TimedOut
+            );
+        }
+        drop(both);
+        tokio::time::resume();
+        let mut fresh = download_reader(
+            stream_file(),
+            1024 * 1024,
+            permits.clone().acquire_owned().await.unwrap(),
+            Duration::from_secs(300),
+        );
+        let mut bytes = Vec::new();
+        fresh.read_to_end(&mut bytes).await.unwrap();
+        assert_eq!(bytes, vec![7; 1024 * 1024]);
+    }
+    #[tokio::test(start_paused = true)]
+    async fn trickle_does_not_reset_total_deadline_and_drop_cancels() {
+        let permits = Arc::new(Semaphore::new(1));
+        let count = Arc::new(AtomicUsize::new(0));
+        let mut reader = download_reader(
+            CountedRead {
+                file: stream_file(),
+                reads: count.clone(),
+            },
+            1024 * 1024,
+            permits.clone().acquire_owned().await.unwrap(),
+            Duration::from_secs(10),
+        );
+        wait_reads(&count, 2).await;
+        for _ in 0..3 {
+            assert_eq!(reader.read(&mut [0; 1]).await.unwrap(), 1);
+            tokio::time::advance(Duration::from_secs(3)).await;
+        }
+        tokio::time::advance(Duration::from_secs(2)).await;
+        let permit = permits.clone().acquire_owned().await.unwrap();
+        assert_eq!(
+            reader.read(&mut [0; 1]).await.unwrap_err().kind(),
+            io::ErrorKind::TimedOut
+        );
+        drop(permit);
+        let count = Arc::new(AtomicUsize::new(0));
+        let disconnected = download_reader(
+            CountedRead {
+                file: stream_file(),
+                reads: count.clone(),
+            },
+            1024 * 1024,
+            permits.clone().acquire_owned().await.unwrap(),
+            Duration::from_secs(300),
+        );
+        wait_reads(&count, 2).await;
+        drop(disconnected);
+        let _returned = permits.acquire_owned().await.unwrap();
+    }
+    #[tokio::test(start_paused = true)]
+    async fn small_unpolled_body_and_queued_tail_still_expire() {
+        for consume_first in [false, true] {
+            let permits = Arc::new(Semaphore::new(1));
+            let count = Arc::new(AtomicUsize::new(0));
+            let mut reader = download_reader(
+                CountedRead {
+                    file: stream_file(),
+                    reads: count.clone(),
+                },
+                2,
+                permits.clone().acquire_owned().await.unwrap(),
+                Duration::from_secs(10),
+            );
+            wait_reads(&count, 1).await;
+            if consume_first {
+                assert_eq!(reader.read(&mut [0; 1]).await.unwrap(), 1);
+            }
+            assert_eq!(permits.available_permits(), 0);
+            tokio::time::advance(Duration::from_secs(11)).await;
+            let _returned = permits.acquire_owned().await.unwrap();
+            assert_eq!(
+                reader.read(&mut [0; 1]).await.unwrap_err().kind(),
+                io::ErrorKind::TimedOut
+            );
+        }
+    }
+    #[tokio::test]
+    async fn cancelled_blocking_read_keeps_spool_permit_until_io_finishes() {
+        struct Blocked {
+            started: std::sync::mpsc::Sender<()>,
+            finish: std::sync::mpsc::Receiver<()>,
+        }
+        impl Read for Blocked {
+            fn read(&mut self, _: &mut [u8]) -> io::Result<usize> {
+                self.started.send(()).unwrap();
+                self.finish.recv().unwrap();
+                Ok(0)
+            }
+        }
+        let permits = Arc::new(Semaphore::new(1));
+        let (start, started) = std::sync::mpsc::channel();
+        let (finish, finished) = std::sync::mpsc::channel();
+        let reader = download_reader(
+            Blocked {
+                started: start,
+                finish: finished,
+            },
+            1,
+            permits.clone().acquire_owned().await.unwrap(),
+            Duration::from_secs(300),
+        );
+        tokio::task::spawn_blocking(move || started.recv_timeout(Duration::from_secs(5)))
+            .await
+            .unwrap()
+            .unwrap();
+        drop(reader);
+        tokio::task::yield_now().await;
+        assert_eq!(permits.available_permits(), 0);
+        finish.send(()).unwrap();
+        let _returned = tokio::time::timeout(Duration::from_secs(5), permits.acquire_owned())
+            .await
+            .unwrap()
+            .unwrap();
+    }
     #[tokio::test]
     async fn serving_budget_is_server_error_without_fallback() {
         let error = classify(anyhow::anyhow!(crate::error::Kind::ProviderLimit));
@@ -781,6 +1245,8 @@ mod provider_admission_tests {
                 token_file: None,
                 provider_root: None,
                 provider_limits: crate::provider_view::Limits::default(),
+                download_timeout: Duration::from_secs(300),
+                download_min_bytes_per_second: 1024 * 1024,
             },
             token: None,
             work: Arc::new(Semaphore::new(8)),
