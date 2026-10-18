@@ -73,3 +73,30 @@ audit ran for this increment. Advisory auditing, secret scans, coverage threshol
 fuzzing and release provenance should establish baselines for the pinned official
 graphs before becoming gates. Do not invent coverage targets or blanket advisory
 exceptions. These review gates do not establish release readiness.
+
+## Reviewed Action cohort (#41)
+
+The dependency delivery consolidates bot proposals #16–#19 with owner-signed,
+issue-linked history. All current workflow references, including Passport,
+use official immutable commits:
+
+| Action | Version | Commit |
+| --- | --- | --- |
+| actions/checkout | 7.0.1 | 3d3c42e5aac5ba805825da76410c181273ba90b1 |
+| actions/upload-artifact | 7.0.2 | cf430e030ddbb5b0abf93d22962f4752f3646cd9 |
+| actions/deploy-pages | 5.0.1 | 368f82528645a54fb793d4d04e342629a3f51346 |
+| actions/upload-pages-artifact | 5.0.0 | fc324d3547104276b827a68afc52ff2a11cc49c9 |
+
+Official tag-to-commit and action.yml metadata were checked through the GitHub
+API on 2026-10-18. JavaScript actions use Node 24 on hosted ubuntu-24.04; Pages
+upload is composite and internally pins upload-artifact 7.0.0. Direct artifact
+uploads explicitly retain archive:true, existing names/paths/retention and each
+existing hidden-file policy. Pages keeps its github-pages artifact and page_url
+output. No workflow permissions/triggers or unsafe-fork escape hatches change.
+
+The target integrity workflow still checks out only the trusted base SHA with
+persist-credentials:false. Its new checkout cannot be exercised by its own PR's
+trusted-base run; inspect the first subsequent PR gate after merge. Ordinary PR
+CI exercises the new checkout and native installer artifact uploads. Manual
+Passport and actual Pages upload/deployment remain unexecuted by this update;
+local docs checks and metadata review do not establish deployment success.
