@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "http_source_roundtrip": true,
+  "auth_and_remote_binding": true,
+  "head_etag_range": true,
+  "path_inputs_refused": true,
+  "sqlite_contention_admission_and_responsive_liveness": true,
+  "corruption_refused_before_conditional_response": true,
+  "real_proofs": [
+    {
+      "profile": "ledger8-v2",
+      "downloaded_warm_artifacts_prove_and_reject_invalid_controls": true
+    },
+    {
+      "profile": "zkir3",
+      "downloaded_warm_artifacts_prove_and_reject_invalid_controls": true
+    },
+    {
+      "profile": "zkir31",
+      "downloaded_warm_artifacts_prove_and_reject_invalid_controls": true
+    }
+  ],
+  "scope": "isolated real HTTP process; local private store",
+  "host": {
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "binary_sha256": "18b0a7c8cee1bb61d62623fe0a2455094d6eb657be627017a5abceef4ed11ab3",
+  "harness_sha256": "92d0fd3b587773a8de97cf6ca5fa6b446a7912382f294c7c13313b42b4d4076a"
+}

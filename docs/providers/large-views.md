@@ -82,3 +82,14 @@ bound remains 2 GiB. The [reference provenance](../evidence/passport-full-provid
 pins the fresh original manifest independently. Its source map differs from the
 historical run because the compiler records the output path; artifact entries
 match. Historical manifests and receipts were not rewritten.
+
+Verified response bodies have a finite, size-scaled lifetime after verification:
+`min(3600, base + ceil(response_bytes / minimum_rate))` seconds. Base is
+`serve --download-timeout-seconds` (default 300, allowed 1..3600); rate is
+`--download-min-bytes-per-second` (default 1048576, positive). A 1GiB response gets
+1324 seconds by default. Progress never resets it; ranges use selected length but
+still verify/spool the whole file. The independently timed producer retains its
+spool/permit until body consumption, cancellation or expiry; in-flight blocking
+I/O keeps ownership until completion. The two-spool/2GiB bound remains. The same
+policy intentionally covers ordinary CAS downloads. See the [HTTP guide](../http/README.md)
+for slow-link configuration, truncation/retry and buffered-byte/I/O limits.
