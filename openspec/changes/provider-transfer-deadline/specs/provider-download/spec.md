@@ -22,5 +22,16 @@ blocking work after cancellation. Corrupt files SHALL refuse before response.
 
 #### Scenario: Invalid timeout
 **WHEN** the timeout is zero or exceeds3600seconds
-**THEN** refuse serve startup; default SHALL be300seconds. This is a transfer
-lifetime, not a keygen timeout or a hosted-service availability promise.
+**THEN** refuse serve startup; base SHALL default to 300 seconds. A zero
+minimum byte rate SHALL also refuse before storage startup, including library calls.
+
+#### Scenario: Slow large response
+**WHEN** a verified CAS or provider response has length L and configured positive rate R
+**THEN** its total lifetime SHALL be min(3600, base + ceil(L/R)) seconds, using
+saturating arithmetic; default R SHALL be 1048576 bytes/second. A default 1GiB
+response SHALL receive 1324 seconds; range length SHALL determine its allowance.
+Progress SHALL NOT reset this deadline. Expiry SHALL log response size and lifetime.
+
+#### Scenario: Producer ends without delivering all bytes
+**WHEN** the channel closes with declared bytes remaining
+**THEN** the reader SHALL fail with UnexpectedEof rather than report clean EOF.

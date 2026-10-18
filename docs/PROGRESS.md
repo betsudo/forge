@@ -1243,3 +1243,34 @@
   storage; OpenSpec/profile and built-docs checks pass. This does not qualify full
   Passport, Linux or hosted CI.
   Compact, official backend pins and shared cache/installation remain unchanged.
+
+## 2026-10-18 — PR40 review fixes (#34)
+
+- Resolve the large-file deadline concern with a finite size allowance:
+  `min(3600, base + ceil(response_bytes / minimum_rate))` seconds. Base remains
+  300 seconds (`--download-timeout-seconds`, 1..3600); new positive
+  `--download-min-bytes-per-second` defaults to 1048576. A full 1GiB response
+  gets 1324 seconds by default. Progress never resets it. Both CAS and provider
+  downloads intentionally use the policy; ranges use response length but still
+  verify/spool the full file. Expiry logs response size and effective lifetime.
+- Channel closure with outstanding bytes is UnexpectedEof; completed bodies keep
+  clean EOF after their deadline. Library validation precedes storage and is
+  explicitly documented separately from clap. Four new functional tests cover
+  cap/rounding/overflow, slow consumption beyond base, early EOF and library rate
+  validation. Existing stalled/trickling/tail/disconnect/I/O ownership cases pass.
+- Increase serial chunks from 64 to 256KiB, retaining one channel slot and the
+  existing two-spool/2GiB cap. An explicit ignored benchmark drains one owned
+  regular 1GiB file through the previous Tokio adapter and the bounded producer
+  in three alternating rounds: medians 2077.752ms and 152.171ms respectively on
+  this Mac ARM64 host. This is warm local body draining without hashing/network,
+  not a CI/VPN/remote throughput guarantee or timing gate. Raw observation:
+  docs/evidence/issue34-download-throughput-local.json. Temporary file removed.
+- Local Nix: 15 functional library tests, 16 provider tests, Clippy all-targets,
+  OpenSpec and built-docs pass. Real HTTP fresh proofs and negative controls
+  pass for all three pinned profiles: docs/evidence/issue34-review-http-local.json.
+  Refreshed Mac ARM64 compiler/SDK adapter qualification passed 15 genuine proofs
+  and 12 API controls: docs/evidence/issue34-review-provider-local.json.
+  Independent review confirmed arithmetic, selected-range sizing, EOF completion
+  and file/permit lifetime remain correct. Original PR40 receipts are historical;
+  this update does not qualify full Passport, native Linux or hosted savings.
+  Compact, official pins and shared installation/cache remain unchanged.
