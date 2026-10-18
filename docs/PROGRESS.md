@@ -1274,3 +1274,20 @@
   and file/permit lifetime remain correct. Original PR40 receipts are historical;
   this update does not qualify full Passport, native Linux or hosted savings.
   Compact, official pins and shared installation/cache remain unchanged.
+
+## 2026-10-18 — Reviewed Action dependency delivery (#41)
+
+- Consolidate bot proposals #16–#19 into owner-signed issue-linked delivery from
+  current main. Verify official upstream commits for checkout 7.0.1,
+  upload-artifact 7.0.2, deploy-pages 5.0.1 and upload-pages-artifact 5.0.0.
+  Include all six checkout references and three direct uploads, including the
+  newer manual Passport workflow missed by the original bot patches.
+- Direct uploads explicitly retain archive:true. Preserve artifact names/paths,
+  retention/hidden-file settings, trusted-base checkout, persist-credentials:false,
+  least permissions, manual Pages trigger and deployment environment.
+- Local Nix actionlint, OpenSpec validation, commit-policy negative controls,
+  28 PR-integrity API controls and built-docs checks pass. Runtime metadata is
+  Node 24 (Pages upload is composite). No Rust/compiler/backend/SDK pin change.
+- Actual Pages deployment and manual Passport workflow are untested. The updated
+  trusted-base checkout itself takes effect only after merge; PR integrity uses
+  reviewed base code. See docs/ci-quality-gates.md for pins and qualification limits.
