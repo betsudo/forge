@@ -64,6 +64,18 @@ bounds, not a strict CPU/memory sandbox or a complete idle-connection policy.
 A disconnected request may finish admitted generation safely. SIGINT/SIGTERM
 wait for admitted work; forced termination retains existing transaction recovery.
 
+Downloads have a total producer/body-consumption lifetime of300seconds after
+verification and range selection. Configure `serve --download-timeout-seconds N`
+with an integer from1to3600. Progress does not reset it: stalled, unpolled and
+trickling bodies expire independently of further reads, including a queued final
+tail. An unfinished response errors/truncates; the client must retry explicitly.
+Bytes already handed to HTTP/kernel/client buffers are outside this deadline.
+Hashing, disk I/O and key generation are not bounded by this option. In-flight
+blocking reads retain their file/admission permit until actual completion.
+Provider downloads retain their separate two-spool/2GiB bound; ordinary artifact
+downloads retain eight permits. The producer uses a one-slot64KiB chunk channel,
+without another spool or unchecked reopen. This is not a connection-count limit.
+
 Objects are hash-verified before streaming or returning304, using the same
 opened descriptor under the store transaction. GET/HEAD provide strong digest
 ETags, exact lengths, private immutable caching and `Accept-Ranges: bytes`.

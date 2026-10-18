@@ -82,3 +82,10 @@ bound remains 2 GiB. The [reference provenance](../evidence/passport-full-provid
 pins the fresh original manifest independently. Its source map differs from the
 historical run because the compiler records the output path; artifact entries
 match. Historical manifests and receipts were not rewritten.
+
+Verified response bodies also have a finite total lifetime after verification:
+`serve --download-timeout-seconds` defaults to300 (allowed1..3600). Progress does
+not reset it. An independently timed producer retains the spool and permit until
+body consumption, cancellation or expiry; in-flight blocking I/O retains ownership
+until it finishes. This preserves the two-spool/2GiB bound. See the [HTTP guide](../http/README.md)
+for truncation/retry behavior and buffered-byte/I/O limits.

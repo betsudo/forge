@@ -1220,3 +1220,26 @@
 - Independent review found and confirmed fixes for manifest ABA binding, entry
   type mutation and bounded enumeration. Compact, official pins and shared
   installation/cache remain unchanged. No manual dispatch, merge or release.
+
+## 2026-10-18 — Bounded HTTP download lifetime (#34)
+
+- `serve --download-timeout-seconds` defaults to300, accepts1..3600, and bounds
+  total producer/body consumption after full verification and range selection.
+  Progress never resets it. Queued final tails remain timed until consumed;
+  expiration does not need another body poll. Disconnects cancel the producer.
+- Existing two provider permits/2GiB spool cap and eight CAS download permits
+  remain. Serial64KiB blocking reads use a one-slot channel, with no new spool or
+  unchecked reopen. In-flight blocking I/O retains its file/permit until actual
+  completion. Hashing/I/O and bytes already handed to HTTP/kernel/client buffers
+  are outside the deadline; incomplete bodies fail and require explicit retry.
+- 11 Rust library tests and16provider integration tests pass, including deterministic paused-clock unpolled,
+  trickling, tiny-body/tail expiry, disconnect, blocking-read ownership and fresh
+  read recovery. Clippy all-targets passes. Independent review identified the
+  queued-tail gap and confirmed the consumption acknowledgment fix.
+- Local macOS ARM64 JSON3.1 compiler/SDK adapter qualification passed15genuine
+  proofs and12API controls: docs/evidence/issue34-provider-local.json. Real HTTP
+  downloaded warm artifacts also proved and rejected invalid controls for all
+  three pinned profiles. Fast HTTP tests reject invalid timeouts before creating
+  storage; OpenSpec/profile and built-docs checks pass. This does not qualify full
+  Passport, Linux or hosted CI.
+  Compact, official backend pins and shared cache/installation remain unchanged.

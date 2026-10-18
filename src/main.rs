@@ -133,6 +133,9 @@ enum Command {
         provider_root: Option<PathBuf>,
         #[arg(long, default_value_t = midnight_zkir_forge::provider_view::DEFAULT_MAX_VIEW_BYTES)]
         provider_max_view_bytes: u64,
+        /// Total producer lifetime after verification; progress does not reset it.
+        #[arg(long, default_value_t = 300, value_parser = clap::value_parser!(u64).range(1..=3600))]
+        download_timeout_seconds: u64,
     },
 }
 #[tokio::main(flavor = "current_thread")]
@@ -253,6 +256,7 @@ async fn run(cli: Cli) -> Result<Value> {
         token_file,
         provider_root,
         provider_max_view_bytes,
+        download_timeout_seconds,
     } = &cli.command
     {
         return http::serve(http::Config {
@@ -266,6 +270,7 @@ async fn run(cli: Cli) -> Result<Value> {
             provider_limits: midnight_zkir_forge::provider_view::Limits::new(
                 *provider_max_view_bytes,
             )?,
+            download_timeout: std::time::Duration::from_secs(*download_timeout_seconds),
         })
         .await;
     }
