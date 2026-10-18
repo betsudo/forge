@@ -247,10 +247,21 @@ def main():
             require((root/'completed').is_file(), 'compiler did not complete cached keygen hook')
             require((output/'compiler/contract-manifest.json').is_file(), 'compiler did not emit final integrity manifest')
             return 0
-    except (ValueError, KeyError, TypeError, OSError, subprocess.SubprocessError) as error:
+    except (ValueError, KeyError, TypeError, OSError, subprocess.SubprocessError, CompilerInterrupted) as error:
         print('Forge compiler wrapper refused: '+str(error), file=sys.stderr)
         return 1
 
 
+class CompilerInterrupted(Exception):
+    pass
+
+
+def interrupted(_signal, _frame):
+    # Allow a supervising qualifier to stop the hook's separately owned Forge
+    # process group before terminating the surrounding compiler group.
+    raise CompilerInterrupted('compiler wrapper interrupted')
+
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGTERM, interrupted)
     sys.exit(main())

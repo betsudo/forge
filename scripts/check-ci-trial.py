@@ -29,7 +29,7 @@ def fixture(warm_ms=700):
         for lane in report.LANES:
             hits = 2 if lane == 'warm' else 1 if lane == 'partial' else 0
             download = 100 if hits else 0
-            stats = None if lane == 'uncached' else dict(requests=2, hits=hits, misses=2-hits, errors=0)
+            stats = None if lane in ('uncached','unavailable') else dict(requests=2, hits=hits, misses=2-hits, errors=0)
             rows.append(dict(plan_sha256='c'*64, identity=copy.deepcopy(identity), scope='whole-job',
                 conclusion='success', repetition=repetition, lane=lane,
                 job_url=f'https://github.com/betsudo/forge/actions/runs/123/job/{len(rows)+1}',
@@ -88,6 +88,7 @@ class Reporter(unittest.TestCase):
             ('warm miss', lambda p, r: r[2]['cache'].update(hits=1, misses=1)),
             ('fake partial', lambda p, r: r[3]['cache'].update(hits=2, misses=0)),
             ('availability relabel', lambda p, r: r[4].update(transport_unavailable=False)),
+            ('unavailable forged cache', lambda p, r: r[4].update(cache=dict(requests=2,hits=0,misses=2,errors=0))),
             ('uncached upload', lambda p, r: r[0].update(upload_bytes=10)),
             ('posthoc short sample', lambda p, r: p.update(repetitions=1)),
             ('zero adoption threshold', lambda p, r: p.update(minimum_saving_ms=0)),

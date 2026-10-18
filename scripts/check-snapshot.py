@@ -25,6 +25,7 @@ with tempfile.TemporaryDirectory(prefix='forge-snapshot-e2e-') as d:
  initial=cli(source,'snapshot','--output',snap,'--partition','a'*64)
  restored=temp/'relocated';r=cli(restored,'restore',snap,'--expected-id',initial['snapshot_id'],'--partition','a'*64)
  assert r['snapshot_id']==initial['snapshot_id']
+ assert r['manifest_sha256']==hashlib.sha256((snap/'snapshot.json').read_bytes()).hexdigest()
  assert cli(restored,'inspect',bundle)['ready'] is False
  cli(restored,'restore',snap,ok=False)
  assert cli(restored,'inspect',bundle)['record']['source']==registered['source']

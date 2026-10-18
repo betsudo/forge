@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "consumer_commit": "0d7bb0bc834f2d45d9fe2d84c4d022a30d648423",
+  "source_closure": {
+    "revision": "0d7bb0bc834f2d45d9fe2d84c4d022a30d648423",
+    "files": {
+      "contract/contracts/account-p256.compact": {
+        "sha256": "50aca789d611fab99292725a64a8231e0a6509ca726fdb1e23babf96e0ad9fd4",
+        "git_blob": "be3787a627c12eecb6c5d7045b2dfb0b1d852840",
+        "bytes": 19918
+      },
+      "contract/contracts/account.compact": {
+        "sha256": "ef1e3d6eb873e91e205c12e07f33cda744d228470dd43a4794cb3784447fd6ae",
+        "git_blob": "0512d5a6652e9a2cf4d3e3c93ea83a321bce1ddb",
+        "bytes": 130095
+      },
+      "contract/contracts/control.compact": {
+        "sha256": "2f092f1f7955256a542f1bfea5622854b5128b038fefea16e52c4718ebd05bcb",
+        "git_blob": "ad0fbcb96853c6c3d7fafc0e890962bccc5b743b",
+        "bytes": 2193
+      },
+      "contract/contracts/faucet.compact": {
+        "sha256": "1834ad2a49235cc405390f22fdd3e9480bfe66ebf88817947e4250d400b95f71",
+        "git_blob": "57b555b5e97d930b996eeed35f3678fffc775e13",
+        "bytes": 2031
+      },
+      "contract/contracts/probe-block-time.compact": {
+        "sha256": "038de93603102884036dea055aaa0d3ead165c49981be497b72b844c1c0c55f0",
+        "git_blob": "8a7847357ec816569ac9fb1a5bc60c7b145eeb68",
+        "bytes": 1338
+      },
+      "contract/contracts/probe-grant-caller.compact": {
+        "sha256": "e3c9a6d8429817992e80f9623c4211e6907139552601649395563fa4a8555ed1",
+        "git_blob": "794e606b7d4183c8e51b328e67b83e8f594821f3",
+        "bytes": 2154
+      },
+      "contract/contracts/probe-p256.compact": {
+        "sha256": "e42427fa90b3a40f7d45ce81b39dfcdbfeba078b7bb472ca79bd76cec9c6ba3e",
+        "git_blob": "0efee7bd366d0f0a8b3d7803bd4a04968aec127e",
+        "bytes": 948
+      },
+      "contract/contracts/webauthn.compact": {
+        "sha256": "04e84a53c6ffd2701a7f07820ef6becf2ffee06e05de9ca9dfd9e2b33ce7dedb",
+        "git_blob": "543fe518f4c58f7e045f39ef9c5e1d2828c59eed",
+        "bytes": 4778
+      }
+    }
+  },
+  "official_compiler_sha256": "4bda4f060e9c821416c6c4058f2cc9c5788c22bdbbcd6dac9c82f03d87858552",
+  "official_zkir_sha256": "2e5febcbe905451cb549991f96eb91b94dfa7bc1a5deb7a41ee017964d532fb4",
+  "original_manifest_sha256": "b05834d643eda2b179dd4123b1f8202865be41f0ec29d6e9364b8ac187098842",
+  "prior_original_manifest_sha256": "433e83a167167a4756a210fba71ae509ed066a3c6993f4030e1bca297cfb2a8b",
+  "manifest_entry_differences_from_prior": [
+    "contract/index.js.map"
+  ],
+  "reason": "Original compiler source map records this run path; retain fresh original bytes, never rewrite metadata.",
+  "baseline_process": {
+    "returncode": 0,
+    "wall_ms": 1534718.9371249988,
+    "command": [
+      "python3",
+      "scripts/compiler-local.py",
+      "--mode",
+      "off",
+      "--compiler-dir",
+      "/Users/ysh/github/betsudo/forge/.local/provider-research/compiler",
+      "--params-dir",
+      "/Users/ysh/.cache/midnight/zk-params",
+      "/Users/ysh/github/betsudo/forge/.local/milestone-2026.10.1/passport/source/contract/contracts/account.compact",
+      "/Users/ysh/github/betsudo/forge/.local/issue31-provider/native-off"
+    ]
+  }
+}

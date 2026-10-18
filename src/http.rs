@@ -42,6 +42,7 @@ pub struct Config {
     pub listen: SocketAddr,
     pub token_file: Option<PathBuf>,
     pub provider_root: Option<PathBuf>,
+    pub provider_limits: crate::provider_view::Limits,
 }
 struct Service {
     config: Config,
@@ -78,6 +79,13 @@ impl IntoResponse for ApiError {
 }
 fn bad(code: &'static str) -> ApiError {
     ApiError(StatusCode::BAD_REQUEST, code)
+}
+fn provider_read_error(error: ApiError) -> ApiError {
+    if error.1 == "provider_limit" {
+        ApiError(StatusCode::INTERNAL_SERVER_ERROR, error.1)
+    } else {
+        error
+    }
 }
 fn classify(error: anyhow::Error) -> ApiError {
     let kind = crate::error::classify(&error);
@@ -645,15 +653,17 @@ async fn provider_file(
     } else {
         "application/octet-stream"
     };
+    let limits = state.config.provider_limits;
     let ((file, digest, size), permit) = state
         .provider_work(move || {
             let view = root.join(&id);
             if !view.exists() {
                 return Err(anyhow::anyhow!(crate::error::Kind::NotFound));
             }
-            crate::provider_view::read(&view, &id, &path)
+            crate::provider_view::read_with_limits(&view, &id, &path, limits)
         })
-        .await?;
+        .await
+        .map_err(provider_read_error)?;
     file_response(file, size, &digest, content_type, headers, method, permit)
 }
 fn file_response(
@@ -744,6 +754,22 @@ async fn shutdown() {
 #[cfg(test)]
 mod provider_admission_tests {
     use super::*;
+    #[tokio::test]
+    async fn serving_budget_is_server_error_without_fallback() {
+        let error = classify(anyhow::anyhow!(crate::error::Kind::ProviderLimit));
+        assert_eq!(error.0, StatusCode::BAD_REQUEST);
+        let response = provider_read_error(error).into_response();
+        assert_eq!(response.status(), StatusCode::INTERNAL_SERVER_ERROR);
+        let bytes = to_bytes(response.into_body(), 4096).await.unwrap();
+        let value: Value = serde_json::from_slice(&bytes).unwrap();
+        assert_eq!(value["error"]["code"], "provider_limit");
+        assert_eq!(value["error"]["availability_fallback"], false);
+        assert_eq!(value["error"]["retryable"], false);
+        assert_eq!(
+            provider_read_error(bad("invalid_id")).0,
+            StatusCode::BAD_REQUEST
+        );
+    }
     fn service(root: PathBuf) -> Arc<Service> {
         Arc::new(Service {
             config: Config {
@@ -754,6 +780,7 @@ mod provider_admission_tests {
                 listen: "127.0.0.1:0".parse().unwrap(),
                 token_file: None,
                 provider_root: None,
+                provider_limits: crate::provider_view::Limits::default(),
             },
             token: None,
             work: Arc::new(Semaphore::new(8)),

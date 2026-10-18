@@ -24,6 +24,11 @@ python3 scripts/check-compiler-local.py
 python3 -m py_compile scripts/qualify-passport-local.py scripts/measure-provider-ranges.py scripts/passport-range-fixture.py
 node --check integration/providers/passport.mjs
 python3 scripts/check-ci-trial.py
+python3 scripts/check-ci-collection.py
+python3 scripts/check-ci-payload.py
+python3 scripts/check-passport-linux.py
+python3 -m py_compile scripts/stage-passport-linux.py
+python3 -m py_compile scripts/qualify-passport-provider.py
 python3 scripts/check-linux-qualification.py
 python3 scripts/check-installer.py
 python3 scripts/check-local-install.py

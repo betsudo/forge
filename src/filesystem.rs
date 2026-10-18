@@ -36,6 +36,22 @@ pub(crate) fn publish_directory(stage: &Path, target: &Path) -> Result<()> {
     Ok(())
 }
 
+/// Available bytes for the current user on the destination filesystem.
+pub(crate) fn available_space(path: &Path) -> Result<u64> {
+    use std::os::fd::AsRawFd;
+    let directory = File::open(path)?;
+    let mut stats = std::mem::MaybeUninit::<libc::statvfs>::uninit();
+    // fstatvfs initializes the structure on success; use the opened destination FD.
+    ensure!(
+        unsafe { libc::fstatvfs(directory.as_raw_fd(), stats.as_mut_ptr()) } == 0,
+        "destination space query failed: {}",
+        std::io::Error::last_os_error()
+    );
+    let stats = unsafe { stats.assume_init() };
+    u64::try_from(u128::from(stats.f_bavail) * u128::from(stats.f_frsize))
+        .context("destination space overflow")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -7,6 +7,7 @@ import os
 from pathlib import Path
 import platform
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
@@ -26,21 +27,18 @@ def inventory(root):
     return {str(p.relative_to(root)):sha(p) for p in sorted(root.rglob('*')) if p.is_file()}
 
 
-def main():
-    parser = argparse.ArgumentParser(description=__doc__)
-    for name in ['binary','compiler-dir','params-dir','source','baseline','output']:
-        parser.add_argument('--'+name, required=True, type=Path)
-    args = parser.parse_args()
+def qualify(args):
     binary = args.binary.absolute()
     compiler, params, source, baseline = [p.resolve(strict=True) for p in
         [args.compiler_dir,args.params_dir,args.source,args.baseline]]
     args.output = args.output.resolve()
-    saved_qualification = args.output.with_name('passport-adapter-qualification-local.json')
+    saved_qualification = args.output.with_name(getattr(args, 'qualification_name', 'passport-adapter-qualification-local.json'))
+    assert args.output != saved_qualification, 'result and qualification policy must be distinct'
     assert not args.output.exists() and not saved_qualification.exists(), 'fresh receipts required'
     for removed in [baseline,*(baseline.parent/name for name in ['independent-cache','adapter-cache','local-cold','local-warm'])]:
         assert not args.output.is_relative_to(removed) and not saved_qualification.is_relative_to(removed), 'receipt inside cleanup target'
     assert not args.output.resolve().is_relative_to(baseline), 'receipt cannot be removed with baseline'
-    baseline.relative_to(ROOT/'.local/milestone-2026.10.1/passport')
+    baseline.relative_to(getattr(args, 'work', ROOT/'.local/milestone-2026.10.1/passport'))
     assert baseline.name == 'native-off', 'only explicitly owned baseline allowed'
     expected = json.loads((ROOT/'benchmarks/passport/consumer-files.json').read_text())
     for name,digest in expected['files'].items(): assert sha(source/name) == digest
@@ -51,9 +49,13 @@ def main():
         assert sha(source/name) == facts['sha256'], 'changed imported Compact source'
         data = (source/name).read_bytes()
         assert hashlib.sha1(b'blob '+str(len(data)).encode()+b'\0'+data).hexdigest() == facts['git_blob']
-    official = json.loads((ROOT/'docs/evidence/passport-exact-profile.json').read_text())
+    official = getattr(args, 'cohort', None)
+    if official is None:
+        assert platform.system() == 'Darwin' and platform.machine() == 'arm64', 'historical Mac cohort requires native ARM64 macOS'
+        old = json.loads((ROOT/'docs/evidence/passport-exact-profile.json').read_text())
+        official = {'tool_sha256':{name:old['tool_sha256']['tools/compiler/'+name] for name in ['compactc.bin','zkir-v3']}}
     for name in ['compactc.bin','zkir-v3']:
-        assert sha(compiler/name) == official['tool_sha256']['tools/compiler/'+name]
+        assert sha(compiler/name) == official['tool_sha256'][name]
     assert {p.name:sha(p) for p in (baseline/'zkir').glob('*.zkir')} == expected['emitted_zkir_sha256']
     worker = binary.parent/'midnight-zkir-forge-zkir31-worker'
     reference = inventory(baseline)
@@ -65,10 +67,21 @@ def main():
         environment.pop(key,None)
 
     def run(command, **kwargs):
-        result = subprocess.run(list(map(str,command)),capture_output=True,timeout=7200,
-                                text=True,env=environment,**kwargs)
-        if result.returncode: raise RuntimeError(str(command[:2])+': '+result.stderr[-4000:])
-        return result.stdout
+        import signal
+        with subprocess.Popen(list(map(str,command)), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                              text=True, env=environment, start_new_session=True, **kwargs) as process:
+            try: stdout, stderr = process.communicate(timeout=7200)
+            except BaseException:
+                try: os.killpg(process.pid, signal.SIGTERM)
+                except ProcessLookupError: pass
+                try: process.communicate(timeout=10)
+                except subprocess.TimeoutExpired:
+                    try: os.killpg(process.pid, signal.SIGKILL)
+                    except ProcessLookupError: pass
+                    process.communicate()
+                raise
+            if process.returncode: raise RuntimeError(str(command[:2])+': '+stderr[-4000:])
+            return stdout
 
     def cli(cache,*command):
         return json.loads(run([binary,'--cache-dir',cache,'--params-dir',params,*command]))
@@ -112,16 +125,16 @@ def main():
         probe = subprocess.run([binary,'--cache-dir',work/'limit-probe-cache','publish-view',baseline,
             '--manifest-sha256',sha(baseline/'compiler/contract-manifest.json'),
             '--provider-root',work/'limit-probe-views'],capture_output=True,text=True,env=environment,timeout=60)
-        assert probe.returncode != 0 and not any((work/'limit-probe-views').iterdir())
+        assert probe.returncode != 0 and (not (work/'limit-probe-views').exists() or not any((work/'limit-probe-views').iterdir()))
         provider_budget.update({'complete_http_view_qualified':False,'actual_publication_refusal':json.loads(probe.stdout)})
-        shutil.rmtree(work/'limit-probe-views')
+        if (work/'limit-probe-views').exists(): shutil.rmtree(work/'limit-probe-views')
         if (work/'limit-probe-cache').exists():shutil.rmtree(work/'limit-probe-cache')
     else:
         provider_budget['complete_http_view_qualified'] = False  # Node-only consumer harness
     qualification = {'schema':1,'status':'passed','tool_sha256':{name:sha(path) for name,path in
         [('compactc.bin',compiler/'compactc.bin'),('zkir-v3',compiler/'zkir-v3'),('forge',binary),('worker',worker)]},
         'materialization':materialization,'provider_checks':provider_checks,
-        'scope':'All52 intercepted artifact triples independently match official output; genuine selected-two Node SDK proofs only, native macOS ARM64.'}
+        'scope':'All52 intercepted artifact triples independently match official output; genuine selected-two Node SDK proofs only, ' + getattr(args, 'platform_scope', 'native macOS ARM64') + '.'}
     qpath = work/'adapter-qualification.json'
     assert not qpath.exists()
     qpath.write_text(json.dumps(qualification,indent=2)+'\n')
@@ -129,9 +142,11 @@ def main():
     native_start = json.loads((work/'native-off-start.json').read_text())
     native_status = json.loads((work/'native-off-result.json').read_text())
     assert native_status['returncode'] == 0
-    native_wall_ms = ((baseline/'compiler/contract-manifest.json').stat().st_mtime-native_start['process_start_epoch'])*1000
+    native_wall_ms = native_status.get('wall_ms')
+    if native_wall_ms is None:
+        native_wall_ms = ((baseline/'compiler/contract-manifest.json').stat().st_mtime-native_start['process_start_epoch'])*1000
     rows = [{'lane':'native-off','original_inventory':reference,'provider_checks':provider_checks,
-             'compile_wall_ms_approx':native_wall_ms,'compile_timing_scope':native_start['measurement'],
+             'compile_wall_ms' if 'wall_ms' in native_status else 'compile_wall_ms_approx':native_wall_ms,'compile_timing_scope':native_start['measurement'],
              'proof_test_wall_ms':native_proof_wall_ms,
              'compiler_command':['compiler-local.py','--mode','off','--feature-zkir-v3 (native invocation)','account.compact','native-off'],
              'compiler_completed_manifest':True,'compiler_exit_status':native_status['returncode']}]
@@ -172,6 +187,21 @@ def main():
     identity = prepared['artifact_set_id']
     descriptor = prepared['descriptor']
     controls = []
+    # Damage the final compiler output, not just the Forge export cache. The
+    # original compiler manifest stays independently pinned throughout repair.
+    consumer_prover = out/'keys/deposit_unshielded.prover'
+    original_prover = consumer_prover.read_bytes()
+    consumer_prover.write_bytes(b'damaged final compiler output')
+    try:
+        try: proofs(out)
+        except RuntimeError as error:
+            assert 'ZkArtifactIntegrityError' in str(error), 'unexpected SDK failure during integrity control'
+        else: raise AssertionError('SDK accepted damaged compiler output')
+    finally:
+        consumer_prover.write_bytes(original_prover)
+    assert inventory(out) == reference
+    controls.append({'control':'final-compiler-output-integrity-refusal-explicit-exact-repair',
+                     'provider_checks':proofs(out)})
 
     def refused(*command):
         result = subprocess.run(list(map(str,[binary,'--cache-dir',cache,'--params-dir',params,*command])),
@@ -232,20 +262,23 @@ def main():
     controls.append({'control':'wrong-profile-and-qualification-refuse-before-compiler-cleanup'})
     final_stats = cli(cache,'stats')
     # Keep fresh qualification policy as evidence; cache/compiled/private proof copies go away.
-    saved_qualification = args.output.with_name('passport-adapter-qualification-local.json')
+    saved_qualification = args.output.with_name(getattr(args, 'qualification_name', 'passport-adapter-qualification-local.json'))
     assert not saved_qualification.exists() and not saved_qualification.is_relative_to(cache)
     assert inventory(out) == reference, 'recovery changed original complete compiler output'
     saved_qualification.write_bytes(qpath.read_bytes())
     assert sha(saved_qualification) == qhash
     shutil.rmtree(out)
     shutil.rmtree(cache)
-    receipt = {'schema':1,'status':'passed','host':platform.platform(),'consumer_commit':expected['commit'],
+    receipt = {'schema':1,'status':'passed','host':platform.platform(),
+        'native_host':getattr(args, 'qualification_host', None),
+        'cohort_sha256':getattr(args, 'cohort_sha256', None),
+        'cohort_tool_sha256':getattr(args, 'cohort', {}).get('tool_sha256'),'consumer_commit':expected['commit'],
         'source_closure':json.loads((work/'source-inventory.json').read_text()),
         'tools':qualification['tool_sha256'],'qualification_sha256':qhash,
         'qualified_artifact_circuits':52,'application_proof_circuits':NAMES,
         'provider_budget':provider_budget,'full_bundle_bytes':baseline_size,'rows':rows,'recovery_controls':controls,'post_controls_stats':final_stats,
         'saved_qualification':saved_qualification.name,'cleanup':'owned baseline, independent/adapter stores, compiled lane outputs and private proof/preimage copies removed after evidence capture',
-        'scope':'Native macOS ARM64 full compiler adapter/Node provider; selected2 application proofs, not52 proofs or Linux/hostedCI support. Full large-bundle HTTP serving retains existing limits.',
+        'scope':getattr(args, 'platform_scope', 'Native macOS ARM64')+' full compiler adapter/Node provider; selected2 application proofs, not52 proofs or hostedCI savings. Full large-bundle HTTP serving is a separate qualification.',
         'source_inventory_sha256':sha(work/'source-inventory.json'),
         'sdk_package_lock_sha256':sha(PROJECT/'package-lock.json'),
         'harness_sha256':{str(p.relative_to(ROOT)):sha(p) for p in [Path(__file__).resolve(),PROJECT/'passport.mjs',ROOT/'scripts/compiler-local.py',ROOT/'benchmarks/passport/make-preimage.mjs']}}
@@ -254,4 +287,18 @@ def main():
     print(json.dumps({'output':str(args.output),'qualified_artifacts':52,'selected_proofs':sum(len(row['provider_checks']['lanes']) for row in rows)+sum(len(control.get('provider_checks',{}).get('lanes',[])) for control in controls)}))
 
 
-if __name__ == '__main__': main()
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    for name in ['binary','compiler-dir','params-dir','source','baseline','output']:
+        parser.add_argument('--'+name, required=True, type=Path)
+    args = parser.parse_args()
+    qualify(args)
+
+
+def interrupted(_signal, _frame):
+    raise RuntimeError('Passport qualification interrupted')
+
+
+if __name__ == '__main__':
+    signal.signal(signal.SIGTERM,interrupted)
+    main()

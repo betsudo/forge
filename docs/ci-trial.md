@@ -93,7 +93,7 @@ timing: {
 download_bytes: actual transferred bytes, integer
 upload_bytes: actual transferred bytes, integer
 transport_unavailable: boolean, true only for the unavailable lane
-cache: null for uncached, otherwise {requests, hits, misses, errors}
+cache: null for uncached/unavailable (official generation), otherwise {requests, hits, misses, errors}
 ```
 
 Use actual GitHub job start/end data for `job_ms`, including upload steps; a
@@ -103,8 +103,9 @@ job time, but cannot discover interval overlap or dishonest instrumentation.
 `download_ms` includes lookup/download/decompression/verification/restore;
 `upload_ms` includes snapshot/compression/upload. Measure actual compressed
 transport bytes from retained transport logs, rather than substituting unpacked
-snapshot size. The current Action alone does not provide all these measurements;
-a hosted producer/collector remains follow-up implementation.
+snapshot size. The current Action alone does not provide all these measurements. Local stage
+capture and strict collection prepare orchestration; actual transport instrumentation
+and the frozen, native-qualified hosted pilot remain pending.
 
 Use cache statistics **since the post-restore baseline**, not inherited totals.
 The correctness counters come from real test instrumentation, including failed
@@ -114,7 +115,156 @@ audited. Retain transport keys, cache creation age, matching source provenance,
 runner details and failure diagnostics in the evidence bundle. Each row must have
 a unique complete hosted job identity; rerunning a report does not add samples.
 
+## Local capture and terminal collection
+
+Tracking: [#9](https://github.com/betsudo/forge/issues/9). The native Passport
+qualification gate must pass before freezing actual Linux tool inventories.
+This increment supplies instrumentation and strict offline collection, not a
+completed pilot producer, transport integration or a claim of minutes saved.
+
+`scripts/capture-ci-stage.py` wraps one argument-array command with monotonic
+start/end intervals, exit status and bounded raw stdout/stderr (16 MiB each).
+Use one job/boot clock identity, sequential stages and fresh receipt names:
+
+```sh
+./bootstrap.sh -- python3 scripts/capture-ci-stage.py \
+  --stage setup_ms --clock RUN-ATTEMPT-JOB-BOOT \
+  --timeout 600 --output /absolute/evidence/setup.json \
+  --plan-sha256 REVIEWED_PLAN_SHA256 --run-id RUN_ID --run-attempt 1 --job-id JOB_ID \
+  -- npm ci --ignore-scripts --prefix integration/providers
+```
+
+Actual hosted capture requires the native Linux x86_64 GitHub runner context;
+local capture is labelled local and cannot become a hosted comparison.
+Timeout/overflow stops the owned process group and retains a failed receipt;
+wrappers that start additional sessions must own their descendant cleanup.
+Capture each lane's setup, actual codegen, key preparation and fresh proof test.
+Capture actual transport stages too. This tool does not turn a command duration
+into terminal whole-job time, nor snapshot size into measured network bytes.
+Keep secrets, witnesses and proof requests out of commands/logs.
+
+The frozen plan additionally needs a `collection` object with:
+
+- `head_sha`, `run_attempt: 1`, `max_job_ms` and the exact ordered `schedule`
+  of `{job_name,repetition,lane}` entries for every lane/repetition.
+- `auxiliary_jobs`: a map from explicit job names to `collector` or `seed`. Seeds
+  must finish successfully. A current collector may still run; a terminal failed
+  collector prevents comparison. Auxiliary jobs remain outside measured lanes.
+- `qualification` and `qualification_sha256`: retained actual native Linux
+  Passport qualification, binding consumer commit and CLI/worker bytes.
+- `inventories`: evidence-relative filenames keyed by `workload_sha256`,
+  `toolchain_sha256`, `parameters_sha256`, hashed against the plan identity.
+- `seeds`: frozen warm/partial `{key,seed_job_url,snapshot_sha256,
+  payload_sha256,actual_bytes}` provenance.
+  Review seed terminal success and complete/partial coverage before freezing.
+
+Retain a receipt named `JOB_ID.json` per measured job. The schema is enforced by
+`scripts/collect-ci-trial.py`: exact run/attempt/job/plan/identity, lane/repetition,
+one clock domain, original captured stage files/hashes (including producer
+run/attempt/job/plan context), raw SDK proof receipt/hash matching the captured
+proof-stage stdout,
+observed correctness/cache deltas, classified transport attempts and
+`reusable_cache_published: false`. SDK counts must agree with raw successful
+proof/verification/invalid-statement/corrupt-proof controls and assertions.
+These receipts still require independent audit; JSON declarations alone are
+not cryptographic verification.
+
+Transport attempts must retain exact **compressed payload bytes**, excluding
+headers/TLS, direction, outcome, every ordered attempt and raw receipt/hash.
+Successful receipts also bind payload digest, cache key and seed/snapshot
+provenance. The raw attempt envelope must be the captured transport-stage stdout,
+bound to the same job/attempt/plan. Downloads must match the frozen compressed
+payload hash/bytes and retain the successful Forge restore receipt for that exact
+snapshot. No rounded Action log estimate is accepted. The initial collector
+refuses partially transferred failures until a measured partial-byte policy is
+defined. Integrity, authorization and identity failures cannot become misses.
+The unavailable lane runs official generation with `cache: null`, no upload and
+a classified transport refusal; it does not invent Forge misses.
+
+Candidate upload is quarantined to the current run/attempt. Reusable promotion
+requires a separate trusted terminal-success decision. The existing Action's
+prior-step success gate is weaker than terminal job success; do not describe it
+as a finished promotion implementation. PRs must never publish reusable entries.
+
+Save raw GitHub run metadata and the **complete paginated** jobs response after
+all measured jobs finish, including skipped, cancelled and failed jobs. Retain
+all attempts separately; this initial pilot refuses rerun selection. Collection
+can run offline if cancellation prevents an in-workflow collector from running:
+
+```sh
+./bootstrap.sh -- python3 scripts/collect-ci-trial.py \
+  --plan /absolute/frozen-plan.json --plan-sha256 REVIEWED_PLAN_SHA256 \
+  --run /absolute/raw-run.json --jobs /absolute/raw-complete-jobs.json \
+  --evidence-dir /absolute/raw-receipts \
+  --output /absolute/collection.json
+```
+
+The output retains the complete roster and raw-input hashes. Failed/missing jobs,
+unplanned jobs, retry selection, stage overlap, wrong seed/byte counts or missing
+native qualification prevent a comparison. A refused collection exits nonzero
+and preserves diagnostics; it does not filter failures into a favorable sample.
+Outputs are exclusive and outside the raw evidence directory, avoiding
+self-referential hashes. The bounded raw metadata tree is at most 64 MiB/4096
+entries; keep key archives and private proof data outside it.
+
+Local tests use deliberately synthetic subprocess/API/transport fixtures. They
+provide neither application-proof nor hosted-performance receipts. Actual
+GitHub transport instrumentation, reviewed frozen Linux pilot and separately
+authorized hosted execution remain open.
+
 ## Report without changing the raw inputs
+
+### Prepare an exact payload locally
+
+`scripts/ci-payload.py` provides the bounded compressed envelope for future
+transport instrumentation. It accepts an existing Forge snapshot, not arbitrary
+key directories. Pin the snapshot identity and partition independently:
+
+```sh
+./bootstrap.sh -- python3 scripts/ci-payload.py pack \
+  --binary /absolute/zkir-forge --profile zkir31 \
+  --snapshot /absolute/owned-snapshot --snapshot-id SNAPSHOT_SHA256 \
+  --partition PARTITION_SHA256 --max-compressed-bytes 268435456 \
+  --max-expanded-bytes 1073741824 --output /absolute/new-payload.tgz
+```
+
+The JSON result records exact compressed `actual_bytes`/`payload_sha256`, expanded
+bytes and snapshot identity. The deterministic gzip/tar envelope retains regular
+files and required directories, normalizes archive timestamps/modes/owners, and
+refuses links, special files and extension headers. Both byte budgets are explicit
+and at most64GiB. The independent100001-entry envelope cap includes directories;
+a snapshot at the CLI file-count ceiling may therefore exceed this stricter cap.
+These are local archive sizes, not network transfer measurements.
+
+For downloaded payload bytes, use `restore` with the independently frozen
+`--payload-sha256`, `--payload-bytes`, `--snapshot-id`, `--partition`, both budgets,
+`--payload /absolute/download.tgz` and `--output /absolute/absent-private-store`.
+The compressed size/hash are checked before extraction. Existing Forge snapshot
+validation governs identity, producer/profile, database consistency and file
+digests. Output publication never replaces an existing path. Private staging is
+cleaned on handled failure; an abrupt process kill can leave its owned
+`.forge-payload-*` directory for explicit inspection/removal after it stops.
+
+Packing validates the original snapshot through a private restore, removes that
+verification store, then hashes the exact bytes streamed into the archive against
+the exact manifest consumed by verification (`restore.result.manifest_sha256`).
+This requires the current Forge verifier. It does not extract another full snapshot. Restore
+extracts once and validates directly into the final absent store; it does not
+create an intermediate verification store. Peak expanded data is two snapshot
+copies in either mode (including the caller-owned original while packing), plus
+compressed payload copies and filesystem overhead. Allow corresponding headroom;
+this is not a guarantee that a full Passport payload fits a standard runner.
+The original snapshot is read-only and must remain stopped/owned during packing.
+No automatic deletion, network upload, reusable cache promotion or GitHub
+credential use occurs. Capturing the tool's stdout does not create the transport
+attempt envelope expected by the collector. Seed generation, actual transfer
+instrumentation and the reviewed native Linux pilot remain separate open work.
+
+Fast tests exercise real CLI snapshots and hostile archives without keygen.
+`scripts/check-ci-payload.py --real` additionally generates JSON3.1 fixture keys,
+packs/restores them, requires a warm identity-preserving hit, and generates a
+fresh proof with valid verification and invalid-statement/corrupt-proof controls.
+It requires verified parameters and the pinned JSON3.1 worker environment.
 
 ```sh
 ./bootstrap.sh -- python3 scripts/report-ci-trial.py \

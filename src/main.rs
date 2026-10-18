@@ -80,12 +80,16 @@ enum Command {
         manifest_sha256: String,
         #[arg(long)]
         provider_root: PathBuf,
+        #[arg(long, default_value_t = midnight_zkir_forge::provider_view::DEFAULT_MAX_VIEW_BYTES)]
+        provider_max_view_bytes: u64,
     },
     /// Audit every declared compiler-view file without modifying it.
     VerifyView {
         input: PathBuf,
         #[arg(long)]
         manifest_sha256: String,
+        #[arg(long, default_value_t = midnight_zkir_forge::provider_view::DEFAULT_MAX_VIEW_BYTES)]
+        provider_max_view_bytes: u64,
     },
     /// Publish a consistent verified directory snapshot of an existing store.
     Snapshot {
@@ -127,6 +131,8 @@ enum Command {
         token_file: Option<PathBuf>,
         #[arg(long)]
         provider_root: Option<PathBuf>,
+        #[arg(long, default_value_t = midnight_zkir_forge::provider_view::DEFAULT_MAX_VIEW_BYTES)]
+        provider_max_view_bytes: u64,
     },
 }
 #[tokio::main(flavor = "current_thread")]
@@ -209,6 +215,7 @@ async fn run(cli: Cli) -> Result<Value> {
         input,
         manifest_sha256,
         provider_root,
+        provider_max_view_bytes,
     } = &cli.command
     {
         midnight_zkir_forge::provider_view::separate_roots(
@@ -218,14 +225,24 @@ async fn run(cli: Cli) -> Result<Value> {
                 None => application::default_cache_dir()?,
             },
         )?;
-        return midnight_zkir_forge::provider_view::publish(input, manifest_sha256, provider_root);
+        return midnight_zkir_forge::provider_view::publish_with_limits(
+            input,
+            manifest_sha256,
+            provider_root,
+            midnight_zkir_forge::provider_view::Limits::new(*provider_max_view_bytes)?,
+        );
     }
     if let Command::VerifyView {
         input,
         manifest_sha256,
+        provider_max_view_bytes,
     } = &cli.command
     {
-        return midnight_zkir_forge::provider_view::verify(input, manifest_sha256);
+        return midnight_zkir_forge::provider_view::verify_with_limits(
+            input,
+            manifest_sha256,
+            midnight_zkir_forge::provider_view::Limits::new(*provider_max_view_bytes)?,
+        );
     }
     let root = match cli.cache_dir {
         Some(path) => path,
@@ -235,6 +252,7 @@ async fn run(cli: Cli) -> Result<Value> {
         listen,
         token_file,
         provider_root,
+        provider_max_view_bytes,
     } = &cli.command
     {
         return http::serve(http::Config {
@@ -245,6 +263,9 @@ async fn run(cli: Cli) -> Result<Value> {
             listen: *listen,
             token_file: token_file.clone(),
             provider_root: provider_root.clone(),
+            provider_limits: midnight_zkir_forge::provider_view::Limits::new(
+                *provider_max_view_bytes,
+            )?,
         })
         .await;
     }

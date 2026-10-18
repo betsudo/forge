@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "status": "passed",
+  "evidence_kind": "local",
+  "platform": {
+    "system": "Darwin",
+    "machine": "arm64"
+  },
+  "tests_run": 10,
+  "tests_skipped": 0,
+  "binary_sha256": "854d79bfd0260c8b33b431a53cb9fed970f4d7d4af345b9bdbf38da91cbb5355",
+  "harness_sha256": "918d5c5c79090d79e7873a5229abea80f46dd62e272cd5fe19dfc7ae0a687516",
+  "payload_tool_sha256": "a75ab494706d4bc660f18913da2e6b6c29d745a546dfd48a58923ccc7f99aef5",
+  "real_fixture": {
+    "profile": "zkir31",
+    "fixture_sha256": "1fb2fd553d225d7b833c181bad0b81bf051bdbd3edca95ea77925948cc794e37",
+    "worker_sha256": "08855f543901a79f9575c8f1f3f958dc9208849b4983a998e60d017819c8bd58",
+    "artifact_set_id": "aa5417e78e493ea1f5967794f9763da3e82be7e1c14ddf257289834aeaf5d244",
+    "warm_hit": true,
+    "payload": {
+      "schema": 1,
+      "kind": "forge-ci-payload/v1",
+      "snapshot_sha256": "6c04bab99dd86b2d661aa9af10334d90760021c11897ef5fc089886c00bb0688",
+      "partition": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "payload_sha256": "cf061304559ab877245e352bb1d14dcdba1b71a39643b38c22f47f77911a4f12",
+      "actual_bytes": 15448,
+      "expanded_bytes": 79026,
+      "scope": "local compressed envelope; not network transfer or proof evidence"
+    },
+    "restored_snapshot_id": "6c04bab99dd86b2d661aa9af10334d90760021c11897ef5fc089886c00bb0688",
+    "proof_controls": {
+      "binary_ir_tag": "ir-source[v3-generic]",
+      "build_fingerprint": "50e9f5f1957ece3c97179238c4c4e81f11220b3a8aeaaafa37fa8856dfb5ba21",
+      "corrupt_proof_rejected": true,
+      "format": "midnight-zkir-v3.1-json",
+      "invalid_statement_rejected": true,
+      "k": 4,
+      "parameter_sha256": "232f401fad10c7ddf8828d2aa4c85c6506c5da09795998cecaeb9f75fc8f6ada",
+      "profile": "zkir31-e82d81d2/zkir-3.1.0-rc.1/transient-3.0.0/base-1.1.0/serialize-1.2.0/proofs-0.8.2/circuits-7.2.4/stdlib-2.3.5/curves-0.3.1/ir-source-v3-generic/forge-recipe-v1",
+      "protocol": 1,
+      "source_revision": "e82d81d25aabcc5f5092e2bd559083487f577914",
+      "used_exported_artifacts": true,
+      "valid_proof_verified": true
+    }
+  },
+  "scope": "local payload fixture/failure tests; no network/native Linux/Passport performance claim"
+}

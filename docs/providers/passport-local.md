@@ -157,13 +157,16 @@ reconstruction, eviction and concurrent callers, with fresh selected SDK proofs
 after each recovery. Existing interruption/timeout controls remain separately
 described in the adapter guide.
 
-The full account exceeds the current 4 GiB complete HTTP-view budget; its largest
+The full account exceeds the default 4 GiB complete HTTP-view budget; its largest
 individual file, 495,024,744 bytes, is below 1 GiB. Local Node support does not
 imply full-account Fetch support. [#31](https://github.com/betsudo/forge/issues/31)
-tracks bounded large-view qualification and an actionable limit error. Until that
-gate passes, retain the smaller qualified HTTP fixture. Preserve complete compiler
-metadata and existing limits. [Range costs](range-cost.md) are measured separately;
+tracks bounded large-view qualification. An explicit aggregate budget is now
+available; read [large-view setup and current qualification](large-views.md).
+Preserve complete compiler metadata and per-file limits. [Range costs](range-cost.md) are measured separately;
 Cloudflare and the hosted CI study remain deferred.
+
+Native Linux setup and its separate pending acceptance gate are documented in
+[the Linux qualification guide](passport-linux.md).
 
 ## Renew qualification
 
