@@ -36,11 +36,39 @@ class MaterialTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 material.inventory_size(value, ['/nix/store/root'])
 
+    def test_store_output_rejects_empty_multiple_relative_and_nonstore(self):
+        actual = '/nix/store/' + 'a' * 32 + '-source'
+        self.assertEqual(material.store_output(actual), Path(actual))
+        for raw in ('', '.', '/tmp/source', actual + '\n' + actual, 'source', '/nix/store/not-a-hash-source'):
+            with self.assertRaises(ValueError):
+                material.store_output(raw)
+
+    @unittest.skipUnless(os.environ.get('FORGE_TEST_PRIVATE_STORE') == '1', 'explicit isolated-store semantic regression only')
+    def test_actual_clean_source_set_requires_string_coercion(self):
+        import tempfile
+        with tempfile.TemporaryDirectory(prefix='forge-clean-source-') as temporary:
+            root = Path(temporary).resolve()
+            store = 'local?root=' + str(root / 'store')
+            expression = '{ _isLibCleanSourceWith=true; filter=x: true; name="source"; origSrc=builtins.toFile "original" "unfiltered"; outPath=builtins.toFile "source" "filtered"; }'
+            def command(expr, name):
+                return subprocess.check_output(['nix', '--store', store, 'build', '--expr', expr,
+                    '--out-link', str(root / name), '--print-out-paths', '--offline'], text=True).strip()
+            original = command(expression, 'original-root')
+            self.assertEqual(original, '', 'cleanSource attrset is not a buildable string output')
+            with self.assertRaises(ValueError):
+                material.store_output(original)
+            actual = material.store_output(command('toString ' + expression, 'source-root'))
+            expected = subprocess.check_output(['nix', '--store', store, 'eval', '--raw', '--expr', 'toString ' + expression, '--offline'], text=True)
+            self.assertEqual(str(actual), expected)
+            self.assertEqual((root / 'source-root').readlink(), actual)
+            subprocess.run(['nix-store', '--store', store, '--check-validity', str(actual)], check=True)
+            self.assertEqual((root / 'store' / str(actual).lstrip('/')).read_text(), 'filtered')
+
     def test_materialize_source_before_build_and_roots_outside_payload(self):
         text = Path(__file__).with_name('build-nix-material.py').read_text()
         self.assertLess(text.index("'flake', 'archive'"), text.index("REF, '--out-link'"))
         self.assertLess(text.index("register_root(run, source"), text.index("REF, '--out-link'"))
-        self.assertLess(text.index("realized_source ="), text.index("package = Path(run"))
+        self.assertLess(text.index("realized_source ="), text.index("package = store_output(run"))
         self.assertIn("prefix='forge-material-roots-', dir=args.output.parent", text)
         for name in ('package', 'rust', 'build-source'):
             self.assertIn("gcroots / '" + name + "'", text)

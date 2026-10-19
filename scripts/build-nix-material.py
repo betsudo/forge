@@ -55,6 +55,14 @@ def run_dirty(root):
     return subprocess.check_output(['git', '-C', str(root), 'status', '--porcelain', '--untracked-files=no'], text=True).strip()
 
 
+def store_output(raw):
+    """Successful Nix exit alone does not establish a single materialized path."""
+    lines = raw.splitlines()
+    require(len(lines) == 1 and re.fullmatch(r'/nix/store/[a-z0-9]{32}-[^/\s]+', lines[0]),
+            'exactly one absolute Nix store output required')
+    return Path(lines[0])
+
+
 def register_root(run, path, root):
     """Official registration, never a fabricated symlink to an unregistered path."""
     actual = Path(run('nix-store', '--realise', path, '--add-root', root, '--indirect'))
@@ -89,22 +97,22 @@ def main():
         gcroots = Path(roots_directory)
         metadata = capture('flake.json', 'nix', 'flake', 'metadata', REF, '--json')
         require(metadata['locked']['rev'] == SOURCE, 'payload source revision mismatch')
-        source = Path(metadata['path'])
+        source = store_output(metadata['path'])
         archived = json.loads(run('nix', 'flake', 'archive', '--json', REF))
-        require(Path(archived['path']) == source, 'materialized pinned source differs from flake metadata')
+        require(store_output(archived['path']) == source, 'materialized pinned source differs from flake metadata')
         register_root(run, source, gcroots / 'source')
-        realized_source = Path(run('nix', 'build', '--impure', '--expr',
-            '(builtins.getFlake "' + REF + '").packages.x86_64-linux.default.src',
+        realized_source = store_output(run('nix', 'build', '--impure', '--expr',
+            'toString (builtins.getFlake "' + REF + '").packages.x86_64-linux.default.src',
             '--out-link', gcroots / 'build-source', '--print-out-paths', '--max-jobs', '1', '--cores', '2'))
-        package = Path(run('nix', 'build', REF, '--out-link', gcroots / 'package', '--print-out-paths', '--max-jobs', '1', '--cores', '2'))
+        package = store_output(run('nix', 'build', REF, '--out-link', gcroots / 'package', '--print-out-paths', '--max-jobs', '1', '--cores', '2'))
         expression = ('let f = builtins.getFlake "' + REF + '"; '
                       'pkgs = import f.inputs.nixpkgs { system = "x86_64-linux"; overlays = [(import f.inputs.rust-overlay)]; }; '
                       'in pkgs.rust-bin.stable."1.98.1".minimal.override { extensions = ["rustfmt" "clippy"]; }')
-        rust = Path(run('nix', 'build', '--impure', '--expr', expression, '--out-link', gcroots / 'rust', '--print-out-paths', '--max-jobs', '1', '--cores', '2'))
+        rust = store_output(run('nix', 'build', '--impure', '--expr', expression, '--out-link', gcroots / 'rust', '--print-out-paths', '--max-jobs', '1', '--cores', '2'))
         drv = capture('forge-derivation.json', 'nix', 'derivation', 'show', package)
         row = derivation(drv, package)
         require(str(rust) in row['env']['nativeBuildInputs'].split(), 'independent Rust root absent from actual derivation')
-        build_source = Path(row['env']['src'])
+        build_source = store_output(row['env']['src'])
         require(realized_source == build_source, 'materialized build source differs from actual derivation')
         roots = [package, rust, source, build_source]
         paths = run('nix-store', '--query', '--requisites', *roots).splitlines()

@@ -31,3 +31,6 @@ The producer SHALL materialize the exact pinned flake source before the long bui
 
 #### Scenario: Metadata-only source path
 A metadata path not yet registered as a valid store object SHALL be materialized from the same immutable flake before registration; fabricated directories and omitted source roots SHALL not be accepted.
+
+#### Scenario: cleanSource attrset is not a build output
+The producer SHALL explicitly coerce derivation src to its store-path string before realization and reject empty, multiple, relative or non-store output before the long payload build. It SHALL retain equality with actual derivation env.src; a successful subprocess exit alone is insufficient.
