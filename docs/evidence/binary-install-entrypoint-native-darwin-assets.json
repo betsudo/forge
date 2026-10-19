@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "source_commit": "45a72b3b6334687d22e3bfafe3fd3e64befd3dc6",
+  "target": "aarch64-apple-darwin",
+  "tag_label": "v2026.10.0 (local archive label only, no Git tag/release)",
+  "assets": [
+    {
+      "name": "SHA256SUMS",
+      "bytes": 351,
+      "sha256": "12c61647b0674c1f7d6c23eac60f8fe0fc2a1ceabf0df20f5e01c4ccd143fb40"
+    },
+    {
+      "name": "install-release.py",
+      "bytes": 20254,
+      "sha256": "f233ae8ca2421b8f6ea0768d0e05b95d6bb97fadcff54bd2c9cbd0d9bb4458fd"
+    },
+    {
+      "name": "midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin-runtime-sources.tar.gz",
+      "bytes": 62343924,
+      "sha256": "750adee177c9645e2a4390a1628a0a135beace9a7b5a34a032860392e80ca6f6"
+    },
+    {
+      "name": "midnight-zkir-forge-v2026.10.0-aarch64-apple-darwin.tar.gz",
+      "bytes": 35570975,
+      "sha256": "6a9b3ecf6f089640e55c36d1604470211f84afe7f1cac02cd376f497c39af6fe"
+    }
+  ],
+  "build": {
+    "exit_code": 0,
+    "wall_seconds": 64.5440198329743,
+    "started_utc": "2026-10-19T15:09:35.057759+00:00",
+    "source_commit": "45a72b3b6334687d22e3bfafe3fd3e64befd3dc6",
+    "command_role": "build via unchanged official scripts; exact argv in original local receipts"
+  },
+  "qualification": {
+    "exit_code": 0,
+    "wall_seconds": 11.825031667016447,
+    "started_utc": "2026-10-19T15:14:26.711329+00:00",
+    "source_commit": "45a72b3b6334687d22e3bfafe3fd3e64befd3dc6",
+    "command_role": "qualification via unchanged official scripts; exact argv in original local receipts"
+  },
+  "initial_qualification_failure": {
+    "exit_code": 1,
+    "reason": "Copied Compact SRS5..17 omitted installer fixture k4; strict proof setup refused parameters_unavailable before proof. Original failure retained."
+  },
+  "parameter_correction": {
+    "k": 4,
+    "sha256": "232f401fad10c7ddf8828d2aa4c85c6506c5da09795998cecaeb9f75fc8f6ada",
+    "method": "Official exact45aForge --fetch-params prepare original assert.zkir in new private store; verified provider digest, inspect.record.k/digest/ready confirmed. Existing13SRS and original4assets unchanged. No rebuild or weaker checker."
+  },
+  "metadata_harness_correction": "Initial evidence wrapper parsed inspect.k instead of inspect.record.k and stopped after successful parameter commands; no runtime checker was replayed before correcting metadata access. Original setup/error receipts retained.",
+  "source_scope": "Payload built from exact signed45a; later evidence-only documentation commits do not relabel its source.",
+  "scope": "Restricted native macOS ARM64 actual portable payload and Python installer, all3minimal fixture proof/negative/recovery profiles. Fake GitHub transport, no clean-Mac/Linux/realRelease download/Compact acceptance, shared installation or speedup claim."
+}

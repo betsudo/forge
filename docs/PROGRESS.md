@@ -1309,3 +1309,21 @@
 - GitHub currently reports no published Forge releases. A real binary download
   still needs qualified assets and owner-authorized publication. No tag/upload,
   push, remote CI, Compact allowlist change or CI acceleration claim.
+
+
+### Exact source 45a local macOS portable payload
+
+- Official clean-source native candidate build passed in 64.544 seconds. The unchanged
+  restricted-host checker passed in 11.825 seconds after privately acquiring fixture k4
+  through the exact-source official verified provider; initial missing-parameter
+  refusal is retained. Original archive and 13 copied SRS identities stay unchanged.
+- All three advertised profiles execute real proof/reproducibility/negative and
+  recovery controls under external Python with Nix/checkout runtime reads denied.
+  Independent receipt review verifies archive/all 778 manifest file identities.
+- Evidence: `binary-install-entrypoint-native-darwin{,-assets}.json`. Exact archive
+  source remains 45a72b3; this evidence-only documentation increment does not change
+  the runtime payload or qualify a new source stamp. The documented metadata-only
+  wrapper error did not replay the runtime checker or weaken its assertions.
+- Actual clean-Mac, Linux, real GitHub release download and Compact exact consumer
+  acceptance remain separate. No shared installation, publication, performance
+  claim, new hosted run or deferred VM restart.

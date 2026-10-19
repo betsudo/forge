@@ -167,3 +167,29 @@ New release archives contain identical executable bytes for both; old schema1
 legacy-only releases remain installable and keep both installed launchers usable
 on rollback. Existing release archive names and managed installation paths stay
 stable. An unrelated file at either launcher path refuses installation.
+
+
+## Lightweight installer native candidate — 2026-10-19
+
+A local macOS ARM64 archive from exact signed source
+`45a72b3b6334687d22e3bfafe3fd3e64befd3dc6` passed the unchanged official
+installer/checker with external Python and runtime reads of Nix/the checkout
+denied. All three advertised profiles ran real reproducibility, valid-proof,
+invalid-statement and corrupt-proof controls, plus the existing real recovery
+checks. Independent review verified all 778 manifest file hashes, archive checksum,
+worker/profile identities and retained source/parameter premises.
+
+The initial copied Compact parameter set contained k5..17 and correctly refused
+this fixture's missing k4. The exact-source Forge CLI fetched k4 through its
+official verified provider in a private directory. The original archive was not
+rebuilt, and the unchanged checker then passed. Original setup failure and a
+metadata-only evidence-wrapper parsing error remain recorded; no assertion was
+weakened. See [actual runtime receipt](evidence/binary-install-entrypoint-native-darwin.json)
+and [asset/source identity](evidence/binary-install-entrypoint-native-darwin-assets.json).
+
+This complements the shell entry point's separate offline fixture controls; the
+real-payload checker invokes the packaged Python installer directly. It remains
+a restricted-host experiment with fake GitHub transport, not a clean Nix-free
+Mac, Linux, authenticated release download or Compact consumer acceptance. No
+release asset was uploaded. A future tag must match the archive's exact source
+commit; later documentation commits do not relabel its provenance.
