@@ -60,7 +60,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   installed-x86_64:
-    if: github.event_name == 'pull_request' && inputs.material-only != true
+    if: github.event_name == 'pull_request' && inputs.material-only != true && inputs.producer-source == ''
     runs-on: ubuntu-24.04
     timeout-minutes: 100
     steps:
@@ -205,7 +205,7 @@ jobs:
           if-no-files-found: ignore
 
   nix-material:
-    if: inputs.material-only == true
+    if: github.event_name == 'workflow_dispatch' || inputs.producer-source != '' || inputs.material-only == true
     runs-on: ubuntu-24.04
     timeout-minutes: 100
     outputs:
@@ -216,8 +216,10 @@ jobs:
     steps:
       - name: Validate immutable exporter checkout
         env:
+          MATERIAL_ONLY: ${{ inputs.material-only }}
           PRODUCER_SOURCE: ${{ inputs.producer-source || github.sha }}
         run: |
+          [[ "$MATERIAL_ONLY" == "true" ]] || { echo "Only explicit material-only:true is supported" >&2; exit 1; }
           [[ "$PRODUCER_SOURCE" =~ ^[0-9a-f]{40}$ ]] || exit 1
           echo "FORGE_PRODUCER_SOURCE=$PRODUCER_SOURCE" >> "$GITHUB_ENV"
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1

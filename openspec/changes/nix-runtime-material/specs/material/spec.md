@@ -22,3 +22,6 @@ The producer SHALL refuse declared or actual export size over2GiB and incomplete
 
 #### Scenario: Producer source changes during build
 The final live guard SHALL refuse without a success material.json. Actual producer attempt SHALL be exposed as a reusable output, independently of a later consumer rerun.
+
+#### Scenario: Non-material dispatch or reusable call
+An explicit material-only:false call SHALL fail at the first job preflight rather than succeed with empty outputs. Real PR installer qualification remains unchanged; reusable callers do not trigger the portable PR job.

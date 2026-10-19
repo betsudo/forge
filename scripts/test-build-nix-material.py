@@ -3,6 +3,8 @@
 import importlib.util
 from pathlib import Path
 import unittest
+import os
+import subprocess
 
 spec = importlib.util.spec_from_file_location('material', Path(__file__).with_name('build-nix-material.py'))
 material = importlib.util.module_from_spec(spec)
@@ -33,6 +35,15 @@ class MaterialTests(unittest.TestCase):
                       {'/nix/store/root': dict(row, narHash=None)}):
             with self.assertRaises(ValueError):
                 material.inventory_size(value, ['/nix/store/root'])
+
+    def test_false_manual_or_reusable_input_explicitly_refuses(self):
+        text = (Path(__file__).resolve().parents[1] / '.github/workflows/qualify-linux.yml').read_text()
+        self.assertIn("if: github.event_name == 'workflow_dispatch' || inputs.producer-source != '' || inputs.material-only == true", text)
+        self.assertIn("inputs.material-only != true && inputs.producer-source == ''", text)
+        guard = next(line.strip() for line in text.splitlines() if '[[ "$MATERIAL_ONLY"' in line)
+        for value, expected in [('true', 0), ('false', 1), ('', 1)]:
+            result = subprocess.run(['bash', '-c', guard], env=dict(os.environ, MATERIAL_ONLY=value), capture_output=True)
+            self.assertEqual(result.returncode, expected)
 
     def test_reusable_material_does_not_replace_pr_proofs(self):
         workflow = Path(__file__).resolve().parents[1] / '.github/workflows/qualify-linux.yml'
