@@ -14,3 +14,9 @@ A reusable caller pins `.github/workflows/qualify-linux.yml` to an exact reviewe
 The exporter caps both declared NAR size and actual export at **2GiB**; it refuses rather than omits Rust/source/runtime dependencies. This is a bounded per-artifact guard, not a global GitHub10GB quota. No actual current Linux closure size, transfer speed or benefit is claimed until the authorized producer runs. The export includes compiler/source roots required for independent qualification; it may exceed the cap and require an explicit measured budget decision.
 
 Run focused pure tests via `./bootstrap.sh -- python3 scripts/test-build-nix-material.py`. No native payload is built by these tests. Manual dispatch builds the reviewed current exporter checkout; reusable callers must pass an immutable producer SHA. No release, registry, CDN, cache publication, macOS artifact or shared installation is introduced.
+
+## Export lifetime
+
+Pinned full flake source is explicitly materialized with `nix flake archive` and checked against original metadata before the long package build. Full source is officially registered with `nix-store --realise --add-root --indirect`; derivation build source, runtime output and independent Rust use Nix `--out-link` roots. Temporary roots stay outside the six-file artifact directory and survive through export/final guards, then are cleaned. No source root is omitted or fabricated.
+
+`FORGE_TEST_PRIVATE_STORE=1 ./bootstrap.sh -- python3 scripts/test-build-nix-material.py` additionally exercises actual Nix GC only in an isolated test-owned local store: a registered source survives GC and is collected after its root is removed. This is a local root-lifetime regression, not proof the full Linux export now passes. The original failure established invalid full-source store path after build, but did not establish GC as cause (its log says automatic GC disabled); explicit materialization also addresses lazy fetcher metadata.

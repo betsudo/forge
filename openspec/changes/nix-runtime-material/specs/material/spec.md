@@ -25,3 +25,9 @@ The final live guard SHALL refuse without a success material.json. Actual produc
 
 #### Scenario: Non-material dispatch or reusable call
 An explicit material-only:false call SHALL fail at the first job preflight rather than succeed with empty outputs. Real PR installer qualification remains unchanged; reusable callers do not trigger the portable PR job.
+
+### Requirement: Materialized roots survive the complete export
+The producer SHALL materialize the exact pinned flake source before the long build, preserve its original path identity, and register official Nix GC roots outside the six-file artifact directory. Package, independent Rust and derivation-bound build source SHALL likewise remain rooted until export and final checks complete. Roots SHALL be cleaned afterward.
+
+#### Scenario: Metadata-only source path
+A metadata path not yet registered as a valid store object SHALL be materialized from the same immutable flake before registration; fabricated directories and omitted source roots SHALL not be accepted.

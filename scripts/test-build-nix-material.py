@@ -36,6 +36,37 @@ class MaterialTests(unittest.TestCase):
             with self.assertRaises(ValueError):
                 material.inventory_size(value, ['/nix/store/root'])
 
+    def test_materialize_source_before_build_and_roots_outside_payload(self):
+        text = Path(__file__).with_name('build-nix-material.py').read_text()
+        self.assertLess(text.index("'flake', 'archive'"), text.index("REF, '--out-link'"))
+        self.assertLess(text.index("register_root(run, source"), text.index("REF, '--out-link'"))
+        self.assertLess(text.index("realized_source ="), text.index("package = Path(run"))
+        self.assertIn("prefix='forge-material-roots-', dir=args.output.parent", text)
+        for name in ('package', 'rust', 'build-source'):
+            self.assertIn("gcroots / '" + name + "'", text)
+
+    @unittest.skipUnless(os.environ.get('FORGE_TEST_PRIVATE_STORE') == '1', 'explicit isolated-store GC regression only')
+    def test_actual_private_store_gc_preserves_registered_source(self):
+        import tempfile
+        with tempfile.TemporaryDirectory(prefix='forge-private-store-') as temporary:
+            root = Path(temporary).resolve()
+            store = 'local?root=' + str(root / 'store')
+            content = root / 'source.txt'
+            content.write_bytes(b'exact test-owned source bytes')
+            def run(*argv):
+                args = [str(arg) for arg in argv]
+                args[1:1] = ['--store', store]
+                return subprocess.check_output(args, text=True).strip()
+            path = Path(run('nix-store', '--add', content))
+            gcroot = root / 'source-root'
+            material.register_root(run, path, gcroot)
+            run('nix-store', '--gc')
+            run('nix-store', '--check-validity', path)
+            gcroot.unlink()
+            run('nix-store', '--gc')
+            result = subprocess.run(['nix-store', '--store', store, '--check-validity', str(path)], capture_output=True)
+            self.assertNotEqual(result.returncode, 0)
+
     def test_false_manual_or_reusable_input_explicitly_refuses(self):
         text = (Path(__file__).resolve().parents[1] / '.github/workflows/qualify-linux.yml').read_text()
         self.assertIn("if: github.event_name == 'workflow_dispatch' || inputs.producer-source != '' || inputs.material-only == true", text)
