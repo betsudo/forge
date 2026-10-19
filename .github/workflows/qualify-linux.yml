@@ -1,5 +1,33 @@
 name: Native Linux portable installer
 on:
+  workflow_dispatch:
+    inputs:
+      material-only:
+        description: Build pinned original Nix material only; not consumer qualification
+        type: boolean
+        default: true
+  workflow_call:
+    inputs:
+      material-only:
+        type: boolean
+        default: true
+      producer-source:
+        description: Exact reviewed Forge toolkit SHA; distinct from caller source and payload d64
+        type: string
+        required: true
+    outputs:
+      artifact-id:
+        value: ${{ jobs.nix-material.outputs.artifact-id }}
+      artifact-name:
+        value: ${{ jobs.nix-material.outputs.artifact-name }}
+      producer-attempt:
+        value: ${{ jobs.nix-material.outputs.producer-attempt }}
+      artifact-digest:
+        value: ${{ jobs.nix-material.outputs.artifact-digest }}
+      payload-source:
+        value: d64f52db7239b0ca4891fb0316dca6adb54a5db5
+      system:
+        value: x86_64-linux
   pull_request:
     paths:
       - '.github/actions/zkir31-cache/action.yml'
@@ -8,6 +36,8 @@ on:
       - 'scripts/qualify-linux*.py'
       - 'scripts/check-linux-qualification.py'
       - 'scripts/build-release.py'
+      - 'scripts/build-nix-material.py'
+      - 'scripts/test-build-nix-material.py'
       - 'scripts/install-release.py'
       - 'scripts/linux-runtime*.py'
       - 'scripts/cargo-notices.py'
@@ -26,10 +56,11 @@ on:
 permissions:
   contents: read
 concurrency:
-  group: qualify-linux-${{ github.event.pull_request.number }}
+  group: qualify-linux-${{ github.event.pull_request.number || github.run_id }}
   cancel-in-progress: true
 jobs:
   installed-x86_64:
+    if: github.event_name == 'pull_request' && inputs.material-only != true
     runs-on: ubuntu-24.04
     timeout-minutes: 100
     steps:
@@ -172,3 +203,46 @@ jobs:
           include-hidden-files: true
           retention-days: 14
           if-no-files-found: ignore
+
+  nix-material:
+    if: inputs.material-only == true
+    runs-on: ubuntu-24.04
+    timeout-minutes: 100
+    outputs:
+      producer-attempt: ${{ steps.produce.outputs.producer-attempt }}
+      artifact-id: ${{ steps.upload.outputs.artifact-id }}
+      artifact-digest: ${{ steps.upload.outputs.artifact-digest }}
+      artifact-name: forge-nix-linux-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - name: Validate immutable exporter checkout
+        env:
+          PRODUCER_SOURCE: ${{ inputs.producer-source || github.sha }}
+        run: |
+          [[ "$PRODUCER_SOURCE" =~ ^[0-9a-f]{40}$ ]] || exit 1
+          echo "FORGE_PRODUCER_SOURCE=$PRODUCER_SOURCE" >> "$GITHUB_ENV"
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: betsudo/forge
+          ref: ${{ env.FORGE_PRODUCER_SOURCE }}
+          persist-credentials: false
+      - uses: cachix/install-nix-action@3c6342b75005b9cc7c7d4069c3e9179247c89012 # v31
+        with:
+          extra_nix_config: |
+            experimental-features = nix-command flakes
+            max-jobs = 1
+            cores = 2
+      - name: Build and export original pinned material
+        id: produce
+        run: |
+          ./bootstrap.sh -- python3 scripts/build-nix-material.py \
+            --producer-source "$FORGE_PRODUCER_SOURCE" --output "$RUNNER_TEMP/forge-nix-material"
+          echo "producer-attempt=$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
+      - name: Attach same-run material; no keys or SRS
+        id: upload
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          archive: true
+          name: forge-nix-linux-${{ github.run_id }}-${{ github.run_attempt }}
+          path: ${{ runner.temp }}/forge-nix-material
+          retention-days: 3
+          if-no-files-found: error
