@@ -50,10 +50,35 @@ else:sys.exit(2)
 ''');gh.chmod(0o755)
  env=dict(os.environ,PATH=str(bin_dir)+os.pathsep+os.environ['PATH'],FIXTURE_REMOTE=str(releases))
  def command(tag='v1.0.0',extra=(),environment=None,ok=True,dest=None):
-  r=subprocess.run([sys.executable,str(ROOT/'scripts/install-release.py'),'--version',tag,'--prefix',str(dest or prefix),*extra],env=environment or env,capture_output=True,text=True,timeout=30)
+  r=subprocess.run([str(ROOT/'install.sh'),'--version',tag,'--prefix',str(dest or prefix),*extra],cwd=temp,env=environment or env,capture_output=True,text=True,timeout=30)
   assert (r.returncode==0)==ok,(r.stdout,r.stderr)
   return json.loads(r.stdout) if ok else r.stderr
  first=command();active=prefix/'share/midnight-zkir-forge/binary/current';old=active.resolve();assert command()['directory']==first['directory']
+ # The thin entry point preserves release verification and only registers PATH
+ # after success. Fixtures are synthetic; no authenticated release is downloaded.
+ path_file=temp/'github-path';path_file.write_text('existing-entry\n')
+ path_env=dict(env,GITHUB_PATH=str(path_file))
+ command(environment=path_env);assert path_file.read_text()=='existing-entry\n'
+ command(extra=('--github-path',),environment=path_env)
+ assert path_file.read_text()=='existing-entry\n'+str(prefix/'bin')+'\n'
+ path_before=path_file.read_bytes()
+ assert 'checksum' in command(extra=('--github-path','--sha256','0'*64),environment=path_env,ok=False)
+ assert path_file.read_bytes()==path_before and active.resolve()==old
+ missing_prefix=temp/'missing-context'
+ missing_env={k:v for k,v in env.items() if k!='GITHUB_PATH'}
+ assert 'requires GITHUB_PATH' in command(extra=('--github-path',),environment=missing_env,ok=False,dest=missing_prefix)
+ assert not missing_prefix.exists()
+ for value in ('relative-path',str(temp/'nonexistent-command-file')):
+  assert 'existing absolute regular file' in command(extra=('--github-path',),environment=dict(env,GITHUB_PATH=value),ok=False,dest=missing_prefix)
+  assert not missing_prefix.exists()
+ path_link=temp/'github-path-link';path_link.symlink_to(path_file)
+ assert 'existing absolute regular file' in command(extra=('--github-path',),environment=dict(env,GITHUB_PATH=str(path_link)),ok=False,dest=missing_prefix)
+ for char in ('\n','\r'):
+  newline_prefix=temp/('path'+char+'injection')
+  assert 'contains a newline' in command(extra=('--github-path',),environment=path_env,ok=False,dest=newline_prefix)
+  assert not newline_prefix.exists() and path_file.read_bytes()==path_before
+ help_result=subprocess.run([str(ROOT/'install.sh'),'--help'],cwd=temp,env=env,capture_output=True,text=True)
+ assert help_result.returncode==0 and '--github-path' in help_result.stdout
  assert (prefix/'bin'/module.PRIMARY).readlink()==active/'bin/midnight-zkir-forge'
  assert subprocess.check_output([str(prefix/'bin'/module.PRIMARY),'--version'],text=True).strip()=='midnight-zkir-forge 1.0.0'
  assert 'CLI alias bytes differ' in command('v1.4.0',ok=False) and active.resolve()==old
@@ -154,4 +179,4 @@ m.install('v1.1.0',pathlib.Path(prefix))
  # Same tag changed content cannot silently replace the pinned installation.
  folder=releases/'v1.0.0';archive=next(folder.glob('*.tar.gz'));data=archive.read_bytes();archive.write_bytes(data+b'changed');(folder/'SHA256SUMS').write_text(module.digest(archive)+'  '+archive.name+'\n')
  assert 'tag content changed' in command(ok=False) and active.resolve()==old
- print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'install_reinstall_upgrade_rollback':True,'primary_alias_upgrade_legacy_rollback':True,'alias_corruption_refused':True,'both_launcher_collisions_refused_before_activation':True,'optional_worker_upgrade_legacy_rollback':True,'advertised_missing_worker_refused':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'metadata_checksum_and_expansion_budgets':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))
+ print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'shell_entrypoint_unrelated_cwd':True,'github_path_explicit_success_only':True,'github_path_invalid_context_and_newline_refused':True,'install_reinstall_upgrade_rollback':True,'primary_alias_upgrade_legacy_rollback':True,'alias_corruption_refused':True,'both_launcher_collisions_refused_before_activation':True,'optional_worker_upgrade_legacy_rollback':True,'advertised_missing_worker_refused':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'metadata_checksum_and_expansion_budgets':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))

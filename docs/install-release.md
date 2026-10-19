@@ -1,5 +1,26 @@
 # Private release installation and pinned Nix use
 
+## Short binary-install command
+
+In a reviewed checkout, run `./install.sh --version "$FORGE_VERSION" --prefix
+"$HOME/.local/forge"`. Add `--sha256 "$FORGE_ARCHIVE_SHA256"` for an independently
+obtained archive digest. The five-line shell entry point forwards to the existing
+Python 3.11+/gh installer; it does not invoke Nix, Cargo or a source build. It works
+from an unrelated current directory as well. Version selection remains mandatory.
+
+For GitHub Actions, `--prefix "$RUNNER_TEMP/forge" --github-path` uses a job-private
+installation and appends its absolute `bin` directory to the existing `GITHUB_PATH`
+command file only after verified installation succeeds. Subsequent steps discover
+the CLI, matched workers and helper; in the same step use their absolute paths.
+Missing/invalid command-file context or newline-containing bin paths refuse before
+installation. An install failure emits no PATH record. A later PATH-write failure
+is an error but cannot undo an already completed installation. PATH registration
+is never implicit, and shell profiles/credentials/cache data remain untouched.
+
+The standalone `install-release.py` asset remains usable directly; the shell entry
+point requires its adjacent `scripts/install-release.py` from the reviewed checkout.
+Neither path is a release publisher or a consumer compatibility qualification.
+
 The installer and candidate builder are local implementation work. **No downloadable
 Forge binary release is published by this increment.** A supported target is not
 qualified merely because the script recognizes its name. macOS/Linux ARM64/x86_64

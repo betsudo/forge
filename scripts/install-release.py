@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Install an explicit private Forge release; requires gh and Python 3.11+."""
 import argparse
+import contextlib
 import fcntl
 import gzip
 import hashlib
@@ -10,6 +11,7 @@ from pathlib import Path, PurePosixPath
 import platform
 import re
 import shutil
+import stat
 import subprocess
 import sys
 import tarfile
@@ -315,10 +317,27 @@ def main():
     parser.add_argument('--version', required=True)
     parser.add_argument('--prefix', type=Path, default=Path.home() / '.local')
     parser.add_argument('--sha256')
+    parser.add_argument('--github-path', action='store_true',
+                        help='append PREFIX/bin to GITHUB_PATH after successful installation')
     args = parser.parse_args()
     if args.sha256:
         require(re.fullmatch('[0-9a-f]{64}', args.sha256), 'invalid expected SHA-256')
-    result = install(args.version, args.prefix, args.sha256)
+    with contextlib.ExitStack() as stack:
+        path_stream = None
+        if args.github_path:
+            configured = os.environ.get('GITHUB_PATH')
+            require(configured is not None and configured != '', '--github-path requires GITHUB_PATH')
+            github_path = Path(configured)
+            require(github_path.is_absolute() and github_path.is_file() and not github_path.is_symlink(),
+                    'GITHUB_PATH must be an existing absolute regular file')
+            bin_path = str(Path(os.path.abspath(args.prefix.expanduser())) / 'bin')
+            require('\n' not in bin_path and '\r' not in bin_path, 'installation PATH contains a newline')
+            descriptor = os.open(github_path, os.O_WRONLY | os.O_APPEND | os.O_NOFOLLOW)
+            path_stream = stack.enter_context(os.fdopen(descriptor, 'a'))
+            require(stat.S_ISREG(os.fstat(descriptor).st_mode), 'GITHUB_PATH is not a regular file')
+        result = install(args.version, args.prefix, args.sha256)
+        if path_stream is not None:
+            path_stream.write(bin_path + '\n')
     print(json.dumps(result))
     print('Add ' + str(Path(result['prefix']) / 'bin') + ' to PATH. Stop Forge operations before switching releases.', file=sys.stderr)
 

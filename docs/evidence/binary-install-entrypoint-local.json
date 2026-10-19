@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "platform": "aarch64-apple-darwin",
+  "command": "./bootstrap.sh -- python3 scripts/check-installer.py",
+  "execution": "Original session89878 TERMINAL0; offline synthetic release fixtures and isolated prefixes only. No timing claim.",
+  "shell_entrypoint_unrelated_cwd": true,
+  "github_path_explicit_success_only": true,
+  "github_path_invalid_context_symlink_and_newline_refused_before_installation": true,
+  "failed_checksum_leaves_github_path_and_active_release_unchanged": true,
+  "existing_install_reinstall_upgrade_rollback_and_corruption_controls_preserved": true,
+  "existing_concurrency_kill_recovery_and_archive_bounds_controls_preserved": true,
+  "source_review": "Independent source review accepted; local adoption evidence directory forge-binary-installer-source-review.md",
+  "post_test_change": "Only final stdout JSON summary fields extended after original successful execution; assertions, fixture execution and production sources unchanged.",
+  "scope": "No real release download, authentication, genuine payload proof, new platform portability, Compact exact-build admission, shared install, cache mutation or hosted CI claim. No published release assets currently exist."
+}

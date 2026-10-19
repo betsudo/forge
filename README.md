@@ -48,7 +48,36 @@ zkir-forge --profile zkir3 qualify
 ```
 
 
-## Install for all local agents
+## Install a binary locally or in CI
+
+From a reviewed Forge checkout, `./install.sh` delegates to the existing verified
+release installer. It needs Python 3.11+ and authenticated `gh`, not Nix or Cargo.
+Choose an explicit published release and optionally pin its archive SHA-256:
+
+```sh
+./install.sh --version "$FORGE_VERSION" --prefix "$HOME/.local/forge" \
+  --sha256 "$FORGE_ARCHIVE_SHA256"
+export PATH="$HOME/.local/forge/bin:$PATH"
+zkir-forge --version
+```
+
+In GitHub Actions, use a job-private prefix and `--github-path` to make commands
+available to subsequent steps. The token must have read access to Forge releases:
+
+```sh
+./install.sh --version "$FORGE_VERSION" --prefix "$RUNNER_TEMP/forge" \
+  --sha256 "$FORGE_ARCHIVE_SHA256" --github-path
+"$RUNNER_TEMP/forge/bin/zkir-forge" --version
+```
+
+**No binary releases are currently published.** Set the version/digest only after
+qualified assets exist. This entry point does not build a missing release, select
+`latest`, publish assets or change a consumer's exact-build qualification. Matched
+workers and the CI helper install together. See [installation](docs/install-release.md)
+for checksum, platform, prefix and rollback details. Source development remains
+available through the Nix installation below.
+
+## Install for all local agents from source
 
 From this checkout, with Nix flakes enabled:
 

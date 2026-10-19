@@ -1291,3 +1291,21 @@
 - Actual Pages deployment and manual Passport workflow are untested. The updated
   trusted-base checkout itself takes effect only after merge; PR integrity uses
   reviewed base code. See docs/ci-quality-gates.md for pins and qualification limits.
+
+
+## 2026-10-19 — lightweight binary install entry point (#43)
+
+- Added five-line `install.sh` forwarding to the existing Python/gh verified
+  exact-release installer; no Nix/Cargo source build or latest/source fallback.
+- Explicit `--github-path` validates command-file/bin-path context before install,
+  then registers a verified successful installation for subsequent Actions steps.
+  Local users choose an isolated prefix and set PATH explicitly. No shared
+  installation, shell profile, credentials, parameters or cache was changed.
+- Existing offline fake-gh install/upgrade/rollback/corruption/archive/lock/kill
+  controls pass through the shell entry point from an unrelated cwd. New PATH
+  positive/negative controls pass; independent source review accepted. Evidence:
+  `docs/evidence/binary-install-entrypoint-local.json`. No payload/crypto change
+  or new runtime qualification; source checks do not imply a release.
+- GitHub currently reports no published Forge releases. A real binary download
+  still needs qualified assets and owner-authorized publication. No tag/upload,
+  push, remote CI, Compact allowlist change or CI acceleration claim.
