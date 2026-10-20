@@ -18,3 +18,11 @@
 
 Source preparation does not imply qualification or publication. An existing
 predecessor receipt does not qualify new RC bytes. Preserve original evidence.
+
+## RC2 correction after actual public RC1 refusal (#48)
+
+- [x] Retain actual RC1 download deadline refusal and immutable public assets.
+- [x] Qualify the bounded slow-download policy and generated standalone shell.
+- [ ] Independently and externally review corrected source before new native builds.
+- [ ] Publish newly qualified coherent RC2; accept genuine public installation.
+- [ ] Continue installed-RC complete local DID benchmark and independent results.

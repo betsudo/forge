@@ -1,5 +1,21 @@
 # Progress
 
+## 2026-10-20 — RC2 slow-download correction (#48)
+
+- RC1 was published at exact1df with all9 independently authenticated assets and
+  signed checksum anchor. Real public ARM Mac installation authenticated metadata/
+  signatures then refused the progressing native download at its fixed300second
+  deadline. Partial scratch cleaned; public installed proof/performance acceptance
+  remains open. The original failure is preserved; RC1 assets/tags stay immutable.
+- RC2 preparation adds a bounded size-based native transfer deadline and explicit
+  1..3600second override, while metadata/byte/digest/activation guards stay intact.
+  Focused standalone controls pass25.086s, including actual child kill/reap,
+  longer bounded success and invalid override before prefix mutation; canonical
+  renderer/build-tag/profile/spec/diff checks pass. Independent source review
+  accepts this scope. External review and new exact-source native qualification
+  remain before publication. No new RC2
+  release or benchmark result is claimed by this source preparation.
+
 ## 2026-10-20 — owner-revised RC and local compiler goal
 
 - Owner prioritized a Forge-owned representative Passport/midnight-did benchmark,

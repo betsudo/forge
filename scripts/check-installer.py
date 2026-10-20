@@ -47,6 +47,9 @@ if args[:2]==['release','view']:
 elif args[0]=='api':print(json.dumps({'sha':'a'*40}))
 elif args[:2]==['release','download']:
  if os.environ.get('FAIL_DOWNLOAD'):sys.exit(1)
+ if os.environ.get('SLOW_DOWNLOAD'):
+  pathlib.Path(os.environ['SLOW_PID']).write_text(str(os.getpid()))
+  time.sleep(2)
  if os.environ.get('PAUSE_DOWNLOAD'):
   pathlib.Path(os.environ['PAUSE_DOWNLOAD']).write_text('started')
   time.sleep(60)
@@ -66,6 +69,22 @@ else:sys.exit(2)
  assert 'CLI alias bytes differ' in command('v1.4.0',ok=False) and active.resolve()==old
  assert 'checksum' in command(extra=('--sha256','0'*64),ok=False) and active.resolve()==old
  assert 'GitHub download failed' in command(environment=dict(env,FAIL_DOWNLOAD='1'),ok=False) and active.resolve()==old
+ # An absolute operator bound kills/reaps the real stalled gh child, without
+ # activating partial files. A larger explicit bound allows the same transfer.
+ slow=temp/'slow-refusal';pidfile=temp/'slow.pid'
+ slowenv=dict(env,SLOW_DOWNLOAD='1',SLOW_PID=str(pidfile))
+ assert 'download deadline exceeded' in command('v1.1.0',extra=('--download-timeout-seconds','1'),environment=slowenv,dest=slow,ok=False)
+ assert not (slow/'share/midnight-zkir-forge/binary/current').exists() and active.resolve()==old
+ try:os.kill(int(pidfile.read_text()),0)
+ except ProcessLookupError:pass
+ else:raise AssertionError('timed-out gh child survived')
+ command('v1.1.0',extra=('--download-timeout-seconds','5'),environment=slowenv,dest=temp/'slow-success')
+ for value in ('0','-1','3601'):
+  invalid=temp/('invalid-deadline-'+value)
+  assert 'download timeout must be' in command(extra=('--download-timeout-seconds',value),dest=invalid,ok=False)
+  assert not invalid.exists()
+ assert 300 < module.download_seconds(35_572_268,1024) < 3600
+ assert module.download_seconds(module.MAX_DOWNLOAD,1024**2)==3600
  command('v1.3.0',ok=False);assert active.resolve()==old and not (prefix/'escape').exists()
  assert 'metadata exceeds limit' in command(environment=dict(env,LARGE_METADATA='1'),ok=False) and active.resolve()==old
  assert 'checksum metadata exceeds limit' in command(environment=dict(env,LARGE_CHECKSUM='1'),ok=False) and active.resolve()==old
@@ -161,4 +180,4 @@ m.install('v1.1.0',pathlib.Path(prefix))
  # Same tag changed content cannot silently replace the pinned installation.
  folder=releases/'v1.0.0';archive=next(folder.glob('*.tar.gz'));data=archive.read_bytes();archive.write_bytes(data+b'changed');(folder/'SHA256SUMS').write_text(module.digest(archive)+'  '+archive.name+'\n')
  assert 'tag content changed' in command(ok=False) and active.resolve()==old
- print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'install_reinstall_upgrade_rollback':True,'primary_alias_upgrade_legacy_rollback':True,'alias_corruption_refused':True,'both_launcher_collisions_refused_before_activation':True,'optional_worker_upgrade_legacy_rollback':True,'advertised_missing_worker_refused':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'metadata_checksum_and_expansion_budgets':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))
+ print(json.dumps({'schema':1,'platform':native,'offline_fake_gh':True,'bounded_download_deadline_child_reaped':True,'slow_download_explicit_override':True,'invalid_deadline_before_prefix_mutation':True,'install_reinstall_upgrade_rollback':True,'primary_alias_upgrade_legacy_rollback':True,'alias_corruption_refused':True,'both_launcher_collisions_refused_before_activation':True,'optional_worker_upgrade_legacy_rollback':True,'advertised_missing_worker_refused':True,'checksum_download_archive_conflict_refusals':True,'concurrent_installer_refused':True,'killed_installer_lock_recovery':True,'activation_and_first_link_interruption_recovery':True,'metadata_checksum_and_expansion_budgets':True,'same_tag_replacement_refused':True,'scope':'private temporary fixtures; no GitHub credentials/releases or Nix-free portability claim'}))

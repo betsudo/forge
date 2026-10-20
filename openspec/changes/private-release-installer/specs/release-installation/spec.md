@@ -68,3 +68,18 @@ and Linux, exposing the CLI with matching worker/helper as one default package.
 - **WHEN** an authorized user references a full commit and locks the input
 - **THEN** Nix evaluates the corresponding native package/dev shell without a token in
   the input URL; this path explicitly requires Nix rather than claiming portability.
+
+### Requirement: bounded slow-connection downloads
+
+The native download SHALL use an absolute deadline computed from the declared
+archive plus checksum bytes at32KiB/s plus300seconds, capped at3600seconds.
+An explicit integer override SHALL be bounded to1..3600seconds and validated
+before prefix mutation. Metadata retains its separate300second deadline.
+Progress SHALL NOT renew the deadline. Byte/inventory/digest bounds remain intact.
+
+#### Scenario: progressing transfer exceeds selected deadline
+
+- **WHEN** native transfer takes longer than the selected absolute deadline
+- **THEN** the gh child is killed and reaped, partial scratch is removed and no
+  new installation is activated. A future explicit longer bounded attempt may
+  complete after independently verifying the same exact release bytes.
