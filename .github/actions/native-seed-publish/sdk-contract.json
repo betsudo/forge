@@ -1,0 +1,26 @@
+{
+  "version": "5.0.5",
+  "files": {
+    "lib/cache.js": "77a7b788cb6a7a2fae2d3742ace3646049269df486bc380112df9aa1bbb71f71",
+    "lib/generated/google/protobuf/timestamp.js": "6a525f870ab3e4b4271d557fdbbef488f66fc08c9948949ff9f6605fb01a3a10",
+    "lib/generated/google/protobuf/wrappers.js": "59d0f291bedfc63012c1f15549e48512d7a0917ab1cf6e18fd9659ef1b0f5b37",
+    "lib/generated/results/api/v1/cache.js": "66bdbe612a24cc66a16b3ddedc24d633f07fe968088d122df72a28b89abe1762",
+    "lib/generated/results/api/v1/cache.twirp-client.js": "2a9c000e1acaa09db89a0be8542d65a3d6e816adc1cd4851fc0671477a07c407",
+    "lib/generated/results/entities/v1/cachemetadata.js": "e36c514160e50ad47f9200390d6ba0423c54011f2cde037104627e746d4e19f0",
+    "lib/generated/results/entities/v1/cachescope.js": "4ab9195c6b1a3af15f280ce9a2e809ba9543a669b892a0afae2c4fc3ef0692d3",
+    "lib/internal/cacheHttpClient.js": "8e0aba5a4e54a6186f641a27b17bb4598e157b1d61b9e94ad32378ab1926b298",
+    "lib/internal/cacheUtils.js": "a382bf048b01d304c878230ddfe93cb5a7d35351ffec469f5dbb7a76bfa594f7",
+    "lib/internal/config.js": "9dfa2653299465e1eb2a030d949d00bfd4dabfe33515e201f311a8d30576fce4",
+    "lib/internal/constants.js": "e891766638e60cc15ac76b5836d0656cc9e8b360e80241792bd721d210979eab",
+    "lib/internal/downloadUtils.js": "da2add9186f196070ed6accdc3e0accd4d01fbd11abfb16eecf82c564f30d8bf",
+    "lib/internal/requestUtils.js": "8cc1b8e6f155e0a85e6e6a7eafc26de7b06507eb279de07f5993a6769ca959e0",
+    "lib/internal/shared/cacheTwirpClient.js": "9cfbc1b8af6e167a541edb3b22a98540b033838dedd1c10219dc3c46fa7720e0",
+    "lib/internal/shared/errors.js": "7e890acab17db778a1a4d0de374ca2bb12028e456af08d36a39edf1400712527",
+    "lib/internal/shared/user-agent.js": "152a58390bfb074d9fc854be8a5d41ad651d3a0484ab0bc3d49aa62f0147eb9e",
+    "lib/internal/shared/util.js": "d6a78d9c3a9222c14dd3ee72e1f9c20e661e7a8d3b5518577ff4e64ac4f1f9ef",
+    "lib/internal/tar.js": "e92f0b930c7b1baf4683d9b35cc148e92a9f33ab23650ece1779d6178588e193",
+    "lib/internal/uploadUtils.js": "96532f4e4b66d115fdf57d0124b430c643dfb3862f3f8c9dd1893d4f2b77c837",
+    "lib/options.js": "f966ecad9e3b38d63ed7fce25691488b5e8b3b75856d9a506fa72afb2c031a23",
+    "package.json": "09fcb38b395c82d26d4e01ec1e086bf4d8d3fce542dae3c03a7e869647f752ad"
+  }
+}

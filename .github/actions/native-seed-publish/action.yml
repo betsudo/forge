@@ -1,0 +1,39 @@
+name: Bounded native Forge seed publisher
+description: Explicit trusted window; measures official SDK archive before reservation. No proof qualification.
+inputs:
+  enabled:
+    description: Explicit owner-authorized opt-in; defaults off
+    default: 'false'
+  prepared:
+    description: Original official prepare-save receipt
+    required: true
+  key:
+    description: Original verified native plan key
+    required: true
+  binary:
+    description: Original Forge executable used by the native plan
+    required: true
+  cache-dir:
+    description: Original stopped job-local native store
+    required: true
+  baseline:
+    description: Original official native baseline
+    required: true
+  compact-guard:
+    description: Original keyed Compact prepare_native_seed.py live guard
+    required: true
+  compact-plan:
+    description: Original completed native plan directory
+    required: true
+  window:
+    description: Operator-approved repository/run/ref/approval-label JSON
+    required: true
+  output:
+    description: Fresh absolute publication report path
+    required: true
+  github-token:
+    description: Read-only complete inventory access; SDK uses its own injected runtime token
+    default: ${{ github.token }}
+runs:
+  using: node24
+  main: publish.cjs
