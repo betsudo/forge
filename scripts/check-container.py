@@ -7,11 +7,13 @@ import pathlib
 import secrets
 import tempfile
 import time
+import tomllib
 import urllib.request
 import uuid
 
 parser = argparse.ArgumentParser(description=__doc__)
-parser.add_argument('--image', default='midnight-zkir-forge:2026.10.0')
+product_version = tomllib.loads((pathlib.Path(__file__).resolve().parent.parent/'Cargo.toml').read_text())['package']['version']
+parser.add_argument('--image', default='midnight-zkir-forge:'+product_version)
 args = parser.parse_args()
 
 def docker(*arguments, check=True):

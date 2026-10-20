@@ -30,6 +30,11 @@
   and three Linux precondition controls pass. Independent source review accepts
   this coherence slice. Native qualification now invokes the standalone shell
   in the isolated consumer kit; new native execution is still pending.
+- Authentic exact-commit Codex review found one P2 in the old container smoke
+  default, which still selected stable2026.10.0 after the RC version change.
+  The default now derives from Cargo, matching Nix/Compose. The first build's
+  source352cbce remains predecessor evidence; corrected-source assets and review
+  are required before RC publication.
 
 ## 2026-10-15 — iteration 1: local factory and contract
 
