@@ -1,6 +1,6 @@
 # Binary release installation and pinned Nix use
 
-The pending RC source version is `2026.10.0-rc.1` across the CLI, both workers
+The current RC2 source version is `2026.10.0-rc.2` across the CLI, both workers
 and product metadata. The native builder rejects a tag that differs from the
 committed Cargo version before starting Nix. Native candidate qualification uses
 the standalone shell asset from an unrelated directory; its simulated GitHub
@@ -19,10 +19,9 @@ sh /path/to/zkir-forge-installer.sh --version "$FORGE_RC_VERSION" \
 ```
 
 Select an explicit published version and verify the installer against that
-release's authenticated checksums. The planned RC is `v2026.10.0-rc.1`; it is not
-published yet. The candidate builder includes the standalone script in
+release's authenticated checksums. RC1 is [published](https://github.com/betsudo/forge/releases/tag/v2026.10.0-rc.1) with native Linux x86_64 and macOS ARM64 assets. Its real public Mac download exceeded the original transfer deadline; see the RC2 correction below. RC2 is not published yet. The candidate builder includes the standalone script in
 `SHA256SUMS` alongside the platform archive, canonical Python installer and runtime
-source companions. Exact RC native and release-download qualification is pending.
+source companions. Exact RC2 native and release-download qualification is pending.
 
 The shell embeds the maintained Python implementation rather than duplicating
 archive, profile, locking or rollback logic. Regenerate it after changing that
@@ -32,8 +31,7 @@ Python executable. Run offline shell-entry tests from an unrelated directory wit
 `./bootstrap.sh -- python3 scripts/check-installer.py --standalone`; those fixtures
 do not establish native portability or real release downloading.
 
-The installer and candidate builder are local implementation work. **No downloadable
-Forge binary release is published by this increment.** A supported target is not
+RC1 assets and its source/checksum tags remain immutable. A recognized target is not
 qualified merely because the script recognizes its name. macOS/Linux ARM64/x86_64
 are the target matrix; clean-runtime qualification is tracked separately per target.
 
@@ -178,3 +176,16 @@ New release archives contain identical executable bytes for both; old schema1
 legacy-only releases remain installable and keep both installed launchers usable
 on rollback. Existing release archive names and managed installation paths stay
 stable. An unrelated file at either launcher path refuses installation.
+
+## Slow connections (RC2)
+
+RC1 remains immutable. Its actual public ARM Mac native download was correctly
+refused after the fixed300second transfer deadline; no installed acceptance or
+benchmark was claimed from that attempt. RC2 gives native downloads an absolute
+size-based deadline:300seconds plus declared archive/checksum bytes at32KiB/s,
+with a3600second maximum. This is a planning allowance, not a bandwidth guarantee.
+Metadata retains300seconds, all byte/inventory/digest checks remain, and progress
+never resets either deadline. `--download-timeout-seconds N` can select an integer
+from1to3600 before any prefix mutation. A timeout kills/reaps gh and removes staged
+partial files without activating them. New RC2 binaries and installer require
+fresh exact-source qualification and public installation before acceptance.

@@ -1,7 +1,7 @@
 #!/bin/sh
 # Generated from scripts/install-release.py; do not edit the embedded code.
 # Requires Python 3.11+ and authenticated gh; installs binaries without Nix/Cargo.
-# Canonical installer SHA-256: e687a8da31416424265402795e6f16202c12526cd1d4b73ee2350ed68ec2db95
+# Canonical installer SHA-256: 465008c25b721e800023f58fe815d70fec39cbb5647cd6dc510a1682f0bbc390
 set -eu
 exec "${FORGE_INSTALLER_PYTHON:-python3}" - "$@" <<'_ZKIR_FORGE_CANONICAL_INSTALLER_'
 #!/usr/bin/env python3
@@ -28,6 +28,21 @@ WORKER31 = 'midnight-zkir-forge-zkir31-worker'
 PRIMARY = 'zkir-forge'
 MAX_DOWNLOAD = 1024 ** 3
 MAX_UNPACKED = 2 * 1024 ** 3
+MAX_DOWNLOAD_SECONDS = 3600
+
+
+def download_seconds(archive_bytes, checksum_bytes, override=None):
+    require(type(archive_bytes) is int and 0 < archive_bytes <= MAX_DOWNLOAD,
+            'invalid archive download size')
+    require(type(checksum_bytes) is int and 0 <= checksum_bytes <= 1024 ** 2,
+            'invalid checksum download size')
+    if override is not None:
+        require(type(override) is int and 1 <= override <= MAX_DOWNLOAD_SECONDS,
+                'download timeout must be 1..3600 seconds')
+        return override
+    # Fixed absolute deadline: allow setup plus 32 KiB/s for declared bytes.
+    # Transfer progress never renews it; the existing byte caps remain separate.
+    return min(MAX_DOWNLOAD_SECONDS, 300 + (archive_bytes + checksum_bytes + 32767) // 32768)
 
 
 def require(condition, message):
@@ -78,7 +93,7 @@ def runtime(minimum):
         require(version_tuple(value) >= version_tuple(minimum['libc_version']), 'glibc is below the qualified minimum')
 
 
-def gh(*arguments, output_dir=None):
+def gh(*arguments, output_dir=None, download_timeout=300):
     try:
         if output_dir is None:
             with tempfile.TemporaryFile() as output, tempfile.TemporaryFile() as diagnostics:
@@ -100,7 +115,7 @@ def gh(*arguments, output_dir=None):
         with tempfile.TemporaryFile() as diagnostics:
             process = subprocess.Popen(['gh', *map(str, arguments)], stdout=diagnostics, stderr=diagnostics)
             try:
-                deadline = time.monotonic() + 300
+                deadline = time.monotonic() + download_timeout
                 while process.poll() is None:
                     size = sum(p.stat().st_size for p in output_dir.rglob('*') if p.is_file())
                     require(size <= MAX_DOWNLOAD + 1024 ** 2, 'download byte budget exceeded')
@@ -249,8 +264,11 @@ def managed_directory(path):
         path.mkdir(mode=0o700, parents=True)
 
 
-def install(version, prefix, expected_sha=None):
+def install(version, prefix, expected_sha=None, download_timeout_seconds=None):
     require(sys.version_info >= (3, 11), 'Python 3.11+ required')
+    if download_timeout_seconds is not None:
+        require(type(download_timeout_seconds) is int and 1 <= download_timeout_seconds <= MAX_DOWNLOAD_SECONDS,
+                'download timeout must be 1..3600 seconds')
     require(re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.-]+)?', version), 'explicit semantic release tag required')
     native = target()
     prefix = Path(os.path.abspath(prefix.expanduser()))
@@ -277,10 +295,12 @@ def install(version, prefix, expected_sha=None):
         matches = [a for a in release['assets'] if a['name'] == asset]
         require(len(matches) == 1 and 0 < matches[0]['size'] <= MAX_DOWNLOAD, 'qualified target asset unavailable or exceeds budget')
         require(sum(a['name'] == 'SHA256SUMS' and a['size'] <= 1024 ** 2 for a in release['assets']) == 1, 'checksum asset unavailable')
+        sums_size = next(a['size'] for a in release['assets'] if a['name'] == 'SHA256SUMS')
+        transfer_seconds = download_seconds(matches[0]['size'], sums_size, download_timeout_seconds)
         commit = gh('api', f'repos/{REPOSITORY}/commits/{version}')['sha']
         with tempfile.TemporaryDirectory(prefix='.install-', dir=root) as temporary:
             stage = Path(temporary)
-            gh('release', 'download', version, '--repo', REPOSITORY, '--pattern', asset, '--pattern', 'SHA256SUMS', '--dir', stage, output_dir=stage)
+            gh('release', 'download', version, '--repo', REPOSITORY, '--pattern', asset, '--pattern', 'SHA256SUMS', '--dir', stage, output_dir=stage, download_timeout=transfer_seconds)
             bundle = stage / asset
             require(bundle.stat().st_size <= MAX_DOWNLOAD, 'download byte budget exceeded')
             sums = stage / 'SHA256SUMS'
@@ -321,10 +341,12 @@ def main():
     parser.add_argument('--version', required=True)
     parser.add_argument('--prefix', type=Path, default=Path.home() / '.local')
     parser.add_argument('--sha256')
+    parser.add_argument('--download-timeout-seconds', type=int,
+                        help='absolute native download deadline, 1..3600; default scales with declared bytes at 32 KiB/s plus 300 seconds, capped at 3600')
     args = parser.parse_args()
     if args.sha256:
         require(re.fullmatch('[0-9a-f]{64}', args.sha256), 'invalid expected SHA-256')
-    result = install(args.version, args.prefix, args.sha256)
+    result = install(args.version, args.prefix, args.sha256, args.download_timeout_seconds)
     print(json.dumps(result))
     print('Add ' + str(Path(result['prefix']) / 'bin') + ' to PATH. Stop Forge operations before switching releases.', file=sys.stderr)
 
