@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """Prepare a local native release candidate, never upload or tag. Requires a clean source tree."""
-import argparse,hashlib,importlib.util,io,json,os,pathlib,platform,re,shutil,subprocess,tarfile,tempfile
+import argparse,hashlib,importlib.util,io,json,os,pathlib,platform,re,shutil,subprocess,tarfile,tempfile,tomllib
 ROOT=pathlib.Path(__file__).resolve().parent.parent
 spec=importlib.util.spec_from_file_location('installer',ROOT/'scripts/install-release.py');installer=importlib.util.module_from_spec(spec);spec.loader.exec_module(installer)
 def run(*args):return subprocess.run(list(map(str,args)),check=True,capture_output=True,text=True).stdout
 
 def _prepare(tag,output,commit,frozen):
  installer.require(re.fullmatch(r'v[0-9]+\.[0-9]+\.[0-9]+(?:-[A-Za-z0-9.-]+)?',tag),'semantic release tag required')
+ version=tomllib.loads((frozen/'Cargo.toml').read_text())['package']['version']
+ installer.require(tag=='v'+version,'release tag must match committed Cargo version')
  # Build the exact clean commit, never attribute caller-supplied/stale binaries to HEAD.
  nix=shutil.which('nix') or '/nix/var/nix/profiles/default/bin/nix'
  built=json.loads(run(nix,'build','--no-link','--json','--cores','2',f'git+file://{ROOT}?rev={commit}#default'))

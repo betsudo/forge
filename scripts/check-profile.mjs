@@ -47,4 +47,5 @@ for(const [name,version] of Object.entries(v31)){
  else if(git.has(name))assert.equal(matches[0].source,'git+https://github.com/midnightntwrk/midnight-ledger?rev=9a8777c4d035fc7f38ae286bcf5f8656668efd9f#9a8777c4d035fc7f38ae286bcf5f8656668efd9f');
 }
 assert.equal(modern.find(x=>x.name==='midnight-zkir-forge-zkir31-worker').version,product);
+assert.equal(/^version = "([^"]+)"/m.exec(readFileSync('workers/zkir31/Cargo.toml','utf8'))[1],product);
 console.log('Isolated Compact0.35 JSON3.1 profile: OK');

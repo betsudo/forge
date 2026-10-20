@@ -1,5 +1,11 @@
 # Binary release installation and pinned Nix use
 
+The pending RC source version is `2026.10.0-rc.1` across the CLI, both workers
+and product metadata. The native builder rejects a tag that differs from the
+committed Cargo version before starting Nix. Native candidate qualification uses
+the standalone shell asset from an unrelated directory; its simulated GitHub
+transport remains distinct from actual release-download acceptance.
+
 ## Standalone installer asset (RC preparation)
 
 `zkir-forge-installer.sh` is a self-contained shell entry point generated from

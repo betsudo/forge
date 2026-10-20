@@ -2,7 +2,7 @@
   "openapi": "3.1.0",
   "info": {
     "title": "Midnight ZKIR Forge \u2014 initial HTTP subset",
-    "version": "2026.10.0",
+    "version": "2026.10.0-rc.1",
     "description": "Single-owner service. Raw single-circuit uploads and synchronous materialization. No archives, durable jobs, namespaces or hosted registry guarantees. Bearer authentication is enforced when a token file is configured and required for non-loopback binding. No CORS; TLS belongs at a trusted reverse proxy. Parameter acquisition is an explicit operator option. Optional verified immutable compiler views are published locally with publish-view and explicitly enabled by --provider-root; identity encoding only. Provider reads verify pinned metadata/inventory and the selected file only; full audits use local verify-view and publication/reuse. Two dedicated provider permits bound hashing/streaming without consuming cache work; no persistent verified marker. Both CAS and provider downloads have a total body-consumption lifetime after verification/range selection: min(3600, base + ceil(response_bytes/minimum_rate)) seconds. Base is serve --download-timeout-seconds (default300; 1..3600); rate is --download-min-bytes-per-second (default1048576; positive). A full 1GiB response defaults to1324seconds; ranges use selected length. Expiry logs response bytes and effective seconds. Progress does not reset it. Expiry truncates/errors unfinished bodies; in-flight blocking I/O retains ownership until completion. Already handed-off HTTP/kernel/client bytes are outside the deadline."
   },
   "servers": [

@@ -23,6 +23,13 @@
 - RC version/source preparation, exact native Linux/macOS packaging and proof/
   recovery, actual release downloading, compiler integration and complete repeated
   local value acceptance remain open. Old archives cannot be relabeled as the RC.
+- RC source now reports `2026.10.0-rc.1` consistently across root/workers/lock
+  entries and public product metadata; official dependency pins are unchanged.
+  The frozen native builder rejects mismatched tags before Nix. Two focused
+  admission tests (five tag/version cases), profile/spec/actionlint/diff checks
+  and three Linux precondition controls pass. Independent source review accepts
+  this coherence slice. Native qualification now invokes the standalone shell
+  in the isolated consumer kit; new native execution is still pending.
 
 ## 2026-10-15 — iteration 1: local factory and contract
 

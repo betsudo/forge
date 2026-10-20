@@ -38,7 +38,7 @@ with tarfile.open(archive, 'r:gz') as tar:
 with tempfile.TemporaryDirectory(prefix='forge-native-install-') as directory:
     temp = Path(directory).resolve()
     remote = temp/'remote'; remote.mkdir()
-    for name in [archive.name, 'install-release.py', 'SHA256SUMS']:
+    for name in [archive.name, 'install-release.py', 'zkir-forge-installer.sh', 'SHA256SUMS']:
         shutil.copyfile(args.directory/name, remote/name)
     runtime = args.runtime_python.resolve()
     if args.deny_nix:
@@ -60,6 +60,7 @@ else:sys.exit(2)
 '''.replace('COMMIT', repr(manifest['source_commit'])).replace('ASSETS', repr([archive.name,'SHA256SUMS'])))
     gh.chmod(0o755)
     env = dict(os.environ, PATH=os.pathsep.join([str(tools),str(runtime.parent),'/opt/homebrew/bin','/usr/bin','/bin']))
+    env['FORGE_INSTALLER_PYTHON'] = str(runtime)
     for variable in ('MIDNIGHT_ZKIR_FORGE_ZKIR3_WORKER','MIDNIGHT_ZKIR_FORGE_ZKIR31_WORKER'):env.pop(variable,None)
     sandbox = []
     if args.deny_nix:
@@ -73,7 +74,7 @@ else:sys.exit(2)
         assert result.returncode == 0, (result.stdout,result.stderr)
         return result.stdout
     prefix = temp/'prefix'
-    installed = json.loads(run(runtime,remote/'install-release.py','--version',manifest['tag'],'--prefix',prefix))
+    installed = json.loads(run('/bin/sh',remote/'zkir-forge-installer.sh','--version',manifest['tag'],'--prefix',prefix))
     cli = prefix/'bin/midnight-zkir-forge'
     version = run(cli,'--version').strip()
     assert version in {name+' '+manifest['version'] for name in ('midnight-zkir-forge','zkir-forge')}
@@ -100,5 +101,5 @@ else:sys.exit(2)
         recovery=json.loads(run(*command))
     print(json.dumps({'schema':1,'candidate_sha256':hashlib.file_digest(archive.open('rb'),'sha256').hexdigest(),
                       'source_commit':manifest['source_commit'],'version':manifest['version'],
-                      'target':manifest['target'],'fake_gh_install':True,'runtime_python_uses_nix':str(runtime).startswith('/nix/'),'runtime_denies_nix_and_checkout':args.deny_nix,'required_nix_free_environment':args.require_nix_free,
+                      'target':manifest['target'],'standalone_shell_install':True,'fake_gh_install':True,'runtime_python_uses_nix':str(runtime).startswith('/nix/'),'runtime_denies_nix_and_checkout':args.deny_nix,'required_nix_free_environment':args.require_nix_free,
                       'profiles':profiles,'recovery':recovery,'scope':'real relocated native bundle and isolated prefix; host/environment facts recorded separately; fake GitHub transport, not a real release download'}))
