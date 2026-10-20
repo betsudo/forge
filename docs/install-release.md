@@ -1,4 +1,36 @@
-# Private release installation and pinned Nix use
+# Binary release installation and pinned Nix use
+
+The pending RC source version is `2026.10.0-rc.1` across the CLI, both workers
+and product metadata. The native builder rejects a tag that differs from the
+committed Cargo version before starting Nix. Native candidate qualification uses
+the standalone shell asset from an unrelated directory; its simulated GitHub
+transport remains distinct from actual release-download acceptance.
+
+## Standalone installer asset (RC preparation)
+
+`zkir-forge-installer.sh` is a self-contained shell entry point generated from
+the canonical `scripts/install-release.py`. A downloaded copy needs no repository
+checkout, Nix or Cargo. It currently requires Python 3.11+ and installed,
+authenticated `gh`; these are installer prerequisites, not source-build tools.
+
+```sh
+sh /path/to/zkir-forge-installer.sh --version "$FORGE_RC_VERSION" \
+  --prefix "$HOME/.local/forge-rc"
+```
+
+Select an explicit published version and verify the installer against that
+release's authenticated checksums. The planned RC is `v2026.10.0-rc.1`; it is not
+published yet. The candidate builder includes the standalone script in
+`SHA256SUMS` alongside the platform archive, canonical Python installer and runtime
+source companions. Exact RC native and release-download qualification is pending.
+
+The shell embeds the maintained Python implementation rather than duplicating
+archive, profile, locking or rollback logic. Regenerate it after changing that
+implementation with `python3 scripts/render-installer.py --output
+zkir-forge-installer.sh`. `FORGE_INSTALLER_PYTHON` may select an explicit compatible
+Python executable. Run offline shell-entry tests from an unrelated directory with
+`./bootstrap.sh -- python3 scripts/check-installer.py --standalone`; those fixtures
+do not establish native portability or real release downloading.
 
 The installer and candidate builder are local implementation work. **No downloadable
 Forge binary release is published by this increment.** A supported target is not

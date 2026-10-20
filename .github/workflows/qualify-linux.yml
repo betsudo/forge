@@ -8,7 +8,10 @@ on:
       - 'scripts/qualify-linux*.py'
       - 'scripts/check-linux-qualification.py'
       - 'scripts/build-release.py'
+      - 'scripts/check-build-release.py'
       - 'scripts/install-release.py'
+      - 'scripts/render-installer.py'
+      - 'zkir-forge-installer.sh'
       - 'scripts/linux-runtime*.py'
       - 'scripts/cargo-notices.py'
       - 'scripts/forge-ci.py'
@@ -56,7 +59,8 @@ jobs:
           mkdir -p .local/qualification-x86
           revision="$(git rev-parse HEAD)"
           ./bootstrap.sh -- nix build --no-link --json --print-build-logs --cores 2 "git+file://$PWD?rev=$revision#default" > >(tee .local/qualification-x86/native-build.json) 2> >(tee .local/qualification-x86/native-build.stderr >&2)
-          ./bootstrap.sh -- python3 scripts/build-release.py --tag v2026.10.0 --output .local/qualification-x86/candidate > >(tee .local/qualification-x86/producer.json) 2> >(tee .local/qualification-x86/producer.stderr >&2)
+          tag="$(python3 -c 'import pathlib,tomllib; print("v"+tomllib.loads(pathlib.Path("Cargo.toml").read_text())["package"]["version"])')"
+          ./bootstrap.sh -- python3 scripts/build-release.py --tag "$tag" --output .local/qualification-x86/candidate > >(tee .local/qualification-x86/producer.json) 2> >(tee .local/qualification-x86/producer.stderr >&2)
       - name: Installed real proofs and recovery without Nix, then fresh verified HTTPS
         run: ./bootstrap.sh -- python3 scripts/qualify-linux.py --candidate .local/qualification-x86/candidate --output .local/qualification-x86/receipts
       - name: Verify portable Action CLI and fetch verified public parameters

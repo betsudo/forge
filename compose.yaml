@@ -1,6 +1,6 @@
 services:
   forge:
-    image: midnight-zkir-forge:2026.10.0
+    image: midnight-zkir-forge:2026.10.0-rc.1
     pull_policy: never
     ports:
       - "127.0.0.1:8787:8787"

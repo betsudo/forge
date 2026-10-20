@@ -47,7 +47,7 @@ def main():
         kit.chmod(0o755)
         (kit/'assets').mkdir()
         for path in candidate.iterdir():
-            if path.name in ['install-release.py', 'SHA256SUMS'] or (path.name.endswith('.tar.gz') and not path.name.endswith('-runtime-sources.tar.gz')):
+            if path.name in ['install-release.py', 'zkir-forge-installer.sh', 'SHA256SUMS'] or (path.name.endswith('.tar.gz') and not path.name.endswith('-runtime-sources.tar.gz')):
                 shutil.copyfile(path, kit/'assets'/path.name)
         (kit/'scripts').mkdir()
         for name in ['check-release-candidate.py', 'check-recovery.py', 'qualify-linux-consumer.py']:
