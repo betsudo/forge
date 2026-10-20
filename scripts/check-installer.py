@@ -1,10 +1,17 @@
 #!/usr/bin/env python3
 """Offline private-release installer e2e with fake gh and isolated prefixes; no publication."""
-import fcntl,gzip,hashlib,importlib.util,io,json,os,pathlib,platform,shutil,subprocess,sys,tarfile,tempfile,time
+import argparse,fcntl,gzip,hashlib,importlib.util,io,json,os,pathlib,platform,shutil,subprocess,sys,tarfile,tempfile,time
 ROOT=pathlib.Path(__file__).resolve().parent.parent
+parser=argparse.ArgumentParser(description=__doc__);parser.add_argument('--standalone',action='store_true');args=parser.parse_args()
 spec=importlib.util.spec_from_file_location('installer',ROOT/'scripts/install-release.py');module=importlib.util.module_from_spec(spec);spec.loader.exec_module(module)
 with tempfile.TemporaryDirectory(prefix='forge-installer-test-') as d:
  temp=pathlib.Path(d).resolve();releases=temp/'remote';releases.mkdir();bin_dir=temp/'tools';bin_dir.mkdir();prefix=temp/'prefix';native=module.target();source='a'*40
+ entrypoint=[sys.executable,str(ROOT/'scripts/install-release.py')]
+ if args.standalone:
+  renderer_spec=importlib.util.spec_from_file_location('render_installer',ROOT/'scripts/render-installer.py');renderer=importlib.util.module_from_spec(renderer_spec);renderer_spec.loader.exec_module(renderer)
+  assert (ROOT/'zkir-forge-installer.sh').read_bytes()==renderer.render((ROOT/'scripts/install-release.py').read_bytes()),'regenerate standalone installer from canonical source'
+  standalone=temp/'standalone'/'zkir-forge-installer.sh';standalone.parent.mkdir();shutil.copyfile(ROOT/'zkir-forge-installer.sh',standalone)
+  entrypoint=['/bin/sh',str(standalone)]
  def fixture(tag,hostile=False):
   folder=releases/tag;folder.mkdir();stem=f'midnight-zkir-forge-{tag}-{native}';payload=temp/(tag+'-payload');(payload/'bin').mkdir(parents=True);(payload/'share/midnight-zkir-forge').mkdir(parents=True);(payload/'LICENSES').mkdir()
   profiles={'root':{'fixture':'root'},'v3':{'fixture':'worker'}}
@@ -48,9 +55,9 @@ elif args[:2]==['release','download']:
  if os.environ.get('LARGE_CHECKSUM'):(directory/'SHA256SUMS').write_bytes(b'x'*(2*1024**2))
 else:sys.exit(2)
 ''');gh.chmod(0o755)
- env=dict(os.environ,PATH=str(bin_dir)+os.pathsep+os.environ['PATH'],FIXTURE_REMOTE=str(releases))
+ env=dict(os.environ,PATH=str(bin_dir)+os.pathsep+os.environ['PATH'],FIXTURE_REMOTE=str(releases),FORGE_INSTALLER_PYTHON=sys.executable)
  def command(tag='v1.0.0',extra=(),environment=None,ok=True,dest=None):
-  r=subprocess.run([sys.executable,str(ROOT/'scripts/install-release.py'),'--version',tag,'--prefix',str(dest or prefix),*extra],env=environment or env,capture_output=True,text=True,timeout=30)
+  r=subprocess.run([*entrypoint,'--version',tag,'--prefix',str(dest or prefix),*extra],cwd=temp,env=environment or env,capture_output=True,text=True,timeout=30)
   assert (r.returncode==0)==ok,(r.stdout,r.stderr)
   return json.loads(r.stdout) if ok else r.stderr
  first=command();active=prefix/'share/midnight-zkir-forge/binary/current';old=active.resolve();assert command()['directory']==first['directory']
@@ -79,7 +86,7 @@ else:sys.exit(2)
   fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
   assert 'another installer' in command('v1.1.0',ok=False)
  marker=temp/'download-started'
- process=subprocess.Popen([sys.executable,str(ROOT/'scripts/install-release.py'),'--version','v1.1.0','--prefix',str(prefix)],env=dict(env,PAUSE_DOWNLOAD=str(marker)),stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
+ process=subprocess.Popen([*entrypoint,'--version','v1.1.0','--prefix',str(prefix)],cwd=temp,env=dict(env,PAUSE_DOWNLOAD=str(marker)),stdout=subprocess.DEVNULL,stderr=subprocess.DEVNULL,start_new_session=True)
  try:
   deadline=time.monotonic()+10
   while not marker.exists():assert time.monotonic()<deadline and process.poll() is None;time.sleep(.01)

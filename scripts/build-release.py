@@ -92,7 +92,10 @@ os.execv(sys.executable,[sys.executable,str(root/'share/midnight-zkir-forge/forg
   (root/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');installer.runtime(minimum);installer.inventory(root,manifest);installer.smoke(root,manifest,environment=environment)
   with tarfile.open(archive,'w:gz') as tar:tar.add(root,arcname=stem)
  (output/'install-release.py').write_text(run('git','-C',ROOT,'show',commit+':scripts/install-release.py'))
- sums=''.join(f'{installer.digest(path)}  {path.name}\n' for path in [archive,output/'install-release.py',*companions])
+ renderer_spec=importlib.util.spec_from_file_location('render_installer',frozen/'scripts/render-installer.py')
+ renderer=importlib.util.module_from_spec(renderer_spec);renderer_spec.loader.exec_module(renderer)
+ shell=output/'zkir-forge-installer.sh';shell.write_bytes(renderer.render((output/'install-release.py').read_bytes()));shell.chmod(0o755)
+ sums=''.join(f'{installer.digest(path)}  {path.name}\n' for path in [archive,output/'install-release.py',shell,*companions])
  (output/'SHA256SUMS').write_text(sums)
  return {'candidate':str(archive),'target':target,'source_commit':manifest['source_commit'],'qualification':'local candidate only; clean Nix-free target host qualification still required; dependency notices and runtime source companion inventoried; no publication'}
 def prepare(tag,output):

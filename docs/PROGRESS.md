@@ -1,5 +1,29 @@
 # Progress
 
+## 2026-10-20 — owner-revised RC and local compiler goal
+
+- Owner prioritized a Forge-owned representative Passport/midnight-did benchmark,
+  RC binaries and standalone installer, smooth compiler integration, then complete
+  local comparisons targeting more than 50% warm wall-time reduction. Actions
+  optimization follows local delivery. Tiny circuits bypass automatic caching;
+  initial configurable compiler cutoff remains k <= 8.
+- Explicit autonomous execution and RC tag/release/assets authority supersede old
+  planning-only release restrictions for this deliverable. Preserve unrelated
+  checkouts/installations and all genuine proof/identity requirements.
+- New contract: `openspec/changes/rc-local-compiler-synergy`, tracked by #11/#43
+  and Compact#679. The agent-owned old Compact cache pilot was cancelled on scope
+  change; its receipts are preserved and no restore follow-up is planned.
+- Implemented a standalone `zkir-forge-installer.sh` generated from the canonical
+  Python installer; no clone/source build is needed. Python 3.11+ and authenticated
+  gh remain explicit prerequisites. The exact frozen release builder emits and
+  checksums this asset. Independent source review accepted the entrypoint slice.
+- Offline fake-gh install/upgrade/rollback/corruption/interruption controls through
+  the standalone shell pass from an unrelated directory (25.932s, native ARM Mac).
+  This is not new RC portability, real-download or end-to-end speedup evidence.
+- RC version/source preparation, exact native Linux/macOS packaging and proof/
+  recovery, actual release downloading, compiler integration and complete repeated
+  local value acceptance remain open. Old archives cannot be relabeled as the RC.
+
 ## 2026-10-15 — iteration 1: local factory and contract
 
 - Read the supplied starter/product spec, factory vault bootstrap/runtime/porting
