@@ -75,6 +75,29 @@ function checkPlanBindings(env) {
   assert.equal(hash(fs.realpathSync(binary)), invocation.tools.forge.sha256, 'Forge executable differs from original native plan');
 }
 
+
+function checkGrowth(prepared, current, key) {
+  assert.equal(prepared.schema, 1); assert.equal(current.schema, 1);
+  for (const field of ['key_id', 'partition']) {
+    assert.equal(prepared[field], key[field], 'prepare-save report differs from native key');
+    assert.equal(current[field], key[field], 'live report differs from native key');
+  }
+  assert.deepEqual(prepared.delta, current.delta, 'prepare-save report differs from live original baseline');
+  assert(Number.isSafeInteger(current.delta.misses) && current.delta.misses > 0, 'current generation growth required');
+  assert.equal(current.delta.errors, 0, 'live official report has request errors');
+}
+function verifySnapshot(helper, env, snapshot, identity, run = execFileSync) {
+  const temporary = fs.mkdtempSync(path.join(env.RUNNER_TEMP, 'forge-seed-verify-'));
+  try {
+    const verified = JSON.parse(run('python3', [helper, '--binary', env.INPUT_BINARY, 'restore',
+      '--key', env.INPUT_KEY, '--cache-dir', path.join(temporary, 'verified-cache'),
+      '--snapshot', snapshot, '--max-bytes', '268435456', '--expected-id', identity],
+      { encoding: 'utf8', timeout: 120000, maxBuffer: 16 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] }));
+    assert.equal(verified.schema, 1); assert.equal(verified.restored, true, 'official snapshot verification required');
+    return { verified: true, method: 'official_restore_into_disposable_private_store', snapshot_id: identity };
+  } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
+}
+
 async function main(env = process.env) {
   assert.equal(process.versions.node.split('.')[0], '24', 'Node24 action required');
   const report = { schema: 1, published: false, accepted: false, scope: 'single stopped native seed; no proof/consumer qualification or global mutex claim' };
@@ -121,12 +144,13 @@ async function main(env = process.env) {
       assert.deepEqual(snapshotFiles(snapshot, identity, partition), inventory, 'prepared snapshot mutated');
       guardCheck();
       const current = JSON.parse(execFileSync('python3', [helper, '--binary', env.INPUT_BINARY, 'report', '--key', env.INPUT_KEY, '--cache-dir', env['INPUT_CACHE-DIR'], '--baseline', env.INPUT_BASELINE], { encoding: 'utf8', timeout: 120000, maxBuffer: 16 * 1024 * 1024, stdio: ['ignore', 'pipe', 'pipe'] }));
-      assert.equal(current.key_id, key.key_id);
-      assert.equal(current.partition, partition);
-      assert.equal(current.delta.errors, 0, 'live official report has request errors');
+      checkGrowth(prepared.report, current, key);
     }
     Object.assign(report, { key: key.primary, snapshot_id: identity, partition, source_sha: env.GITHUB_SHA,
       repository: env.GITHUB_REPOSITORY, run_id: env.GITHUB_RUN_ID, run_attempt: env.GITHUB_RUN_ATTEMPT });
+    live();
+    report.snapshot_verification = { ...verifySnapshot(helper, env, snapshot, identity), partition };
+    live();
     const result = await saveGuarded(snapshot, key.primary,
       archive => { live(); return admit({ policy, env, window, key: key.primary, partition, token }, archive); }, policy.max_archive_bytes, live);
     Object.assign(report, result, { published: true });
@@ -148,4 +172,4 @@ async function main(env = process.env) {
   }
 }
 if (require.main === module) main().then(report => console.log(JSON.stringify(report)));
-module.exports = { main, snapshotFiles, checkedCompactGuard, checkPlanBindings };
+module.exports = { main, snapshotFiles, checkedCompactGuard, checkPlanBindings, checkGrowth, verifySnapshot };

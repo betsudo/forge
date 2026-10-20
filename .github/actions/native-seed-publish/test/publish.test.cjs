@@ -7,7 +7,7 @@ const fs = require('node:fs');
 const os = require('node:os');
 const path = require('node:path');
 const crypto = require('node:crypto');
-const { main, snapshotFiles, checkedCompactGuard, checkPlanBindings } = require('../publish.cjs');
+const { main, snapshotFiles, checkedCompactGuard, checkPlanBindings, checkGrowth, verifySnapshot } = require('../publish.cjs');
 const hash = data => crypto.createHash('sha256').update(data).digest('hex');
 test('default off needs no prepared/key/window/API/SDK access', async () => {
   const root=fs.mkdtempSync(path.join(os.tmpdir(),'forge-default-off-'));
@@ -70,5 +70,32 @@ test('official report inputs cannot mix another plan key baseline store or execu
     const alternate=path.join(root,'alternate');fs.writeFileSync(alternate,'original executable');
     assert.throws(()=>checkPlanBindings({...env,INPUT_BINARY:alternate}));
     fs.writeFileSync(binary,'changed');assert.throws(()=>checkPlanBindings(env));
+  } finally {fs.rmSync(root,{recursive:true,force:true});}
+});
+
+test('prepare-save growth must equal the current original report', () => {
+  const key={key_id:'key',partition:'partition'}, delta={requests:1,hits:0,misses:1,errors:0,generation_ms:5};
+  const original={schema:1,...key,delta,job_elapsed_ms:10};
+  checkGrowth(original,{...original,job_elapsed_ms:20},key);
+  for(const changed of [{...original,key_id:'other'},{...original,partition:'other'},
+    {...original,delta:{...delta,misses:0}},{...original,delta:{...delta,errors:1}}])
+    assert.throws(()=>checkGrowth(original,changed,key));
+  assert.throws(()=>checkGrowth({...original,delta:{...delta,misses:0}},{...original,delta:{...delta,misses:0}},key));
+});
+test('official restore with original identity is mandatory and private verification is cleaned', () => {
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'forge-official-snapshot-'));
+  const env={RUNNER_TEMP:root,INPUT_BINARY:'/original/forge',INPUT_KEY:'/original/key'};
+  try {
+    let target;
+    verifySnapshot('/original/helper',env,'/original/snapshot','original-id',(_exe,argv)=>{
+      assert.equal(argv[argv.indexOf('--expected-id')+1],'original-id');
+      assert.equal(argv[argv.indexOf('--snapshot')+1],'/original/snapshot');
+      target=argv[argv.indexOf('--cache-dir')+1];assert(!fs.existsSync(target));
+      return JSON.stringify({schema:1,restored:true});
+    });
+    assert(!fs.existsSync(path.dirname(target)));
+    assert.throws(()=>verifySnapshot('/original/helper',env,'/rewritten/snapshot','old-id',()=>{throw new Error('official snapshot_id recomputation refuses rewritten manifest');}));
+    assert.deepEqual(fs.readdirSync(root),[]);
+    assert.throws(()=>verifySnapshot('/original/helper',env,'/missing/snapshot','old-id',()=>JSON.stringify({schema:1,restored:false})));
   } finally {fs.rmSync(root,{recursive:true,force:true});}
 });

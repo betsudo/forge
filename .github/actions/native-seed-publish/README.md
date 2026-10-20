@@ -17,6 +17,11 @@ sole active job `Forge / Linux candidate qualification`, one seed per ref/partit
 Snapshot path must be exactly `$RUNNER_TEMP/forge-linux-supplied-snapshot`, matching
 restore path/version. No alternate archive, prefix search, delete or refresh.
 
+Before SDK work, the official Forge restore command verifies the original snapshot ID,
+partition, parameters and bytes in a disposable private store, which is removed.
+The prepare-save logical delta must equal the current original report and retain
+positive generation misses with zero errors; elapsed time is not a logical delta.
+
 The stock SDK creates the upload archive; exact-source guarded hooks admit its
 actual bytes before reservation and verify the same bytes before stock upload.
 Complete current API inventory plus the archive must fit decimal 10 GB. Other
